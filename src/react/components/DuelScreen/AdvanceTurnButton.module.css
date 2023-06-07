@@ -1,0 +1,16 @@
+.highlighted {
+  animation: filter-animation 1s infinite;
+}
+
+@keyframes filter-animation {
+  0% {
+  }
+
+  50% {
+    filter: brightness(130%);
+  }
+
+  100% {
+    
+  }
+}

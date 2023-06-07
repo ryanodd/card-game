@@ -1,0 +1,35 @@
+.energy_icon_small {
+  @apply w-6 h-6 rounded-full border border-neutral-900 text-neutral-900 p-1 shadow-md aspect-square flex justify-center items-center;
+}
+
+.energy_icon_large {
+  @apply w-8 h-8 rounded-full border border-neutral-900 text-neutral-900 p-1.5 shadow-md aspect-square flex justify-center items-center;
+}
+
+.energy_toggled {
+  filter: brightness(150%);
+  @apply shadow-2xl rounded-full;
+  > * {
+    @apply border-neutral-50;
+  }
+}
+
+.neutral_element {
+  @apply bg-slate-300;
+}
+
+.fire_element {
+  @apply bg-orange-400;
+}
+
+.water_element {
+  @apply bg-cyan-400;
+}
+
+.earth_element {
+  @apply bg-lime-500;
+}
+
+.air_element {
+  @apply bg-purple-400;
+}

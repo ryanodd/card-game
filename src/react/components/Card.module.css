@@ -1,0 +1,45 @@
+.card_size {
+  @apply w-28 h-40;
+}
+
+.card_border {
+  @apply rounded-md overflow-hidden border border-zinc-700 shadow-lg;
+}
+
+.card_selectable {
+  cursor: pointer;
+  &:hover {
+    filter: brightness(120%);
+  }
+}
+
+.card_selected {
+  @apply shadow-2xl -translate-y-4;
+};
+
+.card_highlighted {
+  animation: highlight-animation 1s infinite;
+}
+
+@keyframes highlight-animation {
+  50% {
+    filter: brightness(130%)
+  }
+}
+
+.image_border {
+  @apply w-full rounded-md overflow-hidden border border-zinc-700 pointer-events-none;
+}
+
+
+.full_card_size {
+  @apply w-72 h-96;
+}
+
+.full_card_border {
+  @apply rounded-lg overflow-hidden border-2 border-zinc-700 shadow-lg;
+}
+
+.full_image_border {
+  @apply w-full rounded-xl overflow-hidden border border-zinc-700;
+}

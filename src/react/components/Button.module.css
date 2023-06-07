@@ -1,0 +1,8 @@
+
+.button {
+  @apply rounded-md border-stone-900 shadow-md bg-yellow-300 text-neutral-950 py-1 px-2;
+}
+
+.unpressable {
+  opacity: 0.2;
+}
