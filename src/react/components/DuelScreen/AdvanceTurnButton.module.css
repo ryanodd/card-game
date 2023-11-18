@@ -2,12 +2,20 @@
   animation: filter-animation 1s infinite;
 }
 
+.attack_color {
+  @apply bg-red-400 shadow-xl;
+}
+
+.defend_color {
+  @apply bg-cyan-400;
+}
+
 @keyframes filter-animation {
   0% {
   }
 
-  50% {
-    filter: brightness(130%);
+  35% {
+    filter: brightness(120%);
   }
 
   100% {

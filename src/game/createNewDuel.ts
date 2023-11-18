@@ -4,7 +4,7 @@ import { DuelParams } from "./DuelController"
 import { CardState, DuelState, PlayerState } from "./DuelData"
 import { v4 } from "uuid"
 
-export const STARTING_HEALTH = 30
+export const STARTING_HEALTH = 20
 
 export const createCardsFromNos = (cardNos: number[]): CardState[] => {
   const cards: CardState[] = []
@@ -78,6 +78,7 @@ export const createNewDuel = ({ game, opponentDeckCardNos }: DuelParams) => {
     },
 
     choice: { id: ChoiceID.CONFIRM_START, playerId: "human" },
+    animationQueue: [],
     playerGoingFirst: "human",
     currentPlayerId: "human",
     turnNumber: 1,

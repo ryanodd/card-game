@@ -1,5 +1,4 @@
-import { duelWinner, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
-import { useDuelStore } from "../../hooks/useDuelStore"
+import { duelWinner } from "@/src/game/DuelHelpers"
 import {
   ChoiceID,
   confirmEndAttacks_execute,
@@ -9,7 +8,6 @@ import {
   takeTurn_executeAdvance,
   takeTurn_getValidHandTargets,
 } from "@/src/game/Choices"
-import { endTurn } from "@/src/game/Actions"
 import { saveAndRerenderDuel } from "@/src/game/DuelController"
 
 import styles from "./AdvanceTurnButton.module.css"
@@ -20,6 +18,9 @@ import { DuelState } from "@/src/game/DuelData"
 const getText = (duel: DuelState): string | null => {
   if (duelWinner(duel) !== null) {
     return null
+  }
+  if (duel.choice.playerId === "opponent") {
+    return "Opponent's Turn"
   }
   const choiceId = duel.choice.id
   if (choiceId === ChoiceID.TAKE_TURN) {
@@ -36,7 +37,7 @@ const getText = (duel: DuelState): string | null => {
     return "Lock in Defenders"
   }
   if (choiceId === ChoiceID.RESOLVE_ATTACKS) {
-    return null
+    return "Attacking..."
   }
   if (choiceId === ChoiceID.CONFIRM_END_ATTACKS) {
     return "End Attacks"
@@ -44,15 +45,25 @@ const getText = (duel: DuelState): string | null => {
   return null
 }
 
-export const AdvanceTurnButton = () => {
-  const { duel } = useDuelStore()
-  const { cardIdToBePlayed, attackersToDeclare, defendersToAttackers } = useDuelUIStore()
+export type AdvanceTurnButtonProps = {
+  duel: DuelState
+}
+
+export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
+  const { cardIdToBePlayed, spaceIdToDefend, attackersToDeclare, defendersToAttackers } = useDuelUIStore()
 
   const attackedThisTurn = duel.attackedThisTurn
   const choiceId = duel.choice.id
 
   const buttonText = getText(duel)
-  const pressable = !duelWinner(duel) && buttonText !== null && cardIdToBePlayed === null
+  const pressable =
+    duel.choice.playerId !== "opponent" &&
+    !duelWinner(duel) &&
+    !("animation" in duel) &&
+    buttonText !== null &&
+    !(choiceId === ChoiceID.TAKE_TURN && cardIdToBePlayed !== null) &&
+    !(choiceId === ChoiceID.DECLARE_DEFENDS && spaceIdToDefend !== null) &&
+    !(choiceId === ChoiceID.RESOLVE_ATTACKS)
 
   const highlighted =
     pressable &&
@@ -61,11 +72,19 @@ export const AdvanceTurnButton = () => {
       (choiceId === ChoiceID.DECLARE_DEFENDS &&
         declareDefenders_getValidDefenderTargets(duel).length === Object.keys(defendersToAttackers).length))
 
+  const attackColor =
+    (choiceId === ChoiceID.TAKE_TURN && !duel.attackedThisTurn && takeTurn_getValidHandTargets(duel).length === 0) ||
+    choiceId === ChoiceID.DECLARE_ATTACKERS ||
+    choiceId === ChoiceID.RESOLVE_ATTACKS
+  const defendColor = pressable && choiceId === ChoiceID.DECLARE_DEFENDS
+
   return (
     <button
-      className={`${buttonStyles.button} border-2 w-40 h-12 flex justify-center items-center ${
+      className={`${buttonStyles.button} font-medium border-2 w-40 h-12 flex justify-center items-center ${
         !pressable ? buttonStyles.unpressable : ""
-      } ${highlighted ? styles.highlighted : ""}`}
+      } ${highlighted ? styles.highlighted : ""} ${attackColor ? styles.attack_color : ""} ${
+        defendColor ? styles.defend_color : ""
+      }`}
       onClick={() => {
         if (choiceId === ChoiceID.TAKE_TURN) {
           const newDuel = takeTurn_executeAdvance(duel)

@@ -1,8 +1,37 @@
 .player_health_positioning {
-  @apply absolute -bottom-1 -left-1;
+  @apply absolute -top-2 left-1/2 -translate-x-1/2;
 }
 
 .player_element_number {
   @apply font-normal text-2xl;
   text-shadow: rgba(0, 0, 0, 0.4) 2px 2px 2px;
+}
+
+.animated_health_value {
+  text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
+  @apply absolute right-0 -bottom-3 text-red-500 font-bold;
+  animation: health_update 1000ms forwards;
+}
+
+@keyframes health_update {
+  0% {
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+.shaking {
+  animation: shaking_animation 50ms ease-in alternate infinite;
+}
+@keyframes shaking_animation {
+  0% {
+  }
+  100% {
+    transform: translate(3px,3px);
+  }
 }

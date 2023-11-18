@@ -1,11 +1,8 @@
 import { EnergyType } from "@/src/game/Cards"
 import { EnergyIcon } from "./EnergyIcon"
-import { EnergyCounts } from "@/src/game/DuelData"
-import { useEffect, useState } from "react"
 import { EnergySelected, findEnergyById, useDuelUIStore } from "../hooks/useDuelUIStore"
 
 import styles from "./Energy.module.css"
-import { useDuelStore } from "../hooks/useDuelStore"
 
 export type ClickableEnergyProps = {
   index: number

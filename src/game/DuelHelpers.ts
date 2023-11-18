@@ -1,4 +1,5 @@
-import { CardState, DuelState, EnergyCounts, PlayerID, SpaceID, SpaceState } from "./DuelData"
+import { DuelAnimation } from "./Animations"
+import { AnimatedDuelState, CardState, DuelState, EnergyCounts, PlayerID, SpaceID, SpaceState } from "./DuelData"
 
 export const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * max)
@@ -132,4 +133,23 @@ export const duelWinner = (duel: DuelState): PlayerID | "draw" | null => {
     return "opponent"
   }
   return null
+}
+
+export const addAnimationToDuel = (inputDuel: DuelState, animation: DuelAnimation) => {
+  if (!("animationQueue" in inputDuel)) {
+    throw Error("Tried to add an animation to a non-static duel")
+  }
+
+  let duel = inputDuel
+  const { animationQueue: omittedAnimationQueue, ...duelCopy } = window.structuredClone(duel)
+  duel.animationQueue.push({
+    ...duelCopy,
+    animation,
+  })
+  return duel
+}
+
+export const getAnimatedDuelState = (duel: DuelState): DuelState | AnimatedDuelState => {
+  const nextAnimation = "animationQueue" in duel ? duel.animationQueue[0] : null
+  return nextAnimation ?? duel
 }

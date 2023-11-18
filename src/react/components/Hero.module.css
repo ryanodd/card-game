@@ -1,5 +1,5 @@
 .hero_size {
-  @apply w-40 h-52;
+  @apply w-40 h-56;
 }
 
 .hero_border {
@@ -8,4 +8,8 @@
 
 .image_border {
  @apply border border-neutral-900 rounded-md;
+}
+
+.lit_dot {
+  @apply bg-yellow-200 border border-neutral-900;
 }

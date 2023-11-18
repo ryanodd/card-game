@@ -1,8 +1,6 @@
 import { CardState, DuelState } from "@/src/game/DuelData"
-import { useDuelStore } from "../../hooks/useDuelStore"
 
 import styles from "./CreatureArea.module.css"
-import generalStyles from "./General.module.css"
 import { CardPreview } from "../CardPreview"
 import {
   ChoiceID,
@@ -28,8 +26,7 @@ export type CreatureAreaProps = {
   duel: DuelState
 }
 
-export const CreatureArea = () => {
-  const { duel } = useDuelStore()
+export const CreatureArea = ({ duel }: CreatureAreaProps) => {
   const {
     cardIdToBePlayed,
     energySelected,
@@ -51,6 +48,7 @@ export const CreatureArea = () => {
       const humanSpaceState = duel.human.creatureSpaces[x]
       const humanSelectable =
         !duelWinner(duel) &&
+        !("animation" in duel) &&
         ((choiceId === ChoiceID.TAKE_TURN &&
           cardIdToBePlayed !== null &&
           takeTurn_getValidSpaceTargets(duel, cardIdToBePlayed, getEnergyCountsFromSelected(energySelected)).includes(
@@ -78,10 +76,19 @@ export const CreatureArea = () => {
         spaceIdToDefend === humanSpaceState.id ||
         Object.keys(defendersToAttackers).includes(humanSpaceState.id) ||
         Object.keys(duel.defendersToAttackers).includes(humanSpaceState.id)
+      const humanAnimationAttackStart =
+        "animation" in duel &&
+        duel.animation.id === "ATTACK_START" &&
+        duel.animation.attackingSpaceId === humanSpaceState.id
+      const humanAnimationAttackEnd =
+        "animation" in duel &&
+        duel.animation.id === "ATTACK_END" &&
+        duel.animation.attackingSpaceId === humanSpaceState.id
 
       const opponentSpaceState = duel.opponent.creatureSpaces[x]
       const opponentSelectable =
         !duelWinner(duel) &&
+        !("animation" in duel) &&
         ((choiceId === ChoiceID.RESOLVE_ATTACKS &&
           spaceIdToAttack !== null &&
           resolveAttacks_getValidDefenderTargets(duel, spaceIdToAttack).includes(opponentSpaceState.id)) ||
@@ -94,6 +101,14 @@ export const CreatureArea = () => {
         opponentSpaceState.occupant?.summonSick === true || opponentSpaceState.occupant?.attackedThisTurn === true
       const opponentAttacking = duel.attackingSpaceIds.includes(opponentSpaceState.id)
       const opponentDefending = Object.keys(duel.defendersToAttackers).includes(opponentSpaceState.id)
+      const opponentAnimationAttackStart =
+        "animation" in duel &&
+        duel.animation.id === "ATTACK_START" &&
+        duel.animation.attackingSpaceId === opponentSpaceState.id
+      const opponentAnimationAttackEnd =
+        "animation" in duel &&
+        duel.animation.id === "ATTACK_END" &&
+        duel.animation.attackingSpaceId === opponentSpaceState.id
 
       columns.push(
         <div className="flex flex-col gap-1" key={x}>
@@ -106,8 +121,6 @@ export const CreatureArea = () => {
                 const newDefendersToAttackers = defendersToAttackers
                 newDefendersToAttackers[spaceIdToDefend] = opponentSpaceState.id
                 setDefendersToAttackers(newDefendersToAttackers)
-                console.log(duel)
-                console.log(newDefendersToAttackers)
                 setSpaceIdToDefend(null)
               }
               if (choiceId === ChoiceID.RESOLVE_ATTACKS && spaceIdToAttack !== null) {
@@ -122,7 +135,9 @@ export const CreatureArea = () => {
               opponentSelectable ? styles.space_selectable : ""
             } ${opponentHighlighted ? styles.space_highlighted : ""} ${opponentFaded ? styles.space_faded : ""} ${
               opponentAttacking ? styles.space_toAttack : ""
-            } ${opponentDefending ? styles.space_defending : ""} ${styles.space}`}
+            } ${opponentDefending ? styles.space_defending : ""} ${
+              opponentAnimationAttackStart ? styles.space_animation_attack_start : ""
+            } ${opponentAnimationAttackEnd ? styles.space_animation_attack_end : ""} ${styles.space}`}
           >
             <div className={`${styles.space_overlay}`}>
               {opponentAttacking && (
@@ -137,7 +152,7 @@ export const CreatureArea = () => {
                 </div>
               )}
             </div>
-            {opponentSpaceState.occupant && <CardPreview cardState={opponentSpaceState.occupant} />}
+            {opponentSpaceState.occupant && <CardPreview duel={duel} cardState={opponentSpaceState.occupant} />}
           </div>
           <div
             onClick={() => {
@@ -170,13 +185,25 @@ export const CreatureArea = () => {
                     })
                     saveAndRerenderDuel(newDuel)
                   }
+                  if (defenders.length === 1) {
+                    const newDuel = resolveAttacks_execute(duel, {
+                      attackingSpaceId: humanSpaceState.id,
+                      defendingSpaceId: defenders[0],
+                    })
+                    saveAndRerenderDuel(newDuel)
+                  }
                   // TODO automatically select defender if there's only 1? Blocked on vfx
-                  if (defenders.length > 0) {
+                  if (defenders.length >= 2) {
                     setSpaceIdToAttack(spaceIdToAttack ? null : humanSpaceState.id)
                   }
                 }
                 if (choiceId === ChoiceID.DECLARE_DEFENDS) {
-                  setSpaceIdToDefend(spaceIdToDefend === humanSpaceState.id ? null : humanSpaceState.id)
+                  setSpaceIdToDefend(
+                    spaceIdToDefend === humanSpaceState.id ||
+                      Object.keys(defendersToAttackers).includes(humanSpaceState.id)
+                      ? null
+                      : humanSpaceState.id
+                  )
                   delete defendersToAttackers[humanSpaceState.id]
                 }
               }
@@ -185,7 +212,9 @@ export const CreatureArea = () => {
               humanSelectable ? styles.space_selectable : ""
             } ${humanHighlighted ? styles.space_highlighted : ""} ${humanFaded ? styles.space_faded : ""} ${
               humanAttacking ? styles.space_toAttack : ""
-            } ${humanDefending ? styles.space_defending : ""} ${styles.space}`}
+            } ${humanDefending ? styles.space_defending : ""} ${
+              humanAnimationAttackStart ? styles.space_animation_attack_start : ""
+            } ${humanAnimationAttackEnd ? styles.space_animation_attack_end : ""} ${styles.space}`}
           >
             <div className={`${styles.space_overlay}`}>
               {humanAttacking && (
@@ -202,7 +231,7 @@ export const CreatureArea = () => {
                 </>
               )}
             </div>
-            {humanSpaceState.occupant && <CardPreview cardState={humanSpaceState.occupant} />}
+            {humanSpaceState.occupant && <CardPreview duel={duel} cardState={humanSpaceState.occupant} />}
           </div>
         </div>
       )
@@ -210,9 +239,5 @@ export const CreatureArea = () => {
     return columns
   }
 
-  return (
-    <div className="flex overflow-hidden rounded-md border-4 shadow-md border-slate-400 gap-1 bg-slate-400">
-      {getColumns()}
-    </div>
-  )
+  return <div className="flex rounded-md border-4 shadow-md border-slate-400 gap-1 bg-slate-400">{getColumns()}</div>
 }

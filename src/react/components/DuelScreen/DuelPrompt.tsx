@@ -1,5 +1,4 @@
 import { duelWinner } from "@/src/game/DuelHelpers"
-import { useDuelStore } from "../../hooks/useDuelStore"
 import {
   ChoiceID,
   confirmStart_execute,
@@ -12,14 +11,16 @@ import { saveAndRerenderDuel } from "@/src/game/DuelController"
 import { DuelState } from "@/src/game/DuelData"
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 
-export type DuelPromptProps = {}
+export type DuelPromptProps = {
+  duel: DuelState
+}
 
 export const useGetPromptMessage = (duel: DuelState): string | null => {
   const { cardIdToBePlayed, spaceIdToDefend, spaceIdToAttack, defendersToAttackers, energySelected } = useDuelUIStore()
   const choiceId = duel.choice.id
 
   if (duelWinner(duel) === "human") {
-    return "Victory! The opponent is deafeted."
+    return "Victory! The opponent is defeated."
   }
   if (duelWinner(duel) === "opponent") {
     return "You lost..."
@@ -98,19 +99,16 @@ export const getButtonText = (duel: DuelState) => {
   return null
 }
 
-export const DuelPrompt = ({}: DuelPromptProps) => {
-  const { duel } = useDuelStore()
-
+export const DuelPrompt = ({ duel }: DuelPromptProps) => {
   const promptMessage = useGetPromptMessage(duel)
-
   const buttonText = getButtonText(duel)
 
-  if (promptMessage === null && buttonText === null) {
+  if (duel.choice.playerId === "opponent" || (promptMessage === null && buttonText === null)) {
     return null
   }
 
   return (
-    <div className="absolute left-8 bottom-60 z-20 w-80 flex flex-col gap-2 bg-slate-600 rounded-lg shadow-md p-4">
+    <div className="absolute right-8 bottom-60 z-20 w-80 flex flex-col gap-2 bg-slate-600 rounded-lg shadow-md p-4">
       <h2>{promptMessage}</h2>
       {buttonText !== null && (
         <button

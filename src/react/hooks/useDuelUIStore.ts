@@ -1,9 +1,6 @@
 import { create } from "zustand"
-import { useDuelStore } from "./useDuelStore"
-import { useEffect } from "react"
 import { getCardById, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
 import { DuelState, EnergyCounts, SpaceID } from "@/src/game/DuelData"
-import { ChoiceID } from "@/src/game/Choices"
 import { v4 } from "uuid"
 import { EnergyType } from "@/src/game/Cards"
 

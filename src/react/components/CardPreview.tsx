@@ -1,5 +1,5 @@
 import { cardDataMap } from "@/src/game/Cards"
-import { CardState } from "@/src/game/DuelData"
+import { CardState, DuelState } from "@/src/game/DuelData"
 import styles from "./Card.module.css"
 import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
@@ -7,15 +7,14 @@ import { SummonSickIcon } from "./SummonSickIcon"
 import { useState } from "react"
 import { DetailedCard } from "./DetailedCard"
 import { Tooltip } from "./Tooltip"
-import { useDuelStore } from "../hooks/useDuelStore"
 import { getAllSpaces } from "@/src/game/DuelHelpers"
 
 export type CardPreviewProps = {
+  duel: DuelState
   cardState: CardState
 }
 
-export const CardPreview = ({ cardState }: CardPreviewProps) => {
-  const { duel } = useDuelStore()
+export const CardPreview = ({ duel, cardState }: CardPreviewProps) => {
   const cardData = cardDataMap[cardState.number]
 
   const [hovering, setHovering] = useState(false)

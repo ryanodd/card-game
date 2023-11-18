@@ -1,6 +1,5 @@
-import { CardState } from "@/src/game/DuelData"
+import { CardState, DuelState } from "@/src/game/DuelData"
 import { CardPreview } from "../CardPreview"
-import { useDuelStore } from "../../hooks/useDuelStore"
 import { autoPayElements, useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { ChoiceID, takeTurn_getValidHandTargets } from "@/src/game/Choices"
 import cardStyles from "../Card.module.css"
@@ -8,17 +7,18 @@ import { resetDuelUIStore } from "@/src/game/DuelController"
 import { duelWinner } from "@/src/game/DuelHelpers"
 
 export type HandCardProps = {
+  duel: DuelState
   cardState: CardState
 }
 
-export const HandCard = ({ cardState }: HandCardProps) => {
-  const { duel } = useDuelStore()
+export const HandCard = ({ duel, cardState }: HandCardProps) => {
   const { cardIdToBePlayed, setCardIdToBePlayed, energySelected, setEnergySelected } = useDuelUIStore()
 
   const choiceId = duel.choice.id
 
   const selectable =
     !duelWinner(duel) &&
+    !("animation" in duel) &&
     choiceId === ChoiceID.TAKE_TURN &&
     (!cardIdToBePlayed || cardState.id === cardIdToBePlayed) &&
     takeTurn_getValidHandTargets(duel).includes(cardState.id)
@@ -43,7 +43,7 @@ export const HandCard = ({ cardState }: HandCardProps) => {
         }
       }}
     >
-      <CardPreview cardState={cardState} />
+      <CardPreview duel={duel} cardState={cardState} />
     </div>
   )
 }

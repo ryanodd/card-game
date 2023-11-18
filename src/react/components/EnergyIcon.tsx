@@ -66,7 +66,8 @@ export const EnergyIcon = ({ energyType, amount, size }: EnergyIconProps) => {
         </div>
       )
     }
+    throw Error("invalid energy type")
   }
 
-  return <>{getEnergySvg()}</>
+  return getEnergySvg()
 }

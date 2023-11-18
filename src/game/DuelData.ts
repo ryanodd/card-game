@@ -1,3 +1,4 @@
+import { DuelAnimation } from "./Animations"
 import { EnergyType } from "./Cards"
 import { DuelChoiceData } from "./Choices"
 
@@ -44,19 +45,23 @@ export type PlayerState = {
   drawnDead: boolean
 }
 
-export type TurnPhase = ""
+export type StaticDuelState = {
+  choice: DuelChoiceData
+  animationQueue: AnimatedDuelState[]
 
-export type DuelState = {
   human: PlayerState
   opponent: PlayerState
-  choice: DuelChoiceData
 
   playerGoingFirst: PlayerID
   currentPlayerId: PlayerID
   attackedThisTurn: boolean
   turnNumber: number
-
-  // These strings all refer to space ids
   attackingSpaceIds: SpaceID[]
   defendersToAttackers: Record<SpaceID, SpaceID>
 }
+
+export type AnimatedDuelState = Omit<StaticDuelState, "animationQueue"> & {
+  animation: DuelAnimation
+}
+
+export type DuelState = StaticDuelState | AnimatedDuelState

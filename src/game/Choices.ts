@@ -3,6 +3,7 @@ import { cardDataMap } from "./Cards"
 import { DuelParams } from "./DuelController"
 import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
 import {
+  addAnimationToDuel,
   getCardById,
   getCurrentDuelPlayer,
   getNonCurrentDuelPlayer,
@@ -203,17 +204,25 @@ export const resolveAttacks_getValidDefenderTargets = (duel: DuelState, attackin
 }
 
 export const resolveAttacks_execute = (
-  duel: DuelState,
+  inputDuel: DuelState,
   params: {
     attackingSpaceId: string
     defendingSpaceId: string | null
   }
 ) => {
+  let duel = inputDuel
   const attackingCard = getSpaceById(duel, params.attackingSpaceId).occupant
 
   if (attackingCard === null) {
     throw Error(`No card to resolve attack for at space ${params.attackingSpaceId}`)
   }
+
+  duel = addAnimationToDuel(duel, {
+    id: "ATTACK_START",
+    duration: 200,
+    attackingSpaceId: params.attackingSpaceId,
+    defendingSpaceId: params.defendingSpaceId,
+  })
 
   // Do damage
   if (params.defendingSpaceId === null) {
@@ -252,6 +261,13 @@ export const resolveAttacks_execute = (
     // Continue resolving attacks
     duel.choice = { id: ChoiceID.RESOLVE_ATTACKS, playerId: duel.currentPlayerId }
   }
+
+  duel = addAnimationToDuel(duel, {
+    id: "ATTACK_END",
+    duration: 200,
+    attackingSpaceId: params.attackingSpaceId,
+    defendingSpaceId: params.defendingSpaceId,
+  })
 
   return duel
 }

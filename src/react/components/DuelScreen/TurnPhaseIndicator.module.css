@@ -42,7 +42,7 @@
   }
   &[data-lit="true"] {
     > svg {
-      @apply fill-amber-400
+      @apply fill-red-400
     }
   }
 }

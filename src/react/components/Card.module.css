@@ -28,7 +28,7 @@
 }
 
 .image_border {
-  @apply w-full rounded-md overflow-hidden border border-zinc-700 pointer-events-none;
+  @apply w-full rounded-md overflow-hidden border border-zinc-700;
 }
 
 

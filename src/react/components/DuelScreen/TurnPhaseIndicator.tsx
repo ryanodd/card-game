@@ -1,10 +1,13 @@
 import { ChoiceID } from "@/src/game/Choices"
-import { useDuelStore } from "../../hooks/useDuelStore"
 import SwordSVG from "../../assets/sword-f.svg"
 import styles from "./TurnPhaseIndicator.module.css"
+import { DuelState } from "@/src/game/DuelData"
 
-export const TurnPhaseIndicator = () => {
-  const { duel } = useDuelStore()
+export type TurnPhaseIndicatorProps = {
+  duel: DuelState
+}
+
+export const TurnPhaseIndicator = ({ duel }: TurnPhaseIndicatorProps) => {
   const choiceId = duel.choice.id
 
   const isMainPhaseOne = choiceId === ChoiceID.TAKE_TURN && !duel.attackedThisTurn

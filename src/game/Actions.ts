@@ -111,8 +111,14 @@ export const performTurnEffects = (inputDuel: DuelState, playerId: PlayerID) => 
   for (let x = 0; x < turnEffectNumbers.length; x++) {
     const effectTurnNumber = turnEffectNumbers[x] as unknown as number
     if (duel.turnNumber >= effectTurnNumber) {
-      const effectId = hero.turnEffects[turnEffectNumbers[x]].id
-      effectMap[effectId]?.(duel, playerId)
+      const effects = hero.turnEffects[turnEffectNumbers[x]]
+      effects.forEach((effect) => {
+        const callback = effectMap[effect.id]
+        if (callback === undefined) {
+          throw Error("no callback for turn effect")
+        }
+        callback?.(duel, playerId)
+      })
     }
   }
   return inputDuel
@@ -120,6 +126,15 @@ export const performTurnEffects = (inputDuel: DuelState, playerId: PlayerID) => 
 
 export const turnStart = (inputDuel: DuelState) => {
   let duel = inputDuel
+
+  // Reset energy
+  getDuelPlayerById(duel, duel.currentPlayerId).energy = {
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+    neutral: 0,
+  }
 
   duel = playerDrawN(duel, { numberToDraw: 1, playerId: duel.currentPlayerId })
 
@@ -236,6 +251,7 @@ export const removeCard = (inputDuel: DuelState, cardId: CardID) => {
     }
   }
 
+  // Delete defendersToAttackers if it's one of the defenders
   const defendingSpaceId = Object.keys(duel.defendersToAttackers).find((spaceId) => {
     return getSpaceById(duel, spaceId).occupant?.id === cardId
   })
@@ -243,11 +259,12 @@ export const removeCard = (inputDuel: DuelState, cardId: CardID) => {
     delete duel.defendersToAttackers[defendingSpaceId]
   }
 
-  const defendingSpaceIdAgainst = Object.keys(duel.defendersToAttackers).filter((spaceId) => {
-    return getSpaceById(duel, duel.defendersToAttackers[spaceId]).occupant?.id === cardId
+  // Delete defendersToAttackers if it's one of the attackers
+  const defendingSpaceIdForAttacker = Object.values(duel.defendersToAttackers).find((spaceId) => {
+    return getSpaceById(duel, spaceId).occupant?.id === cardId
   })
-  for (let x = 0; x < defendingSpaceIdAgainst.length; x++) {
-    delete duel.defendersToAttackers[defendingSpaceIdAgainst[x]]
+  if (defendingSpaceIdForAttacker) {
+    delete duel.defendersToAttackers[defendingSpaceIdForAttacker]
   }
 }
 

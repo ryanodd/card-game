@@ -19,18 +19,44 @@
   }
 }
 
-.space_toAttack {
-
-}
-
 .space_defending {
   @apply z-20;
+}
+
+.space_animation_attack_start {
+  > * {
+    animation: attack_start 200ms ease-in;
+  }
+}
+
+@keyframes attack_start {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+}
+
+.space_animation_attack_end {
+  > * {
+    animation: attack_end 200ms ease-out;
+  }
+}
+
+@keyframes attack_end {
+  0% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .space_attack_icon {
   @apply w-full h-full bg-opacity-40 bg-red-300;
   > svg {
-    @apply stroke-neutral-900 fill-red-500 stroke-1;
+    @apply stroke-neutral-900 fill-red-400 stroke-1;
   }
   &[data-direction="up"] {
     > svg {
@@ -45,9 +71,9 @@
 }
 
 .space_defend_icon {
-  @apply w-full h-full bg-opacity-40 bg-blue-300;
+  @apply w-full h-full bg-opacity-40 bg-cyan-300;
   > svg {
-    @apply stroke-neutral-900 fill-blue-500 stroke-1;
+    @apply stroke-neutral-900 fill-cyan-300 stroke-1;
   }
   &[data-direction="up"] {
     > svg {
