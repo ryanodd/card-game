@@ -3,7 +3,6 @@ import { CardState, EnergyCounts } from "./DuelData"
 export type EnergyType = "neutral" | "fire" | "water" | "earth" | "air"
 
 export type CardData = {
-  number: number
   name: string
   imageSrc: string
   attack: number
@@ -13,7 +12,6 @@ export type CardData = {
 }
 
 export const goldenFriend: CardData = {
-  number: 1,
   name: "Golden Friend",
   imageSrc: "/card-art/goldenFriend.png",
   attack: 2,
@@ -28,7 +26,6 @@ export const goldenFriend: CardData = {
 }
 
 export const networkOfSnakes: CardData = {
-  number: 2,
   name: "Network of Snakes",
   imageSrc: "/card-art/networkOfSnakes.png",
   attack: 1,
@@ -44,7 +41,6 @@ export const networkOfSnakes: CardData = {
 
 // Whenever this successfully attacks opponent's face, deal 1 damage to the opponent
 export const emberFoxling: CardData = {
-  number: 3,
   name: "Ember Foxling",
   imageSrc: "/card-art/emberFoxling.png",
   attack: 2,
@@ -59,7 +55,6 @@ export const emberFoxling: CardData = {
 }
 
 export const wingedBull: CardData = {
-  number: 4,
   name: "Winged Bull",
   imageSrc: "/card-art/wingedBull.png",
   attack: 3,
@@ -74,7 +69,6 @@ export const wingedBull: CardData = {
 }
 
 export const greenwingCaller: CardData = {
-  number: 5,
   name: "Greenwing Caller",
   imageSrc: "/card-art/greenwingCaller.png",
   attack: 6,
@@ -89,7 +83,6 @@ export const greenwingCaller: CardData = {
 }
 
 export const elderSaurus: CardData = {
-  number: 6,
   name: "Elder Saurus",
   imageSrc: "/card-art/elderSaurus.png",
   attack: 5,
@@ -104,7 +97,6 @@ export const elderSaurus: CardData = {
 }
 
 export const vengefulFlamewing: CardData = {
-  number: 7,
   name: "Vengeful Flamewing",
   imageSrc: "/card-art/vengefulFlamewing.png",
   attack: 4,
@@ -119,7 +111,6 @@ export const vengefulFlamewing: CardData = {
 }
 
 export const sludgeAmphibian: CardData = {
-  number: 8,
   name: "Sludge Amphibian",
   imageSrc: "/card-art/sludgeAmphibian.png",
   attack: 2,
@@ -133,13 +124,13 @@ export const sludgeAmphibian: CardData = {
   },
 }
 
-export const cardDataMap: Record<number, CardData> = {
-  1: goldenFriend,
-  2: networkOfSnakes,
-  3: emberFoxling,
-  4: wingedBull,
-  5: greenwingCaller,
-  6: elderSaurus,
-  7: vengefulFlamewing,
-  8: sludgeAmphibian,
+export const cardDataMap: Record<string, CardData> = {
+  "Golden Friend": goldenFriend,
+  "Network of Snakes": networkOfSnakes,
+  "Ember Foxling": emberFoxling,
+  "Winged Bull": wingedBull,
+  "Greenwing Caller": greenwingCaller,
+  "Elder Saurus": elderSaurus,
+  "Vengeful Flamewing": vengefulFlamewing,
+  "Sludge Amphibian": sludgeAmphibian,
 }

@@ -1,6 +1,6 @@
 import { cardDataMap } from "./Cards"
 import { ChoiceID, DuelChoiceData } from "./Choices"
-import { CardID, DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
+import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
 import {
   getAllCards,
   getCardById,
@@ -176,10 +176,10 @@ export const playCardFromHand = (inputDuel: DuelState, { cardId, targetId, energ
   let duel = inputDuel
   const player = getCurrentDuelPlayer(duel)
   const playedCard = player.hand.find((card) => {
-    return card.id === cardId
+    return card.instanceId === cardId
   })
   player.hand = player.hand.filter((card) => {
-    return card.id !== cardId
+    return card.instanceId !== cardId
   })
   const targetSpace = player.creatureSpaces.find((space) => {
     return space.id === targetId
@@ -188,7 +188,7 @@ export const playCardFromHand = (inputDuel: DuelState, { cardId, targetId, energ
     throw Error("something went wrong playing a card")
   }
 
-  const cardCosts = cardDataMap[playedCard.number].cost
+  const cardCosts = cardDataMap[playedCard.name].cost
   if (!isEnergySufficient(energyPaid, cardCosts, true)) {
     throw Error("Can't afford to play this card (or paid too much)")
   }
@@ -205,18 +205,18 @@ export const playCardFromHand = (inputDuel: DuelState, { cardId, targetId, energ
   return duel
 }
 
-export const removeCard = (inputDuel: DuelState, cardId: CardID) => {
+export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
   const duel = inputDuel
   const humanHand = duel.human.hand
   for (let x = 0; x < humanHand.length; x++) {
-    if (humanHand[x].id === cardId) {
+    if (humanHand[x].instanceId === cardInstanceId) {
       humanHand.splice(x)
     }
   }
 
   const humanDiscard = duel.human.discard
   for (let x = 0; x < humanDiscard.length; x++) {
-    if (humanDiscard[x].id === cardId) {
+    if (humanDiscard[x].instanceId === cardInstanceId) {
       humanDiscard.splice(x)
     }
   }
@@ -224,21 +224,21 @@ export const removeCard = (inputDuel: DuelState, cardId: CardID) => {
   const humanCreatureSpaces = duel.human.creatureSpaces
   for (let x = 0; x < humanCreatureSpaces.length; x++) {
     const space = humanCreatureSpaces[x]
-    if (space.occupant?.id === cardId) {
+    if (space.occupant?.instanceId === cardInstanceId) {
       space.occupant = null
     }
   }
 
   const opponentHand = duel.opponent.hand
   for (let x = 0; x < opponentHand.length; x++) {
-    if (opponentHand[x].id === cardId) {
+    if (opponentHand[x].instanceId === cardInstanceId) {
       opponentHand.splice(x)
     }
   }
 
   const opponentDiscard = duel.opponent.discard
   for (let x = 0; x < opponentDiscard.length; x++) {
-    if (opponentDiscard[x].id === cardId) {
+    if (opponentDiscard[x].instanceId === cardInstanceId) {
       opponentDiscard.splice(x)
     }
   }
@@ -246,14 +246,14 @@ export const removeCard = (inputDuel: DuelState, cardId: CardID) => {
   const opponentCreatureSpaces = duel.opponent.creatureSpaces
   for (let x = 0; x < opponentCreatureSpaces.length; x++) {
     const space = opponentCreatureSpaces[x]
-    if (space.occupant?.id === cardId) {
+    if (space.occupant?.instanceId === cardInstanceId) {
       space.occupant = null
     }
   }
 
   // Delete defendersToAttackers if it's one of the defenders
   const defendingSpaceId = Object.keys(duel.defendersToAttackers).find((spaceId) => {
-    return getSpaceById(duel, spaceId).occupant?.id === cardId
+    return getSpaceById(duel, spaceId).occupant?.instanceId === cardInstanceId
   })
   if (defendingSpaceId) {
     delete duel.defendersToAttackers[defendingSpaceId]
@@ -261,21 +261,21 @@ export const removeCard = (inputDuel: DuelState, cardId: CardID) => {
 
   // Delete defendersToAttackers if it's one of the attackers
   const defendingSpaceIdForAttacker = Object.values(duel.defendersToAttackers).find((spaceId) => {
-    return getSpaceById(duel, spaceId).occupant?.id === cardId
+    return getSpaceById(duel, spaceId).occupant?.instanceId === cardInstanceId
   })
   if (defendingSpaceIdForAttacker) {
     delete duel.defendersToAttackers[defendingSpaceIdForAttacker]
   }
 }
 
-export const dealDamage = (duel: DuelState, cardId: CardID, damageAmount: number) => {
+export const dealDamage = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
   let newDuel = duel
-  const cardState = getCardById(newDuel, cardId)
+  const cardState = getCardById(newDuel, cardInstanceId)
   cardState.health = Math.max(0, cardState.health - damageAmount)
   return newDuel
 }
 
-export const combat = (duel: DuelState, attackingCardId: CardID, defendingCardId: CardID) => {
+export const combat = (duel: DuelState, attackingCardId: string, defendingCardId: string) => {
   let newDuel = duel
 
   const attackingCard = getCardById(newDuel, attackingCardId)

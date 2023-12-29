@@ -15,7 +15,7 @@ export type CardPreviewProps = {
 }
 
 export const CardPreview = ({ duel, cardState }: CardPreviewProps) => {
-  const cardData = cardDataMap[cardState.number]
+  const cardData = cardDataMap[cardState.name]
 
   const [hovering, setHovering] = useState(false)
 
@@ -48,7 +48,8 @@ export const CardPreview = ({ duel, cardState }: CardPreviewProps) => {
   }
 
   const summonSick = cardState.summonSick
-  const isOnField = getAllSpaces(duel).find((space) => space.occupant?.id === cardState.id) !== undefined
+  const isOnField =
+    getAllSpaces(duel).find((space) => space.occupant?.instanceId === cardState.instanceId) !== undefined
 
   return (
     <Tooltip content={<DetailedCard cardData={cardData} />}>

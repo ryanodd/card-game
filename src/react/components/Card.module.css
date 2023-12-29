@@ -15,7 +15,7 @@
 
 .card_selected {
   @apply shadow-2xl -translate-y-4;
-};
+}
 
 .card_highlighted {
   animation: highlight-animation 1s infinite;
@@ -23,14 +23,13 @@
 
 @keyframes highlight-animation {
   50% {
-    filter: brightness(130%)
+    filter: brightness(130%);
   }
 }
 
 .image_border {
   @apply w-full rounded-md overflow-hidden border border-zinc-700;
 }
-
 
 .full_card_size {
   @apply w-72 h-96;
@@ -42,4 +41,8 @@
 
 .full_image_border {
   @apply w-full rounded-xl overflow-hidden border border-zinc-700;
+}
+
+.inventory_card_size {
+  @apply w-40 h-56;
 }

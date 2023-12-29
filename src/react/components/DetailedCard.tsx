@@ -10,40 +10,40 @@ export type DetailedCardProps = {
   cardData: CardData
 }
 
-export const DetailedCard = ({ cardData }: DetailedCardProps) => {
-  const getCostIcons = () => {
-    const icons = []
-    if (cardData.cost.neutral !== 0) {
-      icons.push(<EnergyIcon energyType="neutral" size="small" amount={cardData.cost.neutral} key="neutral" />)
-    }
-    if (cardData.cost.fire !== undefined) {
-      for (let x = 0; x < cardData.cost.fire; x++) {
-        icons.push(<EnergyIcon energyType="fire" size="small" key={`fire-${x}`} />)
-      }
-    }
-    if (cardData.cost.water !== undefined) {
-      for (let x = 0; x < cardData.cost.water; x++) {
-        icons.push(<EnergyIcon energyType="water" size="small" key={`water-${x}`} />)
-      }
-    }
-    if (cardData.cost.earth !== undefined) {
-      for (let x = 0; x < cardData.cost.earth; x++) {
-        icons.push(<EnergyIcon energyType="earth" size="small" key={`earth-${x}`} />)
-      }
-    }
-    if (cardData.cost.air !== undefined) {
-      for (let x = 0; x < cardData.cost.air; x++) {
-        icons.push(<EnergyIcon energyType="air" size="small" key={`air-${x}`} />)
-      }
-    }
-    return icons
+export const getCostIcons = (cardData: CardData) => {
+  const icons = []
+  if (cardData.cost.neutral !== 0) {
+    icons.push(<EnergyIcon energyType="neutral" size="small" amount={cardData.cost.neutral} key="neutral" />)
   }
+  if (cardData.cost.fire !== undefined) {
+    for (let x = 0; x < cardData.cost.fire; x++) {
+      icons.push(<EnergyIcon energyType="fire" size="small" key={`fire-${x}`} />)
+    }
+  }
+  if (cardData.cost.water !== undefined) {
+    for (let x = 0; x < cardData.cost.water; x++) {
+      icons.push(<EnergyIcon energyType="water" size="small" key={`water-${x}`} />)
+    }
+  }
+  if (cardData.cost.earth !== undefined) {
+    for (let x = 0; x < cardData.cost.earth; x++) {
+      icons.push(<EnergyIcon energyType="earth" size="small" key={`earth-${x}`} />)
+    }
+  }
+  if (cardData.cost.air !== undefined) {
+    for (let x = 0; x < cardData.cost.air; x++) {
+      icons.push(<EnergyIcon energyType="air" size="small" key={`air-${x}`} />)
+    }
+  }
+  return icons
+}
 
+export const DetailedCard = ({ cardData }: DetailedCardProps) => {
   return (
     <div className={`relative`}>
       <div className={`${styles.full_card_size} ${styles.full_card_border} bg-slate-200 relative px-2 flex flex-col`}>
         <div className="flex gap-0.5 items-center -ml-1">
-          {getCostIcons()}
+          {getCostIcons(cardData)}
           <h2 className="ml-auto text-xl text-neutral-900 tracking-tight">{cardData.name}</h2>
         </div>
         <div className={`${styles.full_image_border} relative`}>

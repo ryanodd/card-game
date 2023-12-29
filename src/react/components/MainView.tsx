@@ -6,5 +6,5 @@ export type MainViewProps = {
 
 // Purpose is to fill the viewport
 export const MainView = ({ children }: MainViewProps) => {
-  return <main className="w-full h-full relative overflow-hidden">{children}</main>
+  return <main className="w-screen h-screen relative overflow-hidden">{children}</main>
 }

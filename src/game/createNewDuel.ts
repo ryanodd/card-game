@@ -3,16 +3,17 @@ import { ChoiceID } from "./Choices"
 import { DuelParams } from "./DuelController"
 import { CardState, DuelState, PlayerState } from "./DuelData"
 import { v4 } from "uuid"
+import { getActiveDeck } from "./GameData"
 
 export const STARTING_HEALTH = 20
 
-export const createCardsFromNos = (cardNos: number[]): CardState[] => {
+export const createCardsFromNames = (cardNames: string[]): CardState[] => {
   const cards: CardState[] = []
-  for (let x = 0; x < cardNos.length; x++) {
-    const card = cardDataMap[cardNos[x]]
+  for (let x = 0; x < cardNames.length; x++) {
+    const card = cardDataMap[cardNames[x]]
     cards.push({
-      id: v4(),
-      number: card.number,
+      instanceId: v4(),
+      name: card.name,
       attack: card.attack,
       health: card.health,
 
@@ -24,12 +25,17 @@ export const createCardsFromNos = (cardNos: number[]): CardState[] => {
   return cards
 }
 
-export const createNewDuel = ({ game, opponentDeckCardNos }: DuelParams) => {
+export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
+  const deck = getActiveDeck(game)
+  if (deck === undefined) {
+    throw Error("Tried to start a new duel but no active deck found")
+  }
   const duel: DuelState = {
+    id: "duel",
     human: {
       heroId: "hero1",
       health: STARTING_HEALTH,
-      deck: createCardsFromNos(game.decks[game.activeDeckIndex].cardNumbers),
+      deck: createCardsFromNames(deck.cardNames),
       hand: [],
       discard: [],
       creatureSpaces: [
@@ -54,7 +60,7 @@ export const createNewDuel = ({ game, opponentDeckCardNos }: DuelParams) => {
     opponent: {
       heroId: "hero2",
       health: STARTING_HEALTH,
-      deck: createCardsFromNos(opponentDeckCardNos),
+      deck: createCardsFromNames(opponentDeckCardNames),
       hand: [],
       discard: [],
       creatureSpaces: [

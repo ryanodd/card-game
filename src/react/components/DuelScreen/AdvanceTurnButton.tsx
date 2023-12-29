@@ -11,7 +11,7 @@ import {
 import { saveAndRerenderDuel } from "@/src/game/DuelController"
 
 import styles from "./AdvanceTurnButton.module.css"
-import buttonStyles from "../Button.module.css"
+import buttonStyles from "../designSystem/Button.module.css"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { DuelState } from "@/src/game/DuelData"
 

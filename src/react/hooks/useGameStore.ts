@@ -1,13 +1,51 @@
 import { GameState } from "@/src/game/GameData"
 import { createNewDuel } from "@/src/game/createNewDuel"
+import { sortCardNames } from "@/src/game/helpers"
 import { create } from "zustand"
 
 export const initialGameState: GameState = {
-  activeDeckIndex: 0,
+  screen: { id: "mainMenu" },
+  activeDeckId: null,
+  collection: {
+    "Ember Foxling": 4,
+    "Golden Friend": 4,
+    "Winged Bull": 4,
+    "Vengeful Flamewing": 4,
+    "Greenwing Caller": 4,
+    "Elder Saurus": 4,
+    "Network of Snakes": 4,
+    "Sludge Amphibian": 4,
+  },
   decks: [
     {
+      id: "I am not a UUID",
       name: "Starter",
-      cardNumbers: [1, 3, 4, 5, 6, 7, 1, 3, 4, 5, 6, 1, 3, 4, 7, 1, 3, 4, 5, 6, 7, 1, 3, 4, 5, 6, 1, 3, 4, 7],
+      cardNames: sortCardNames([
+        "Ember Foxling",
+        "Ember Foxling",
+        "Ember Foxling",
+        "Ember Foxling",
+        "Golden Friend",
+        "Golden Friend",
+        "Golden Friend",
+        "Golden Friend",
+        "Winged Bull",
+        "Winged Bull",
+        "Winged Bull",
+        "Winged Bull",
+        "Vengeful Flamewing",
+        "Vengeful Flamewing",
+        "Vengeful Flamewing",
+        "Vengeful Flamewing",
+        "Greenwing Caller",
+        "Greenwing Caller",
+        "Greenwing Caller",
+        "Greenwing Caller",
+        "Elder Saurus",
+        "Elder Saurus",
+        "Elder Saurus",
+        "Elder Saurus",
+      ]),
     },
   ],
 }

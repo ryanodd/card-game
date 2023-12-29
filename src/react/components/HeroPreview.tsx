@@ -3,7 +3,7 @@ import Image from "next/image"
 import { HeroData, TurnEffect, heroDataMap } from "@/src/game/Hero"
 import { ReactNode } from "react"
 import { EnergyIcon } from "./EnergyIcon"
-import { useDuelStore } from "../hooks/useDuelStore"
+import { useDuelState } from "../hooks/useDuelState"
 import { PlayerID } from "@/src/game/DuelData"
 import { Tooltip } from "./Tooltip"
 
@@ -32,7 +32,7 @@ export type HeroPreviewProps = {
 }
 
 export const HeroPreview = ({ playerId, heroData }: HeroPreviewProps) => {
-  const { duel } = useDuelStore()
+  const { duel } = useDuelState()
 
   const renderTurnSections = () => {
     const turnSections: ReactNode[] = []

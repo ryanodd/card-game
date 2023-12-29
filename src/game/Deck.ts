@@ -1,6 +1,12 @@
 import { CardData } from "./Cards"
 
-export type DeckBuildingState = {
-  deckName: string
-  deckCardNos: number[]
+export type Deck = {
+  id: string
+  name: string
+  cardNames: string[]
+}
+
+export type EditDeckState = {
+  id: "editDeck"
+  deck: Deck
 }

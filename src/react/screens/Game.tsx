@@ -3,10 +3,14 @@ import { DuelScreen } from "./DuelScreen"
 import * as Tooltip from "@radix-ui/react-tooltip"
 import { useGameStore } from "../hooks/useGameStore"
 import { useForceUpdate } from "../hooks/useForceUpdate"
+import { DndContext } from "@dnd-kit/core"
+import { MainMenuScreen } from "./MainMenuScreen"
+import { ManageDecksScreen } from "./ManageDecksScreen"
+import { EditDeckScreen } from "./EditDeckScreen"
 
 export const Game = () => {
   const forceUpdate = useForceUpdate()
-  const { setRerenderFunction } = useGameStore()
+  const { game, setRerenderFunction } = useGameStore()
 
   // Hook up UI updater
   useEffect(() => {
@@ -14,8 +18,13 @@ export const Game = () => {
   }, [forceUpdate, setRerenderFunction])
 
   return (
-    <Tooltip.Provider>
-      <DuelScreen />
+    <Tooltip.Provider skipDelayDuration={0}>
+      <DndContext>
+        {game.screen.id === "mainMenu" && <MainMenuScreen />}
+        {game.screen.id === "manageDecks" && <ManageDecksScreen />}
+        {game.screen.id === "editDeck" && <EditDeckScreen />}
+        {game.screen.id === "duel" && <DuelScreen />}
+      </DndContext>
     </Tooltip.Provider>
   )
 }

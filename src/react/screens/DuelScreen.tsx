@@ -4,7 +4,7 @@ import { PlayerHand } from "../components/DuelScreen/PlayerHand"
 import { OpponentHand } from "../components/DuelScreen/OpponentHand"
 import { GameBackground } from "../components/GameBackground"
 import { useEffect } from "react"
-import { useDuelStore } from "../hooks/useDuelStore"
+import { useDuelState } from "../hooks/useDuelState"
 import { createNewDuel } from "@/src/game/createNewDuel"
 import { DuelPrompt } from "../components/DuelScreen/DuelPrompt"
 import { useGameStore } from "../hooks/useGameStore"
@@ -17,20 +17,10 @@ import { getAnimatedDuelState } from "@/src/game/DuelHelpers"
 export type DuelScreenProps = {}
 
 export const DuelScreen = ({}: DuelScreenProps) => {
-  const { duel: rawDuel, setDuel } = useDuelStore()
+  const { duel: rawDuel, setDuel } = useDuelState()
   const { game } = useGameStore()
 
   const duel = getAnimatedDuelState(rawDuel)
-
-  // Create new duel
-  useEffect(() => {
-    setDuel(
-      createNewDuel({
-        game,
-        opponentDeckCardNos: [1, 2, 6, 8, 1, 8, 6, 1, 2, 6, 8, 1, 8, 6, 1, 2, 6, 8, 1, 8, 6],
-      })
-    )
-  }, [])
 
   return (
     <MainView>

@@ -5,7 +5,6 @@ import { DuelChoiceData } from "./Choices"
 export type PlayerID = "human" | "opponent"
 
 export type SpaceID = string
-export type CardID = string
 
 export type EnergyCounts = {
   neutral: number
@@ -16,8 +15,8 @@ export type EnergyCounts = {
 }
 
 export type CardState = {
-  id: string
-  number: number
+  name: string
+  instanceId: string
   cost: EnergyCounts
 
   attack: number
@@ -28,7 +27,7 @@ export type CardState = {
 }
 
 export type SpaceState = {
-  id: string
+  id: SpaceID
   index: number
   occupant: CardState | null
 }
@@ -46,6 +45,7 @@ export type PlayerState = {
 }
 
 export type StaticDuelState = {
+  id: "duel"
   choice: DuelChoiceData
   animationQueue: AnimatedDuelState[]
 

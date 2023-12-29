@@ -1,14 +1,14 @@
-import { useDuelStore } from "../react/hooks/useDuelStore"
 import { getEmptyEnergySelectedFromCounts, useDuelUIStore } from "../react/hooks/useDuelUIStore"
 import { executeChoiceForOpponent } from "./Bot"
 import { AnimatedDuelState, DuelState } from "./DuelData"
 import { addAnimationToDuel, duelWinner } from "./DuelHelpers"
 import { GameState } from "./GameData"
 import { useGameStore } from "../react/hooks/useGameStore"
+import { getDuelState, useDuelState } from "../react/hooks/useDuelState"
 
 export type DuelParams = {
   game: GameState
-  opponentDeckCardNos: number[]
+  opponentDeckCardNames: string[]
 }
 
 export const resetDuelUIStore = (duel: DuelState) => {
@@ -35,7 +35,8 @@ export const saveAndRerenderDuel = (inputDuel: DuelState) => {
     duel = executeChoiceForOpponent(duel)
   }
 
-  useDuelStore.getState().setDuel(duel)
+  const { setDuel } = getDuelState()
+  setDuel(duel)
   useGameStore.getState().rerender()
 
   // Animation Time
@@ -45,7 +46,7 @@ export const saveAndRerenderDuel = (inputDuel: DuelState) => {
   const nextAnimation = duel.animationQueue[0]?.animation
   if (nextAnimation) {
     setTimeout(() => {
-      const { duel: duelToAnimate } = useDuelStore.getState()
+      const { duel: duelToAnimate } = getDuelState()
       if (!("animationQueue" in duelToAnimate)) {
         throw Error("no animationQueue found in this duel")
       }

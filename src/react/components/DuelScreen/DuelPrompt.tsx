@@ -6,7 +6,7 @@ import {
   takeTurn_getValidHandTargets,
   takeTurn_getValidSpaceTargets,
 } from "@/src/game/Choices"
-import buttonStyles from "../Button.module.css"
+import buttonStyles from "../designSystem/Button.module.css"
 import { saveAndRerenderDuel } from "@/src/game/DuelController"
 import { DuelState } from "@/src/game/DuelData"
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"

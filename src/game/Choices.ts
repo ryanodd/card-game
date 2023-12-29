@@ -54,7 +54,7 @@ export const takeTurn_getValidHandTargets = (duel: DuelState): string[] => {
   for (let x = 0; x < playerHand.length; x++) {
     const card = playerHand[x]
     if (isEnergySufficient(energyCounts, card.cost, false)) {
-      cardsAfforded.push(card.id)
+      cardsAfforded.push(card.instanceId)
     }
   }
   return cardsAfforded
@@ -233,7 +233,7 @@ export const resolveAttacks_execute = (
     delete duel.defendersToAttackers[params.defendingSpaceId]
     const defendingCard = getSpaceById(duel, params.defendingSpaceId).occupant
     if (defendingCard) {
-      duel = combat(duel, attackingCard.id, defendingCard.id)
+      duel = combat(duel, attackingCard.instanceId, defendingCard.instanceId)
     }
   }
 
