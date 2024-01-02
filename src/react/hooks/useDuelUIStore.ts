@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { getCardById, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
+import { getCardByInstanceId, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
 import { DuelState, EnergyCounts, SpaceID } from "@/src/game/DuelData"
 import { v4 } from "uuid"
 import { EnergyType } from "@/src/game/Cards"
@@ -19,6 +19,9 @@ export const getEmptyEnergySelectedFromCounts = (energyCounts: EnergyCounts): En
     water: [],
     earth: [],
     air: [],
+  }
+  for (let x = 0; x < energyCounts.neutral; x++) {
+    newEnergySelected.neutral.push({ id: v4(), selected: false })
   }
   for (let x = 0; x < energyCounts.fire; x++) {
     newEnergySelected.fire.push({ id: v4(), selected: false })
@@ -52,18 +55,6 @@ export type DuelUIStorePayload = {
 
   energySelected: EnergySelected
   setEnergySelected: (energy: EnergySelected) => void
-
-  attackersToDeclare: string[]
-  setAttackersToDeclare: (cardIds: string[]) => void
-
-  defendersToAttackers: Record<string, string>
-  setDefendersToAttackers: (newAttackersToDefenders: Record<string, string>) => void
-
-  spaceIdToDefend: SpaceID | null
-  setSpaceIdToDefend: (newSpaceId: SpaceID | null) => void
-
-  spaceIdToAttack: SpaceID | null
-  setSpaceIdToAttack: (spaceId: SpaceID | null) => void
 }
 
 export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
@@ -78,18 +69,6 @@ export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
     air: [],
   },
   setEnergySelected: (newEnergy) => set({ energySelected: newEnergy }),
-
-  attackersToDeclare: [],
-  setAttackersToDeclare: (cardId) => set({ attackersToDeclare: cardId }),
-
-  spaceIdToDefend: null,
-  setSpaceIdToDefend: (newSpaceId) => set({ spaceIdToDefend: newSpaceId }),
-
-  defendersToAttackers: {},
-  setDefendersToAttackers: (newDefendersToAttackers) => set({ defendersToAttackers: newDefendersToAttackers }),
-
-  spaceIdToAttack: null,
-  setSpaceIdToAttack: (spaceId) => set({ spaceIdToAttack: spaceId }),
 }))
 
 export const selectEnergyOfType = (
@@ -119,7 +98,7 @@ export const autoPayElements = (
   let selectedEnergy = window.structuredClone(inputSelectedEnergy)
   const playerEnergy = getCurrentDuelPlayer(duel).energy
   const selectedEnergyCounts = getEnergyCountsFromSelected(inputSelectedEnergy)
-  const card = getCardById(duel, cardIdToBePlayed)
+  const card = getCardByInstanceId(duel, cardIdToBePlayed)
 
   let neutralNeeded = Math.max(0, card.cost.neutral - selectedEnergyCounts.neutral)
   let fireNeeded = Math.max(0, card.cost.fire - selectedEnergyCounts.fire)

@@ -1,13 +1,5 @@
 import { duelWinner } from "@/src/game/DuelHelpers"
-import {
-  ChoiceID,
-  confirmEndAttacks_execute,
-  declareAttackers_execute,
-  declareDefenders_execute,
-  declareDefenders_getValidDefenderTargets,
-  takeTurn_executeAdvance,
-  takeTurn_getValidHandTargets,
-} from "@/src/game/Choices"
+import { ChoiceID, takeTurn_executeAdvance, takeTurn_getValidHandTargets } from "@/src/game/Choices"
 import { saveAndRerenderDuel } from "@/src/game/DuelController"
 
 import styles from "./AdvanceTurnButton.module.css"
@@ -24,23 +16,7 @@ const getText = (duel: DuelState): string | null => {
   }
   const choiceId = duel.choice.id
   if (choiceId === ChoiceID.TAKE_TURN) {
-    if (!duel.attackedThisTurn) {
-      return "Begin Attacks"
-    } else {
-      return "End Turn"
-    }
-  }
-  if (choiceId === ChoiceID.DECLARE_ATTACKERS) {
-    return "Lock in Attackers"
-  }
-  if (choiceId === ChoiceID.DECLARE_DEFENDS) {
-    return "Lock in Defenders"
-  }
-  if (choiceId === ChoiceID.RESOLVE_ATTACKS) {
-    return "Attacking..."
-  }
-  if (choiceId === ChoiceID.CONFIRM_END_ATTACKS) {
-    return "End Attacks"
+    return "End Turn"
   }
   return null
 }
@@ -50,9 +26,8 @@ export type AdvanceTurnButtonProps = {
 }
 
 export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
-  const { cardIdToBePlayed, spaceIdToDefend, attackersToDeclare, defendersToAttackers } = useDuelUIStore()
+  const { cardIdToBePlayed } = useDuelUIStore()
 
-  const attackedThisTurn = duel.attackedThisTurn
   const choiceId = duel.choice.id
 
   const buttonText = getText(duel)
@@ -61,45 +36,19 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
     !duelWinner(duel) &&
     !("animation" in duel) &&
     buttonText !== null &&
-    !(choiceId === ChoiceID.TAKE_TURN && cardIdToBePlayed !== null) &&
-    !(choiceId === ChoiceID.DECLARE_DEFENDS && spaceIdToDefend !== null) &&
-    !(choiceId === ChoiceID.RESOLVE_ATTACKS)
+    !(choiceId === ChoiceID.TAKE_TURN && cardIdToBePlayed !== null)
 
-  const highlighted =
-    pressable &&
-    ((choiceId === ChoiceID.TAKE_TURN && takeTurn_getValidHandTargets(duel).length === 0) ||
-      choiceId === ChoiceID.CONFIRM_END_ATTACKS ||
-      (choiceId === ChoiceID.DECLARE_DEFENDS &&
-        declareDefenders_getValidDefenderTargets(duel).length === Object.keys(defendersToAttackers).length))
-
-  const attackColor =
-    (choiceId === ChoiceID.TAKE_TURN && !duel.attackedThisTurn && takeTurn_getValidHandTargets(duel).length === 0) ||
-    choiceId === ChoiceID.DECLARE_ATTACKERS ||
-    choiceId === ChoiceID.RESOLVE_ATTACKS
-  const defendColor = pressable && choiceId === ChoiceID.DECLARE_DEFENDS
+  const highlighted = pressable && choiceId === ChoiceID.TAKE_TURN && takeTurn_getValidHandTargets(duel).length === 0
 
   return (
     <button
       className={`${buttonStyles.button} font-medium border-2 w-40 h-12 flex justify-center items-center ${
         !pressable ? buttonStyles.unpressable : ""
-      } ${highlighted ? styles.highlighted : ""} ${attackColor ? styles.attack_color : ""} ${
-        defendColor ? styles.defend_color : ""
+      } ${highlighted ? styles.highlighted : ""}
       }`}
       onClick={() => {
         if (choiceId === ChoiceID.TAKE_TURN) {
           const newDuel = takeTurn_executeAdvance(duel)
-          saveAndRerenderDuel(newDuel)
-        }
-        if (choiceId === ChoiceID.DECLARE_ATTACKERS) {
-          const newDuel = declareAttackers_execute(duel, { attackingSpaceIds: attackersToDeclare })
-          saveAndRerenderDuel(newDuel)
-        }
-        if (choiceId === ChoiceID.DECLARE_DEFENDS) {
-          const newDuel = declareDefenders_execute(duel, { defendersToAttackers })
-          saveAndRerenderDuel(newDuel)
-        }
-        if (choiceId === ChoiceID.CONFIRM_END_ATTACKS) {
-          const newDuel = confirmEndAttacks_execute(duel)
           saveAndRerenderDuel(newDuel)
         }
       }}

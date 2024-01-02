@@ -10,7 +10,7 @@ export type PlayerHandProps = {
 
 export const PlayerHand = ({ duel, cards }: PlayerHandProps) => {
   const cardsToRender = cards.map((card) => {
-    return <HandCard duel={duel} key={card.id} cardState={card} />
+    return <HandCard duel={duel} key={card.instanceId} cardState={card} />
   })
   return <div className={`${styles.hand_container}`}>{cardsToRender}</div>
 }

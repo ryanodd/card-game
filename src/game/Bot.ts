@@ -6,21 +6,20 @@ import {
 import {
   ChoiceID,
   confirmEndAttacks_execute,
-  declareAttackers_execute,
-  declareAttackers_getValidSpaceTargets,
-  declareDefenders_execute,
-  declareDefenders_getValidAttackerTargets,
-  declareDefenders_getValidDefenderTargets,
   resolveAttacks_execute,
-  resolveAttacks_getValidAttackerTargets,
-  resolveAttacks_getValidDefenderTargets,
   takeTurn_executeAdvance,
   takeTurn_executePlayCard,
   takeTurn_getValidHandTargets,
   takeTurn_getValidSpaceTargets,
 } from "./Choices"
 import { CardState, DuelState } from "./DuelData"
-import { getCardById, getCurrentDuelPlayer, getOccupantIdBySpaceId, getRandomInt, getSpaceById } from "./DuelHelpers"
+import {
+  getCardByInstanceId,
+  getCurrentDuelPlayer,
+  getOccupantIdBySpaceId,
+  getRandomInt,
+  getSpaceByInstanceId,
+} from "./DuelHelpers"
 
 export const executeChoiceForOpponent = (inputDuel: DuelState): DuelState => {
   let duel = inputDuel
@@ -28,14 +27,6 @@ export const executeChoiceForOpponent = (inputDuel: DuelState): DuelState => {
   const choiceId = duel.choice.id
   if (choiceId === ChoiceID.TAKE_TURN) {
     duel = opponentTakeTurn(duel)
-    return duel
-  }
-  if (choiceId === ChoiceID.DECLARE_ATTACKERS) {
-    duel = opponentDeclareAttackers(duel)
-    return duel
-  }
-  if (choiceId === ChoiceID.DECLARE_DEFENDS) {
-    duel = opponentDeclareDefenders(duel)
     return duel
   }
   if (choiceId === ChoiceID.RESOLVE_ATTACKS) {
@@ -67,49 +58,12 @@ export const opponentTakeTurn = (inputDuel: DuelState): DuelState => {
   return duel
 }
 
-export const opponentDeclareAttackers = (inputDuel: DuelState): DuelState => {
-  let duel = inputDuel
-
-  const validTargets = declareAttackers_getValidSpaceTargets(duel)
-  const selectedTargets = validTargets.filter((targetId) => {
-    return true //getRandomInt(2) === 0
-  })
-  duel = declareAttackers_execute(duel, { attackingSpaceIds: selectedTargets })
-
-  return duel
-}
-
-export const opponentDeclareDefenders = (inputDuel: DuelState): DuelState => {
-  let duel = inputDuel
-  const defendersToAttackers: Record<string, string> = {}
-
-  const validDefenderTargets = declareDefenders_getValidDefenderTargets(duel)
-  validDefenderTargets.forEach((defendingSpaceId) => {
-    const defenderId = getOccupantIdBySpaceId(duel, defendingSpaceId)
-    const validAttackers = declareDefenders_getValidAttackerTargets(duel, defendingSpaceId)
-    const randomAttackerPlusOne = getRandomInt(validAttackers.length + 1)
-    const attackingSpaceIdChosen: string | undefined = validAttackers[randomAttackerPlusOne]
-
-    if (attackingSpaceIdChosen !== undefined) {
-      defendersToAttackers[defendingSpaceId] = attackingSpaceIdChosen
-    }
-  })
-  duel = declareDefenders_execute(duel, { defendersToAttackers })
-
-  return duel
-}
 export const opponentResolveAttacks = (inputDuel: DuelState): DuelState => {
   let duel = inputDuel
-  const validAttackerTargets = resolveAttacks_getValidAttackerTargets(duel)
-  const attackingSpaceId = validAttackerTargets[getRandomInt(validAttackerTargets.length)]
-  const validDefenderTargets = resolveAttacks_getValidDefenderTargets(duel, attackingSpaceId)
-  const defendingSpaceId =
-    validDefenderTargets.length === 0 ? null : validDefenderTargets[getRandomInt(validDefenderTargets.length)]
-
-  duel = resolveAttacks_execute(duel, {
-    attackingSpaceId,
-    defendingSpaceId,
-  })
+  // duel = resolveAttacks_execute(duel, {
+  //   attackingSpaceId,
+  //   defendingSpaceId,
+  // })
 
   return duel
 }

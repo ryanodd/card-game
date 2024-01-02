@@ -21,9 +21,6 @@ export type CardState = {
 
   attack: number
   health: number
-
-  summonSick: boolean
-  attackedThisTurn: boolean
 }
 
 export type SpaceState = {
@@ -38,8 +35,7 @@ export type PlayerState = {
   hand: CardState[]
   deck: CardState[]
   discard: CardState[]
-  incomes: [EnergyType, EnergyType, EnergyType]
-  creatureSpaces: [SpaceState, SpaceState, SpaceState, SpaceState, SpaceState, SpaceState, SpaceState]
+  creatureSpaces: [SpaceState, SpaceState, SpaceState, SpaceState, SpaceState]
   energy: EnergyCounts
   drawnDead: boolean
 }
@@ -54,10 +50,7 @@ export type StaticDuelState = {
 
   playerGoingFirst: PlayerID
   currentPlayerId: PlayerID
-  attackedThisTurn: boolean
   turnNumber: number
-  attackingSpaceIds: SpaceID[]
-  defendersToAttackers: Record<SpaceID, SpaceID>
 }
 
 export type AnimatedDuelState = Omit<StaticDuelState, "animationQueue"> & {

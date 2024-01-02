@@ -5,18 +5,15 @@ import { addAnimationToDuel, duelWinner } from "./DuelHelpers"
 import { GameState } from "./GameData"
 import { useGameStore } from "../react/hooks/useGameStore"
 import { getDuelState, useDuelState } from "../react/hooks/useDuelState"
+import { Deck } from "./Deck"
 
 export type DuelParams = {
   game: GameState
-  opponentDeckCardNames: string[]
+  opponentDeck: Deck
 }
 
 export const resetDuelUIStore = (duel: DuelState) => {
   useDuelUIStore.getState().setCardIdToBePlayed(null)
-  useDuelUIStore.getState().setAttackersToDeclare([])
-  useDuelUIStore.getState().setSpaceIdToAttack(null)
-  useDuelUIStore.getState().setSpaceIdToDefend(null)
-  useDuelUIStore.getState().setDefendersToAttackers({})
 
   const newEnergySelected = getEmptyEnergySelectedFromCounts(duel.human.energy)
   useDuelUIStore.getState().setEnergySelected(newEnergySelected)

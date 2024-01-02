@@ -3,7 +3,6 @@ import { CardState, DuelState } from "@/src/game/DuelData"
 import styles from "./Card.module.css"
 import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
-import { SummonSickIcon } from "./SummonSickIcon"
 import { useState } from "react"
 import { DetailedCard } from "./DetailedCard"
 import { Tooltip } from "./Tooltip"
@@ -47,7 +46,6 @@ export const CardPreview = ({ duel, cardState }: CardPreviewProps) => {
     return icons
   }
 
-  const summonSick = cardState.summonSick
   const isOnField =
     getAllSpaces(duel).find((space) => space.occupant?.instanceId === cardState.instanceId) !== undefined
 
@@ -55,11 +53,6 @@ export const CardPreview = ({ duel, cardState }: CardPreviewProps) => {
     <Tooltip content={<DetailedCard cardData={cardData} />}>
       <div className={`relative`} onPointerEnter={() => setHovering(true)} onPointerLeave={() => setHovering(false)}>
         {!isOnField && <div className="absolute -top-1 -left-1 z-20 flex gap-0.5">{getCostIcons()}</div>}
-        {summonSick && (
-          <div className="z-20 absolute top-0 right-0 ">
-            <SummonSickIcon />
-          </div>
-        )}
 
         <div
           className={`${styles.card_size} ${styles.card_border} ${styles.card_attacking} bg-slate-200 relative p-1 pt-2 `}

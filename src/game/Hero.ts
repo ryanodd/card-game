@@ -1,19 +1,11 @@
 import { playerGainEnergy } from "./Actions"
 import { EnergyType } from "./Cards"
-import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
-import { getDuelPlayerById } from "./DuelHelpers"
-
-export type TurnEffect = {
-  id: string
-  text: string
-  uiIicon?: HeroUiIconType
-}
+import { DuelState, PlayerID } from "./DuelData"
 
 export type HeroData = {
   id: string
   name: string
   imageSrc: string
-  turnEffects: Record<string, TurnEffect[]>
 }
 
 export const gainFire = (duel: DuelState, playerId: PlayerID) => {
@@ -42,58 +34,12 @@ export const hero1: HeroData = {
   id: "hero1",
   name: "Protagonist Name lol",
   imageSrc: "/card-art/goldenFriend.png",
-  turnEffects: {
-    1: [
-      {
-        id: "gainFire",
-        text: "Gain 1 {fire}",
-        uiIicon: "fire",
-      },
-    ],
-    3: [
-      {
-        id: "gainAir",
-        text: "Gain 1 {air}",
-        uiIicon: "air",
-      },
-    ],
-    6: [
-      {
-        id: "gainFire",
-        text: "Gain 1 {fire}",
-        uiIicon: "fire",
-      },
-    ],
-  },
 }
 
 export const hero2: HeroData = {
   id: "hero2",
   name: "Antagonist Name lol",
   imageSrc: "/card-art/goldenFriend.png",
-  turnEffects: {
-    1: [
-      {
-        id: "gainWater",
-        text: "Gain 1 {water}",
-        uiIicon: "water",
-      },
-    ],
-    3: [
-      {
-        id: "gainEarth",
-        text: "Gain 1 {earth}",
-        uiIicon: "earth",
-      },
-    ],
-    6: [
-      {
-        id: "gainWater",
-        text: "Gain 1 {water}",
-        uiIicon: "water",
-      },
-    ],
-  },
 }
 
 export const effectMap: Record<string, Function> = {

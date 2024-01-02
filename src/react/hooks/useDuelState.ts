@@ -1,7 +1,4 @@
 import { DuelState } from "@/src/game/DuelData"
-import { GameState } from "@/src/game/GameData"
-import { createNewDuel } from "@/src/game/createNewDuel"
-import { create } from "zustand"
 import { useGameStore } from "./useGameStore"
 
 export type DuelStorePayload = {

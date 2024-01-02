@@ -2,7 +2,6 @@ import { duelWinner } from "@/src/game/DuelHelpers"
 import {
   ChoiceID,
   confirmStart_execute,
-  declareDefenders_getValidDefenderTargets,
   takeTurn_getValidHandTargets,
   takeTurn_getValidSpaceTargets,
 } from "@/src/game/Choices"
@@ -16,7 +15,7 @@ export type DuelPromptProps = {
 }
 
 export const useGetPromptMessage = (duel: DuelState): string | null => {
-  const { cardIdToBePlayed, spaceIdToDefend, spaceIdToAttack, defendersToAttackers, energySelected } = useDuelUIStore()
+  const { cardIdToBePlayed, energySelected } = useDuelUIStore()
   const choiceId = duel.choice.id
 
   if (duelWinner(duel) === "human") {
@@ -50,39 +49,10 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
     // Can't play cards
     if (handTargets.length === 0) {
       if (duel.turnNumber === 0) {
-        return "Can't afford to play any more cards. Advance to the next phase."
+        return "Can't afford to play any more cards. End your turn."
       }
       return null
     }
-  }
-
-  if (duel.choice.id === ChoiceID.DECLARE_ATTACKERS) {
-    return "Select how many of your creatures will attack this turn."
-  }
-
-  if (duel.choice.id === ChoiceID.DECLARE_DEFENDS) {
-    if (declareDefenders_getValidDefenderTargets(duel).length === Object.keys(defendersToAttackers).length) {
-      return null
-    }
-    if (spaceIdToDefend === null) {
-      return "Select creatures to defend with. "
-    }
-    if (spaceIdToDefend !== null) {
-      return "Select which creature to defend against."
-    }
-  }
-
-  if (duel.choice.id === ChoiceID.RESOLVE_ATTACKS) {
-    if (!spaceIdToAttack) {
-      return "Select an attacking creature to attack!"
-    }
-    if (spaceIdToAttack) {
-      return "Select a defending creature to deal damage."
-    }
-  }
-
-  if (duel.choice.id === ChoiceID.CONFIRM_END_ATTACKS && duel.turnNumber === 0) {
-    return "Creatures can't attack the turn they are played. End the attack phase."
   }
 
   return null

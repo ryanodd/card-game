@@ -1,11 +1,10 @@
 import { GameState } from "@/src/game/GameData"
-import { createNewDuel } from "@/src/game/createNewDuel"
 import { sortCardNames } from "@/src/game/helpers"
 import { create } from "zustand"
 
 export const initialGameState: GameState = {
   screen: { id: "mainMenu" },
-  activeDeckId: null,
+  activeDeckId: "starterDeck",
   collection: {
     "Ember Foxling": 4,
     "Golden Friend": 4,
@@ -18,7 +17,7 @@ export const initialGameState: GameState = {
   },
   decks: [
     {
-      id: "I am not a UUID",
+      id: "starterDeck",
       name: "Starter",
       cardNames: sortCardNames([
         "Ember Foxling",

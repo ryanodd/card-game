@@ -20,14 +20,14 @@ export const HandCard = ({ duel, cardState }: HandCardProps) => {
     !duelWinner(duel) &&
     !("animation" in duel) &&
     choiceId === ChoiceID.TAKE_TURN &&
-    (!cardIdToBePlayed || cardState.id === cardIdToBePlayed) &&
-    takeTurn_getValidHandTargets(duel).includes(cardState.id)
+    (!cardIdToBePlayed || cardState.instanceId === cardIdToBePlayed) &&
+    takeTurn_getValidHandTargets(duel).includes(cardState.instanceId)
 
   const highlighted = selectable && !cardIdToBePlayed
 
   return (
     <div
-      className={`relative ${cardState.id === cardIdToBePlayed ? cardStyles.card_selected : ""} ${
+      className={`relative ${cardState.instanceId === cardIdToBePlayed ? cardStyles.card_selected : ""} ${
         selectable ? cardStyles.card_selectable : ""
       } ${highlighted ? cardStyles.card_highlighted : ""}`}
       onClick={() => {
@@ -35,11 +35,11 @@ export const HandCard = ({ duel, cardState }: HandCardProps) => {
           return
         }
 
-        if (cardState.id === cardIdToBePlayed) {
+        if (cardState.instanceId === cardIdToBePlayed) {
           resetDuelUIStore(duel)
         } else {
-          setCardIdToBePlayed(cardState.id)
-          setEnergySelected(autoPayElements(duel, cardState.id, energySelected))
+          setCardIdToBePlayed(cardState.instanceId)
+          setEnergySelected(autoPayElements(duel, cardState.instanceId, energySelected))
         }
       }}
     >

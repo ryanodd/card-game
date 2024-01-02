@@ -3,11 +3,11 @@ import { ChoiceID, DuelChoiceData } from "./Choices"
 import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
 import {
   getAllCards,
-  getCardById,
+  getCardByInstanceId,
   getCurrentDuelPlayer,
   getDuelPlayerById,
   getOtherPlayerId,
-  getSpaceById,
+  getSpaceByInstanceId,
   isEnergySufficient,
 } from "./DuelHelpers"
 import { effectMap, heroDataMap } from "./Hero"
@@ -75,70 +75,19 @@ export const duelSetup = (inputDuel: DuelState) => {
   return duel
 }
 
-const gainEnergyIncome = (inputDuel: DuelState) => {
-  let duel = inputDuel
-
-  const player = getCurrentDuelPlayer(duel)
-  const energyToAdd = {
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 0,
-  }
-  for (let x = 0; x < player.incomes.length; x++) {
-    const energy = player.incomes[x]
-    if (energy === "fire") {
-      energyToAdd.fire += 1
-    }
-    if (energy === "water") {
-      energyToAdd.water += 1
-    }
-    if (energy === "earth") {
-      energyToAdd.earth += 1
-    }
-    if (energy === "air") {
-      energyToAdd.air += 1
-    }
-  }
-
-  return duel
-}
-
-export const performTurnEffects = (inputDuel: DuelState, playerId: PlayerID) => {
-  let duel = inputDuel
-  const hero = heroDataMap[getDuelPlayerById(duel, playerId).heroId]
-  const turnEffectNumbers = Object.keys(hero.turnEffects)
-  for (let x = 0; x < turnEffectNumbers.length; x++) {
-    const effectTurnNumber = turnEffectNumbers[x] as unknown as number
-    if (duel.turnNumber >= effectTurnNumber) {
-      const effects = hero.turnEffects[turnEffectNumbers[x]]
-      effects.forEach((effect) => {
-        const callback = effectMap[effect.id]
-        if (callback === undefined) {
-          throw Error("no callback for turn effect")
-        }
-        callback?.(duel, playerId)
-      })
-    }
-  }
-  return inputDuel
-}
-
 export const turnStart = (inputDuel: DuelState) => {
   let duel = inputDuel
 
   // Reset energy
   getDuelPlayerById(duel, duel.currentPlayerId).energy = {
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 0,
-    neutral: 0,
+    fire: 5,
+    water: 5,
+    earth: 5,
+    air: 5,
+    neutral: 5,
   }
 
   duel = playerDrawN(duel, { numberToDraw: 1, playerId: duel.currentPlayerId })
-
-  duel = performTurnEffects(duel, duel.currentPlayerId)
 
   duel.choice = { id: ChoiceID.TAKE_TURN, playerId: duel.currentPlayerId }
   return duel
@@ -150,16 +99,7 @@ export const endTurn = (inputDuel: DuelState) => {
   if (duel.currentPlayerId === duel.playerGoingFirst) {
     duel.turnNumber = duel.turnNumber + 1
   }
-  duel.attackedThisTurn = false
-  getAllCards(duel).forEach((card) => {
-    card.summonSick = false
-  })
 
-  getDuelPlayerById(duel, duel.currentPlayerId).creatureSpaces.forEach((space) => {
-    if (space.occupant) {
-      space.occupant.attackedThisTurn = false
-    }
-  })
   duel = turnStart(duel)
 
   return duel
@@ -200,7 +140,6 @@ export const playCardFromHand = (inputDuel: DuelState, { cardId, targetId, energ
   player.energy.air -= energyPaid.air
 
   targetSpace.occupant = playedCard
-  playedCard.summonSick = true
 
   return duel
 }
@@ -250,27 +189,11 @@ export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
       space.occupant = null
     }
   }
-
-  // Delete defendersToAttackers if it's one of the defenders
-  const defendingSpaceId = Object.keys(duel.defendersToAttackers).find((spaceId) => {
-    return getSpaceById(duel, spaceId).occupant?.instanceId === cardInstanceId
-  })
-  if (defendingSpaceId) {
-    delete duel.defendersToAttackers[defendingSpaceId]
-  }
-
-  // Delete defendersToAttackers if it's one of the attackers
-  const defendingSpaceIdForAttacker = Object.values(duel.defendersToAttackers).find((spaceId) => {
-    return getSpaceById(duel, spaceId).occupant?.instanceId === cardInstanceId
-  })
-  if (defendingSpaceIdForAttacker) {
-    delete duel.defendersToAttackers[defendingSpaceIdForAttacker]
-  }
 }
 
 export const dealDamage = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
   let newDuel = duel
-  const cardState = getCardById(newDuel, cardInstanceId)
+  const cardState = getCardByInstanceId(newDuel, cardInstanceId)
   cardState.health = Math.max(0, cardState.health - damageAmount)
   return newDuel
 }
@@ -278,16 +201,16 @@ export const dealDamage = (duel: DuelState, cardInstanceId: string, damageAmount
 export const combat = (duel: DuelState, attackingCardId: string, defendingCardId: string) => {
   let newDuel = duel
 
-  const attackingCard = getCardById(newDuel, attackingCardId)
-  const defendingCard = getCardById(newDuel, defendingCardId)
+  const attackingCard = getCardByInstanceId(newDuel, attackingCardId)
+  const defendingCard = getCardByInstanceId(newDuel, defendingCardId)
 
   newDuel = dealDamage(newDuel, defendingCardId, attackingCard.attack)
   newDuel = dealDamage(newDuel, attackingCardId, defendingCard.attack)
 
-  if (getCardById(newDuel, attackingCardId).health === 0) {
+  if (getCardByInstanceId(newDuel, attackingCardId).health === 0) {
     removeCard(duel, attackingCardId)
   }
-  if (getCardById(newDuel, defendingCardId).health === 0) {
+  if (getCardByInstanceId(newDuel, defendingCardId).health === 0) {
     removeCard(duel, defendingCardId)
   }
 

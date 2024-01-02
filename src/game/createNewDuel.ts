@@ -16,16 +16,13 @@ export const createCardsFromNames = (cardNames: string[]): CardState[] => {
       name: card.name,
       attack: card.attack,
       health: card.health,
-
       cost: card.cost,
-      summonSick: false,
-      attackedThisTurn: false,
     })
   }
   return cards
 }
 
-export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
+export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
   const deck = getActiveDeck(game)
   if (deck === undefined) {
     throw Error("Tried to start a new duel but no active deck found")
@@ -44,8 +41,6 @@ export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
         { id: v4(), index: 2, occupant: null },
         { id: v4(), index: 3, occupant: null },
         { id: v4(), index: 4, occupant: null },
-        { id: v4(), index: 5, occupant: null },
-        { id: v4(), index: 6, occupant: null },
       ],
       energy: {
         neutral: 0,
@@ -54,13 +49,12 @@ export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
         earth: 0,
         air: 0,
       },
-      incomes: ["fire", "fire", "air"],
       drawnDead: false,
     },
     opponent: {
       heroId: "hero2",
       health: STARTING_HEALTH,
-      deck: createCardsFromNames(opponentDeckCardNames),
+      deck: createCardsFromNames(opponentDeck.cardNames),
       hand: [],
       discard: [],
       creatureSpaces: [
@@ -69,8 +63,6 @@ export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
         { id: v4(), index: 2, occupant: null },
         { id: v4(), index: 3, occupant: null },
         { id: v4(), index: 4, occupant: null },
-        { id: v4(), index: 5, occupant: null },
-        { id: v4(), index: 6, occupant: null },
       ],
       energy: {
         neutral: 0,
@@ -79,7 +71,6 @@ export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
         earth: 0,
         air: 0,
       },
-      incomes: ["water", "water", "earth"],
       drawnDead: false,
     },
 
@@ -88,10 +79,6 @@ export const createNewDuel = ({ game, opponentDeckCardNames }: DuelParams) => {
     playerGoingFirst: "human",
     currentPlayerId: "human",
     turnNumber: 1,
-    attackedThisTurn: false,
-
-    attackingSpaceIds: [],
-    defendersToAttackers: {},
   }
   return duel
 }

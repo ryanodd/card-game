@@ -1,5 +1,5 @@
 import { DuelAnimation } from "./Animations"
-import { AnimatedDuelState, CardState, DuelState, EnergyCounts, PlayerID, SpaceID, SpaceState } from "./DuelData"
+import { AnimatedDuelState, CardState, DuelState, EnergyCounts, PlayerID, SpaceState } from "./DuelData"
 
 export const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * max)
@@ -66,9 +66,9 @@ export const getAllSpaces = (duel: DuelState): SpaceState[] => {
   return [...humanCreatureSpaces, ...opponentCreatureSpaces]
 }
 
-export const getCardById = (duel: DuelState, cardId: string): CardState => {
+export const getCardByInstanceId = (duel: DuelState, cardId: string): CardState => {
   const card = getAllCards(duel).find((card) => {
-    return card.id === cardId
+    return card.instanceId === cardId
   })
 
   if (card === undefined) {
@@ -77,7 +77,7 @@ export const getCardById = (duel: DuelState, cardId: string): CardState => {
   return card
 }
 
-export const getSpaceById = (duel: DuelState, spaceId: string): SpaceState => {
+export const getSpaceByInstanceId = (duel: DuelState, spaceId: string): SpaceState => {
   const space = getAllSpaces(duel).find((space) => {
     return space.id === spaceId
   })
@@ -88,11 +88,11 @@ export const getSpaceById = (duel: DuelState, spaceId: string): SpaceState => {
 }
 
 export const getOccupantIdBySpaceId = (duel: DuelState, spaceId: string): string => {
-  const occupant = getSpaceById(duel, spaceId).occupant
+  const occupant = getSpaceByInstanceId(duel, spaceId).occupant
   if (occupant === null) {
-    throw Error(`occupant not found for space ${getSpaceById(duel, spaceId).index}`)
+    throw Error(`occupant not found for space ${getSpaceByInstanceId(duel, spaceId).index}`)
   }
-  return occupant.id
+  return occupant.instanceId
 }
 
 export const isEnergySufficient = (energy: EnergyCounts, cost: EnergyCounts, mustMatchExactly?: boolean): boolean => {
@@ -114,9 +114,9 @@ export const isEnergySufficient = (energy: EnergyCounts, cost: EnergyCounts, mus
   }
   remainingEnergyForNeutral += energy.air - cost.air
   if (mustMatchExactly) {
-    return remainingEnergyForNeutral === cost.neutral
+    return remainingEnergyForNeutral + energy.neutral === cost.neutral
   } else {
-    const canAffordNeutral = remainingEnergyForNeutral >= cost.neutral
+    const canAffordNeutral = remainingEnergyForNeutral + energy.neutral >= cost.neutral
     return canAffordNeutral
   }
 }
