@@ -1,18 +1,20 @@
 import { create } from "zustand"
 import { getCardByInstanceId, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
-import { DuelState, EnergyCounts, SpaceID } from "@/src/game/DuelData"
+import { DuelState, EnergyCounts, PlayerState, SpaceID } from "@/src/game/DuelData"
 import { v4 } from "uuid"
 import { EnergyType } from "@/src/game/Cards"
 
 export type EnergySelected = {
-  neutral: { id: string; selected: boolean }[]
-  fire: { id: string; selected: boolean }[]
-  water: { id: string; selected: boolean }[]
-  earth: { id: string; selected: boolean }[]
-  air: { id: string; selected: boolean }[]
+  neutral: { id: string; available: boolean; selected: boolean }[]
+  fire: { id: string; available: boolean; selected: boolean }[]
+  water: { id: string; available: boolean; selected: boolean }[]
+  earth: { id: string; available: boolean; selected: boolean }[]
+  air: { id: string; available: boolean; selected: boolean }[]
 }
 
-export const getEmptyEnergySelectedFromCounts = (energyCounts: EnergyCounts): EnergySelected => {
+export const getEnergyButtonsForPlayer = (player: PlayerState): EnergySelected => {
+  const energyIncome = player.energyIncome
+  const energyAvailable = player.energy
   const newEnergySelected: EnergySelected = {
     neutral: [],
     fire: [],
@@ -20,20 +22,20 @@ export const getEmptyEnergySelectedFromCounts = (energyCounts: EnergyCounts): En
     earth: [],
     air: [],
   }
-  for (let x = 0; x < energyCounts.neutral; x++) {
-    newEnergySelected.neutral.push({ id: v4(), selected: false })
+  for (let x = 1; x <= Math.max(energyAvailable.neutral, energyIncome.neutral); x++) {
+    newEnergySelected.neutral.push({ id: v4(), available: x <= energyAvailable.neutral, selected: false })
   }
-  for (let x = 0; x < energyCounts.fire; x++) {
-    newEnergySelected.fire.push({ id: v4(), selected: false })
+  for (let x = 1; x <= Math.max(energyAvailable.fire, energyIncome.fire); x++) {
+    newEnergySelected.fire.push({ id: v4(), available: x <= energyAvailable.fire, selected: false })
   }
-  for (let x = 0; x < energyCounts.water; x++) {
-    newEnergySelected.water.push({ id: v4(), selected: false })
+  for (let x = 1; x <= Math.max(energyAvailable.water, energyIncome.water); x++) {
+    newEnergySelected.water.push({ id: v4(), available: x <= energyAvailable.water, selected: false })
   }
-  for (let x = 0; x < energyCounts.earth; x++) {
-    newEnergySelected.earth.push({ id: v4(), selected: false })
+  for (let x = 1; x <= Math.max(energyAvailable.earth, energyIncome.earth); x++) {
+    newEnergySelected.earth.push({ id: v4(), available: x <= energyAvailable.earth, selected: false })
   }
-  for (let x = 0; x < energyCounts.air; x++) {
-    newEnergySelected.air.push({ id: v4(), selected: false })
+  for (let x = 1; x <= Math.max(energyAvailable.air, energyIncome.air); x++) {
+    newEnergySelected.air.push({ id: v4(), available: x <= energyAvailable.air, selected: false })
   }
 
   return newEnergySelected
@@ -79,7 +81,7 @@ export const selectEnergyOfType = (
   let quantitySoFar = 0
   for (let x = 0; x < selectedEnergy[energyToSelect].length; x++) {
     const energy = selectedEnergy[energyToSelect][x]
-    if (!energy.selected) {
+    if (energy.available && !energy.selected) {
       energy.selected = true
       quantitySoFar += 1
       if (quantitySoFar === quantity) {

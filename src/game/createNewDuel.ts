@@ -1,4 +1,4 @@
-import { CardData, cardDataMap, goldenFriend, networkOfSnakes } from "./Cards"
+import { CardData, cardDataMap } from "./Cards"
 import { ChoiceID } from "./Choices"
 import { DuelParams } from "./DuelController"
 import { CardState, DuelState, PlayerState } from "./DuelData"
@@ -13,10 +13,13 @@ export const createCardsFromNames = (cardNames: string[]): CardState[] => {
     const card = cardDataMap[cardNames[x]]
     cards.push({
       instanceId: v4(),
+
       name: card.name,
+      cost: card.cost,
+      cardType: card.cardType,
       attack: card.attack,
       health: card.health,
-      cost: card.cost,
+      initialHealth: card.health,
     })
   }
   return cards
@@ -40,7 +43,6 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
         { id: v4(), index: 1, occupant: null },
         { id: v4(), index: 2, occupant: null },
         { id: v4(), index: 3, occupant: null },
-        { id: v4(), index: 4, occupant: null },
       ],
       energy: {
         neutral: 0,
@@ -49,7 +51,15 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
         earth: 0,
         air: 0,
       },
+      energyIncome: {
+        neutral: 0,
+        fire: 0,
+        water: 0,
+        earth: 0,
+        air: 0,
+      },
       drawnDead: false,
+      playedEnergyThisTurn: false,
     },
     opponent: {
       heroId: "hero2",
@@ -62,7 +72,6 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
         { id: v4(), index: 1, occupant: null },
         { id: v4(), index: 2, occupant: null },
         { id: v4(), index: 3, occupant: null },
-        { id: v4(), index: 4, occupant: null },
       ],
       energy: {
         neutral: 0,
@@ -71,10 +80,18 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
         earth: 0,
         air: 0,
       },
+      energyIncome: {
+        neutral: 0,
+        fire: 0,
+        water: 0,
+        earth: 0,
+        air: 0,
+      },
       drawnDead: false,
+      playedEnergyThisTurn: false,
     },
 
-    choice: { id: ChoiceID.CONFIRM_START, playerId: "human" },
+    choice: { id: ChoiceID.CONFIRM_DUEL_START, playerId: "human" },
     animationQueue: [],
     playerGoingFirst: "human",
     currentPlayerId: "human",

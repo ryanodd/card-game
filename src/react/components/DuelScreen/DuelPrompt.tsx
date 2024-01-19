@@ -1,14 +1,11 @@
-import { duelWinner } from "@/src/game/DuelHelpers"
-import {
-  ChoiceID,
-  confirmStart_execute,
-  takeTurn_getValidHandTargets,
-  takeTurn_getValidSpaceTargets,
-} from "@/src/game/Choices"
+import { duelWinner, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
+import { ChoiceID, confirmStart_execute, takeTurn_getValidHandTargets } from "@/src/game/Choices"
 import buttonStyles from "../designSystem/Button.module.css"
-import { saveAndRerenderDuel } from "@/src/game/DuelController"
+import { saveAndAdvanceDuelUntilChoice } from "@/src/game/DuelController"
 import { DuelState } from "@/src/game/DuelData"
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
+import { duelTeardown } from "@/src/game/Actions"
+import { useGameStore } from "../../hooks/useGameStore"
 
 export type DuelPromptProps = {
   duel: DuelState
@@ -25,20 +22,15 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
     return "You lost..."
   }
 
-  if (duel.choice.id === ChoiceID.CONFIRM_START) {
+  if (duel.choice.id === ChoiceID.CONFIRM_DUEL_START) {
     return "Ready to start?"
   }
-  if (duel.choice.id === ChoiceID.TAKE_TURN) {
-    // About to play a card
-    if (cardIdToBePlayed !== null) {
-      if (
-        takeTurn_getValidSpaceTargets(duel, cardIdToBePlayed, getEnergyCountsFromSelected(energySelected)).length > 0
-      ) {
-        return "Choose where to play your card."
-      }
-      return "Pay elements for your card."
-    }
 
+  if (duel.choice.id === ChoiceID.TAKE_TURN && !duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
+    return "Spend energy to play cards. You may play one energy card per turn."
+  }
+
+  if (duel.choice.id === ChoiceID.TAKE_TURN) {
     const handTargets = takeTurn_getValidHandTargets(duel)
 
     // Can play cards
@@ -63,13 +55,15 @@ export const getButtonText = (duel: DuelState) => {
     return "End Duel"
   }
 
-  if (duel.choice.id === ChoiceID.CONFIRM_START) {
+  if (duel.choice.id === ChoiceID.CONFIRM_DUEL_START) {
     return "Start"
   }
   return null
 }
 
 export const DuelPrompt = ({ duel }: DuelPromptProps) => {
+  const { game, setGame } = useGameStore()
+
   const promptMessage = useGetPromptMessage(duel)
   const buttonText = getButtonText(duel)
 
@@ -84,9 +78,18 @@ export const DuelPrompt = ({ duel }: DuelPromptProps) => {
         <button
           className={`${buttonStyles.button}`}
           onClick={() => {
-            if (duel.choice.id === ChoiceID.CONFIRM_START) {
+            if (duel.choice.id === ChoiceID.CONFIRM_DUEL_START) {
               const nextDuel = confirmStart_execute(duel)
-              saveAndRerenderDuel(nextDuel)
+              saveAndAdvanceDuelUntilChoice(nextDuel)
+            }
+            if (duel.choice.id === ChoiceID.CONFIRM_DUEL_END) {
+              const nextDuel = duelTeardown(duel)
+              saveAndAdvanceDuelUntilChoice(nextDuel)
+
+              setGame({
+                ...game,
+                screen: { id: "mainMenu" },
+              })
             }
           }}
         >

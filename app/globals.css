@@ -44,7 +44,19 @@ body {
 }
 
 .text-shadow {
-  text-shadow: 1px 1px 1.5px black, 1px -1px 1.5px black, -1px 1px 1.5px black, -1px -1px 1.5px black;
+  padding-left: 4px;
+  margin-left: -4px;
+  padding-right: 4px;
+  margin-right: -4px;
+  text-shadow: 1px 1px 0.5px black, 1px -1px 0.5px black, -1px 1px 0.5px black, -1px -1px 0.5px black;
+}
+
+.text-shadow-2 {
+  padding-left: 4px;
+  margin-left: -4px;
+  padding-right: 4px;
+  margin-right: -4px;
+  text-shadow: 1px 1px 0.5px black, 1px -1px 0.5px black, -1px 1px 0.5px black, -1px -1px 0.5px black;
 }
 
 svg {

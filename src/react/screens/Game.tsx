@@ -24,6 +24,7 @@ export const Game = () => {
         {game.screen.id === "manageDecks" && <ManageDecksScreen />}
         {game.screen.id === "editDeck" && <EditDeckScreen />}
         {game.screen.id === "duel" && <DuelScreen />}
+        {/* {game.screen.id === "duelEnd" && <DuelEndScreen />} */}
       </DndContext>
     </Tooltip.Provider>
   )

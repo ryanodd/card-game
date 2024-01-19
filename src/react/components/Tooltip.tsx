@@ -1,7 +1,5 @@
-import { useDraggable } from "@dnd-kit/core"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import { ReactNode, useEffect, useState } from "react"
-import useIsMountedRef from "../hooks/useIsMounted"
 
 export type TooltipProps = {
   children: ReactNode

@@ -1,11 +1,12 @@
 import { duelWinner } from "@/src/game/DuelHelpers"
 import { ChoiceID, takeTurn_executeAdvance, takeTurn_getValidHandTargets } from "@/src/game/Choices"
-import { saveAndRerenderDuel } from "@/src/game/DuelController"
+import { saveAndAdvanceDuelUntilChoice } from "@/src/game/DuelController"
 
 import styles from "./AdvanceTurnButton.module.css"
 import buttonStyles from "../designSystem/Button.module.css"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { DuelState } from "@/src/game/DuelData"
+import { Button } from "../designSystem/Button"
 
 const getText = (duel: DuelState): string | null => {
   if (duelWinner(duel) !== null) {
@@ -41,20 +42,21 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
   const highlighted = pressable && choiceId === ChoiceID.TAKE_TURN && takeTurn_getValidHandTargets(duel).length === 0
 
   return (
-    <button
-      className={`${buttonStyles.button} font-medium border-2 w-40 h-12 flex justify-center items-center ${
+    <Button
+      className={`font-medium border-2 w-40 h-12 flex justify-center items-center ${
         !pressable ? buttonStyles.unpressable : ""
       } ${highlighted ? styles.highlighted : ""}
       }`}
       onClick={() => {
         if (choiceId === ChoiceID.TAKE_TURN) {
           const newDuel = takeTurn_executeAdvance(duel)
-          saveAndRerenderDuel(newDuel)
+          saveAndAdvanceDuelUntilChoice(newDuel)
         }
       }}
       disabled={!pressable}
+      data-variant={highlighted ? "primary" : "secondary"}
     >
       {buttonText}
-    </button>
+    </Button>
   )
 }

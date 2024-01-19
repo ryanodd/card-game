@@ -1,8 +1,9 @@
 import { DuelAnimation } from "./Animations"
 import { AnimatedDuelState, CardState, DuelState, EnergyCounts, PlayerID, SpaceState } from "./DuelData"
+import { random } from "./randomNumber"
 
 export const getRandomInt = (max: number): number => {
-  return Math.floor(Math.random() * max)
+  return Math.floor(random() * max)
 }
 
 export const getDuelPlayerById = (duel: DuelState, playerId: PlayerID) => {
@@ -77,7 +78,7 @@ export const getCardByInstanceId = (duel: DuelState, cardId: string): CardState 
   return card
 }
 
-export const getSpaceByInstanceId = (duel: DuelState, spaceId: string): SpaceState => {
+export const getSpaceById = (duel: DuelState, spaceId: string): SpaceState => {
   const space = getAllSpaces(duel).find((space) => {
     return space.id === spaceId
   })
@@ -88,9 +89,9 @@ export const getSpaceByInstanceId = (duel: DuelState, spaceId: string): SpaceSta
 }
 
 export const getOccupantIdBySpaceId = (duel: DuelState, spaceId: string): string => {
-  const occupant = getSpaceByInstanceId(duel, spaceId).occupant
+  const occupant = getSpaceById(duel, spaceId).occupant
   if (occupant === null) {
-    throw Error(`occupant not found for space ${getSpaceByInstanceId(duel, spaceId).index}`)
+    throw Error(`occupant not found for space ${getSpaceById(duel, spaceId).index}`)
   }
   return occupant.instanceId
 }

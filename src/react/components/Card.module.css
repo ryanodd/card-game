@@ -3,7 +3,31 @@
 }
 
 .card_border {
-  @apply rounded-md overflow-hidden border border-zinc-700 shadow-lg;
+  @apply rounded-md border-4 border-zinc-800 shadow-lg;
+}
+
+.card[data-background="fire"] {
+  @apply bg-red-400;
+}
+
+.card[data-background="water"] {
+  @apply bg-sky-400;
+}
+
+.card[data-background="earth"] {
+  @apply bg-green-400;
+}
+
+.card[data-background="air"] {
+  @apply bg-purple-400;
+}
+
+.card[data-background="multi"] {
+  @apply bg-yellow-400;
+}
+
+.card[data-background="neutral"] {
+  @apply bg-slate-300;
 }
 
 .card_selectable {
@@ -28,7 +52,7 @@
 }
 
 .image_border {
-  @apply w-full rounded-md overflow-hidden border border-zinc-700;
+  @apply w-full rounded-sm overflow-hidden;
 }
 
 .full_card_size {
@@ -36,13 +60,9 @@
 }
 
 .full_card_border {
-  @apply rounded-lg overflow-hidden border-2 border-zinc-700 shadow-lg;
+  @apply rounded-2xl overflow-hidden border-8 border-zinc-800 shadow-lg;
 }
 
 .full_image_border {
-  @apply w-full rounded-xl overflow-hidden border border-zinc-700;
-}
-
-.inventory_card_size {
-  @apply w-40 h-56;
+  @apply w-full rounded-xl overflow-hidden;
 }

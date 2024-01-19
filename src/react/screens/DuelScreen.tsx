@@ -7,10 +7,11 @@ import { useDuelState } from "../hooks/useDuelState"
 import { DuelPrompt } from "../components/DuelScreen/DuelPrompt"
 import { useGameStore } from "../hooks/useGameStore"
 import { PlayerFaceArea } from "../components/DuelScreen/PlayerFaceArea"
-import { CreatureArea } from "../components/DuelScreen/CreatureArea"
+import { PlayArea } from "../components/DuelScreen/PlayArea"
 import { AdvanceTurnButton } from "../components/DuelScreen/AdvanceTurnButton"
-import { TurnPhaseIndicator } from "../components/DuelScreen/TurnPhaseIndicator"
 import { getAnimatedDuelState } from "@/src/game/DuelHelpers"
+import { useEffect } from "react"
+import { resetDuelUIStore } from "@/src/game/DuelController"
 
 export type DuelScreenProps = {}
 
@@ -19,6 +20,9 @@ export const DuelScreen = ({}: DuelScreenProps) => {
   const { game } = useGameStore()
 
   const duel = getAnimatedDuelState(rawDuel)
+  useEffect(() => {
+    resetDuelUIStore(duel)
+  }, [])
 
   return (
     <MainView>
@@ -31,9 +35,8 @@ export const DuelScreen = ({}: DuelScreenProps) => {
         </div>
 
         <div className="flex justify-center gap-4 items-center">
-          <CreatureArea duel={duel} />
+          <PlayArea duel={duel} />
           <div className="flex flex-col gap-2">
-            <TurnPhaseIndicator duel={duel} />
             <AdvanceTurnButton duel={duel} />
           </div>
         </div>

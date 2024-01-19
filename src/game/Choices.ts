@@ -1,16 +1,18 @@
-import { combat, duelSetup, endTurn, playCardFromHand } from "./Actions"
-import { DuelState, EnergyCounts, PlayerID } from "./DuelData"
+import { autoPayElements } from "../react/hooks/useDuelUIStore"
+import { combat, creaturesMarchIfNecessary, duelSetup, endTurn, playCardFromHand } from "./Actions"
+import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
 import {
   addAnimationToDuel,
   getCardByInstanceId,
   getCurrentDuelPlayer,
   getNonCurrentDuelPlayer,
-  getSpaceByInstanceId,
+  getSpaceById,
   isEnergySufficient,
 } from "./DuelHelpers"
 
 export enum ChoiceID {
-  CONFIRM_START,
+  CONFIRM_DUEL_START,
+  CONFIRM_DUEL_END,
   TAKE_TURN,
   DECLARE_ATTACKERS,
   DECLARE_DEFENDS,
@@ -28,6 +30,11 @@ export type DuelChoiceData = {
 }
 
 export const confirmStart_execute = (duel: DuelState): DuelState => {
+  duelSetup(duel)
+  return duel
+}
+
+export const confirmEnd_execute = (duel: DuelState): DuelState => {
   duelSetup(duel)
   return duel
 }
@@ -54,92 +61,74 @@ export const takeTurn_getValidHandTargets = (duel: DuelState): string[] => {
       cardsAfforded.push(card.instanceId)
     }
   }
-  return cardsAfforded
+  const cardsAffordedWithTargets = cardsAfforded.filter((cardInstanceId) => {
+    const card = getCardByInstanceId(duel, cardInstanceId)
+    const targets = takeTurn_getValidTargetsForCard(duel, cardInstanceId)
+    return targets.length > 0
+  })
+  return cardsAffordedWithTargets
 }
 
-export const takeTurn_getValidSpaceTargets = (
+export type Target =
+  | {
+      targetType: "space"
+      spaceId: SpaceID
+    }
+  | {
+      targetType: "playArea"
+      playerId: PlayerID
+    }
+  | {
+      targetType: "player"
+      playerId: PlayerID
+    }
+
+export const takeTurn_getValidTargetsForCard = (
   duel: DuelState,
   cardIdToPlay: string,
-  energyToPay: EnergyCounts
-): string[] => {
-  console.log(energyToPay)
-  if (!isEnergySufficient(energyToPay, getCardByInstanceId(duel, cardIdToPlay).cost, true)) {
+  energyToPay?: EnergyCounts
+): Target[] => {
+  if (energyToPay && !isEnergySufficient(energyToPay, getCardByInstanceId(duel, cardIdToPlay).cost, true)) {
     return []
   }
+  const validTargets: Target[] = []
+  const card = getCardByInstanceId(duel, cardIdToPlay)
+  const player = getCurrentDuelPlayer(duel)
 
-  const playerCreatureSpaces = getCurrentDuelPlayer(duel).creatureSpaces
-  const validSpaceIds: string[] = []
-  for (let x = 0; x < playerCreatureSpaces.length; x++) {
-    if (playerCreatureSpaces[x].occupant === null) {
-      validSpaceIds.push(playerCreatureSpaces[x].id)
+  if (card.cardType === "creature") {
+    const playerCreatureSpaces = getCurrentDuelPlayer(duel).creatureSpaces
+    for (let x = 0; x < playerCreatureSpaces.length; x++) {
+      if (playerCreatureSpaces[x].occupant === null) {
+        validTargets.push({ targetType: "space", spaceId: playerCreatureSpaces[x].id })
+      }
     }
   }
-  return validSpaceIds
+  if (card.cardType === "energy" && !player.playedEnergyThisTurn) {
+    validTargets.push({ targetType: "playArea", playerId: duel.currentPlayerId })
+  }
+  return validTargets
 }
 
 export const takeTurn_executePlayCard = (
   duel: DuelState,
   params: {
     cardIdToPlay: string
-    targetSpaceId: string
+    target: Target
     energyPaid: EnergyCounts
   }
 ) => {
   duel = playCardFromHand(duel, {
     playerId: duel.currentPlayerId,
     cardId: params.cardIdToPlay,
-    targetId: params.targetSpaceId,
+    target: params.target,
     energyPaid: params.energyPaid,
   })
   return duel
 }
 export const takeTurn_executeAdvance = (duel: DuelState): DuelState => {
-  // TODO
-
+  duel = combat(duel)
+  duel = creaturesMarchIfNecessary(duel)
   return endTurn(duel)
-}
-
-export const resolveAttacks_execute = (
-  inputDuel: DuelState,
-  params: {
-    attackingSpaceId: string
-    defendingSpaceId: string | null
-  }
-) => {
-  let duel = inputDuel
-  const attackingCard = getSpaceByInstanceId(duel, params.attackingSpaceId).occupant
-
-  if (attackingCard === null) {
-    throw Error(`No card to resolve attack for at space ${params.attackingSpaceId}`)
-  }
-
-  duel = addAnimationToDuel(duel, {
-    id: "ATTACK_START",
-    duration: 200,
-    attackingSpaceId: params.attackingSpaceId,
-    defendingSpaceId: params.defendingSpaceId,
-  })
-
-  // Do damage
-  if (params.defendingSpaceId === null) {
-    const otherPlayer = getNonCurrentDuelPlayer(duel)
-    otherPlayer.health -= attackingCard.attack
-  }
-  if (params.defendingSpaceId !== null) {
-    const defendingCard = getSpaceByInstanceId(duel, params.defendingSpaceId).occupant
-    if (defendingCard) {
-      duel = combat(duel, attackingCard.instanceId, defendingCard.instanceId)
-    }
-  }
-
-  duel = addAnimationToDuel(duel, {
-    id: "ATTACK_END",
-    duration: 200,
-    attackingSpaceId: params.attackingSpaceId,
-    defendingSpaceId: params.defendingSpaceId,
-  })
-
-  return duel
 }
 
 export const confirmEndAttacks_execute = (duel: DuelState): DuelState => {

@@ -7,7 +7,7 @@ import styles from "./Energy.module.css"
 export type ClickableEnergyProps = {
   index: number
   energyType: EnergyType
-  id?: string
+  id: string
 }
 
 const onEnergyClick = (
@@ -24,14 +24,19 @@ const onEnergyClick = (
 
 export const ClickableEnergy = ({ index, id, energyType }: ClickableEnergyProps) => {
   const { energySelected, setEnergySelected } = useDuelUIStore()
-  const selected = id ? findEnergyById(energySelected, id).selected : false
+  const energy = findEnergyById(energySelected, id)
+  const selected = energy.selected
 
   return (
     <button
       onClick={() => {
-        onEnergyClick(index, energyType, energySelected, setEnergySelected)
+        if (energy.available) {
+          onEnergyClick(index, energyType, energySelected, setEnergySelected)
+        }
       }}
-      className={`${selected ? styles.energy_toggled : ""}`}
+      data-available={energy.available}
+      data-selected={energy.selected}
+      className={styles.energy}
     >
       <EnergyIcon energyType={energyType} size="large" />
     </button>

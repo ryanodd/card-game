@@ -1,0 +1,8 @@
+.deckGrid {
+  --deck-button-width: 16rem;
+  grid-template-columns: repeat(auto-fill, var(--deck-button-width));
+}
+
+.deckCell {
+  width: var(--deck-button-width);
+}

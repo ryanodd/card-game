@@ -3,6 +3,7 @@ import { DeckListCard } from "./DeckListCard"
 import { cardDataMap } from "@/src/game/Cards"
 import { sortCardNames } from "@/src/game/helpers"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
+import styles from "./Inventory.module.css"
 
 export const DROPPABLE_ID_DECKLIST = "droppable-decklist"
 
@@ -42,7 +43,10 @@ export const DeckList = () => {
   })
 
   return (
-    <div ref={setNodeRef} className={`bg-stone-800 p-1 flex flex-col gap-1 w-80 ${isOver ? "brightness-125" : ""}`}>
+    <div
+      ref={setNodeRef}
+      className={`${styles.deckList} bg-stone-800 p-1 flex flex-col gap-1 ${isOver ? "brightness-125" : ""}`}
+    >
       {[...(Object.keys(cardTotalsMap) as unknown as number[])].map((cardNo) => (
         <DeckListCard key={cardNo} cardNumber={cardNo} quantity={cardTotalsMap[cardNo]} />
       ))}

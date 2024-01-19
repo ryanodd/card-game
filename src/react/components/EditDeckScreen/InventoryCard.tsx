@@ -1,5 +1,6 @@
 import { CardData, cardDataMap } from "@/src/game/Cards"
-import styles from "../Card.module.css"
+import cardStyles from "../Card.module.css"
+import inventoryStyles from "./Inventory.module.css"
 import Image from "next/image"
 import { Tooltip } from "../Tooltip"
 import { DetailedCard, getCostIcons } from "../DetailedCard"
@@ -27,7 +28,8 @@ export const InventoryCard = ({ cardData }: CardProps) => {
   return (
     <Tooltip content={<DetailedCard cardData={cardData} />} open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
       <div
-        className={`${styles.inventory_card_size} ${styles.card_border} bg-slate-300 relative p-1 gap-1 flex flex-col z-40`}
+        className={`${cardStyles.card} ${inventoryStyles.inventory_card_size} ${cardStyles.card_border} relative p-1 gap-1 flex flex-col z-40`}
+        data-background={cardData.energyType}
         style={style}
         ref={setNodeRef}
         {...attributes}
@@ -37,15 +39,19 @@ export const InventoryCard = ({ cardData }: CardProps) => {
           {getCostIcons(cardData)}
           <h2 className="ml-auto text-sm text-neutral-900 tracking-tight line-clamp-1">{cardData.name}</h2>
         </div>
-        <div className={`${styles.image_border} relative`}>
+        <div className={`${cardStyles.image_border} relative`}>
           <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
         </div>
-        <div className="w-9 h-9 rounded-tr-xl bg-red-500 absolute bottom-0 left-0 flex border-t border-r border-neutral-900 pr-0.5 justify-center items-center">
-          <h2 className="text-2xl font-semibold">{cardData.attack}</h2>
-        </div>
-        <div className="w-9 h-9 rounded-tl-xl bg-stone-500 absolute bottom-0 right-0 flex border-t border-l border-neutral-900 justify-center items-center">
-          <h2 className="text-2xl font-semibold">{cardData.health}</h2>
-        </div>
+        {cardData.attack !== undefined && (
+          <div className="w-9 h-9 rounded-tr-xl bg-red-500 absolute bottom-0 left-0 flex border-t border-r border-neutral-900 pr-0.5 justify-center items-center">
+            <h2 className="text-2xl font-semibold">{cardData.attack}</h2>
+          </div>
+        )}
+        {cardData.health !== undefined && (
+          <div className="w-9 h-9 rounded-tl-xl bg-stone-500 absolute bottom-0 right-0 flex border-t border-l border-neutral-900 justify-center items-center">
+            <h2 className="text-2xl font-semibold">{cardData.health}</h2>
+          </div>
+        )}
       </div>
     </Tooltip>
   )

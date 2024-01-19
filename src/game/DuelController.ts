@@ -1,4 +1,4 @@
-import { getEmptyEnergySelectedFromCounts, useDuelUIStore } from "../react/hooks/useDuelUIStore"
+import { getEnergyButtonsForPlayer, useDuelUIStore } from "../react/hooks/useDuelUIStore"
 import { executeChoiceForOpponent } from "./Bot"
 import { AnimatedDuelState, DuelState } from "./DuelData"
 import { addAnimationToDuel, duelWinner } from "./DuelHelpers"
@@ -6,6 +6,7 @@ import { GameState } from "./GameData"
 import { useGameStore } from "../react/hooks/useGameStore"
 import { getDuelState, useDuelState } from "../react/hooks/useDuelState"
 import { Deck } from "./Deck"
+import { ChoiceID } from "./Choices"
 
 export type DuelParams = {
   game: GameState
@@ -15,22 +16,12 @@ export type DuelParams = {
 export const resetDuelUIStore = (duel: DuelState) => {
   useDuelUIStore.getState().setCardIdToBePlayed(null)
 
-  const newEnergySelected = getEmptyEnergySelectedFromCounts(duel.human.energy)
+  const newEnergySelected = getEnergyButtonsForPlayer(duel.human)
   useDuelUIStore.getState().setEnergySelected(newEnergySelected)
 }
 
-export const saveAndRerenderDuel = (inputDuel: DuelState) => {
+export const saveAndAdvanceDuelUntilChoice = (inputDuel: DuelState) => {
   let duel = inputDuel
-  const winner = duelWinner(duel)
-
-  if (winner !== null) {
-  }
-
-  // Execute choices for opponent until human choice is next
-  while (duel.choice.playerId === "opponent") {
-    duel = addAnimationToDuel(duel, { id: "PAUSE", duration: 400 })
-    duel = executeChoiceForOpponent(duel)
-  }
 
   const { setDuel } = getDuelState()
   setDuel(duel)
@@ -48,9 +39,28 @@ export const saveAndRerenderDuel = (inputDuel: DuelState) => {
         throw Error("no animationQueue found in this duel")
       }
       duelToAnimate.animationQueue.shift()
-      saveAndRerenderDuel(duelToAnimate) // Caution - this is recursion until animationQueue is done
+
+      // Recursive call
+      saveAndAdvanceDuelUntilChoice(duelToAnimate) // Caution - this is recursion until animationQueue is done
     }, nextAnimation.duration)
-  } else {
-    resetDuelUIStore(duel)
+
+    return
   }
+
+  if (duelWinner(duel)) {
+    duel.choice = { id: ChoiceID.CONFIRM_DUEL_END, playerId: "human" }
+    resetDuelUIStore(duel)
+    return
+  }
+
+  // Execute choices for opponent until human choice is next
+  if (duel.choice.playerId === "opponent") {
+    duel = executeChoiceForOpponent(duel)
+    duel = addAnimationToDuel(duel, { id: "PAUSE", duration: 1200 })
+    saveAndAdvanceDuelUntilChoice(duel)
+    return
+  }
+
+  // player choice
+  resetDuelUIStore(duel)
 }

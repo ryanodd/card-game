@@ -1,4 +1,4 @@
-import { CardData, cardDataMap } from "./Cards"
+import { CardData, EnergyType, cardDataMap } from "./Cards"
 
 export const hasDuplicates = (array: any[]) => {
   return new Set(array).size !== array.length
@@ -12,21 +12,32 @@ export const sortCardNames = (cardNames: string[]) => {
   return cardNames.sort((cardNameA, cardNameB) => {
     const cardA = cardDataMap[cardNameA]
     const cardB = cardDataMap[cardNameB]
-    if (getConvertedEnergyCost(cardA) !== getConvertedEnergyCost(cardB)) {
-      return getConvertedEnergyCost(cardA) - getConvertedEnergyCost(cardB)
+
+    if (cardA.energyType === cardB.energyType) {
+      if (getConvertedEnergyCost(cardA) !== getConvertedEnergyCost(cardB)) {
+        return getConvertedEnergyCost(cardA) < getConvertedEnergyCost(cardB) ? -1 : 1
+      }
+      return cardNameA < cardNameB ? -1 : 1
     }
-    if (cardA.cost.fire !== cardB.cost.fire) {
-      return cardB.cost.fire - cardA.cost.fire
+
+    if (cardA.energyType === "fire" || cardB.energyType === "fire") {
+      return cardA.energyType === "fire" ? -1 : 1
     }
-    if (cardA.cost.water !== cardB.cost.water) {
-      return cardB.cost.water - cardA.cost.water
+    if (cardA.energyType === "water" || cardB.energyType === "water") {
+      return cardA.energyType === "water" ? -1 : 1
     }
-    if (cardA.cost.earth !== cardB.cost.earth) {
-      return cardB.cost.earth - cardA.cost.earth
+    if (cardA.energyType === "earth" || cardB.energyType === "earth") {
+      return cardA.energyType === "earth" ? -1 : 1
     }
-    if (cardA.cost.air !== cardB.cost.air) {
-      return cardB.cost.air - cardA.cost.air
+    if (cardA.energyType === "air" || cardB.energyType === "air") {
+      return cardA.energyType === "air" ? -1 : 1
     }
-    return cardNameA < cardNameB ? 1 : -1
+    if (cardA.energyType === "multi" || cardB.energyType === "multi") {
+      return cardA.energyType === "multi" ? -1 : 1
+    }
+    if (cardA.energyType === "neutral" || cardB.energyType === "neutral") {
+      return cardA.energyType === "neutral" ? -1 : 1
+    }
+    return -1
   })
 }

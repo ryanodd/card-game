@@ -1,0 +1,16 @@
+.inventoryGrid {
+  --inventory-card-width: 16rem;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+  @apply z-0;
+}
+
+.inventory_card_size {
+  width: var(--inventory-card-width);
+  @apply h-80;
+}
+
+.deckList {
+  @apply absolute right-0 w-32 z-10;
+}

@@ -11,10 +11,8 @@ export type HeroPreviewProps = {
 export const HeroPreview = ({ playerId, heroData }: HeroPreviewProps) => {
   return (
     <div className={`relative`}>
-      <div className={`${styles.hero_size} ${styles.hero_border} bg-slate-300 relative p-1 pt-2 flex flex-col`}>
-        <div className={`${styles.image_border} relative`}>
-          <Image src={heroData.imageSrc} alt={heroData.name} width={512} height={512} />
-        </div>
+      <div className={`${styles.hero_size} ${styles.image_border} relative`}>
+        <Image src={heroData.imageSrc} alt={heroData.name} width={512} height={512} />
       </div>
     </div>
   )

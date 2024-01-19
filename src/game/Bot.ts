@@ -1,16 +1,11 @@
-import {
-  autoPayElements,
-  getEmptyEnergySelectedFromCounts,
-  getEnergyCountsFromSelected,
-} from "../react/hooks/useDuelUIStore"
+import { autoPayElements, getEnergyButtonsForPlayer, getEnergyCountsFromSelected } from "../react/hooks/useDuelUIStore"
 import {
   ChoiceID,
   confirmEndAttacks_execute,
-  resolveAttacks_execute,
   takeTurn_executeAdvance,
   takeTurn_executePlayCard,
   takeTurn_getValidHandTargets,
-  takeTurn_getValidSpaceTargets,
+  takeTurn_getValidTargetsForCard,
 } from "./Choices"
 import { CardState, DuelState } from "./DuelData"
 import {
@@ -18,7 +13,7 @@ import {
   getCurrentDuelPlayer,
   getOccupantIdBySpaceId,
   getRandomInt,
-  getSpaceByInstanceId,
+  getSpaceById,
 } from "./DuelHelpers"
 
 export const executeChoiceForOpponent = (inputDuel: DuelState): DuelState => {
@@ -50,11 +45,11 @@ export const opponentTakeTurn = (inputDuel: DuelState): DuelState => {
   }
 
   const cardIdToPlay = handTargets[getRandomInt(handTargets.length)]
-  const emptyEnergySelected = getEmptyEnergySelectedFromCounts(getCurrentDuelPlayer(duel).energy)
+  const emptyEnergySelected = getEnergyButtonsForPlayer(getCurrentDuelPlayer(duel))
   const elementsToPay = getEnergyCountsFromSelected(autoPayElements(duel, cardIdToPlay, emptyEnergySelected))
-  const spaceTargets = takeTurn_getValidSpaceTargets(duel, cardIdToPlay, elementsToPay)
-  const spaceToIdPlay = spaceTargets[getRandomInt(spaceTargets.length)]
-  duel = takeTurn_executePlayCard(duel, { cardIdToPlay, targetSpaceId: spaceToIdPlay, energyPaid: elementsToPay })
+  const targets = takeTurn_getValidTargetsForCard(duel, cardIdToPlay, elementsToPay)
+  const targetToPlay = targets[getRandomInt(targets.length)]
+  duel = takeTurn_executePlayCard(duel, { cardIdToPlay, target: targetToPlay, energyPaid: elementsToPay })
   return duel
 }
 

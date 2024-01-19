@@ -62,7 +62,7 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
       <GameBackground />
       <div className="absolute-fill inset-0 z-10 flex flex-col p-2 gap-2" ref={setNodeRef}>
         <h1 className="text-3xl font-semibold text-gray-900">{editDeck.deck.name}</h1>
-        <div className="flex-grow flex">
+        <div className="flex-grow flex overflow-hidden">
           <InventoryBrowser />
           <DeckList />
         </div>

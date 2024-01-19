@@ -6,12 +6,16 @@
   @apply w-8 h-8 rounded-full border border-neutral-900 text-neutral-900 p-1.5 shadow-md aspect-square flex justify-center items-center;
 }
 
-.energy_toggled {
+.energy[data-selected="true"] {
   filter: brightness(150%);
   @apply shadow-2xl rounded-full;
   > * {
     @apply border-neutral-50;
   }
+}
+
+.energy[data-available="false"] {
+  filter: brightness(0%);
 }
 
 .neutral_element {

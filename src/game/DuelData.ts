@@ -1,5 +1,5 @@
 import { DuelAnimation } from "./Animations"
-import { EnergyType } from "./Cards"
+import { CardType, EnergyType } from "./Cards"
 import { DuelChoiceData } from "./Choices"
 
 export type PlayerID = "human" | "opponent"
@@ -17,10 +17,12 @@ export type EnergyCounts = {
 export type CardState = {
   name: string
   instanceId: string
-  cost: EnergyCounts
 
-  attack: number
-  health: number
+  cost: EnergyCounts
+  cardType: CardType
+  attack?: number
+  health?: number
+  initialHealth?: number
 }
 
 export type SpaceState = {
@@ -35,8 +37,10 @@ export type PlayerState = {
   hand: CardState[]
   deck: CardState[]
   discard: CardState[]
-  creatureSpaces: [SpaceState, SpaceState, SpaceState, SpaceState, SpaceState]
+  creatureSpaces: [SpaceState, SpaceState, SpaceState, SpaceState]
   energy: EnergyCounts
+  energyIncome: EnergyCounts
+  playedEnergyThisTurn: boolean
   drawnDead: boolean
 }
 

@@ -1,16 +1,18 @@
 import { cardDataMap } from "./Cards"
-import { ChoiceID, DuelChoiceData } from "./Choices"
+import { ChoiceID, DuelChoiceData, Target } from "./Choices"
 import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
 import {
+  addAnimationToDuel,
   getAllCards,
   getCardByInstanceId,
   getCurrentDuelPlayer,
   getDuelPlayerById,
   getOtherPlayerId,
-  getSpaceByInstanceId,
+  getSpaceById,
   isEnergySufficient,
 } from "./DuelHelpers"
 import { effectMap, heroDataMap } from "./Hero"
+import { random } from "./randomNumber"
 
 export type PlayerDrawNParams = {
   numberToDraw: number
@@ -55,8 +57,29 @@ export const playerGainEnergy = (
   return duel
 }
 
+/* Randomize array in-place using Durstenfeld shuffle algorithm */
+export const shuffleArray = (array: any[]) => {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(random() * (i + 1))
+    var temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+}
+
+export const shuffleDeck = (inputDuel: DuelState, playerId: PlayerID) => {
+  let duel = inputDuel
+  const deck = getDuelPlayerById(duel, playerId).deck
+  shuffleArray(deck)
+  return duel
+}
+
 export const duelSetup = (inputDuel: DuelState) => {
   let duel = inputDuel
+
+  duel = shuffleDeck(duel, "human")
+  duel = shuffleDeck(duel, "opponent")
+
   duel = playerDrawN(duel, { playerId: "human", numberToDraw: 4 })
   duel = playerDrawN(duel, { playerId: "opponent", numberToDraw: 4 })
 
@@ -75,17 +98,25 @@ export const duelSetup = (inputDuel: DuelState) => {
   return duel
 }
 
+export const duelTeardown = (inputDuel: DuelState) => {
+  let duel = inputDuel
+
+  return duel
+}
+
 export const turnStart = (inputDuel: DuelState) => {
   let duel = inputDuel
 
   // Reset energy
-  getDuelPlayerById(duel, duel.currentPlayerId).energy = {
-    fire: 5,
-    water: 5,
-    earth: 5,
-    air: 5,
-    neutral: 5,
+  const player = getDuelPlayerById(duel, duel.currentPlayerId)
+  player.energy = {
+    fire: player.energyIncome.fire,
+    water: player.energyIncome.water,
+    earth: player.energyIncome.earth,
+    air: player.energyIncome.air,
+    neutral: player.energyIncome.neutral,
   }
+  player.playedEnergyThisTurn = false
 
   duel = playerDrawN(duel, { numberToDraw: 1, playerId: duel.currentPlayerId })
 
@@ -108,38 +139,54 @@ export const endTurn = (inputDuel: DuelState) => {
 export type PlayCardParams = {
   playerId: PlayerID
   cardId: string
-  targetId: string
+  target: Target
   energyPaid: EnergyCounts
 }
 
-export const playCardFromHand = (inputDuel: DuelState, { cardId, targetId, energyPaid }: PlayCardParams) => {
+export const playCardFromHand = (inputDuel: DuelState, { cardId, target, energyPaid }: PlayCardParams) => {
   let duel = inputDuel
   const player = getCurrentDuelPlayer(duel)
   const playedCard = player.hand.find((card) => {
     return card.instanceId === cardId
   })
-  player.hand = player.hand.filter((card) => {
-    return card.instanceId !== cardId
-  })
-  const targetSpace = player.creatureSpaces.find((space) => {
-    return space.id === targetId
-  })
-  if (!playedCard || !targetSpace) {
+  if (!playedCard) {
     throw Error("something went wrong playing a card")
   }
-
-  const cardCosts = cardDataMap[playedCard.name].cost
-  if (!isEnergySufficient(energyPaid, cardCosts, true)) {
+  if (!isEnergySufficient(energyPaid, playedCard.cost, true)) {
     throw Error("Can't afford to play this card (or paid too much)")
   }
 
+  // Remove from hand
+  player.hand = player.hand.filter((card) => {
+    return card.instanceId !== cardId
+  })
+
+  // Pay energy
   player.energy.neutral -= energyPaid.neutral
   player.energy.fire -= energyPaid.fire
   player.energy.water -= energyPaid.water
   player.energy.earth -= energyPaid.earth
   player.energy.air -= energyPaid.air
 
-  targetSpace.occupant = playedCard
+  // Put creature in space
+  if (playedCard.cardType === "creature" && target.targetType === "space") {
+    const targetSpace = player.creatureSpaces.find((space) => {
+      return space.id === target.spaceId
+    })
+    if (targetSpace) {
+      targetSpace.occupant = playedCard
+    }
+  }
+
+  if (playedCard.cardType === "energy" && target.targetType === "playArea") {
+    player.playedEnergyThisTurn = true
+  }
+
+  // Question: should this stuff ^ be put into effects?
+  const cardData = cardDataMap[playedCard.name]
+  if (cardData.effects?.summon) {
+    duel = cardData.effects.summon(duel, duel.currentPlayerId, playedCard.instanceId)
+  }
 
   return duel
 }
@@ -189,23 +236,82 @@ export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
       space.occupant = null
     }
   }
+  return duel
 }
 
-export const dealDamage = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
+export const dealDamageToCreature = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
   let newDuel = duel
   const cardState = getCardByInstanceId(newDuel, cardInstanceId)
-  cardState.health = Math.max(0, cardState.health - damageAmount)
+  cardState.health = Math.max(0, (cardState.health ?? 0) - damageAmount)
   return newDuel
 }
 
-export const combat = (duel: DuelState, attackingCardId: string, defendingCardId: string) => {
+export const dealDamageToPlayer = (duel: DuelState, playerID: PlayerID, damageAmount: number) => {
+  let newDuel = duel
+  const player = getDuelPlayerById(newDuel, playerID)
+  player.health = Math.max(0, player.health - damageAmount)
+
+  return newDuel
+}
+
+export const combat = (inputDuel: DuelState) => {
+  let duel = inputDuel
+
+  const humanAttackingSpace = duel.human.creatureSpaces[0]
+  const opponentAttackingSpace = duel.opponent.creatureSpaces[0]
+  const humanAttackingCard = duel.human.creatureSpaces[0].occupant
+  const opponentAttackingCard = duel.opponent.creatureSpaces[0].occupant
+
+  duel = addAnimationToDuel(duel, {
+    id: "ATTACK_START",
+    duration: 200,
+    humanAttackingSpaceId: humanAttackingSpace.id,
+    opponentAttackingSpaceId: opponentAttackingSpace.id,
+  })
+
+  //Trade
+  if (humanAttackingCard !== null && opponentAttackingCard !== null) {
+    duel = creaturesTrade(duel, humanAttackingCard.instanceId, opponentAttackingCard.instanceId)
+  }
+  // Human damage to Opponent face
+  else if (
+    humanAttackingCard !== null &&
+    humanAttackingCard.cardType === "creature" &&
+    opponentAttackingCard === null
+  ) {
+    dealDamageToPlayer(duel, "opponent", humanAttackingCard.attack ?? 0)
+  }
+  // Opponent damage to Human face
+  else if (
+    opponentAttackingCard !== null &&
+    opponentAttackingCard.cardType === "creature" &&
+    humanAttackingCard === null
+  ) {
+    dealDamageToPlayer(duel, "human", opponentAttackingCard.attack ?? 0)
+  }
+
+  duel = addAnimationToDuel(duel, {
+    id: "ATTACK_END",
+    duration: 200,
+    humanAttackingSpaceId: humanAttackingSpace.id,
+    opponentAttackingSpaceId: opponentAttackingSpace.id,
+  })
+
+  return duel
+}
+
+export const creaturesTrade = (duel: DuelState, attackingCardId: string, defendingCardId: string) => {
   let newDuel = duel
 
   const attackingCard = getCardByInstanceId(newDuel, attackingCardId)
   const defendingCard = getCardByInstanceId(newDuel, defendingCardId)
 
-  newDuel = dealDamage(newDuel, defendingCardId, attackingCard.attack)
-  newDuel = dealDamage(newDuel, attackingCardId, defendingCard.attack)
+  if (attackingCard?.cardType !== "creature" || defendingCard?.cardType !== "creature") {
+    throw Error("Tried to engage in combat with non-creature")
+  }
+
+  newDuel = dealDamageToCreature(newDuel, defendingCardId, attackingCard.attack ?? 0)
+  newDuel = dealDamageToCreature(newDuel, attackingCardId, defendingCard.attack ?? 0)
 
   if (getCardByInstanceId(newDuel, attackingCardId).health === 0) {
     removeCard(duel, attackingCardId)
@@ -215,4 +321,26 @@ export const combat = (duel: DuelState, attackingCardId: string, defendingCardId
   }
 
   return newDuel
+}
+
+// If anyone's first space is empty, march.
+export const creaturesMarchIfNecessary = (inputDuel: DuelState) => {
+  let duel = inputDuel
+  if (duel.human.creatureSpaces[0].occupant === null) {
+    duel = creaturesMarch(duel, "human")
+  }
+  if (duel.opponent.creatureSpaces[0].occupant === null) {
+    duel = creaturesMarch(duel, "opponent")
+  }
+  return duel
+}
+
+export const creaturesMarch = (inputDuel: DuelState, playerId: PlayerID) => {
+  let duel = inputDuel
+  const player = getDuelPlayerById(duel, playerId)
+  for (let x = 0; x < player.creatureSpaces.length - 1; x++) {
+    player.creatureSpaces[x].occupant = player.creatureSpaces[x + 1].occupant
+    player.creatureSpaces[x + 1].occupant = null
+  }
+  return duel
 }

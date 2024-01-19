@@ -12,12 +12,12 @@ export type DuelAnimation = {
     }
   | {
       id: "ATTACK_START"
-      attackingSpaceId: string
-      defendingSpaceId: string | null
+      humanAttackingSpaceId: string
+      opponentAttackingSpaceId: string | null
     }
   | {
       id: "ATTACK_END"
-      attackingSpaceId: string
-      defendingSpaceId: string | null
+      humanAttackingSpaceId: string
+      opponentAttackingSpaceId: string | null
     }
 )
