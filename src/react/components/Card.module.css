@@ -6,6 +6,10 @@
   @apply rounded-md border-4 border-zinc-800 shadow-lg;
 }
 
+.card {
+  flex-shrink: 0;
+}
+
 .card[data-background="fire"] {
   @apply bg-red-400;
 }
@@ -37,10 +41,6 @@
   }
 }
 
-.card_selected {
-  @apply shadow-2xl -translate-y-4;
-}
-
 .card_highlighted {
   animation: highlight-animation 1s infinite;
 }
@@ -65,4 +65,12 @@
 
 .full_image_border {
   @apply w-full rounded-xl overflow-hidden;
+}
+
+.cardText {
+  @apply text-gray-950;
+}
+
+.cardPreviewText {
+  font-size: 0.5rem;
 }

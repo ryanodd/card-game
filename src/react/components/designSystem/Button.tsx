@@ -3,7 +3,8 @@ import styles from "./Button.module.css"
 
 type Props = {
   children?: ReactNode
-  "data-variant"?: "primary" | "secondary"
+  "data-size"?: "small" | "large"
+  "data-variant"?: "primary" | "secondary" | "destructive"
   "data-loading"?: boolean
 }
 

@@ -80,8 +80,8 @@ export const duelSetup = (inputDuel: DuelState) => {
   duel = shuffleDeck(duel, "human")
   duel = shuffleDeck(duel, "opponent")
 
-  duel = playerDrawN(duel, { playerId: "human", numberToDraw: 4 })
-  duel = playerDrawN(duel, { playerId: "opponent", numberToDraw: 4 })
+  duel = playerDrawN(duel, { playerId: "human", numberToDraw: 6 })
+  duel = playerDrawN(duel, { playerId: "opponent", numberToDraw: 6 })
 
   // TODO randomize
   const humanGoesFirst = true
@@ -296,6 +296,16 @@ export const combat = (inputDuel: DuelState) => {
     humanAttackingSpaceId: humanAttackingSpace.id,
     opponentAttackingSpaceId: opponentAttackingSpace.id,
   })
+
+  //Trigger effects of attacking cards
+  const humanAfterAttackEffect = cardDataMap[humanAttackingCard?.name ?? ""]?.effects?.afterAttack
+  if (humanAfterAttackEffect !== undefined) {
+    duel = humanAfterAttackEffect(duel, "human")
+  }
+  const opponentAfterAttackEffect = cardDataMap[opponentAttackingCard?.name ?? ""]?.effects?.afterAttack
+  if (opponentAfterAttackEffect !== undefined) {
+    duel = opponentAfterAttackEffect(duel, "human")
+  }
 
   return duel
 }

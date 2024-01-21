@@ -3,7 +3,7 @@
 }
 
 .space[data-dragging-over="true"][data-selectable="true"] {
-  @apply border-2 border-rose-400 bg-slate-100 cursor-pointer;
+  @apply border-sky-500 border-4 bg-slate-100 cursor-pointer;
 }
 
 .space[data-highlighted="true"] {

@@ -7,6 +7,7 @@ import { useState } from "react"
 import { DetailedCard } from "./DetailedCard"
 import { Tooltip } from "./Tooltip"
 import { getAllSpaces } from "@/src/game/DuelHelpers"
+import { useDndContext } from "@dnd-kit/core"
 
 export type CardPreviewProps = {
   duel: DuelState
@@ -64,6 +65,7 @@ export const CardPreview = ({ duel, cardState, isTooltipOpen, setIsTooltipOpen }
             <h2 className="text-2xl font-semibold text-shadow">{cardState.attack}</h2>
           </div>
         )}
+        {cardData.text && <p className={`${styles.cardText} ${styles.cardPreviewText}`}>{cardData.text}</p>}
         {cardState.health !== undefined && cardState.initialHealth !== undefined && (
           <div className="w-8 h-8 rounded-tl-xl bg-red-500 absolute bottom-0 right-0 flex border-t border-l border-neutral-900 justify-center items-center">
             <h2

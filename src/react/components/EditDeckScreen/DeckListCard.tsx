@@ -3,8 +3,9 @@ import Image from "next/image"
 import { DetailedCard, getCostIcons } from "../DetailedCard"
 import { Tooltip } from "../Tooltip"
 import { useDraggable } from "@dnd-kit/core"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
+import { useEditDeckState } from "../../hooks/useEditDeckState"
 
 export type DeckListCardProps = {
   cardNumber: number
@@ -13,22 +14,28 @@ export type DeckListCardProps = {
 
 export const DeckListCard = ({ cardNumber, quantity }: DeckListCardProps) => {
   const cardData = cardDataMap[cardNumber]
+  const { editDeck, setEditDeck } = useEditDeckState()
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: `draggable-deck-list-card-${cardData.name}`,
-  })
-  const style = transform
-    ? {
-        zIndex: isDragging ? 999 : "auto",
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined
+  const onClick = useCallback(() => {
+    const removedCardIndex = editDeck.deck.cardNames.findIndex((value) => value === cardData.name)
+    if (removedCardIndex === -1) {
+      throw Error(`Removed card not found in deck: ${cardData.name}`)
+    }
 
-  const [isTooltipOpen, setIsTooltipOpen] = useHideTooltipWhileDragging(isDragging)
+    const newCardNames = [...editDeck.deck.cardNames]
+    newCardNames.splice(removedCardIndex, 1)
+    setEditDeck({
+      id: editDeck.id,
+      deck: {
+        ...editDeck.deck,
+        cardNames: newCardNames,
+      },
+    })
+  }, [editDeck])
 
   return (
-    <Tooltip content={<DetailedCard cardData={cardData} />} open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
-      <div {...attributes} {...listeners} ref={setNodeRef} className="relative overflow-hidden" style={style}>
+    <Tooltip content={<DetailedCard cardData={cardData} />}>
+      <button className="relative overflow-hidden" onClick={onClick}>
         <Image
           className="absolute inset-0 object-fill"
           src={cardData.imageSrc}
@@ -41,7 +48,7 @@ export const DeckListCard = ({ cardNumber, quantity }: DeckListCardProps) => {
           <span className="text-shadow flex-grow text-ellipsis line-clamp-1">{cardData.name}</span>
           <div className="flex flex-row">{getCostIcons(cardData)}</div>
         </div>
-      </div>
+      </button>
     </Tooltip>
   )
 }

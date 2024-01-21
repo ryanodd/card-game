@@ -71,8 +71,8 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
   })
 
   return (
-    <div className="p-2 rounded-lg bg-stone-900 grid grid-cols-7 grid-rows-2">
-      <div className={`${styles.opponentPlayArea} p-4 bg-stone-300 grid grid-cols-7`}>
+    <div className="p-1.5 rounded-sm bg-stone-800 grid grid-cols-7 grid-rows-2">
+      <div className={`${styles.opponentPlayArea} p-4  grid grid-cols-7`}>
         <div className={`${styles.opponentCreatureArea} flex flex-row gap-1 bg-slate-500 rounded-lg p-1 row-`}>
           {getOpponentCreatureSpaces()}
         </div>
@@ -82,7 +82,7 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
         data-highlighted={humanPlayAreaHighlighted}
         data-dragging-over={isOver}
         data-selectable={humanPlayAreaSelectable}
-        className={`${styles.humanPlayArea} p-4 bg-stone-300 grid grid-cols-7`}
+        className={`${styles.humanPlayArea} p-4  grid grid-cols-7`}
       >
         <div className={`${styles.humanCreatureArea} flex flex-row gap-1 bg-slate-500 rounded-lg p-1`}>
           {getHumanCreatureSpaces()}

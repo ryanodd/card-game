@@ -1,0 +1,25 @@
+.menuButtonContent {
+  @apply bg-white rounded-md p-1;
+}
+
+.menuButtonItem {
+  @apply text-sm text-neutral-950 flex items-center py-4 px-8 rounded-md;
+  line-height: 1;
+  height: 25px;
+  position: relative;
+  user-select: none;
+  outline: none;
+}
+
+.menuButtonItem:hover {
+  @apply bg-sky-300 cursor-pointer;
+}
+
+.menuButtonItem.focus-visible,
+.menuButtonItem:focus-visible {
+  @apply bg-sky-300;
+}
+
+.menuButtonArrow {
+  fill: white;
+}

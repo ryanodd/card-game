@@ -1,14 +1,38 @@
 .button {
-  @apply rounded-md shadow-md py-1 px-2;
+  @apply shadow-sm;
+}
+
+.button {
+  /* Default size: small */
+  @apply py-1.5 px-3 rounded-md text-lg;
+}
+
+.button[data-size="large"] {
+  @apply py-3 px-6 rounded-lg text-xl font-medium;
 }
 
 .button[data-variant="primary"] {
   @apply bg-sky-500 text-white border-none;
 }
+.button[data-variant="primary"]:hover {
+  @apply bg-sky-600;
+}
 
 .button {
   /* Default Variant: secondary */
   @apply bg-stone-100 text-gray-950 border border-stone-300;
+}
+
+.button:hover {
+  @apply bg-stone-300;
+}
+
+.button[data-variant="destructive"] {
+  @apply bg-red-500 text-white border-none;
+}
+
+.button[data-variant="destructive"]:hover {
+  @apply bg-red-400;
 }
 
 .unpressable {

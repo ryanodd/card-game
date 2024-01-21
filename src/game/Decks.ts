@@ -51,7 +51,7 @@ export const deckMap = {
       "Elder Saurus",
       "Elder Saurus",
 
-      "Girabu, Colossal Simian",
+      "Girabu, Colossal Guardian",
       "Nyreth, Light Eater",
     ],
   },
@@ -89,10 +89,10 @@ export const deckMap = {
       "Merfin Yodeler",
       "Merfin Yodeler",
 
-      "Network of Snakes",
-      "Network of Snakes",
-      "Network of Snakes",
-      "Network of Snakes",
+      "Snake Network",
+      "Snake Network",
+      "Snake Network",
+      "Snake Network",
 
       "Komodo Teacher",
       "Komodo Teacher",

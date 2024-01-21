@@ -70,7 +70,6 @@ export const ManageDecksScreen = () => {
 
     setGame({
       ...game,
-      decks: [...game.decks, newDeck],
       screen: createNewEditDeckState(newDeck),
     })
   }

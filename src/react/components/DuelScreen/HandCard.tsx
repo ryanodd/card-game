@@ -28,15 +28,9 @@ export const HandCard = ({ duel, cardState }: HandCardProps) => {
   const highlighted = selectable && !cardIdToBePlayed
 
   const DRAGGABLE_ID = `draggable-card-${cardState.instanceId}`
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: DRAGGABLE_ID,
   })
-  const style = transform
-    ? {
-        zIndex: isDragging ? 999 : "auto",
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined
   const [isTooltipOpen, setIsTooltipOpen] = useHideTooltipWhileDragging(isDragging)
   useDndMonitor({
     onDragStart: (event) => {
@@ -58,10 +52,9 @@ export const HandCard = ({ duel, cardState }: HandCardProps) => {
 
   return (
     <div
-      className={`relative ${cardState.instanceId === cardIdToBePlayed ? cardStyles.card_selected : ""} ${
-        selectable ? cardStyles.card_selectable : ""
-      } ${highlighted ? cardStyles.card_highlighted : ""}`}
-      style={style}
+      className={`relative ${isDragging ? "opacity-0" : ""} ${selectable ? cardStyles.card_selectable : ""} ${
+        highlighted ? cardStyles.card_highlighted : ""
+      }`}
       ref={setNodeRef}
       {...attributes}
       {...listeners}

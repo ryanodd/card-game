@@ -1,0 +1,46 @@
+.dialogOverlay {
+  @apply bg-slate-500 fixed inset-0 z-50 opacity-20;
+  animation: overlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.2;
+  }
+}
+
+.dialogContent {
+  @apply fixed top-1/2 left-1/2 rounded-md shadow-lg bg-slate-100 p-4 z-50 flex flex-col gap-4;
+  animation: contentShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.dialogCloseButton {
+  @apply absolute top-4 right-4 text-neutral-600;
+}
+
+.dialogTitle {
+  @apply m-0 font-semibold text-xl text-neutral-950;
+}
+
+.dialogDescription {
+  @apply m-0 font-normal text-sm text-neutral-800;
+}

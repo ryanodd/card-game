@@ -1,5 +1,5 @@
 import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
-import { air_energy, earth_energy, fire_energy, water_energy } from "./Effects"
+import { air_energy, earth_energy, ember_foxling_after_attack, fire_energy, water_energy } from "./Effects"
 
 export type EnergyType = "neutral" | "fire" | "water" | "earth" | "air"
 
@@ -16,6 +16,7 @@ export type CardData = {
   health?: number
   effects?: {
     summon?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
+    afterAttack?: (inputDuel: DuelState, playerId: PlayerID) => DuelState
   }
 }
 
@@ -106,8 +107,8 @@ cards.push({
 })
 
 cards.push({
-  name: "Network of Snakes",
-  imageSrc: "/card-art/networkOfSnakes.png",
+  name: "Snake Network",
+  imageSrc: "/card-art/snakeNetwork.png",
   energyType: "earth",
   cardType: "creature",
   attack: 1,
@@ -121,7 +122,6 @@ cards.push({
   },
 })
 
-// Whenever this successfully attacks opponent's face, deal 1 damage to the opponent
 cards.push({
   name: "Ember Foxling",
   imageSrc: "/card-art/emberFoxling.png",
@@ -135,6 +135,10 @@ cards.push({
     water: 0,
     earth: 0,
     air: 0,
+  },
+  text: "Whenever this creature attacks, deal 1 damage to the opposing player.",
+  effects: {
+    afterAttack: ember_foxling_after_attack,
   },
 })
 
@@ -236,8 +240,8 @@ cards.push({
 })
 
 cards.push({
-  name: "Girabu, Colossal Simian",
-  imageSrc: "/card-art/girabucolossalSimian.png",
+  name: "Girabu, Colossal Guardian",
+  imageSrc: "/card-art/girabucolossalGuardian.png",
   energyType: "fire",
   cardType: "creature",
   attack: 7,
@@ -305,12 +309,12 @@ cards.push({
   imageSrc: "/card-art/livingHillside.png",
   energyType: "multi",
   cardType: "creature",
-  attack: 4,
-  health: 5,
+  attack: 2,
+  health: 6,
   cost: {
-    neutral: 0,
+    neutral: 3,
     fire: 0,
-    water: 1,
+    water: 0,
     earth: 1,
     air: 0,
   },

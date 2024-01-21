@@ -8,18 +8,25 @@
   grid-column: 1 / 8;
 }
 
-.humanPlayArea[data-highlighted="true"],
-.opponentPlayArea[data-highlighted="true"] {
+.humanPlayArea,
+.opponentPlayArea {
+  @apply bg-stone-300;
+}
+
+.humanPlayArea[data-highlighted="true"][data-dragging-over="false"],
+.opponentPlayArea[data-highlighted="true"][data-dragging-over="false"] {
   animation: highlight-animation 1s infinite;
 }
 
-.humanPlayArea[data-dragging-over="true"][data-selectable="true"] {
-  @apply border-2 border-rose-400 bg-slate-100 cursor-pointer;
+.humanPlayArea[data-dragging-over="true"][data-selectable="true"],
+.opponentPlayArea[data-dragging-over="true"][data-selectable="true"] {
+  @apply bg-sky-200;
+  filter: blur(1px) brightness(105%);
 }
 
 @keyframes highlight-animation {
   50% {
-    filter: brightness(120%);
+    @apply bg-stone-100;
   }
 }
 

@@ -45,7 +45,7 @@ export const CreatureSpace = ({ duel, playerId, index }: CreatureSpaceProps) => 
       duel.animation.opponentAttackingSpaceId === spaceState.id)
 
   const DROPPABLE_ID = `droppable-${spaceState.id}`
-  const { isOver, setNodeRef } = useDroppable({ id: DROPPABLE_ID })
+  const { isOver, setNodeRef } = useDroppable({ id: DROPPABLE_ID, disabled: !selectable })
   useDndMonitor({
     onDragEnd: (event) => {
       if (

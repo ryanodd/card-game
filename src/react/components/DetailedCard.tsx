@@ -49,6 +49,7 @@ export const DetailedCard = ({ cardData }: DetailedCardProps) => {
         <div className={`${styles.full_image_border} relative`}>
           <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
         </div>
+        {cardData.text && <p className={`${styles.cardText}`}>{cardData.text}</p>}
         {cardData.attack !== undefined && (
           <div className="w-12 h-12 rounded-tr-xl bg-amber-500 absolute bottom-0 left-0 flex border-t border-r border-neutral-900 pr-0.5 justify-center items-center">
             <h2 className="text-4xl text-shadow">{cardData.attack}</h2>

@@ -23,10 +23,12 @@ export const MainMenuScreen = () => {
           <h1 className="text-3xl">{"It's a card game!"}</h1>
           <h2>{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
           <div className="flex flex-col mt-8 gap-4">
-            <Button data-variant="primary" onClick={onStartDuelClick}>
+            <Button data-variant="primary" data-size="large" onClick={onStartDuelClick}>
               Start duel
             </Button>
-            <Button onClick={onManageDeckClick}>Manage decks</Button>
+            <Button data-size="large" onClick={onManageDeckClick}>
+              Manage decks
+            </Button>
           </div>
         </div>
       </div>
