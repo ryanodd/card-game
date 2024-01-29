@@ -19,7 +19,7 @@
 .space[data-animation-attack-start="true"][data-player-id="human"] {
   > * {
     z-index: 20;
-    animation: attack_start_human 200ms ease-in;
+    animation: attack_start_human var(--current-animation-duration) ease-in;
   }
 }
 
@@ -35,7 +35,7 @@
 .space[data-animation-attack-start="true"][data-player-id="opponent"] {
   > * {
     z-index: 20;
-    animation: attack_start_opponent 200ms ease-in;
+    animation: attack_start_opponent var(--current-animation-duration) ease-in;
   }
 }
 
@@ -51,7 +51,7 @@
 .space[data-animation-attack-end="true"][data-player-id="human"] {
   > * {
     z-index: 20;
-    animation: attack_end_human 200ms ease-out;
+    animation: attack_end_human var(--current-animation-duration) ease-out;
   }
 }
 
@@ -67,7 +67,7 @@
 .space[data-animation-attack-end="true"][data-player-id="opponent"] {
   > * {
     z-index: 20;
-    animation: attack_end_opponent 200ms ease-out;
+    animation: attack_end_opponent var(--current-animation-duration) ease-out;
   }
 }
 
@@ -77,6 +77,13 @@
   }
   100% {
     transform: translateY(0px);
+  }
+}
+
+.space[data-animation-ember-foxling="true"] {
+  > * {
+    z-index: 20;
+    filter: contrast(150%);
   }
 }
 

@@ -26,6 +26,12 @@ export const initialGameState: GameState = {
     "Living Hillside": 4,
   },
   decks: [deckMap["starterDeck"], deckMap["firstOpponent"]],
+  settings: {
+    debug: {
+      enabled: false,
+      animationMultiplier: 1,
+    },
+  },
 }
 
 export type GameStorePayload = {

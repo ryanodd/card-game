@@ -20,7 +20,10 @@ export type CardState = {
 
   cost: EnergyCounts
   cardType: CardType
-  attack?: number
+  attack?: {
+    min: number
+    max: number
+  }
   health?: number
   initialHealth?: number
 }

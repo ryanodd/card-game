@@ -22,15 +22,15 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
     return "You lost..."
   }
 
-  if (duel.choice.id === ChoiceID.CONFIRM_DUEL_START) {
+  if (duel.choice.id === "CONFIRM_DUEL_START") {
     return "Ready to start?"
   }
 
-  if (duel.choice.id === ChoiceID.TAKE_TURN && !duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
+  if (duel.choice.id === "TAKE_TURN" && !duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
     return "Spend energy to play cards. You may play one energy card per turn."
   }
 
-  if (duel.choice.id === ChoiceID.TAKE_TURN) {
+  if (duel.choice.id === "TAKE_TURN") {
     const handTargets = takeTurn_getValidHandTargets(duel)
 
     // Can play cards
@@ -55,7 +55,7 @@ export const getButtonText = (duel: DuelState) => {
     return "End Duel"
   }
 
-  if (duel.choice.id === ChoiceID.CONFIRM_DUEL_START) {
+  if (duel.choice.id === "CONFIRM_DUEL_START") {
     return "Start"
   }
   return null
@@ -78,11 +78,11 @@ export const DuelPrompt = ({ duel }: DuelPromptProps) => {
         <button
           className={`${buttonStyles.button}`}
           onClick={() => {
-            if (duel.choice.id === ChoiceID.CONFIRM_DUEL_START) {
+            if (duel.choice.id === "CONFIRM_DUEL_START") {
               const nextDuel = confirmStart_execute(duel)
               saveAndAdvanceDuelUntilChoice(nextDuel)
             }
-            if (duel.choice.id === ChoiceID.CONFIRM_DUEL_END) {
+            if (duel.choice.id === "CONFIRM_DUEL_END") {
               const nextDuel = duelTeardown(duel)
               saveAndAdvanceDuelUntilChoice(nextDuel)
 

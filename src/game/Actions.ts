@@ -1,6 +1,6 @@
 import { cardDataMap } from "./Cards"
 import { ChoiceID, DuelChoiceData, Target } from "./Choices"
-import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
+import { CardState, DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
 import {
   addAnimationToDuel,
   getAllCards,
@@ -8,6 +8,7 @@ import {
   getCurrentDuelPlayer,
   getDuelPlayerById,
   getOtherPlayerId,
+  getRandomInt,
   getSpaceById,
   isEnergySufficient,
 } from "./DuelHelpers"
@@ -120,7 +121,7 @@ export const turnStart = (inputDuel: DuelState) => {
 
   duel = playerDrawN(duel, { numberToDraw: 1, playerId: duel.currentPlayerId })
 
-  duel.choice = { id: ChoiceID.TAKE_TURN, playerId: duel.currentPlayerId }
+  duel.choice = { id: "TAKE_TURN", playerId: duel.currentPlayerId }
   return duel
 }
 
@@ -239,6 +240,13 @@ export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
   return duel
 }
 
+export const rollCardAttack = (cardState: CardState): number => {
+  if (cardState.attack === undefined) {
+    return 0
+  }
+  return cardState.attack.min + getRandomInt(cardState.attack.max + 1 - cardState.attack.min)
+}
+
 export const dealDamageToCreature = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
   let newDuel = duel
   const cardState = getCardByInstanceId(newDuel, cardInstanceId)
@@ -279,7 +287,7 @@ export const combat = (inputDuel: DuelState) => {
     humanAttackingCard.cardType === "creature" &&
     opponentAttackingCard === null
   ) {
-    dealDamageToPlayer(duel, "opponent", humanAttackingCard.attack ?? 0)
+    dealDamageToPlayer(duel, "opponent", rollCardAttack(humanAttackingCard))
   }
   // Opponent damage to Human face
   else if (
@@ -287,7 +295,7 @@ export const combat = (inputDuel: DuelState) => {
     opponentAttackingCard.cardType === "creature" &&
     humanAttackingCard === null
   ) {
-    dealDamageToPlayer(duel, "human", opponentAttackingCard.attack ?? 0)
+    dealDamageToPlayer(duel, "human", rollCardAttack(opponentAttackingCard))
   }
 
   duel = addAnimationToDuel(duel, {
@@ -299,12 +307,20 @@ export const combat = (inputDuel: DuelState) => {
 
   //Trigger effects of attacking cards
   const humanAfterAttackEffect = cardDataMap[humanAttackingCard?.name ?? ""]?.effects?.afterAttack
-  if (humanAfterAttackEffect !== undefined) {
-    duel = humanAfterAttackEffect(duel, "human")
+  if (humanAttackingCard && humanAfterAttackEffect !== undefined) {
+    duel = humanAfterAttackEffect(duel, "human", humanAttackingCard.instanceId)
   }
   const opponentAfterAttackEffect = cardDataMap[opponentAttackingCard?.name ?? ""]?.effects?.afterAttack
-  if (opponentAfterAttackEffect !== undefined) {
-    duel = opponentAfterAttackEffect(duel, "human")
+  if (opponentAttackingCard && opponentAfterAttackEffect !== undefined) {
+    duel = opponentAfterAttackEffect(duel, "opponent", opponentAttackingCard.instanceId)
+  }
+
+  // Check for death & remove cards
+  if (humanAttackingCard && getCardByInstanceId(duel, humanAttackingCard.instanceId).health === 0) {
+    removeCard(duel, humanAttackingCard.instanceId)
+  }
+  if (opponentAttackingCard && getCardByInstanceId(duel, opponentAttackingCard.instanceId).health === 0) {
+    removeCard(duel, opponentAttackingCard.instanceId)
   }
 
   return duel
@@ -320,15 +336,8 @@ export const creaturesTrade = (duel: DuelState, attackingCardId: string, defendi
     throw Error("Tried to engage in combat with non-creature")
   }
 
-  newDuel = dealDamageToCreature(newDuel, defendingCardId, attackingCard.attack ?? 0)
-  newDuel = dealDamageToCreature(newDuel, attackingCardId, defendingCard.attack ?? 0)
-
-  if (getCardByInstanceId(newDuel, attackingCardId).health === 0) {
-    removeCard(duel, attackingCardId)
-  }
-  if (getCardByInstanceId(newDuel, defendingCardId).health === 0) {
-    removeCard(duel, defendingCardId)
-  }
+  newDuel = dealDamageToCreature(newDuel, defendingCardId, rollCardAttack(attackingCard))
+  newDuel = dealDamageToCreature(newDuel, attackingCardId, rollCardAttack(defendingCard))
 
   return newDuel
 }

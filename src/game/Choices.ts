@@ -1,24 +1,9 @@
 import { autoPayElements } from "../react/hooks/useDuelUIStore"
 import { combat, creaturesMarchIfNecessary, duelSetup, endTurn, playCardFromHand } from "./Actions"
 import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
-import {
-  addAnimationToDuel,
-  getCardByInstanceId,
-  getCurrentDuelPlayer,
-  getNonCurrentDuelPlayer,
-  getSpaceById,
-  isEnergySufficient,
-} from "./DuelHelpers"
+import { getCardByInstanceId, getCurrentDuelPlayer, isEnergySufficient } from "./DuelHelpers"
 
-export enum ChoiceID {
-  CONFIRM_DUEL_START,
-  CONFIRM_DUEL_END,
-  TAKE_TURN,
-  DECLARE_ATTACKERS,
-  DECLARE_DEFENDS,
-  RESOLVE_ATTACKS,
-  CONFIRM_END_ATTACKS,
-}
+export type ChoiceID = "CONFIRM_DUEL_START" | "CONFIRM_DUEL_END" | "TAKE_TURN"
 
 export type ChoiceType = "target" | "targets" | "confirm"
 
@@ -132,7 +117,7 @@ export const takeTurn_executeAdvance = (duel: DuelState): DuelState => {
 }
 
 export const confirmEndAttacks_execute = (duel: DuelState): DuelState => {
-  duel.choice = { id: ChoiceID.TAKE_TURN, playerId: duel.choice.playerId }
+  duel.choice = { id: "TAKE_TURN", playerId: duel.choice.playerId }
 
   return duel
 }

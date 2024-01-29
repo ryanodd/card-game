@@ -91,7 +91,7 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
       playedEnergyThisTurn: false,
     },
 
-    choice: { id: ChoiceID.CONFIRM_DUEL_START, playerId: "human" },
+    choice: { id: "CONFIRM_DUEL_START", playerId: "human" },
     animationQueue: [],
     playerGoingFirst: "human",
     currentPlayerId: "human",

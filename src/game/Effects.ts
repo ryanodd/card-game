@@ -1,6 +1,6 @@
 import { removeCard } from "./Actions"
 import { DuelState, PlayerID } from "./DuelData"
-import { addAnimationToDuel, getDuelPlayerById, getOtherPlayerId } from "./DuelHelpers"
+import { addAnimationToDuel, getDuelPlayerById, getOtherPlayerId, getSpaceIdByOccupantId } from "./DuelHelpers"
 
 export const fire_energy = (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => {
   let duel = inputDuel
@@ -38,12 +38,14 @@ export const air_energy = (inputDuel: DuelState, playerId: PlayerID, instanceId:
   return duel
 }
 
-export const ember_foxling_after_attack = (inputDuel: DuelState, playerId: PlayerID) => {
+export const ember_foxling_after_attack = (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => {
   let duel = inputDuel
   const opponent = getDuelPlayerById(duel, getOtherPlayerId(playerId))
 
-  duel = addAnimationToDuel(duel, { id: "PAUSE", duration: 500 })
-
+  const attackingSpaceId = getSpaceIdByOccupantId(duel, instanceId)
+  if (attackingSpaceId) {
+    duel = addAnimationToDuel(duel, { id: "EMBER_FOXLING", duration: 600, attackingSpaceId: attackingSpaceId })
+  }
   opponent.health -= 1
   return duel
 }

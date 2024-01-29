@@ -1,0 +1,11 @@
+.debugMenuContent {
+  @apply absolute z-50 top-56 left-4 w-96 bg-slate-950 bg-opacity-50 rounded-md flex flex-col p-4 gap-2;
+}
+
+.codeSnippet {
+  @apply bg-zinc-700 overflow-x-scroll overflow-y-scroll p-2 whitespace-pre-wrap;
+}
+
+.debugMenuRow {
+  @apply justify-between;
+}

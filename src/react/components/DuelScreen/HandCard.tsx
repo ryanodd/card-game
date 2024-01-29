@@ -21,7 +21,7 @@ export const HandCard = ({ duel, cardState }: HandCardProps) => {
   const selectable =
     !duelWinner(duel) &&
     !("animation" in duel) &&
-    choiceId === ChoiceID.TAKE_TURN &&
+    choiceId === "TAKE_TURN" &&
     (!cardIdToBePlayed || cardState.instanceId === cardIdToBePlayed) &&
     takeTurn_getValidHandTargets(duel).includes(cardState.instanceId)
 

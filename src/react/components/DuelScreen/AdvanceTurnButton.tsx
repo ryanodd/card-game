@@ -16,7 +16,7 @@ const getText = (duel: DuelState): string | null => {
     return "Opponent's Turn"
   }
   const choiceId = duel.choice.id
-  if (choiceId === ChoiceID.TAKE_TURN) {
+  if (choiceId === "TAKE_TURN") {
     return "End Turn"
   }
   return null
@@ -37,9 +37,9 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
     !duelWinner(duel) &&
     !("animation" in duel) &&
     buttonText !== null &&
-    !(choiceId === ChoiceID.TAKE_TURN && cardIdToBePlayed !== null)
+    !(choiceId === "TAKE_TURN" && cardIdToBePlayed !== null)
 
-  const highlighted = pressable && choiceId === ChoiceID.TAKE_TURN && takeTurn_getValidHandTargets(duel).length === 0
+  const highlighted = pressable && choiceId === "TAKE_TURN" && takeTurn_getValidHandTargets(duel).length === 0
 
   return (
     <Button
@@ -48,7 +48,7 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
       } ${highlighted ? styles.highlighted : ""}
       }`}
       onClick={() => {
-        if (choiceId === ChoiceID.TAKE_TURN) {
+        if (choiceId === "TAKE_TURN") {
           const newDuel = takeTurn_executeAdvance(duel)
           saveAndAdvanceDuelUntilChoice(newDuel)
         }

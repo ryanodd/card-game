@@ -20,4 +20,8 @@ export type DuelAnimation = {
       humanAttackingSpaceId: string
       opponentAttackingSpaceId: string | null
     }
+  | {
+      id: "EMBER_FOXLING"
+      attackingSpaceId: string
+    }
 )

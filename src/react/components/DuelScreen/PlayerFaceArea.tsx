@@ -34,7 +34,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
     setTimeout(() => {
       setShaking(false)
     }, 225)
-  }, [player.health])
+  }, [player.health, animationKey])
 
   const onAnimationEnd = useCallback(() => {}, [])
 

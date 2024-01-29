@@ -1,4 +1,5 @@
 import { CardData, EnergyType, cardDataMap } from "./Cards"
+import { CardState } from "./DuelData"
 
 export const hasDuplicates = (array: any[]) => {
   return new Set(array).size !== array.length
@@ -40,4 +41,20 @@ export const sortCardNames = (cardNames: string[]) => {
     }
     return -1
   })
+}
+
+export const getAttackText = (cardData: CardData, cardState?: CardState) => {
+  // apply buffs/debuffs
+  if (cardState !== undefined) {
+  }
+  if (cardData.attack === undefined) {
+    return ""
+  }
+
+  const minAttack = cardData.attack.min
+  const maxAttack = cardData.attack.max
+  if (minAttack === maxAttack) {
+    return minAttack
+  }
+  return `${minAttack}~${maxAttack}`
 }

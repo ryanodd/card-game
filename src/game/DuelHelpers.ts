@@ -1,7 +1,10 @@
+import { useGameStore } from "../react/hooks/useGameStore"
 import { DuelAnimation } from "./Animations"
 import { AnimatedDuelState, CardState, DuelState, EnergyCounts, PlayerID, SpaceState } from "./DuelData"
 import { random } from "./randomNumber"
 
+// Generates a random int from 0 to max-1
+// Should use game seed randomness
 export const getRandomInt = (max: number): number => {
   return Math.floor(random() * max)
 }
@@ -96,6 +99,22 @@ export const getOccupantIdBySpaceId = (duel: DuelState, spaceId: string): string
   return occupant.instanceId
 }
 
+export const getSpaceIdByOccupantId = (duel: DuelState, creatureId: string): string | null => {
+  let spaceId = null
+  duel.human.creatureSpaces.forEach((creatureSpace) => {
+    if (creatureSpace.occupant?.instanceId === creatureId) {
+      spaceId = creatureSpace.id
+    }
+  })
+  duel.opponent.creatureSpaces.forEach((creatureSpace) => {
+    if (creatureSpace.occupant?.instanceId === creatureId) {
+      spaceId = creatureSpace.id
+    }
+  })
+
+  return spaceId
+}
+
 export const isEnergySufficient = (energy: EnergyCounts, cost: EnergyCounts, mustMatchExactly?: boolean): boolean => {
   let remainingEnergyForNeutral = 0
   if (energy.fire < cost.fire) {
@@ -141,11 +160,17 @@ export const addAnimationToDuel = (inputDuel: DuelState, animation: DuelAnimatio
     throw Error("Tried to add an animation to a non-static duel")
   }
 
+  const game = useGameStore.getState().game
+
   let duel = inputDuel
+  // Little trick to get the duelData without the animation?
   const { animationQueue: omittedAnimationQueue, ...duelCopy } = window.structuredClone(duel)
+
+  const animationMultiplier = game.settings.debug.enabled ? game.settings.debug.animationMultiplier : 1
+
   duel.animationQueue.push({
     ...duelCopy,
-    animation,
+    animation: { ...animation, duration: animation.duration * animationMultiplier },
   })
   return duel
 }

@@ -3,10 +3,12 @@ import cardStyles from "../Card.module.css"
 import inventoryStyles from "./Inventory.module.css"
 import Image from "next/image"
 import { Tooltip } from "../Tooltip"
-import { DetailedCard, getCostIcons } from "../DetailedCard"
+import { CardDetailed, getCostIcons } from "../CardDetailed"
 import { useDraggable } from "@dnd-kit/core"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
+import { InventoryCardFocusDialog } from "./InventoryCardFocusDialog"
+import { getAttackText } from "@/src/game/helpers"
 
 export type CardProps = {
   cardData: CardData
@@ -17,32 +19,18 @@ export const InventoryCard = ({ cardData }: CardProps) => {
     id: `draggable-inventory-card-${cardData.name}`,
   })
 
+  const onClick = useCallback(() => {
+    console.log("I was clicked!")
+  }, [])
+
   return (
-    <div
-      className={`${cardStyles.card} ${inventoryStyles.inventory_card_size} ${cardStyles.card_border} relative p-1 gap-1 flex flex-col z-40`}
-      data-background={cardData.energyType}
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-    >
-      <div className="flex gap-0.5 items-center">
-        {getCostIcons(cardData)}
-        <h2 className="ml-auto text-sm text-neutral-900 tracking-tight line-clamp-1">{cardData.name}</h2>
-      </div>
-      <div className={`${cardStyles.image_border} relative`}>
-        <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
-      </div>
-      {cardData.text && <p className={`${cardStyles.cardText} leading-none text-md`}>{cardData.text}</p>}
-      {cardData.attack !== undefined && (
-        <div className="w-9 h-9 rounded-tr-xl bg-red-500 absolute bottom-0 left-0 flex border-t border-r border-neutral-900 pr-0.5 justify-center items-center">
-          <h2 className="text-2xl font-semibold">{cardData.attack}</h2>
-        </div>
-      )}
-      {cardData.health !== undefined && (
-        <div className="w-9 h-9 rounded-tl-xl bg-stone-500 absolute bottom-0 right-0 flex border-t border-l border-neutral-900 justify-center items-center">
-          <h2 className="text-2xl font-semibold">{cardData.health}</h2>
-        </div>
-      )}
-    </div>
+    <InventoryCardFocusDialog
+      cardData={cardData}
+      trigger={
+        <button ref={setNodeRef} {...attributes} {...listeners} onClick={onClick}>
+          <CardDetailed cardData={cardData} />
+        </button>
+      }
+    ></InventoryCardFocusDialog>
   )
 }

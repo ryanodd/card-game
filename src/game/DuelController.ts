@@ -4,7 +4,7 @@ import { AnimatedDuelState, DuelState } from "./DuelData"
 import { addAnimationToDuel, duelWinner } from "./DuelHelpers"
 import { GameState } from "./GameData"
 import { useGameStore } from "../react/hooks/useGameStore"
-import { getDuelState, useDuelState } from "../react/hooks/useDuelState"
+import { getDuelState } from "../react/hooks/useDuelState"
 import { Deck } from "./Deck"
 import { ChoiceID } from "./Choices"
 
@@ -22,10 +22,7 @@ export const resetDuelUIStore = (duel: DuelState) => {
 
 export const saveAndAdvanceDuelUntilChoice = (inputDuel: DuelState) => {
   let duel = inputDuel
-
   const { setDuel } = getDuelState()
-  setDuel(duel)
-  useGameStore.getState().rerender()
 
   // Animation Time
   if (!("animationQueue" in duel)) {
@@ -44,23 +41,38 @@ export const saveAndAdvanceDuelUntilChoice = (inputDuel: DuelState) => {
       saveAndAdvanceDuelUntilChoice(duelToAnimate) // Caution - this is recursion until animationQueue is done
     }, nextAnimation.duration)
 
+    resetDuelUIStore(duel)
+    setDuel(duel)
+    useGameStore.getState().rerender()
     return
   }
 
   if (duelWinner(duel)) {
-    duel.choice = { id: ChoiceID.CONFIRM_DUEL_END, playerId: "human" }
+    duel.choice = { id: "CONFIRM_DUEL_END", playerId: "human" }
     resetDuelUIStore(duel)
+
+    resetDuelUIStore(duel)
+    setDuel(duel)
+    useGameStore.getState().rerender()
     return
   }
 
   // Execute choices for opponent until human choice is next
   if (duel.choice.playerId === "opponent") {
+    // Animate a pause
+    duel = addAnimationToDuel(duel, { id: "PAUSE", duration: 800 })
+    resetDuelUIStore(duel)
+    setDuel(duel)
+    useGameStore.getState().rerender()
+
+    // Render the choice having been made
     duel = executeChoiceForOpponent(duel)
-    duel = addAnimationToDuel(duel, { id: "PAUSE", duration: 1200 })
     saveAndAdvanceDuelUntilChoice(duel)
     return
   }
 
   // player choice
   resetDuelUIStore(duel)
+  setDuel(duel)
+  useGameStore.getState().rerender()
 }

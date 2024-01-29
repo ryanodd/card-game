@@ -4,7 +4,7 @@
 
 .button {
   /* Default size: small */
-  @apply py-1.5 px-3 rounded-md text-lg;
+  @apply py-1.5 px-3 rounded-md text-base;
 }
 
 .button[data-size="large"] {

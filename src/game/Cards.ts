@@ -8,15 +8,19 @@ export type CardType = "creature" | "spell" | "energy"
 export type CardData = {
   name: string
   imageSrc: string
+  imageCenterYPercent: number
   cardType: CardType
   energyType: EnergyType | "multi" | "neutral"
   text?: string
   cost: EnergyCounts
-  attack?: number
+  attack?: {
+    min: number
+    max: number
+  }
   health?: number
   effects?: {
     summon?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
-    afterAttack?: (inputDuel: DuelState, playerId: PlayerID) => DuelState
+    afterAttack?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
   }
 }
 
@@ -25,6 +29,7 @@ let cards: CardData[] = []
 cards.push({
   name: "Fire Energy",
   imageSrc: "/card-art/energyFire.png",
+  imageCenterYPercent: 50,
   energyType: "fire",
   cardType: "energy",
   cost: {
@@ -42,6 +47,7 @@ cards.push({
 cards.push({
   name: "Water Energy",
   imageSrc: "/card-art/energyWater.png",
+  imageCenterYPercent: 50,
   energyType: "water",
   cardType: "energy",
   cost: {
@@ -59,6 +65,7 @@ cards.push({
 cards.push({
   name: "Earth Energy",
   imageSrc: "/card-art/energyEarth.png",
+  imageCenterYPercent: 53,
   energyType: "earth",
   cardType: "energy",
   cost: {
@@ -76,6 +83,7 @@ cards.push({
 cards.push({
   name: "Air Energy",
   imageSrc: "/card-art/energyAir.png",
+  imageCenterYPercent: 50,
   energyType: "air",
   cardType: "energy",
   cost: {
@@ -93,9 +101,13 @@ cards.push({
 cards.push({
   name: "Golden Friend",
   imageSrc: "/card-art/goldenFriend.png",
+  imageCenterYPercent: 50,
   energyType: "neutral",
   cardType: "creature",
-  attack: 2,
+  attack: {
+    min: 2,
+    max: 2,
+  },
   health: 2,
   cost: {
     neutral: 2,
@@ -106,13 +118,18 @@ cards.push({
   },
 })
 
+// Support: the opposing active creature has a 20% chance of getting poisoned
 cards.push({
   name: "Snake Network",
   imageSrc: "/card-art/snakeNetwork.png",
+  imageCenterYPercent: 75,
   energyType: "earth",
   cardType: "creature",
-  attack: 1,
-  health: 4,
+  attack: {
+    min: 0,
+    max: 1,
+  },
+  health: 3,
   cost: {
     neutral: 0,
     fire: 0,
@@ -125,9 +142,13 @@ cards.push({
 cards.push({
   name: "Ember Foxling",
   imageSrc: "/card-art/emberFoxling.png",
+  imageCenterYPercent: 70,
   energyType: "fire",
   cardType: "creature",
-  attack: 2,
+  attack: {
+    min: 2,
+    max: 2,
+  },
   health: 1,
   cost: {
     neutral: 0,
@@ -145,9 +166,13 @@ cards.push({
 cards.push({
   name: "Winged Bull",
   imageSrc: "/card-art/wingedBull.png",
+  imageCenterYPercent: 24,
   energyType: "air",
   cardType: "creature",
-  attack: 3,
+  attack: {
+    min: 2,
+    max: 4,
+  },
   health: 2,
   cost: {
     neutral: 1,
@@ -161,9 +186,13 @@ cards.push({
 cards.push({
   name: "Greenwing Caller",
   imageSrc: "/card-art/greenwingCaller.png",
+  imageCenterYPercent: 40,
   energyType: "air",
   cardType: "creature",
-  attack: 3,
+  attack: {
+    min: 1,
+    max: 5,
+  },
   health: 5,
   cost: {
     neutral: 3,
@@ -177,10 +206,14 @@ cards.push({
 cards.push({
   name: "Elder Saurus",
   imageSrc: "/card-art/elderSaurus.png",
+  imageCenterYPercent: 45,
   energyType: "neutral",
   cardType: "creature",
-  attack: 6,
-  health: 6,
+  attack: {
+    min: 5,
+    max: 5,
+  },
+  health: 5,
   cost: {
     neutral: 5,
     fire: 0,
@@ -194,9 +227,13 @@ cards.push({
 cards.push({
   name: "Vengeful Flamewing",
   imageSrc: "/card-art/vengefulFlamewing.png",
+  imageCenterYPercent: 45,
   energyType: "multi",
   cardType: "creature",
-  attack: 3,
+  attack: {
+    min: 2,
+    max: 6,
+  },
   health: 4,
   cost: {
     neutral: 1,
@@ -210,14 +247,18 @@ cards.push({
 cards.push({
   name: "Sludge Amphibian",
   imageSrc: "/card-art/sludgeAmphibian.png",
+  imageCenterYPercent: 30,
   energyType: "water",
   cardType: "creature",
-  attack: 4,
-  health: 6,
+  attack: {
+    min: 3,
+    max: 4,
+  },
+  health: 4,
   cost: {
-    neutral: 2,
+    neutral: 3,
     fire: 0,
-    water: 2,
+    water: 1,
     earth: 0,
     air: 0,
   },
@@ -226,9 +267,13 @@ cards.push({
 cards.push({
   name: "Merfin Yodeler",
   imageSrc: "/card-art/merfinYodeler.png",
+  imageCenterYPercent: 20,
   energyType: "water",
   cardType: "creature",
-  attack: 2,
+  attack: {
+    min: 2,
+    max: 2,
+  },
   health: 3,
   cost: {
     neutral: 1,
@@ -242,10 +287,14 @@ cards.push({
 cards.push({
   name: "Girabu, Colossal Guardian",
   imageSrc: "/card-art/girabucolossalGuardian.png",
+  imageCenterYPercent: 51,
   energyType: "fire",
   cardType: "creature",
-  attack: 7,
-  health: 5,
+  attack: {
+    min: 4,
+    max: 6,
+  },
+  health: 7,
   cost: {
     neutral: 3,
     fire: 2,
@@ -255,12 +304,17 @@ cards.push({
   },
 })
 
+// When attacking this creature, your opponent has a 25% chance to miss.
 cards.push({
   name: "Fairy Buckfly",
   imageSrc: "/card-art/fairyBuckFly.png",
+  imageCenterYPercent: 18,
   energyType: "multi",
   cardType: "creature",
-  attack: 4,
+  attack: {
+    min: 2,
+    max: 5,
+  },
   health: 4,
   cost: {
     neutral: 1,
@@ -274,10 +328,14 @@ cards.push({
 cards.push({
   name: "Nyreth, Light Eater",
   imageSrc: "/card-art/nyrethLightEater.png",
+  imageCenterYPercent: 60,
   energyType: "multi",
   cardType: "creature",
-  attack: 8,
-  health: 6,
+  attack: {
+    min: 5,
+    max: 9,
+  },
+  health: 7,
   cost: {
     neutral: 5,
     fire: 1,
@@ -291,9 +349,13 @@ cards.push({
 cards.push({
   name: "Komodo Teacher",
   imageSrc: "/card-art/komodoTeacher.png",
+  imageCenterYPercent: 50,
   energyType: "water",
   cardType: "creature",
-  attack: 3,
+  attack: {
+    min: 1,
+    max: 4,
+  },
   health: 3,
   cost: {
     neutral: 2,
@@ -307,9 +369,13 @@ cards.push({
 cards.push({
   name: "Living Hillside",
   imageSrc: "/card-art/livingHillside.png",
-  energyType: "multi",
+  imageCenterYPercent: 20,
+  energyType: "earth",
   cardType: "creature",
-  attack: 2,
+  attack: {
+    min: 2,
+    max: 3,
+  },
   health: 6,
   cost: {
     neutral: 3,

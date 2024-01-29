@@ -17,17 +17,27 @@ import { DragOverlay, useDndContext } from "@dnd-kit/core"
 import { CardPreview } from "../components/CardPreview"
 import { cardDataMap } from "@/src/game/Cards"
 import { useHideTooltipWhileDragging } from "../hooks/useHideTooltipWhileDragging"
+import { DebugMenu } from "../components/DuelScreen/DebugMenu"
 
 export type DuelScreenProps = {}
 
 export const DuelScreen = ({}: DuelScreenProps) => {
-  const { duel: rawDuel, setDuel } = useDuelState()
+  const { duel: rawDuel } = useDuelState()
   const { game } = useGameStore()
 
   const duel = getAnimatedDuelState(rawDuel)
   useEffect(() => {
     resetDuelUIStore(duel)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Set up animation duration injection
+  useEffect(() => {
+    let root = document.documentElement
+    if ("animation" in duel) {
+      root.style.setProperty("--current-animation-duration", `${duel.animation.duration}ms`)
+    }
+  }, [duel])
 
   const { active } = useDndContext()
   const draggedCardInstanceId = active?.id?.toString?.()?.startsWith?.("draggable-card-")
@@ -68,6 +78,7 @@ export const DuelScreen = ({}: DuelScreenProps) => {
         </div>
         <DuelMenuButton />
       </div>
+      {game.settings.debug.enabled && <DebugMenu />}
       <DuelPrompt duel={duel} />
     </MainView>
   )

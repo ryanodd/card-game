@@ -4,10 +4,11 @@ import styles from "./Card.module.css"
 import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
 import { useState } from "react"
-import { DetailedCard } from "./DetailedCard"
+import { CardDetailed } from "./CardDetailed"
 import { Tooltip } from "./Tooltip"
 import { getAllSpaces } from "@/src/game/DuelHelpers"
 import { useDndContext } from "@dnd-kit/core"
+import { getAttackText } from "@/src/game/helpers"
 
 export type CardPreviewProps = {
   duel: DuelState
@@ -51,7 +52,11 @@ export const CardPreview = ({ duel, cardState, isTooltipOpen, setIsTooltipOpen }
     getAllSpaces(duel).find((space) => space.occupant?.instanceId === cardState.instanceId) !== undefined
 
   return (
-    <Tooltip content={<DetailedCard cardData={cardData} />} open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
+    <Tooltip
+      content={<CardDetailed cardData={cardData} cardState={cardState} />}
+      open={isTooltipOpen}
+      onOpenChange={setIsTooltipOpen}
+    >
       <div
         className={`${styles.card} ${styles.card_size} ${styles.card_border} relative`}
         data-background={cardData.energyType}
@@ -60,23 +65,30 @@ export const CardPreview = ({ duel, cardState, isTooltipOpen, setIsTooltipOpen }
         <div className={`${styles.image_border} relative`}>
           <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
         </div>
-        {cardState.cardType === "creature" && (
-          <div className="w-8 h-8 rounded-tr-xl bg-amber-500 absolute bottom-0 left-0 flex border-t border-r border-neutral-900 pr-0.5 justify-center items-center">
-            <h2 className="text-2xl font-semibold text-shadow">{cardState.attack}</h2>
-          </div>
-        )}
-        {cardData.text && <p className={`${styles.cardText} ${styles.cardPreviewText}`}>{cardData.text}</p>}
-        {cardState.health !== undefined && cardState.initialHealth !== undefined && (
-          <div className="w-8 h-8 rounded-tl-xl bg-red-500 absolute bottom-0 right-0 flex border-t border-l border-neutral-900 justify-center items-center">
-            <h2
-              className={`text-2xl font-semibold text-shadow ${
-                cardState.health < cardState.initialHealth ? "text-red-300" : ""
-              }`}
-            >
-              {cardState.health}
-            </h2>
-          </div>
-        )}
+        <div className={`${styles.cardFooter}`}>
+          {cardState.attack && (
+            <div className={`${styles.attackIndicator} pl-1.5 pr-2 h-8 rounded-tr-xl`}>
+              <h2
+                className={`${
+                  cardState.attack.min === cardState.attack.max ? "text-2xl" : "text-lg"
+                } font-semibold text-shadow`}
+              >
+                {getAttackText(cardData, cardState)}
+              </h2>
+            </div>
+          )}
+          {cardState.health !== undefined && cardState.initialHealth !== undefined && (
+            <div className={`${styles.healthIndicator} w-8 h-8 rounded-tl-xl`}>
+              <h2
+                className={`text-2xl font-semibold text-shadow ${
+                  cardState.health < cardState.initialHealth ? "text-red-300" : ""
+                }`}
+              >
+                {cardState.health}
+              </h2>
+            </div>
+          )}
+        </div>
       </div>
     </Tooltip>
   )

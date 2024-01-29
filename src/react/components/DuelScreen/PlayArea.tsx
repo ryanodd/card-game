@@ -37,7 +37,7 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
   const humanPlayAreaSelectable =
     !duelWinner(duel) &&
     !("animation" in duel) &&
-    choiceId === ChoiceID.TAKE_TURN &&
+    choiceId === "TAKE_TURN" &&
     cardIdToBePlayed !== null &&
     takeTurn_getValidTargetsForCard(duel, cardIdToBePlayed, getEnergyCountsFromSelected(energySelected)).find(
       (target) => {
@@ -59,7 +59,7 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
         return
       }
       const draggedCardInstanceId = event.active.id.toString().split("draggable-card-")[1]
-      if (choiceId === ChoiceID.TAKE_TURN) {
+      if (choiceId === "TAKE_TURN") {
         const newDuel = takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: { targetType: "playArea", playerId: "human" },

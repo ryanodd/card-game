@@ -1,0 +1,28 @@
+/* Like standard dialogOverlay, but fades out on the right to show decklist */
+.dialogOverlay {
+  /* This is assuming the deckList is 20rem wide and at the right edge of the screen +1rem for padding */
+  /* mask-image: linear-gradient(to left, transparent, transparent 21rem, rgb(0 0 0) 21.01rem, rgb(0 0 0)); */
+
+  @apply bg-slate-950 fixed inset-0 z-50 opacity-50;
+  animation: overlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.dialogContent {
+  /* This is assuming the deckList is 20rem wide and at the right edge of the screen +1rem for padding */
+  /* left: calc(50% - (21rem / 2)); */
+  left: 50%;
+
+  @apply fixed top-1/2 rounded-md bg-opacity-50 z-50 flex flex-col items-center gap-2;
+  animation: contentShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  transform: translate(-50%, -50%);
+}

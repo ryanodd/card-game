@@ -24,7 +24,7 @@ export const CreatureSpace = ({ duel, playerId, index }: CreatureSpaceProps) => 
     playerId === "human" &&
     !duelWinner(duel) &&
     !("animation" in duel) &&
-    choiceId === ChoiceID.TAKE_TURN &&
+    choiceId === "TAKE_TURN" &&
     cardIdToBePlayed !== null &&
     takeTurn_getValidTargetsForCard(duel, cardIdToBePlayed, getEnergyCountsFromSelected(energySelected)).find(
       (target) => {
@@ -44,6 +44,9 @@ export const CreatureSpace = ({ duel, playerId, index }: CreatureSpaceProps) => 
     (duel.animation.humanAttackingSpaceId === spaceState.id ||
       duel.animation.opponentAttackingSpaceId === spaceState.id)
 
+  const animationEmberFoxling =
+    "animation" in duel && duel.animation.id === "EMBER_FOXLING" && duel.animation.attackingSpaceId === spaceState.id
+
   const DROPPABLE_ID = `droppable-${spaceState.id}`
   const { isOver, setNodeRef } = useDroppable({ id: DROPPABLE_ID, disabled: !selectable })
   useDndMonitor({
@@ -56,7 +59,7 @@ export const CreatureSpace = ({ duel, playerId, index }: CreatureSpaceProps) => 
         return
       }
       const draggedCardInstanceId = event.active.id.toString().split("draggable-card-")[1]
-      if (choiceId === ChoiceID.TAKE_TURN) {
+      if (choiceId === "TAKE_TURN") {
         const newDuel = takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: { targetType: "space", spaceId: spaceState.id },
@@ -76,6 +79,7 @@ export const CreatureSpace = ({ duel, playerId, index }: CreatureSpaceProps) => 
       data-dragging-over={isOver}
       data-animation-attack-start={animationAttackStart}
       data-animation-attack-end={animationAttackEnd}
+      data-animation-ember-foxling={animationEmberFoxling}
       data-player-id={playerId}
       className={`${index % 2 === 0 ? "bg-slate-200" : "bg-slate-300"} ${styles.space}`}
     >

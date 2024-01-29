@@ -1,5 +1,5 @@
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
-import { DeckListCard } from "./DeckListCard"
+import { DECK_LIST_CARD_IMAGE_WIDTH_REMS, DECK_LIST_CARD_WIDTH_REMS, DeckListCard } from "./DeckListCard"
 import { cardDataMap } from "@/src/game/Cards"
 import { sortCardNames } from "@/src/game/helpers"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
@@ -47,6 +47,12 @@ export const DeckList = () => {
       ref={setNodeRef}
       className={`${styles.deckList} bg-stone-800 p-1 flex flex-col gap-1 ${isOver ? "brightness-125" : ""}`}
     >
+      {/*
+       * for image cropping reasons, the image determines the width of this deck list.
+       * When we're empty, maintain width with this empty div.
+       */}
+      {editDeck.deck.cardNames.length === 0 && <div style={{ width: `${DECK_LIST_CARD_WIDTH_REMS}rem` }} />}
+
       {[...(Object.keys(cardTotalsMap) as unknown as number[])].map((cardNo) => (
         <DeckListCard key={cardNo} cardNumber={cardNo} quantity={cardTotalsMap[cardNo]} />
       ))}

@@ -13,7 +13,7 @@ export const EditDeckCancelDialog = () => {
         id: "manageDecks",
       },
     })
-  }, [])
+  }, [game, setGame])
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -24,7 +24,7 @@ export const EditDeckCancelDialog = () => {
         <Dialog.Content className={`${styles.dialogContent}`}>
           <Dialog.Title className={`${styles.dialogTitle}`}>Cancel</Dialog.Title>
           <Dialog.Description className={`${styles.dialogDescription}`}>
-            Are you sure you want to cancel?
+            Are you sure you want to cancel without saving?
           </Dialog.Description>
           <Dialog.Close asChild>
             <button className={`${styles.dialogCloseButton}`}>Close</button>
