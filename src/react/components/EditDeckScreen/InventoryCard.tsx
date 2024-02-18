@@ -19,9 +19,7 @@ export const InventoryCard = ({ cardData }: CardProps) => {
     id: `draggable-inventory-card-${cardData.name}`,
   })
 
-  const onClick = useCallback(() => {
-    console.log("I was clicked!")
-  }, [])
+  const onClick = useCallback(() => {}, [])
 
   return (
     <InventoryCardFocusDialog

@@ -107,7 +107,8 @@ export const deckMap = {
       "Elder Saurus",
       "Elder Saurus",
       "Elder Saurus",
-      "Elder Saurus",
+
+      "Stegowulf",
 
       "Living Hillside",
       "Living Hillside",

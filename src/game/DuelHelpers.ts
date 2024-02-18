@@ -163,7 +163,7 @@ export const addAnimationToDuel = (inputDuel: DuelState, animation: DuelAnimatio
   const game = useGameStore.getState().game
 
   let duel = inputDuel
-  // Little trick to get the duelData without the animation?
+  // Little trick to get the duelData without the animation
   const { animationQueue: omittedAnimationQueue, ...duelCopy } = window.structuredClone(duel)
 
   const animationMultiplier = game.settings.debug.enabled ? game.settings.debug.animationMultiplier : 1

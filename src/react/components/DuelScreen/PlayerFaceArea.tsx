@@ -17,6 +17,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
   const { energySelected } = useDuelUIStore()
   const player = getDuelPlayerById(duel, playerId)
 
+  // Animate when health is lost
   const oldHealthValueRef = useRef(player.health)
   const [animatedHealthValue, setAnimatedHealthValue] = useState<number | null>(null)
   const [animationKey, setAnimationKey] = useState<number>(0)

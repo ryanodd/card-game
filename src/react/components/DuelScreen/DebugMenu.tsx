@@ -8,7 +8,7 @@ import { useCallback } from "react"
 
 export type DebugMenuProps = {}
 
-const animationDurationMultiplierOptions = [0.5, 1, 2, 4, 8]
+const animationDurationMultiplierOptions = [0.25, 0.5, 1, 2, 4, 8, 16]
 
 export const DebugMenu = ({}: DebugMenuProps) => {
   const { duel: rawDuel, setDuel } = useDuelState()

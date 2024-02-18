@@ -2,7 +2,6 @@ import * as MenuButton from "@radix-ui/react-dropdown-menu"
 import { Button } from "../designSystem/Button"
 import styles from "../designSystem/MenuButton.module.css"
 import { useCallback } from "react"
-import { useDuelState } from "../../hooks/useDuelState"
 import { useGameStore } from "../../hooks/useGameStore"
 import { rollCardAttack } from "@/src/game/Actions"
 

@@ -5,10 +5,13 @@ export type EnergyType = "neutral" | "fire" | "water" | "earth" | "air"
 
 export type CardType = "creature" | "spell" | "energy"
 
+export type Rarity = "base" | "common" | "uncommon" | "rare" | "epic" | "mythic"
+
 export type CardData = {
   name: string
   imageSrc: string
   imageCenterYPercent: number
+  rarity: Rarity
   cardType: CardType
   energyType: EnergyType | "multi" | "neutral"
   text?: string
@@ -30,6 +33,7 @@ cards.push({
   name: "Fire Energy",
   imageSrc: "/card-art/energyFire.png",
   imageCenterYPercent: 50,
+  rarity: "base",
   energyType: "fire",
   cardType: "energy",
   cost: {
@@ -48,6 +52,7 @@ cards.push({
   name: "Water Energy",
   imageSrc: "/card-art/energyWater.png",
   imageCenterYPercent: 50,
+  rarity: "base",
   energyType: "water",
   cardType: "energy",
   cost: {
@@ -66,6 +71,7 @@ cards.push({
   name: "Earth Energy",
   imageSrc: "/card-art/energyEarth.png",
   imageCenterYPercent: 53,
+  rarity: "base",
   energyType: "earth",
   cardType: "energy",
   cost: {
@@ -84,6 +90,7 @@ cards.push({
   name: "Air Energy",
   imageSrc: "/card-art/energyAir.png",
   imageCenterYPercent: 50,
+  rarity: "base",
   energyType: "air",
   cardType: "energy",
   cost: {
@@ -102,6 +109,7 @@ cards.push({
   name: "Golden Friend",
   imageSrc: "/card-art/goldenFriend.png",
   imageCenterYPercent: 50,
+  rarity: "common",
   energyType: "neutral",
   cardType: "creature",
   attack: {
@@ -123,6 +131,7 @@ cards.push({
   name: "Snake Network",
   imageSrc: "/card-art/snakeNetwork.png",
   imageCenterYPercent: 75,
+  rarity: "uncommon",
   energyType: "earth",
   cardType: "creature",
   attack: {
@@ -143,6 +152,7 @@ cards.push({
   name: "Ember Foxling",
   imageSrc: "/card-art/emberFoxling.png",
   imageCenterYPercent: 70,
+  rarity: "uncommon",
   energyType: "fire",
   cardType: "creature",
   attack: {
@@ -167,6 +177,7 @@ cards.push({
   name: "Winged Bull",
   imageSrc: "/card-art/wingedBull.png",
   imageCenterYPercent: 24,
+  rarity: "common",
   energyType: "air",
   cardType: "creature",
   attack: {
@@ -187,6 +198,7 @@ cards.push({
   name: "Greenwing Caller",
   imageSrc: "/card-art/greenwingCaller.png",
   imageCenterYPercent: 40,
+  rarity: "common",
   energyType: "air",
   cardType: "creature",
   attack: {
@@ -207,6 +219,7 @@ cards.push({
   name: "Elder Saurus",
   imageSrc: "/card-art/elderSaurus.png",
   imageCenterYPercent: 45,
+  rarity: "common",
   energyType: "neutral",
   cardType: "creature",
   attack: {
@@ -228,6 +241,7 @@ cards.push({
   name: "Vengeful Flamewing",
   imageSrc: "/card-art/vengefulFlamewing.png",
   imageCenterYPercent: 45,
+  rarity: "rare",
   energyType: "multi",
   cardType: "creature",
   attack: {
@@ -248,6 +262,7 @@ cards.push({
   name: "Sludge Amphibian",
   imageSrc: "/card-art/sludgeAmphibian.png",
   imageCenterYPercent: 30,
+  rarity: "common",
   energyType: "water",
   cardType: "creature",
   attack: {
@@ -268,6 +283,7 @@ cards.push({
   name: "Merfin Yodeler",
   imageSrc: "/card-art/merfinYodeler.png",
   imageCenterYPercent: 20,
+  rarity: "common",
   energyType: "water",
   cardType: "creature",
   attack: {
@@ -288,6 +304,7 @@ cards.push({
   name: "Girabu, Colossal Guardian",
   imageSrc: "/card-art/girabucolossalGuardian.png",
   imageCenterYPercent: 51,
+  rarity: "mythic",
   energyType: "fire",
   cardType: "creature",
   attack: {
@@ -309,6 +326,7 @@ cards.push({
   name: "Fairy Buckfly",
   imageSrc: "/card-art/fairyBuckFly.png",
   imageCenterYPercent: 18,
+  rarity: "rare",
   energyType: "multi",
   cardType: "creature",
   attack: {
@@ -329,6 +347,7 @@ cards.push({
   name: "Nyreth, Light Eater",
   imageSrc: "/card-art/nyrethLightEater.png",
   imageCenterYPercent: 60,
+  rarity: "mythic",
   energyType: "multi",
   cardType: "creature",
   attack: {
@@ -350,6 +369,7 @@ cards.push({
   name: "Komodo Teacher",
   imageSrc: "/card-art/komodoTeacher.png",
   imageCenterYPercent: 50,
+  rarity: "epic",
   energyType: "water",
   cardType: "creature",
   attack: {
@@ -370,6 +390,7 @@ cards.push({
   name: "Living Hillside",
   imageSrc: "/card-art/livingHillside.png",
   imageCenterYPercent: 20,
+  rarity: "uncommon",
   energyType: "earth",
   cardType: "creature",
   attack: {
@@ -379,6 +400,27 @@ cards.push({
   health: 6,
   cost: {
     neutral: 3,
+    fire: 0,
+    water: 0,
+    earth: 1,
+    air: 0,
+  },
+})
+
+cards.push({
+  name: "Stegowulf",
+  imageSrc: "/card-art/stegowulf.png",
+  imageCenterYPercent: 20,
+  rarity: "epic",
+  energyType: "earth",
+  cardType: "creature",
+  attack: {
+    min: 3,
+    max: 3,
+  },
+  health: 3,
+  cost: {
+    neutral: 2,
     fire: 0,
     water: 0,
     earth: 1,
