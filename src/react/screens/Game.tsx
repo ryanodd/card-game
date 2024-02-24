@@ -22,7 +22,7 @@ export const Game = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 6,
+        distance: 2,
       },
     })
   )
