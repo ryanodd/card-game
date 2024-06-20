@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { getCardByInstanceId, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
-import { DuelState, EnergyCounts, PlayerState, SpaceID } from "@/src/game/DuelData"
+import { DuelState, EnergyCounts, PlayerState } from "@/src/game/DuelData"
 import { v4 } from "uuid"
 import { EnergyType } from "@/src/game/Cards"
 
@@ -52,16 +52,30 @@ export const getEnergyCountsFromSelected = (energySelected: EnergySelected): Ene
 }
 
 export type DuelUIStorePayload = {
-  cardIdToBePlayed: string | null
-  setCardIdToBePlayed: (cardId: string | null) => void
+  cardIdDragging: string | null
+  setCardIdDragging: (cardId: string | null) => void
+
+  humanHandCardIds: string[]
+  setHumanHandCardIds: (humanHandCardIds: string[]) => void
+
+  humanAllRowCardIds: string[][]
+  setHumanAllRowCardIds: (humanAllRowCardIds: string[][]) => void
 
   energySelected: EnergySelected
   setEnergySelected: (energy: EnergySelected) => void
+
+  resetEnergySelected: (duel: DuelState) => void
 }
 
 export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
-  cardIdToBePlayed: null,
-  setCardIdToBePlayed: (cardId) => set({ cardIdToBePlayed: cardId }),
+  cardIdDragging: null,
+  setCardIdDragging: (cardId) => set({ cardIdDragging: cardId }),
+
+  humanHandCardIds: [],
+  setHumanHandCardIds: (humanHandCardIds) => set({ humanHandCardIds }),
+
+  humanAllRowCardIds: [[], []],
+  setHumanAllRowCardIds: (humanAllRowCardIds) => set({ humanAllRowCardIds }),
 
   energySelected: {
     neutral: [],
@@ -71,6 +85,8 @@ export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
     air: [],
   },
   setEnergySelected: (newEnergy) => set({ energySelected: newEnergy }),
+
+  resetEnergySelected: () => {},
 }))
 
 export const selectEnergyOfType = (
@@ -94,13 +110,13 @@ export const selectEnergyOfType = (
 
 export const autoPayElements = (
   duel: DuelState,
-  cardIdToBePlayed: string,
+  cardIdDragging: string,
   inputSelectedEnergy: EnergySelected
 ): EnergySelected => {
   let selectedEnergy = window.structuredClone(inputSelectedEnergy)
   const playerEnergy = getCurrentDuelPlayer(duel).energy
   const selectedEnergyCounts = getEnergyCountsFromSelected(inputSelectedEnergy)
-  const card = getCardByInstanceId(duel, cardIdToBePlayed)
+  const card = getCardByInstanceId(duel, cardIdDragging)
 
   let neutralNeeded = Math.max(0, card.cost.neutral - selectedEnergyCounts.neutral)
   let fireNeeded = Math.max(0, card.cost.fire - selectedEnergyCounts.fire)

@@ -4,8 +4,6 @@ import { DuelChoiceData } from "./Choices"
 
 export type PlayerID = "human" | "opponent"
 
-export type SpaceID = string
-
 export type EnergyCounts = {
   neutral: number
   fire: number
@@ -20,18 +18,9 @@ export type CardState = {
 
   cost: EnergyCounts
   cardType: CardType
-  attack?: {
-    min: number
-    max: number
-  }
+  attack?: number
   health?: number
   initialHealth?: number
-}
-
-export type SpaceState = {
-  id: SpaceID
-  index: number
-  occupant: CardState | null
 }
 
 export type PlayerState = {
@@ -40,12 +29,16 @@ export type PlayerState = {
   hand: CardState[]
   deck: CardState[]
   discard: CardState[]
-  creatureSpaces: [SpaceState, SpaceState, SpaceState, SpaceState]
+  rows: CardState[][]
   energy: EnergyCounts
   energyIncome: EnergyCounts
   playedEnergyThisTurn: boolean
   drawnDead: boolean
 }
+
+// Just want to make a note about these: it's confusing the way we've got AnimatedDuelStates inside StaticDuelState.
+// An improvement could be to NOT have an animationQueue inside StaticDuelState.
+// when a duel state changes, we go through many DuelStates with animations, each with an animationType & duration.
 
 export type StaticDuelState = {
   id: "duel"
@@ -64,4 +57,5 @@ export type AnimatedDuelState = Omit<StaticDuelState, "animationQueue"> & {
   animation: DuelAnimation
 }
 
+// Like, why?? I think we should have an AnimationManager or something.
 export type DuelState = StaticDuelState | AnimatedDuelState

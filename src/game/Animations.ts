@@ -12,16 +12,14 @@ export type DuelAnimation = {
     }
   | {
       id: "ATTACK_START"
-      humanAttackingSpaceId: string
-      opponentAttackingSpaceId: string | null
+      rowIndex: number
     }
   | {
       id: "ATTACK_END"
-      humanAttackingSpaceId: string
-      opponentAttackingSpaceId: string | null
+      rowIndex: number
     }
   | {
       id: "EMBER_FOXLING"
-      attackingSpaceId: string
+      attackingCardId: string
     }
 )

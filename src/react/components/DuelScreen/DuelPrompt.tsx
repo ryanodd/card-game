@@ -12,7 +12,7 @@ export type DuelPromptProps = {
 }
 
 export const useGetPromptMessage = (duel: DuelState): string | null => {
-  const { cardIdToBePlayed, energySelected } = useDuelUIStore()
+  const { cardIdDragging, energySelected } = useDuelUIStore()
   const choiceId = duel.choice.id
 
   if (duelWinner(duel) === "human") {

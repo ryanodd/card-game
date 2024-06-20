@@ -6,18 +6,18 @@ import { EnergyIcon } from "./EnergyIcon"
 import { useState } from "react"
 import { CardDetailed } from "./CardDetailed"
 import { Tooltip } from "./Tooltip"
-import { getAllSpaces } from "@/src/game/DuelHelpers"
 import { useDndContext } from "@dnd-kit/core"
 import { getAttackText } from "@/src/game/helpers"
 
 export type CardPreviewProps = {
   duel: DuelState
   cardState: CardState
+  showCostIcons?: boolean
   isTooltipOpen?: boolean
   setIsTooltipOpen?: (open: boolean) => void
 }
 
-export const CardPreview = ({ duel, cardState, isTooltipOpen, setIsTooltipOpen }: CardPreviewProps) => {
+export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, setIsTooltipOpen }: CardPreviewProps) => {
   const cardData = cardDataMap[cardState.name]
 
   const getCostIcons = () => {
@@ -48,9 +48,6 @@ export const CardPreview = ({ duel, cardState, isTooltipOpen, setIsTooltipOpen }
     return icons
   }
 
-  const isOnField =
-    getAllSpaces(duel).find((space) => space.occupant?.instanceId === cardState.instanceId) !== undefined
-
   return (
     <Tooltip
       content={<CardDetailed cardData={cardData} cardState={cardState} />}
@@ -61,20 +58,14 @@ export const CardPreview = ({ duel, cardState, isTooltipOpen, setIsTooltipOpen }
         className={`${styles.card} ${styles.card_size} ${styles.card_border} relative`}
         data-background={cardData.energyType}
       >
-        {!isOnField && <div className="absolute -top-2 -left-2 z-20 flex">{getCostIcons()}</div>}
+        {showCostIcons && <div className="absolute -top-2 -left-2 z-20 flex">{getCostIcons()}</div>}
         <div className={`${styles.image_border} relative`}>
           <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
         </div>
         <div className={`${styles.cardFooter}`}>
           {cardState.attack && (
             <div className={`${styles.attackIndicator} pl-1.5 pr-2 h-8 rounded-tr-xl`}>
-              <h2
-                className={`${
-                  cardState.attack.min === cardState.attack.max ? "text-2xl" : "text-lg"
-                } font-semibold text-shadow`}
-              >
-                {getAttackText(cardData, cardState)}
-              </h2>
+              <h2 className={`${"text-2xl"} font-semibold text-shadow`}>{getAttackText(cardData, cardState)}</h2>
             </div>
           )}
           {cardState.health !== undefined && cardState.initialHealth !== undefined && (

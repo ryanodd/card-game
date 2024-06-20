@@ -8,13 +8,7 @@ import {
   takeTurn_getValidTargetsForCard,
 } from "./Choices"
 import { CardState, DuelState } from "./DuelData"
-import {
-  getCardByInstanceId,
-  getCurrentDuelPlayer,
-  getOccupantIdBySpaceId,
-  getRandomInt,
-  getSpaceById,
-} from "./DuelHelpers"
+import { getCardByInstanceId, getCurrentDuelPlayer, getRandomInt } from "./DuelHelpers"
 
 export const executeChoiceForOpponent = (inputDuel: DuelState): DuelState => {
   let duel = inputDuel

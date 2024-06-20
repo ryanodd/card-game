@@ -38,12 +38,7 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
       deck: createCardsFromNames(deck.cardNames),
       hand: [],
       discard: [],
-      creatureSpaces: [
-        { id: v4(), index: 0, occupant: null },
-        { id: v4(), index: 1, occupant: null },
-        { id: v4(), index: 2, occupant: null },
-        { id: v4(), index: 3, occupant: null },
-      ],
+      rows: [[], []],
       energy: {
         neutral: 0,
         fire: 0,
@@ -67,12 +62,7 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
       deck: createCardsFromNames(opponentDeck.cardNames),
       hand: [],
       discard: [],
-      creatureSpaces: [
-        { id: v4(), index: 0, occupant: null },
-        { id: v4(), index: 1, occupant: null },
-        { id: v4(), index: 2, occupant: null },
-        { id: v4(), index: 3, occupant: null },
-      ],
+      rows: [[], []],
       energy: {
         neutral: 0,
         fire: 0,

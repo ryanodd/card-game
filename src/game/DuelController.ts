@@ -14,10 +14,36 @@ export type DuelParams = {
 }
 
 export const resetDuelUIStore = (duel: DuelState) => {
-  useDuelUIStore.getState().setCardIdToBePlayed(null)
+  const uiState = useDuelUIStore.getState()
+  uiState.setCardIdDragging(null)
 
   const newEnergySelected = getEnergyButtonsForPlayer(duel.human)
-  useDuelUIStore.getState().setEnergySelected(newEnergySelected)
+  uiState.setEnergySelected(newEnergySelected)
+
+  // Reset hands
+  // The human hand is tricky, we need to maintain hand order.
+  const humanHandUICardIds = uiState.humanHandCardIds
+  const humanHandStateCardIds = duel.human.hand.map((cardState) => {
+    return cardState.instanceId
+  })
+  const newHumanHandUICardIds = [
+    ...humanHandUICardIds.filter((cardId) => {
+      return humanHandStateCardIds.includes(cardId)
+    }),
+    ...humanHandStateCardIds.filter((cardId) => {
+      return !humanHandUICardIds.includes(cardId)
+    }),
+  ]
+  uiState.setHumanHandCardIds(newHumanHandUICardIds)
+
+  // Reset rows
+  uiState.setHumanAllRowCardIds(
+    duel.human.rows.map((row) => {
+      return row.map((cardState) => {
+        return cardState.instanceId
+      })
+    })
+  )
 }
 
 export const saveAndAdvanceDuelUntilChoice = (inputDuel: DuelState) => {
@@ -50,8 +76,6 @@ export const saveAndAdvanceDuelUntilChoice = (inputDuel: DuelState) => {
   if (duelWinner(duel)) {
     duel.choice = { id: "CONFIRM_DUEL_END", playerId: "human" }
     resetDuelUIStore(duel)
-
-    resetDuelUIStore(duel)
     setDuel(duel)
     useGameStore.getState().rerender()
     return
@@ -60,14 +84,17 @@ export const saveAndAdvanceDuelUntilChoice = (inputDuel: DuelState) => {
   // Execute choices for opponent until human choice is next
   if (duel.choice.playerId === "opponent") {
     // Animate a pause
-    duel = addAnimationToDuel(duel, { id: "PAUSE", duration: 800 })
+    const PAUSE_DURATION_MS = 600
+    duel = addAnimationToDuel(duel, { id: "PAUSE", duration: PAUSE_DURATION_MS })
     resetDuelUIStore(duel)
     setDuel(duel)
     useGameStore.getState().rerender()
-
     // Render the choice having been made
-    duel = executeChoiceForOpponent(duel)
-    saveAndAdvanceDuelUntilChoice(duel)
+    setTimeout(() => {
+      duel = executeChoiceForOpponent(duel)
+      saveAndAdvanceDuelUntilChoice(duel)
+    }, PAUSE_DURATION_MS)
+
     return
   }
 

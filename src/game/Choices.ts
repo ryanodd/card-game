@@ -1,7 +1,8 @@
 import { autoPayElements } from "../react/hooks/useDuelUIStore"
-import { combat, creaturesMarchIfNecessary, duelSetup, endTurn, playCardFromHand } from "./Actions"
-import { DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
-import { getCardByInstanceId, getCurrentDuelPlayer, isEnergySufficient } from "./DuelHelpers"
+import { combat, duelSetup, endTurn, playCardFromHand } from "./Actions"
+import { cardDataMap } from "./Cards"
+import { DuelState, EnergyCounts, PlayerID } from "./DuelData"
+import { getCardByInstanceId, getCurrentDuelPlayer, getDuelPlayerById, isEnergySufficient } from "./DuelHelpers"
 
 export type ChoiceID = "CONFIRM_DUEL_START" | "CONFIRM_DUEL_END" | "TAKE_TURN"
 
@@ -25,18 +26,6 @@ export const confirmEnd_execute = (duel: DuelState): DuelState => {
 }
 
 export const takeTurn_getValidHandTargets = (duel: DuelState): string[] => {
-  // First, check if there are any valid spaces
-  const playerCreatureSpaces = getCurrentDuelPlayer(duel).creatureSpaces
-  const validSpaceIds: string[] = []
-  for (let x = 0; x < playerCreatureSpaces.length; x++) {
-    if (playerCreatureSpaces[x].occupant === null) {
-      validSpaceIds.push(playerCreatureSpaces[x].id)
-    }
-  }
-  if (validSpaceIds.length === 0) {
-    return []
-  }
-
   const playerHand = getCurrentDuelPlayer(duel).hand
   const energyCounts = getCurrentDuelPlayer(duel).energy
   const cardsAfforded = []
@@ -56,17 +45,43 @@ export const takeTurn_getValidHandTargets = (duel: DuelState): string[] => {
 
 export type Target =
   | {
-      targetType: "space"
-      spaceId: SpaceID
+      targetType: "rowSpace"
+      playerId: PlayerID
+      rowIndex: number
+      positionIndex: number
     }
   | {
       targetType: "playArea"
-      playerId: PlayerID
     }
   | {
       targetType: "player"
       playerId: PlayerID
     }
+
+export const getEnergyDefaultTargets = (duel: DuelState, playerId: PlayerID, instanceId: string): Target[] => {
+  if (getDuelPlayerById(duel, playerId).playedEnergyThisTurn) {
+    return []
+  }
+  return [{ targetType: "playArea" }]
+}
+
+export const getDefaultCreatureTargets = (duel: DuelState, playerId: PlayerID, instanceId: string) => {
+  const validTargets: Target[] = []
+  const playerRows = getDuelPlayerById(duel, duel.currentPlayerId).rows
+  for (let x = 0; x < playerRows.length; x++) {
+    const row = playerRows[x]
+    for (let y = 0; y <= row.length; y++) {
+      // <= , since adding a card to the n+1th index is valid
+      validTargets.push({
+        targetType: "rowSpace",
+        playerId: duel.currentPlayerId,
+        rowIndex: x,
+        positionIndex: y,
+      })
+    }
+  }
+  return validTargets
+}
 
 export const takeTurn_getValidTargetsForCard = (
   duel: DuelState,
@@ -76,21 +91,11 @@ export const takeTurn_getValidTargetsForCard = (
   if (energyToPay && !isEnergySufficient(energyToPay, getCardByInstanceId(duel, cardIdToPlay).cost, true)) {
     return []
   }
-  const validTargets: Target[] = []
-  const card = getCardByInstanceId(duel, cardIdToPlay)
-  const player = getCurrentDuelPlayer(duel)
 
-  if (card.cardType === "creature") {
-    const playerCreatureSpaces = getCurrentDuelPlayer(duel).creatureSpaces
-    for (let x = 0; x < playerCreatureSpaces.length; x++) {
-      if (playerCreatureSpaces[x].occupant === null) {
-        validTargets.push({ targetType: "space", spaceId: playerCreatureSpaces[x].id })
-      }
-    }
-  }
-  if (card.cardType === "energy" && !player.playedEnergyThisTurn) {
-    validTargets.push({ targetType: "playArea", playerId: duel.currentPlayerId })
-  }
+  const card = getCardByInstanceId(duel, cardIdToPlay)
+  const cardData = cardDataMap[card.name]
+  const validTargets = cardData.getValidTargets(duel, duel.currentPlayerId, cardIdToPlay)
+
   return validTargets
 }
 
@@ -110,9 +115,9 @@ export const takeTurn_executePlayCard = (
   })
   return duel
 }
+
 export const takeTurn_executeAdvance = (duel: DuelState): DuelState => {
   duel = combat(duel)
-  duel = creaturesMarchIfNecessary(duel)
   return endTurn(duel)
 }
 

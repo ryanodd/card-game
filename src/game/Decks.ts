@@ -12,6 +12,7 @@ export const deckMap = {
       "Fire Energy",
       "Fire Energy",
       "Fire Energy",
+      "Fire Energy",
 
       "Air Energy",
       "Air Energy",
@@ -48,8 +49,9 @@ export const deckMap = {
 
       "Elder Saurus",
       "Elder Saurus",
-      "Elder Saurus",
-      "Elder Saurus",
+
+      "Eerie Vision",
+      "Eerie Vision",
 
       "Girabu, Colossal Guardian",
       "Nyreth, Light Eater",
@@ -68,6 +70,7 @@ export const deckMap = {
       "Earth Energy",
       "Earth Energy",
       "Earth Energy",
+      "Earth Energy",
 
       "Water Energy",
       "Water Energy",
@@ -99,15 +102,15 @@ export const deckMap = {
       "Komodo Teacher",
       "Komodo Teacher",
 
-      "Sludge Amphibian",
       "Sludge Amphibian",
       "Sludge Amphibian",
       "Sludge Amphibian",
 
       "Elder Saurus",
       "Elder Saurus",
-      "Elder Saurus",
 
+      "Stegowulf",
+      "Stegowulf",
       "Stegowulf",
 
       "Living Hillside",

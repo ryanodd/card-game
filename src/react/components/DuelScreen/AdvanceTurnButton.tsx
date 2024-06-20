@@ -27,17 +27,13 @@ export type AdvanceTurnButtonProps = {
 }
 
 export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
-  const { cardIdToBePlayed } = useDuelUIStore()
+  const { cardIdDragging } = useDuelUIStore()
 
   const choiceId = duel.choice.id
 
   const buttonText = getText(duel)
   const pressable =
-    duel.choice.playerId !== "opponent" &&
-    !duelWinner(duel) &&
-    !("animation" in duel) &&
-    buttonText !== null &&
-    !(choiceId === "TAKE_TURN" && cardIdToBePlayed !== null)
+    duel.choice.playerId !== "opponent" && !duelWinner(duel) && !("animation" in duel) && buttonText !== null
 
   const highlighted = pressable && choiceId === "TAKE_TURN" && takeTurn_getValidHandTargets(duel).length === 0
 

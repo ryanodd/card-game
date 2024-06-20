@@ -27,6 +27,10 @@
   @apply bg-stone-300;
 }
 
+.button:disabled {
+  @apply bg-stone-400 border-stone-400;
+}
+
 .button[data-variant="destructive"] {
   @apply bg-red-500 text-white border-none;
 }

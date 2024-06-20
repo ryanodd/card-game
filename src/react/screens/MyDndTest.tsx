@@ -1,4 +1,3 @@
-import { DuelState } from "@/src/game/DuelData"
 import {
   DndContext,
   DragCancelEvent,
@@ -8,29 +7,16 @@ import {
   PointerSensor,
   TouchSensor,
   UniqueIdentifier,
-  useDraggable,
-  useDroppable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core"
-import {
-  AnimateLayoutChanges,
-  SortableContext,
-  arrayMove,
-  defaultAnimateLayoutChanges,
-  horizontalListSortingStrategy,
-  rectSortingStrategy,
-  useSortable,
-} from "@dnd-kit/sortable"
+import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from "@dnd-kit/sortable"
 import { useCallback, useState } from "react"
 import { CSS } from "@dnd-kit/utilities"
+import { GameBackground } from "../components/GameBackground"
+import { MainView } from "../components/MainView"
 
-// From https://codesandbox.io/p/sandbox/react-dndkit-multiple-containers-6wydy9?file=%2Fsrc%2Fexamples%2FSortable%2FMultipleContainers.tsx%3A46%2C1-47%2C61
-const animateLayoutChanges: AnimateLayoutChanges = (args) => defaultAnimateLayoutChanges({ ...args, wasDragging: true })
-
-export type MyDndTestItems = Record<UniqueIdentifier, UniqueIdentifier[]>
-
-const findContainerDroppableIdByDraggableId = (items: MyDndTestItems, id: UniqueIdentifier) => {
+const findContainerDroppableIdByDraggableId = (items: MyDndTestState, id: UniqueIdentifier) => {
   if (id in items) {
     return id
   }
@@ -38,19 +24,17 @@ const findContainerDroppableIdByDraggableId = (items: MyDndTestItems, id: Unique
   return Object.keys(items).find((key) => items[key].includes(id))
 }
 
-export type MyDndTestProps = {
-  duel: DuelState
-}
+export type MyDndTestState = Record<UniqueIdentifier, UniqueIdentifier[]>
+
+export type MyDndTestProps = {}
 
 export const MyDndTest = ({}: MyDndTestProps) => {
-  const [actualItems, setActualItems] = useState<MyDndTestItems>({
+  const [displayedItems, setDisplayedItems] = useState<MyDndTestState>({
     opponentHand: ["4", "5", "6"],
     row1: [],
     row2: ["7"],
     humanHand: ["1", "2", "3"],
   })
-
-  const [displayedItems, setDisplayedItems] = useState<MyDndTestItems>(actualItems)
 
   const [draggingId, setDraggingId] = useState<UniqueIdentifier | null>(null)
 
@@ -124,15 +108,18 @@ export const MyDndTest = ({}: MyDndTestProps) => {
       onDragOver={handleDragOver}
       onDragCancel={handleDragCancel}
     >
-      <div className="flex flex-col p-8 gap-8">
-        <MyDndTestRow droppableId="opponentHand" itemIds={displayedItems.opponentHand} />
-        <MyDndTestRow droppableId="row1" itemIds={displayedItems.row1} />
-        <MyDndTestRow droppableId="row2" itemIds={displayedItems.row2} />
-        <MyDndTestRow droppableId="humanHand" itemIds={displayedItems.humanHand} />
-      </div>
-      <DragOverlay>
-        {draggingId ? <MyDndTestItemSprite text={draggingId.toString()} isDraggingInOverlay /> : null}
-      </DragOverlay>
+      <MainView>
+        <GameBackground />
+        <div className="flex flex-col p-8 gap-8 bg-stone-300">
+          <MyDndTestRow droppableId="opponentHand" itemIds={displayedItems.opponentHand} />
+          <MyDndTestRow droppableId="row1" itemIds={displayedItems.row1} />
+          <MyDndTestRow droppableId="row2" itemIds={displayedItems.row2} />
+          <MyDndTestRow droppableId="humanHand" itemIds={displayedItems.humanHand} />
+        </div>
+        <DragOverlay>
+          {draggingId ? <MyDndTestItemSprite text={draggingId.toString()} isDraggingInOverlay /> : null}
+        </DragOverlay>
+      </MainView>
     </DndContext>
   )
 }
@@ -149,7 +136,6 @@ export const MyDndTestRow = ({ itemIds, droppableId }: MyDndTestRowProps) => {
       type: "container",
       children: itemIds,
     },
-    animateLayoutChanges,
   })
   const isOverContainer = over
     ? (droppableId === over.id && active?.data.current?.type !== "container") ||
@@ -157,12 +143,11 @@ export const MyDndTestRow = ({ itemIds, droppableId }: MyDndTestRowProps) => {
     : false
 
   return (
-    <SortableContext
-      items={itemIds}
-      // strategy={rectSortingStrategy}
-      strategy={horizontalListSortingStrategy}
-    >
-      <div className={` p-4 h-40 gap-4 flex bg-slate-500 ${isOverContainer ? "bg-slate-600" : ""}`} ref={setNodeRef}>
+    <SortableContext items={itemIds} strategy={horizontalListSortingStrategy}>
+      <div
+        className={` p-4 h-40 gap-4 flex border-2 border-slate-500 rounded-md ${isOverContainer ? "bg-slate-200" : ""}`}
+        ref={setNodeRef}
+      >
         {itemIds.map((itemId) => {
           return <DraggableMyDndTestItem key={itemId} draggableId={itemId} />
         })}
@@ -203,7 +188,7 @@ export const MyDndTestItemSprite = ({ text, isDraggingInRow, isDraggingInOverlay
     <div
       className={`${isDraggingInRow ? "opacity-20" : ""} ${
         isDraggingInOverlay ? "scale-105" : ""
-      } w-32 h-32 bg-indigo-400 flex justify-center items-center`}
+      } w-32 h-32 bg-rose-600 flex justify-center items-center`}
     >
       <p>{text}</p>
     </div>

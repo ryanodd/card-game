@@ -1,41 +1,53 @@
-.humanPlayArea {
-  grid-row: 2;
-  grid-column: 1 / 8;
+.playArea {
+  width: 1000px;
+  @apply p-1 rounded-sm bg-stone-500 flex flex-col gap-1 relative;
 }
 
-.opponentPlayArea {
-  grid-row: 1;
-  grid-column: 1 / 8;
+.playAreaDropTarget {
+  @apply absolute inset-0 z-20;
 }
 
-.humanPlayArea,
-.opponentPlayArea {
-  @apply bg-stone-300;
+.playAreaDropTarget[data-selectable="false"],
+.rowHalfDropTarget[data-selectable="false"] {
+  @apply h-0;
 }
 
-.humanPlayArea[data-highlighted="true"][data-dragging-over="false"],
-.opponentPlayArea[data-highlighted="true"][data-dragging-over="false"] {
+.playAreaDropTarget[data-highlighted="true"][data-dragging-over="false"],
+.rowHalfDropTarget[data-highlighted="true"][data-dragging-over="false"] {
   animation: highlight-animation 1s infinite;
 }
 
-.humanPlayArea[data-dragging-over="true"][data-selectable="true"],
-.opponentPlayArea[data-dragging-over="true"][data-selectable="true"] {
-  @apply bg-sky-200;
+.playAreaDropTarget[data-dragging-over="true"][data-selectable="true"],
+.rowHalfDropTarget[data-dragging-over="true"][data-selectable="true"] {
+  @apply bg-sky-200 opacity-40;
   filter: blur(1px) brightness(105%);
 }
 
+.row {
+  @apply flex gap-1 bg-opacity-50;
+}
+
+.rowHalf {
+  width: 80rem;
+  @apply h-48 bg-slate-800 bg-opacity-20 shadow-sm flex flex-row rounded-lg p-1 gap-1 items-center relative;
+}
+
+.rowHumanHalf {
+  @apply flex-row-reverse;
+}
+
+.rowHalfDropTarget {
+  @apply absolute inset-0;
+}
+
 @keyframes highlight-animation {
-  50% {
-    @apply bg-stone-100;
+  0% {
+    @apply bg-amber-100 opacity-5;
   }
-}
-
-.humanCreatureArea {
-  grid-row: 2;
-  grid-column: 1 / 5;
-}
-
-.opponentCreatureArea {
-  grid-row: 1;
-  grid-column: 4 / 8;
+  50% {
+    @apply bg-amber-100 opacity-20;
+  }
+  100% {
+    @apply bg-amber-100 opacity-5;
+  }
 }

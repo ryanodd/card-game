@@ -1,18 +1,15 @@
 import { cardDataMap } from "./Cards"
-import { ChoiceID, DuelChoiceData, Target } from "./Choices"
-import { CardState, DuelState, EnergyCounts, PlayerID, SpaceID } from "./DuelData"
+import { Target } from "./Choices"
+import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
 import {
   addAnimationToDuel,
-  getAllCards,
   getCardByInstanceId,
   getCurrentDuelPlayer,
   getDuelPlayerById,
   getOtherPlayerId,
   getRandomInt,
-  getSpaceById,
   isEnergySufficient,
 } from "./DuelHelpers"
-import { effectMap, heroDataMap } from "./Hero"
 import { random } from "./randomNumber"
 
 export type PlayerDrawNParams = {
@@ -46,7 +43,7 @@ const MAX_ENERGY = 5
 
 export const playerGainEnergy = (
   inputDuel: DuelState,
-  { playerId, neutral, fire, water, earth, air }: PlayerGainEnergyParams
+  { neutral, fire, water, earth, air }: PlayerGainEnergyParams
 ) => {
   let duel = inputDuel
   const player = getCurrentDuelPlayer(duel)
@@ -169,24 +166,24 @@ export const playCardFromHand = (inputDuel: DuelState, { cardId, target, energyP
   player.energy.earth -= energyPaid.earth
   player.energy.air -= energyPaid.air
 
+  const cardData = cardDataMap[playedCard.name]
+  if (cardData.effects?.play) {
+    duel = cardData.effects.play(duel, duel.currentPlayerId, playedCard.instanceId, target)
+  }
+
   // Put creature in space
-  if (playedCard.cardType === "creature" && target.targetType === "space") {
-    const targetSpace = player.creatureSpaces.find((space) => {
-      return space.id === target.spaceId
-    })
-    if (targetSpace) {
-      targetSpace.occupant = playedCard
+  if (playedCard.cardType === "creature" && target.targetType === "rowSpace") {
+    const row = player.rows[target.rowIndex]
+
+    row.splice(target.positionIndex, 0, playedCard)
+
+    if (cardData.effects?.summon) {
+      duel = cardData.effects.summon(duel, duel.currentPlayerId, playedCard.instanceId)
     }
   }
 
   if (playedCard.cardType === "energy" && target.targetType === "playArea") {
     player.playedEnergyThisTurn = true
-  }
-
-  // Question: should this stuff ^ be put into effects?
-  const cardData = cardDataMap[playedCard.name]
-  if (cardData.effects?.summon) {
-    duel = cardData.effects.summon(duel, duel.currentPlayerId, playedCard.instanceId)
   }
 
   return duel
@@ -197,54 +194,52 @@ export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
   const humanHand = duel.human.hand
   for (let x = 0; x < humanHand.length; x++) {
     if (humanHand[x].instanceId === cardInstanceId) {
-      humanHand.splice(x)
+      humanHand.splice(x, 1)
     }
   }
 
   const humanDiscard = duel.human.discard
   for (let x = 0; x < humanDiscard.length; x++) {
     if (humanDiscard[x].instanceId === cardInstanceId) {
-      humanDiscard.splice(x)
+      humanDiscard.splice(x, 1)
     }
   }
 
-  const humanCreatureSpaces = duel.human.creatureSpaces
-  for (let x = 0; x < humanCreatureSpaces.length; x++) {
-    const space = humanCreatureSpaces[x]
-    if (space.occupant?.instanceId === cardInstanceId) {
-      space.occupant = null
+  const humanRows = duel.human.rows
+  for (let x = 0; x < humanRows.length; x++) {
+    const row = humanRows[x]
+    for (let y = 0; y < row.length; y++) {
+      if (row[y].instanceId === cardInstanceId) {
+        row.splice(y, 1)
+      }
     }
   }
 
   const opponentHand = duel.opponent.hand
   for (let x = 0; x < opponentHand.length; x++) {
     if (opponentHand[x].instanceId === cardInstanceId) {
-      opponentHand.splice(x)
+      opponentHand.splice(x, 1)
     }
   }
 
   const opponentDiscard = duel.opponent.discard
   for (let x = 0; x < opponentDiscard.length; x++) {
     if (opponentDiscard[x].instanceId === cardInstanceId) {
-      opponentDiscard.splice(x)
+      opponentDiscard.splice(x, 1)
     }
   }
 
-  const opponentCreatureSpaces = duel.opponent.creatureSpaces
-  for (let x = 0; x < opponentCreatureSpaces.length; x++) {
-    const space = opponentCreatureSpaces[x]
-    if (space.occupant?.instanceId === cardInstanceId) {
-      space.occupant = null
+  const opponentRows = duel.opponent.rows
+  for (let x = 0; x < opponentRows.length; x++) {
+    const row = opponentRows[x]
+    for (let y = 0; y < row.length; y++) {
+      if (row[y].instanceId === cardInstanceId) {
+        row.splice(y, 1)
+      }
     }
   }
+
   return duel
-}
-
-export const rollCardAttack = (cardState: CardState): number => {
-  if (cardState.attack === undefined) {
-    return 0
-  }
-  return cardState.attack.min + getRandomInt(cardState.attack.max + 1 - cardState.attack.min)
 }
 
 export const dealDamageToCreature = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
@@ -265,62 +260,60 @@ export const dealDamageToPlayer = (duel: DuelState, playerID: PlayerID, damageAm
 export const combat = (inputDuel: DuelState) => {
   let duel = inputDuel
 
-  const humanAttackingSpace = duel.human.creatureSpaces[0]
-  const opponentAttackingSpace = duel.opponent.creatureSpaces[0]
-  const humanAttackingCard = duel.human.creatureSpaces[0].occupant
-  const opponentAttackingCard = duel.opponent.creatureSpaces[0].occupant
+  for (let x = 0; x < duel.human.rows.length; x++) {
+    duel = addAnimationToDuel(duel, {
+      id: "ATTACK_START",
+      duration: 200,
+      rowIndex: x,
+    })
+    const humanAttackingCard = duel.human.rows[x][0]
+    const opponentAttackingCard = duel.opponent.rows[x][0]
 
-  duel = addAnimationToDuel(duel, {
-    id: "ATTACK_START",
-    duration: 200,
-    humanAttackingSpaceId: humanAttackingSpace.id,
-    opponentAttackingSpaceId: opponentAttackingSpace.id,
-  })
+    //Trade
+    if (humanAttackingCard !== undefined && opponentAttackingCard !== undefined) {
+      duel = creaturesTrade(duel, humanAttackingCard.instanceId, opponentAttackingCard.instanceId)
+    }
+    // Human damage to Opponent face
+    else if (
+      humanAttackingCard !== undefined &&
+      humanAttackingCard.cardType === "creature" &&
+      humanAttackingCard.attack !== undefined &&
+      opponentAttackingCard === undefined
+    ) {
+      dealDamageToPlayer(duel, "opponent", humanAttackingCard.attack)
+    }
+    // Opponent damage to Human face
+    else if (
+      opponentAttackingCard !== undefined &&
+      opponentAttackingCard.cardType === "creature" &&
+      opponentAttackingCard.attack !== undefined &&
+      humanAttackingCard === undefined
+    ) {
+      dealDamageToPlayer(duel, "human", opponentAttackingCard.attack)
+    }
+    //Trigger effects of attacking cards
+    const humanAfterAttackEffect = cardDataMap[humanAttackingCard?.name ?? ""]?.effects?.afterAttack
+    if (humanAttackingCard && humanAfterAttackEffect !== undefined) {
+      duel = humanAfterAttackEffect(duel, "human", humanAttackingCard.instanceId)
+    }
+    const opponentAfterAttackEffect = cardDataMap[opponentAttackingCard?.name ?? ""]?.effects?.afterAttack
+    if (opponentAttackingCard && opponentAfterAttackEffect !== undefined) {
+      duel = opponentAfterAttackEffect(duel, "opponent", opponentAttackingCard.instanceId)
+    }
 
-  //Trade
-  if (humanAttackingCard !== null && opponentAttackingCard !== null) {
-    duel = creaturesTrade(duel, humanAttackingCard.instanceId, opponentAttackingCard.instanceId)
-  }
-  // Human damage to Opponent face
-  else if (
-    humanAttackingCard !== null &&
-    humanAttackingCard.cardType === "creature" &&
-    opponentAttackingCard === null
-  ) {
-    dealDamageToPlayer(duel, "opponent", rollCardAttack(humanAttackingCard))
-  }
-  // Opponent damage to Human face
-  else if (
-    opponentAttackingCard !== null &&
-    opponentAttackingCard.cardType === "creature" &&
-    humanAttackingCard === null
-  ) {
-    dealDamageToPlayer(duel, "human", rollCardAttack(opponentAttackingCard))
-  }
+    duel = addAnimationToDuel(duel, {
+      id: "ATTACK_END",
+      duration: 200,
+      rowIndex: x,
+    })
 
-  duel = addAnimationToDuel(duel, {
-    id: "ATTACK_END",
-    duration: 200,
-    humanAttackingSpaceId: humanAttackingSpace.id,
-    opponentAttackingSpaceId: opponentAttackingSpace.id,
-  })
-
-  //Trigger effects of attacking cards
-  const humanAfterAttackEffect = cardDataMap[humanAttackingCard?.name ?? ""]?.effects?.afterAttack
-  if (humanAttackingCard && humanAfterAttackEffect !== undefined) {
-    duel = humanAfterAttackEffect(duel, "human", humanAttackingCard.instanceId)
-  }
-  const opponentAfterAttackEffect = cardDataMap[opponentAttackingCard?.name ?? ""]?.effects?.afterAttack
-  if (opponentAttackingCard && opponentAfterAttackEffect !== undefined) {
-    duel = opponentAfterAttackEffect(duel, "opponent", opponentAttackingCard.instanceId)
-  }
-
-  // Check for death & remove cards
-  if (humanAttackingCard && getCardByInstanceId(duel, humanAttackingCard.instanceId).health === 0) {
-    removeCard(duel, humanAttackingCard.instanceId)
-  }
-  if (opponentAttackingCard && getCardByInstanceId(duel, opponentAttackingCard.instanceId).health === 0) {
-    removeCard(duel, opponentAttackingCard.instanceId)
+    // Check for death & remove cards
+    if (humanAttackingCard && getCardByInstanceId(duel, humanAttackingCard.instanceId).health === 0) {
+      removeCard(duel, humanAttackingCard.instanceId)
+    }
+    if (opponentAttackingCard && getCardByInstanceId(duel, opponentAttackingCard.instanceId).health === 0) {
+      removeCard(duel, opponentAttackingCard.instanceId)
+    }
   }
 
   return duel
@@ -332,34 +325,17 @@ export const creaturesTrade = (duel: DuelState, attackingCardId: string, defendi
   const attackingCard = getCardByInstanceId(newDuel, attackingCardId)
   const defendingCard = getCardByInstanceId(newDuel, defendingCardId)
 
-  if (attackingCard?.cardType !== "creature" || defendingCard?.cardType !== "creature") {
+  if (
+    attackingCard?.cardType !== "creature" ||
+    defendingCard?.cardType !== "creature" ||
+    attackingCard?.attack === undefined ||
+    defendingCard?.attack === undefined
+  ) {
     throw Error("Tried to engage in combat with non-creature")
   }
 
-  newDuel = dealDamageToCreature(newDuel, defendingCardId, rollCardAttack(attackingCard))
-  newDuel = dealDamageToCreature(newDuel, attackingCardId, rollCardAttack(defendingCard))
+  newDuel = dealDamageToCreature(newDuel, defendingCardId, attackingCard.attack)
+  newDuel = dealDamageToCreature(newDuel, attackingCardId, defendingCard.attack)
 
   return newDuel
-}
-
-// If anyone's first space is empty, march.
-export const creaturesMarchIfNecessary = (inputDuel: DuelState) => {
-  let duel = inputDuel
-  if (duel.human.creatureSpaces[0].occupant === null) {
-    duel = creaturesMarch(duel, "human")
-  }
-  if (duel.opponent.creatureSpaces[0].occupant === null) {
-    duel = creaturesMarch(duel, "opponent")
-  }
-  return duel
-}
-
-export const creaturesMarch = (inputDuel: DuelState, playerId: PlayerID) => {
-  let duel = inputDuel
-  const player = getDuelPlayerById(duel, playerId)
-  for (let x = 0; x < player.creatureSpaces.length - 1; x++) {
-    player.creatureSpaces[x].occupant = player.creatureSpaces[x + 1].occupant
-    player.creatureSpaces[x + 1].occupant = null
-  }
-  return duel
 }

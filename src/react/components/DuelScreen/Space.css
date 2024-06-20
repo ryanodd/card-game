@@ -1,0 +1,35 @@
+.space {
+  @apply relative w-36 h-44 flex justify-center items-center rounded-lg;
+}
+
+.space[data-dragging-over="true"][data-selectable="true"] {
+  @apply border-sky-500 border-4 bg-slate-100 cursor-pointer;
+}
+
+.space[data-highlighted="true"] {
+  animation: highlight-animation 1s infinite;
+}
+
+@keyframes highlight-animation {
+  50% {
+    filter: brightness(120%);
+  }
+}
+
+.space_faded {
+  > * {
+    filter: brightness(75%);
+  }
+}
+
+@keyframes summoning-sickness-animation {
+  0% {
+    filter: brightness(70%);
+  }
+  50% {
+    filter: brightness(50%);
+  }
+  100% {
+    filter: brightness(70%);
+  }
+}

@@ -51,10 +51,5 @@ export const getAttackText = (cardData: CardData, cardState?: CardState) => {
     return ""
   }
 
-  const minAttack = cardData.attack.min
-  const maxAttack = cardData.attack.max
-  if (minAttack === maxAttack) {
-    return minAttack
-  }
-  return `${minAttack}~${maxAttack}`
+  return cardData.attack
 }

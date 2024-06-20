@@ -1,11 +1,24 @@
+import { Target, getDefaultCreatureTargets, getEnergyDefaultTargets } from "./Choices"
 import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
-import { air_energy, earth_energy, ember_foxling_after_attack, fire_energy, water_energy } from "./Effects"
+import {
+  air_energy,
+  earth_energy,
+  eerie_vision_play,
+  ember_foxling_after_attack,
+  fire_energy,
+  startle_play,
+  stegowulf_attack_modifier,
+  stegowulf_opponent_attack_modifier,
+  water_energy,
+} from "./Effects"
 
 export type EnergyType = "neutral" | "fire" | "water" | "earth" | "air"
 
 export type CardType = "creature" | "spell" | "energy"
 
 export type Rarity = "base" | "common" | "uncommon" | "rare" | "epic" | "mythic"
+
+export type Keyword = "Support"
 
 export type CardData = {
   name: string
@@ -15,15 +28,27 @@ export type CardData = {
   cardType: CardType
   energyType: EnergyType | "multi" | "neutral"
   text?: string
+  keywords?: Keyword[]
   cost: EnergyCounts
-  attack?: {
-    min: number
-    max: number
-  }
+  attack?: number
   health?: number
+  getValidTargets: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Target[]
   effects?: {
+    play?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string, target: Target) => DuelState
     summon?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
     afterAttack?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
+    attackModifier?: (
+      inputDuel: DuelState,
+      playerId: PlayerID,
+      instanceId: string,
+      attackAmount: number
+    ) => number | "miss"
+    opponentAttackModifier?: (
+      inputDuel: DuelState,
+      playerId: PlayerID,
+      instanceId: string,
+      attackAmount: number
+    ) => number | "miss"
   }
 }
 
@@ -43,8 +68,9 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getEnergyDefaultTargets,
   effects: {
-    summon: fire_energy,
+    play: fire_energy,
   },
 })
 
@@ -62,8 +88,9 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: () => [{ targetType: "playArea" }],
   effects: {
-    summon: water_energy,
+    play: water_energy,
   },
 })
 
@@ -81,8 +108,9 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: () => [{ targetType: "playArea" }],
   effects: {
-    summon: earth_energy,
+    play: earth_energy,
   },
 })
 
@@ -100,22 +128,20 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: () => [{ targetType: "playArea" }],
   effects: {
-    summon: air_energy,
+    play: air_energy,
   },
 })
 
 cards.push({
   name: "Golden Friend",
   imageSrc: "/card-art/goldenFriend.png",
-  imageCenterYPercent: 50,
+  imageCenterYPercent: 40,
   rarity: "common",
   energyType: "neutral",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 2,
-  },
+  attack: 2,
   health: 2,
   cost: {
     neutral: 2,
@@ -124,6 +150,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 // Support: the opposing active creature has a 20% chance of getting poisoned
@@ -134,10 +161,7 @@ cards.push({
   rarity: "uncommon",
   energyType: "earth",
   cardType: "creature",
-  attack: {
-    min: 0,
-    max: 1,
-  },
+  attack: 1,
   health: 3,
   cost: {
     neutral: 0,
@@ -146,6 +170,7 @@ cards.push({
     earth: 1,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -155,10 +180,7 @@ cards.push({
   rarity: "uncommon",
   energyType: "fire",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 2,
-  },
+  attack: 2,
   health: 1,
   cost: {
     neutral: 0,
@@ -168,6 +190,7 @@ cards.push({
     air: 0,
   },
   text: "Whenever this creature attacks, deal 1 damage to the opposing player.",
+  getValidTargets: getDefaultCreatureTargets,
   effects: {
     afterAttack: ember_foxling_after_attack,
   },
@@ -180,10 +203,7 @@ cards.push({
   rarity: "common",
   energyType: "air",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 4,
-  },
+  attack: 3,
   health: 2,
   cost: {
     neutral: 1,
@@ -192,6 +212,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -201,10 +222,7 @@ cards.push({
   rarity: "common",
   energyType: "air",
   cardType: "creature",
-  attack: {
-    min: 1,
-    max: 5,
-  },
+  attack: 3,
   health: 5,
   cost: {
     neutral: 3,
@@ -213,6 +231,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -222,10 +241,7 @@ cards.push({
   rarity: "common",
   energyType: "neutral",
   cardType: "creature",
-  attack: {
-    min: 5,
-    max: 5,
-  },
+  attack: 5,
   health: 5,
   cost: {
     neutral: 5,
@@ -234,9 +250,11 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 // Support: when a creature in your active slot is destroyed, gets +3 attack
+// or, Enrage: +2 attack
 cards.push({
   name: "Vengeful Flamewing",
   imageSrc: "/card-art/vengefulFlamewing.png",
@@ -244,10 +262,7 @@ cards.push({
   rarity: "rare",
   energyType: "multi",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 6,
-  },
+  attack: 2,
   health: 4,
   cost: {
     neutral: 1,
@@ -256,6 +271,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -265,10 +281,7 @@ cards.push({
   rarity: "common",
   energyType: "water",
   cardType: "creature",
-  attack: {
-    min: 3,
-    max: 4,
-  },
+  attack: 3,
   health: 4,
   cost: {
     neutral: 3,
@@ -277,6 +290,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -286,10 +300,7 @@ cards.push({
   rarity: "common",
   energyType: "water",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 2,
-  },
+  attack: 2,
   health: 3,
   cost: {
     neutral: 1,
@@ -298,6 +309,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -307,11 +319,8 @@ cards.push({
   rarity: "mythic",
   energyType: "fire",
   cardType: "creature",
-  attack: {
-    min: 4,
-    max: 6,
-  },
-  health: 7,
+  attack: 5,
+  health: 6,
   cost: {
     neutral: 3,
     fire: 2,
@@ -319,6 +328,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 // When attacking this creature, your opponent has a 25% chance to miss.
@@ -329,10 +339,7 @@ cards.push({
   rarity: "rare",
   energyType: "multi",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 5,
-  },
+  attack: 2,
   health: 4,
   cost: {
     neutral: 1,
@@ -341,6 +348,7 @@ cards.push({
     earth: 1,
     air: 1,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -350,10 +358,7 @@ cards.push({
   rarity: "mythic",
   energyType: "multi",
   cardType: "creature",
-  attack: {
-    min: 5,
-    max: 9,
-  },
+  attack: 7,
   health: 7,
   cost: {
     neutral: 5,
@@ -362,6 +367,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 // If this creature is in an inactive slot, the creature in the active slot gets +2 attack
@@ -372,10 +378,7 @@ cards.push({
   rarity: "epic",
   energyType: "water",
   cardType: "creature",
-  attack: {
-    min: 1,
-    max: 4,
-  },
+  attack: 2,
   health: 3,
   cost: {
     neutral: 2,
@@ -384,6 +387,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -393,10 +397,7 @@ cards.push({
   rarity: "uncommon",
   energyType: "earth",
   cardType: "creature",
-  attack: {
-    min: 2,
-    max: 3,
-  },
+  attack: 2,
   health: 6,
   cost: {
     neutral: 3,
@@ -405,19 +406,17 @@ cards.push({
     earth: 1,
     air: 0,
   },
+  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
   name: "Stegowulf",
   imageSrc: "/card-art/stegowulf.png",
-  imageCenterYPercent: 20,
+  imageCenterYPercent: 40,
   rarity: "epic",
   energyType: "earth",
   cardType: "creature",
-  attack: {
-    min: 3,
-    max: 3,
-  },
+  attack: 3,
   health: 3,
   cost: {
     neutral: 2,
@@ -425,6 +424,82 @@ cards.push({
     water: 0,
     earth: 1,
     air: 0,
+  },
+  text: "If Stegowulf attacks with no creatures behind, it deals +2 damage.\n\nStegowulf has a 20% chance of evading attacks.",
+  getValidTargets: getDefaultCreatureTargets,
+  effects: {
+    attackModifier: stegowulf_attack_modifier,
+    opponentAttackModifier: stegowulf_opponent_attack_modifier,
+  },
+})
+
+cards.push({
+  name: "Eerie Vision",
+  imageSrc: "/card-art/eerieVision.png",
+  imageCenterYPercent: 20,
+  rarity: "rare",
+  energyType: "air",
+  cardType: "spell",
+  attack: undefined,
+  health: undefined,
+  cost: {
+    neutral: 1,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 1,
+  },
+  text: "Scry 3. Draw 1. Take 3 damage.",
+  getValidTargets: () => [{ targetType: "playArea" }],
+  effects: {
+    play: eerie_vision_play,
+  },
+})
+
+cards.push({
+  name: "Startle",
+  imageSrc: "/card-art/startle.png",
+  imageCenterYPercent: 50,
+  rarity: "rare",
+  energyType: "multi",
+  cardType: "spell",
+  attack: undefined,
+  health: undefined,
+  cost: {
+    neutral: 0,
+    fire: 1,
+    water: 0,
+    earth: 0,
+    air: 1,
+  },
+  text: "Return target creature to its owner's hand.",
+  getValidTargets: () => [{ targetType: "playArea" }],
+  effects: {
+    play: startle_play,
+  },
+})
+
+cards.push({
+  name: "Sonic Dragon",
+  imageSrc: "/card-art/sonicDragon.png",
+  imageCenterYPercent: 30,
+  rarity: "uncommon",
+  energyType: "air",
+  cardType: "creature",
+  attack: 5,
+  health: 5,
+  cost: {
+    neutral: 4,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 1,
+  },
+  text: "Support: 20% chance to cause the opposing attacking creature to miss.",
+  keywords: ["Support"],
+  getValidTargets: getDefaultCreatureTargets,
+  effects: {
+    // TODO supportOpponentAttackModifier: sonic_dragon_support_opponent_attack_modifier,
   },
 })
 
