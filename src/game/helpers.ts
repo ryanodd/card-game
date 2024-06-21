@@ -1,15 +1,18 @@
-import { CardData, EnergyType, cardDataMap } from "./Cards"
-import { CardState } from "./DuelData"
+import { cardDataMap } from "./cards/AllCards"
+import { CardData, CardName } from "./cards/CardData"
+import { CardState } from "./duel/DuelData"
 
 export const hasDuplicates = (array: any[]) => {
   return new Set(array).size !== array.length
 }
 
+export const delayMs = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const getConvertedEnergyCost = (cardData: CardData) => {
   return cardData.cost.fire + cardData.cost.water + cardData.cost.earth + cardData.cost.air + cardData.cost.neutral
 }
 
-export const sortCardNames = (cardNames: string[]) => {
+export const sortCardNames = (cardNames: CardName[]) => {
   return cardNames.sort((cardNameA, cardNameB) => {
     const cardA = cardDataMap[cardNameA]
     const cardB = cardDataMap[cardNameB]

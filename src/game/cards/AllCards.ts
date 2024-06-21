@@ -1,56 +1,4 @@
-import { Target, getDefaultCreatureTargets, getEnergyDefaultTargets } from "./Choices"
-import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
-import {
-  air_energy,
-  earth_energy,
-  eerie_vision_play,
-  ember_foxling_after_attack,
-  fire_energy,
-  startle_play,
-  stegowulf_attack_modifier,
-  stegowulf_opponent_attack_modifier,
-  water_energy,
-} from "./Effects"
-
-export type EnergyType = "neutral" | "fire" | "water" | "earth" | "air"
-
-export type CardType = "creature" | "spell" | "energy"
-
-export type Rarity = "base" | "common" | "uncommon" | "rare" | "epic" | "mythic"
-
-export type Keyword = "Support"
-
-export type CardData = {
-  name: string
-  imageSrc: string
-  imageCenterYPercent: number
-  rarity: Rarity
-  cardType: CardType
-  energyType: EnergyType | "multi" | "neutral"
-  text?: string
-  keywords?: Keyword[]
-  cost: EnergyCounts
-  attack?: number
-  health?: number
-  getValidTargets: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Target[]
-  effects?: {
-    play?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string, target: Target) => DuelState
-    summon?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
-    afterAttack?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => DuelState
-    attackModifier?: (
-      inputDuel: DuelState,
-      playerId: PlayerID,
-      instanceId: string,
-      attackAmount: number
-    ) => number | "miss"
-    opponentAttackModifier?: (
-      inputDuel: DuelState,
-      playerId: PlayerID,
-      instanceId: string,
-      attackAmount: number
-    ) => number | "miss"
-  }
-}
+import { CardData, CardName } from "./CardData"
 
 let cards: CardData[] = []
 
@@ -68,10 +16,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getEnergyDefaultTargets,
-  effects: {
-    play: fire_energy,
-  },
 })
 
 cards.push({
@@ -87,10 +31,6 @@ cards.push({
     water: 0,
     earth: 0,
     air: 0,
-  },
-  getValidTargets: () => [{ targetType: "playArea" }],
-  effects: {
-    play: water_energy,
   },
 })
 
@@ -108,10 +48,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: () => [{ targetType: "playArea" }],
-  effects: {
-    play: earth_energy,
-  },
 })
 
 cards.push({
@@ -127,10 +63,6 @@ cards.push({
     water: 0,
     earth: 0,
     air: 0,
-  },
-  getValidTargets: () => [{ targetType: "playArea" }],
-  effects: {
-    play: air_energy,
   },
 })
 
@@ -150,7 +82,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 // Support: the opposing active creature has a 20% chance of getting poisoned
@@ -170,7 +101,6 @@ cards.push({
     earth: 1,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -190,10 +120,6 @@ cards.push({
     air: 0,
   },
   text: "Whenever this creature attacks, deal 1 damage to the opposing player.",
-  getValidTargets: getDefaultCreatureTargets,
-  effects: {
-    afterAttack: ember_foxling_after_attack,
-  },
 })
 
 cards.push({
@@ -212,7 +138,6 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -231,7 +156,6 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -250,7 +174,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 // Support: when a creature in your active slot is destroyed, gets +3 attack
@@ -271,7 +194,6 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -290,7 +212,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -309,7 +230,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -328,7 +248,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 // When attacking this creature, your opponent has a 25% chance to miss.
@@ -348,7 +267,6 @@ cards.push({
     earth: 1,
     air: 1,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -367,7 +285,6 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 // If this creature is in an inactive slot, the creature in the active slot gets +2 attack
@@ -387,7 +304,6 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -406,7 +322,6 @@ cards.push({
     earth: 1,
     air: 0,
   },
-  getValidTargets: getDefaultCreatureTargets,
 })
 
 cards.push({
@@ -426,11 +341,6 @@ cards.push({
     air: 0,
   },
   text: "If Stegowulf attacks with no creatures behind, it deals +2 damage.\n\nStegowulf has a 20% chance of evading attacks.",
-  getValidTargets: getDefaultCreatureTargets,
-  effects: {
-    attackModifier: stegowulf_attack_modifier,
-    opponentAttackModifier: stegowulf_opponent_attack_modifier,
-  },
 })
 
 cards.push({
@@ -450,10 +360,6 @@ cards.push({
     air: 1,
   },
   text: "Scry 3. Draw 1. Take 3 damage.",
-  getValidTargets: () => [{ targetType: "playArea" }],
-  effects: {
-    play: eerie_vision_play,
-  },
 })
 
 cards.push({
@@ -473,10 +379,6 @@ cards.push({
     air: 1,
   },
   text: "Return target creature to its owner's hand.",
-  getValidTargets: () => [{ targetType: "playArea" }],
-  effects: {
-    play: startle_play,
-  },
 })
 
 cards.push({
@@ -497,10 +399,6 @@ cards.push({
   },
   text: "Support: 20% chance to cause the opposing attacking creature to miss.",
   keywords: ["Support"],
-  getValidTargets: getDefaultCreatureTargets,
-  effects: {
-    // TODO supportOpponentAttackModifier: sonic_dragon_support_opponent_attack_modifier,
-  },
 })
 
 // Ideas
@@ -510,7 +408,7 @@ cards.push({
 // - earth: monument, gives all creatures +2 health
 // - neutral/blue: draw a card
 
-export const cardDataMap: Record<string, CardData> = cards.reduce((cardsByName, card) => {
+export const cardDataMap: Record<CardName, CardData> = cards.reduce((cardsByName, card) => {
   cardsByName[card.name] = card
   return cardsByName
 }, {} as Record<string, CardData>)

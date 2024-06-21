@@ -1,9 +1,9 @@
-import { CardData } from "./Cards"
+import { CardName } from "./cards/CardData"
 
 export type Deck = {
   id: string
   name: string
-  cardNames: string[]
+  cardNames: CardName[]
 }
 
 export type EditDeckState = {

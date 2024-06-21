@@ -1,13 +1,14 @@
-import { DuelState } from "@/src/game/DuelData"
 import styles from "./PlayArea.module.css"
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
 import { DuelCard } from "./DuelCard"
-import { takeTurn_executePlayCard, takeTurn_getValidTargetsForCard } from "@/src/game/Choices"
 import { SortableContext, SortingStrategy, horizontalListSortingStrategy, useSortable } from "@dnd-kit/sortable"
-import { saveAndAdvanceDuelUntilChoice } from "@/src/game/DuelController"
+
 import { useMemo } from "react"
-import { getAllCards } from "@/src/game/DuelHelpers"
+import { DuelState } from "@/src/game/duel/DuelData"
+import { takeTurn_executePlayCard } from "@/src/game/duel/choices/takeTurn/executePlayCard"
+import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
+import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
 
 export type RowProps = {
   duel: DuelState
@@ -81,7 +82,7 @@ export const Row = ({ duel, index }: RowProps) => {
     ) !== undefined
 
   useDndMonitor({
-    onDragEnd: (event) => {
+    onDragEnd: async (event) => {
       if (
         !event.active.id.toString().startsWith("draggable-card-") ||
         !humanHalfSelectable ||
@@ -98,7 +99,7 @@ export const Row = ({ duel, index }: RowProps) => {
 
       // Moved to container, but not a specific slot - plop down at the end?? Maybe this needs more thinking.
       if (event.over?.id.toString() === DROPPABLE_ID) {
-        const newDuel = takeTurn_executePlayCard(duel, {
+        const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: {
             targetType: "rowSpace",
@@ -108,18 +109,18 @@ export const Row = ({ duel, index }: RowProps) => {
           },
           energyPaid: getEnergyCountsFromSelected(energySelected),
         })
-        saveAndAdvanceDuelUntilChoice(newDuel)
+        saveAndAdvanceDuelUntilChoiceOrWinner(newDuel)
       } else {
         if (activeIndex === -1) {
           throw Error(`Couldn't find where this card was dragged to. Supposedly ${event.over?.id?.toString()}`)
         }
         console.log(activeIndex, duel.human.rows[index], event.over?.id?.toString()?.split("draggable-card-")?.[1])
-        const newDuel = takeTurn_executePlayCard(duel, {
+        const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: { targetType: "rowSpace", playerId: "human", rowIndex: index, positionIndex: activeIndex },
           energyPaid: getEnergyCountsFromSelected(energySelected),
         })
-        saveAndAdvanceDuelUntilChoice(newDuel)
+        saveAndAdvanceDuelUntilChoiceOrWinner(newDuel)
       }
     },
   })

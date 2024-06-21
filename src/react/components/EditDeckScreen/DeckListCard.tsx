@@ -1,12 +1,12 @@
-import { CardData, cardDataMap } from "@/src/game/Cards"
 import Image from "next/image"
 import { CardDetailed, getCostIcons } from "../CardDetailed"
 import { Tooltip } from "../Tooltip"
-import { useDraggable } from "@dnd-kit/core"
-import { useCallback, useEffect, useState } from "react"
-import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
+import { useCallback } from "react"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
+import { CardName } from "@/src/game/cards/CardData"
+import { cardDataMap } from "@/src/game/cards/AllCards"
+import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
 
 export const DECK_LIST_CARD_WIDTH_REMS = 20
 export const DECK_LIST_CARD_IMAGE_WIDTH_REMS = 16
@@ -16,26 +16,13 @@ export const BLANK_AREA_WIDTH = DECK_LIST_CARD_WIDTH_REMS - DECK_LIST_CARD_IMAGE
 
 const GRADIENT_SPREAD = 6
 
-// Assumes actual srcImage is square, and matches displayImage width
-export const calculateTranslateYOffsetRem = (cardData: CardData, width: number, height: number) => {
-  const imageCenterYRem = width * (cardData.imageCenterYPercent / 100) // what the 'centerY' of the image is, in rem
-  const toCenterY = height / 2
-  const translateYOffsetResult = toCenterY - imageCenterYRem
-
-  const minTranslation = -(width - height) // So we clip to the bottom
-  const maxTranslation = 0 // So we clip to the top
-
-  const result = Math.max(minTranslation, Math.min(maxTranslation, translateYOffsetResult))
-  return result
-}
-
 export type DeckListCardProps = {
-  cardNumber: number
+  cardName: string
   quantity: number
 }
 
-export const DeckListCard = ({ cardNumber, quantity }: DeckListCardProps) => {
-  const cardData = cardDataMap[cardNumber]
+export const DeckListCard = ({ cardName, quantity }: DeckListCardProps) => {
+  const cardData = cardDataMap[cardName as CardName]
   const { editDeck, setEditDeck } = useEditDeckState()
 
   const onClick = useCallback(() => {

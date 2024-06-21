@@ -4,11 +4,11 @@ import { useGameStore } from "../../hooks/useGameStore"
 import { ReactNode, useCallback } from "react"
 import dialogStyles from "../designSystem/Dialog.module.css"
 import { CardDetailed } from "../CardDetailed"
-import { CardData } from "@/src/game/Cards"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import { sortCardNames } from "@/src/game/helpers"
 import styles from "./InventoryCardFocusDialog.module.css"
 import { DeckList } from "./DeckList"
+import { CardData } from "@/src/game/cards/CardData"
 
 export type InventoryCardFocusDialogProps = {
   cardData: CardData

@@ -1,11 +1,13 @@
-import { DuelState } from "@/src/game/DuelData"
 import styles from "./PlayArea.module.css"
-import { duelWinner } from "@/src/game/DuelHelpers"
-import { takeTurn_executePlayCard, takeTurn_getValidTargetsForCard } from "@/src/game/Choices"
+
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
 import { Row } from "./Row"
-import { saveAndAdvanceDuelUntilChoice } from "@/src/game/DuelController"
+import { DuelState } from "@/src/game/duel/DuelData"
+import { duelWinner } from "@/src/game/duel/DuelHelpers"
+import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
+import { takeTurn_executePlayCard } from "@/src/game/duel/choices/takeTurn/executePlayCard"
+import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
 
 export type PlayAreaProps = {
   duel: DuelState
@@ -32,7 +34,7 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
 
   // TODO we definitely want to keep a part of this - playing energy should target the entire play area
   useDndMonitor({
-    onDragEnd: (event) => {
+    onDragEnd: async (event) => {
       if (
         event.over?.id.toString() !== DROPPABLE_ID ||
         !event.active.id.toString().startsWith("draggable-card-") ||
@@ -42,12 +44,12 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
       }
       const draggedCardInstanceId = event.active.id.toString().split("draggable-card-")[1]
       if (choiceId === "TAKE_TURN") {
-        const newDuel = takeTurn_executePlayCard(duel, {
+        const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: { targetType: "playArea" },
           energyPaid: getEnergyCountsFromSelected(energySelected),
         })
-        saveAndAdvanceDuelUntilChoice(newDuel)
+        saveAndAdvanceDuelUntilChoiceOrWinner(newDuel)
       }
     },
   })

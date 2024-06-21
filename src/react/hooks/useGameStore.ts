@@ -1,6 +1,7 @@
-import { cardDataMap } from "@/src/game/Cards"
 import { deckMap } from "@/src/game/Decks"
 import { GameState } from "@/src/game/GameData"
+import { cardDataMap } from "@/src/game/cards/AllCards"
+import { CardName } from "@/src/game/cards/CardData"
 import { create } from "zustand"
 
 export const initialGameState: GameState = {
@@ -10,7 +11,7 @@ export const initialGameState: GameState = {
     ...Object.values(cardDataMap).reduce((prev, cardData) => {
       prev[cardData.name] = 4
       return prev
-    }, {} as Record<string, number>),
+    }, {} as Record<CardName, number>),
     "Fire Energy": 60,
     "Water Energy": 60,
     "Earth Energy": 60,

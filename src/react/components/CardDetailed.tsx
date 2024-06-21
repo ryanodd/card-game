@@ -1,10 +1,11 @@
-import { CardData, cardDataMap } from "@/src/game/Cards"
 import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
 import cardStyles from "./Card.module.css"
-import { CardState } from "@/src/game/DuelData"
+
 import { getAttackText } from "@/src/game/helpers"
-import { calculateTranslateYOffsetRem } from "./EditDeckScreen/DeckListCard"
+import { CardData } from "@/src/game/cards/CardData"
+import { CardState } from "@/src/game/duel/DuelData"
+import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
 
 export const CARD_IMAGE_WIDTH_REMS = 16
 export const CARD_IMAGE_HEIGHT_REMS = 12

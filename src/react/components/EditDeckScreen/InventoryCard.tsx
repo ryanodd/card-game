@@ -1,4 +1,3 @@
-import { CardData, cardDataMap } from "@/src/game/Cards"
 import cardStyles from "../Card.module.css"
 import inventoryStyles from "./Inventory.module.css"
 import Image from "next/image"
@@ -9,6 +8,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
 import { InventoryCardFocusDialog } from "./InventoryCardFocusDialog"
 import { getAttackText } from "@/src/game/helpers"
+import { CardData } from "@/src/game/cards/CardData"
 
 export type CardProps = {
   cardData: CardData

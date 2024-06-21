@@ -1,11 +1,14 @@
-import { duelWinner, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
-import { ChoiceID, confirmStart_execute, takeTurn_getValidHandTargets } from "@/src/game/Choices"
 import buttonStyles from "../designSystem/Button.module.css"
-import { saveAndAdvanceDuelUntilChoice } from "@/src/game/DuelController"
-import { DuelState } from "@/src/game/DuelData"
+
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
-import { duelTeardown } from "@/src/game/Actions"
+
 import { useGameStore } from "../../hooks/useGameStore"
+import { DuelState } from "@/src/game/duel/DuelData"
+import { duelWinner } from "@/src/game/duel/DuelHelpers"
+import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
+import { confirmStart_execute } from "@/src/game/duel/choices/confirmStart"
+import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
+import { duelEnd } from "@/src/game/duel/actions/duelEnd"
 
 export type DuelPromptProps = {
   duel: DuelState
@@ -77,15 +80,14 @@ export const DuelPrompt = ({ duel }: DuelPromptProps) => {
       {buttonText !== null && (
         <button
           className={`${buttonStyles.button}`}
-          onClick={() => {
+          onClick={async () => {
             if (duel.choice.id === "CONFIRM_DUEL_START") {
-              const nextDuel = confirmStart_execute(duel)
-              saveAndAdvanceDuelUntilChoice(nextDuel)
+              const nextDuel = await confirmStart_execute(duel)
+              saveAndAdvanceDuelUntilChoiceOrWinner(nextDuel)
             }
             if (duel.choice.id === "CONFIRM_DUEL_END") {
-              const nextDuel = duelTeardown(duel)
-              saveAndAdvanceDuelUntilChoice(nextDuel)
-
+              const nextDuel = await duelEnd(duel)
+              await saveAndAdvanceDuelUntilChoiceOrWinner(nextDuel)
               setGame({
                 ...game,
                 screen: { id: "mainMenu" },

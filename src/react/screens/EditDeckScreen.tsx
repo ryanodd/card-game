@@ -6,11 +6,11 @@ import { useEditDeckState } from "../hooks/useEditDeckState"
 import { InventoryBrowser } from "../components/EditDeckScreen/InventoryBrowser"
 import { useGameStore } from "../hooks/useGameStore"
 import { DragOverlay, useDndContext } from "@dnd-kit/core"
-import { cardDataMap } from "@/src/game/Cards"
 import { Button } from "../components/designSystem/Button"
 import { DeckList } from "../components/EditDeckScreen/DeckList"
 import { InventoryCard } from "../components/EditDeckScreen/InventoryCard"
 import { EditDeckCancelDialog } from "../components/EditDeckScreen/EditDeckCancelDialog"
+import { cardDataMap } from "@/src/game/cards/AllCards"
 
 export type EditDeckScreenProps = {}
 

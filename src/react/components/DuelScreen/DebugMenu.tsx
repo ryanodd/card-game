@@ -1,5 +1,3 @@
-import { getAnimatedDuelState } from "@/src/game/DuelHelpers"
-
 import styles from "./DebugMenu.module.css"
 import { useDuelState } from "../../hooks/useDuelState"
 import { useGameStore } from "../../hooks/useGameStore"
@@ -11,10 +9,8 @@ export type DebugMenuProps = {}
 const animationDurationMultiplierOptions = [0.25, 0.5, 1, 2, 4, 8, 16]
 
 export const DebugMenu = ({}: DebugMenuProps) => {
-  const { duel: rawDuel, setDuel } = useDuelState()
+  const { duel, setDuel } = useDuelState()
   const { game, setGame } = useGameStore()
-
-  const duel = getAnimatedDuelState(rawDuel)
 
   const setAnimationDurationMultiplier = useCallback(
     (multiplier: number) => {
@@ -34,7 +30,7 @@ export const DebugMenu = ({}: DebugMenuProps) => {
 
   return (
     <div className={`${styles.debugMenuContent}`}>
-      <p>{"animation" in duel ? duel.animation.id : duel.choice.id}</p>
+      <p>{duel.currentAnimation ? duel.currentAnimation?.id : duel.choice.id}</p>
       <div className={`${styles.debugMenuRow}`}>
         <Button
           onClick={() => {
@@ -47,7 +43,7 @@ export const DebugMenu = ({}: DebugMenuProps) => {
       <div className={`${styles.debugMenuRow}`}>
         <Button
           onClick={() => {
-            console.log(window.structuredClone(rawDuel))
+            console.log(window.structuredClone(duel))
           }}
         >
           console.log(duel)

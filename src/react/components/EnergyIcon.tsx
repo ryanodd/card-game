@@ -1,5 +1,4 @@
 import styles from "./Energy.module.css"
-import { EnergyType } from "@/src/game/Cards"
 import FireSVG from "../assets/fire.svg"
 import WaterSVG from "../assets/water.svg"
 import EarthSVG from "../assets/earth.svg"

@@ -1,5 +1,6 @@
 import { Deck, EditDeckState } from "./Deck"
-import { DuelState } from "./DuelData"
+import { CardName } from "./cards/CardData"
+import { DuelState } from "./duel/DuelData"
 
 export type ScreenState =
   | { id: "mainMenu" }
@@ -20,7 +21,7 @@ export type SettingsState = {
 export type GameState = {
   screen: ScreenState
   activeDeckId: string | null
-  collection: Record<string, number>
+  collection: Record<CardName, number>
   currentCampaign?: {
     campaignId: string
     round: number

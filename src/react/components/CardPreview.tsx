@@ -1,5 +1,3 @@
-import { cardDataMap } from "@/src/game/Cards"
-import { CardState, DuelState } from "@/src/game/DuelData"
 import styles from "./Card.module.css"
 import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
@@ -8,6 +6,8 @@ import { CardDetailed } from "./CardDetailed"
 import { Tooltip } from "./Tooltip"
 import { useDndContext } from "@dnd-kit/core"
 import { getAttackText } from "@/src/game/helpers"
+import { CardState, DuelState } from "@/src/game/duel/DuelData"
+import { cardDataMap } from "@/src/game/cards/AllCards"
 
 export type CardPreviewProps = {
   duel: DuelState

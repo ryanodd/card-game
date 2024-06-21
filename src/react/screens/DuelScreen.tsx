@@ -8,28 +8,17 @@ import { useGameStore } from "../hooks/useGameStore"
 import { PlayerFaceArea } from "../components/DuelScreen/PlayerFaceArea"
 import { PlayArea } from "../components/DuelScreen/PlayArea"
 import { AdvanceTurnButton } from "../components/DuelScreen/AdvanceTurnButton"
-import { getAnimatedDuelState, getCardByInstanceId } from "@/src/game/DuelHelpers"
+
 import { useCallback, useEffect } from "react"
-import { resetDuelUIStore } from "@/src/game/DuelController"
+
 import { DuelMenuButton } from "../components/DuelScreen/DuelMenuButton"
-import {
-  DndContext,
-  DragCancelEvent,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-  PointerSensor,
-  TouchSensor,
-  UniqueIdentifier,
-  useDndContext,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core"
+import { DndContext, DragEndEvent, DragOverlay, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { CardPreview } from "../components/CardPreview"
 import { DebugMenu } from "../components/DuelScreen/DebugMenu"
 import { useDuelUIStore } from "../hooks/useDuelUIStore"
 import { HumanHand } from "../components/DuelScreen/HumanHand"
-import { MyDndTestRow } from "./MyDndTest"
+import { getCardByInstanceId } from "@/src/game/duel/DuelHelpers"
+import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
 
 // Throws error if given a non-rowHumanHalf droppableId
 const getRowIndexFromDroppableId = (droppableId: string): number | undefined => {
@@ -68,8 +57,7 @@ export type DuelScreenProps = {}
 
 export const DuelScreen = ({}: DuelScreenProps) => {
   const { game } = useGameStore()
-  const { duel: rawDuel } = useDuelState()
-  const duel = getAnimatedDuelState(rawDuel)
+  const { duel } = useDuelState()
   const {
     cardIdDragging,
     humanHandCardIds,
@@ -88,7 +76,7 @@ export const DuelScreen = ({}: DuelScreenProps) => {
   useEffect(() => {
     let root = document.documentElement
     if ("animation" in duel) {
-      root.style.setProperty("--current-animation-duration", `${duel.animation.duration}ms`)
+      root.style.setProperty("--current-animation-duration", `${duel.currentAnimation?.duration}ms`) // If this is undefined is that a problem?
     }
   }, [duel])
 

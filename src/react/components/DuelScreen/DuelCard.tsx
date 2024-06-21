@@ -1,17 +1,18 @@
-import { CardState, DuelState, PlayerID } from "@/src/game/DuelData"
 import { autoPayElements, getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 
 import { CSS } from "@dnd-kit/utilities"
 import styles from "./DuelCard.module.css"
 import { CardPreview } from "../CardPreview"
-import { duelWinner, getDuelPlayerById } from "@/src/game/DuelHelpers"
-import { takeTurn_getValidHandTargets, takeTurn_getValidTargetsForCard } from "@/src/game/Choices"
-import { resetDuelUIStore } from "@/src/game/DuelController"
+
 import { useDndMonitor, useDraggable } from "@dnd-kit/core"
 import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
 
 import cardStyles from "../Card.module.css"
 import { useSortable } from "@dnd-kit/sortable"
+import { CardState, DuelState, PlayerID } from "@/src/game/duel/DuelData"
+import { duelWinner, getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
+import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
+import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
 
 export type DuelCardProps = {
   duel: DuelState
@@ -75,14 +76,13 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     }) === 0
 
   const animationAttackStart =
-    "animation" in duel &&
-    duel.animation.id === "ATTACK_START" &&
-    rowIndex === duel.animation.rowIndex &&
+    duel.currentAnimation?.id === "ATTACK_START" &&
+    rowIndex === duel.currentAnimation?.rowIndex &&
     isInAttackingPosition
   const animationAttackEnd =
     "animation" in duel &&
-    duel.animation.id === "ATTACK_END" &&
-    rowIndex === duel.animation.rowIndex &&
+    duel.currentAnimation?.id === "ATTACK_END" &&
+    rowIndex === duel.currentAnimation?.rowIndex &&
     isInAttackingPosition
 
   return (

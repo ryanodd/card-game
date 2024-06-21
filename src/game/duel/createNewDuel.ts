@@ -1,13 +1,13 @@
-import { CardData, cardDataMap } from "./Cards"
-import { ChoiceID } from "./Choices"
-import { DuelParams } from "./DuelController"
-import { CardState, DuelState, PlayerState } from "./DuelData"
+import { cardDataMap } from "../cards/AllCards"
+import { CardState, DuelState } from "./DuelData"
 import { v4 } from "uuid"
-import { getActiveDeck } from "./GameData"
+import { GameState, getActiveDeck } from "../GameData"
+import { Deck } from "../Deck"
+import { CardName } from "../cards/CardName"
 
 export const STARTING_HEALTH = 20
 
-export const createCardsFromNames = (cardNames: string[]): CardState[] => {
+export const createCardsFromNames = (cardNames: CardName[]): CardState[] => {
   const cards: CardState[] = []
   for (let x = 0; x < cardNames.length; x++) {
     const card = cardDataMap[cardNames[x]]
@@ -25,7 +25,7 @@ export const createCardsFromNames = (cardNames: string[]): CardState[] => {
   return cards
 }
 
-export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
+export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponentDeck: Deck }) => {
   const deck = getActiveDeck(game)
   if (deck === undefined) {
     throw Error("Tried to start a new duel but no active deck found")
@@ -81,8 +81,8 @@ export const createNewDuel = ({ game, opponentDeck }: DuelParams) => {
       playedEnergyThisTurn: false,
     },
 
+    currentAnimation: null,
     choice: { id: "CONFIRM_DUEL_START", playerId: "human" },
-    animationQueue: [],
     playerGoingFirst: "human",
     currentPlayerId: "human",
     turnNumber: 1,

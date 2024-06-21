@@ -2,11 +2,10 @@ import { getActiveDeck } from "@/src/game/GameData"
 import { MainView } from "../components/MainView"
 import { Button } from "../components/designSystem/Button"
 import { useGameStore } from "../hooks/useGameStore"
-import { createNewDuel } from "@/src/game/createNewDuel"
 import { deckMap } from "@/src/game/Decks"
 import { GameBackground } from "../components/GameBackground"
-import { resetDuelUIStore } from "@/src/game/DuelController"
 import { GoldTotal } from "../components/GoldTotal"
+import { createNewDuel } from "@/src/game/duel/createNewDuel"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()

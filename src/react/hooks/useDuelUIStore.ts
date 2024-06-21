@@ -1,8 +1,9 @@
 import { create } from "zustand"
-import { getCardByInstanceId, getCurrentDuelPlayer } from "@/src/game/DuelHelpers"
-import { DuelState, EnergyCounts, PlayerState } from "@/src/game/DuelData"
+
 import { v4 } from "uuid"
-import { EnergyType } from "@/src/game/Cards"
+import { DuelState, EnergyCounts, PlayerState } from "@/src/game/duel/DuelData"
+import { getCardByInstanceId, getCurrentDuelPlayer } from "@/src/game/duel/DuelHelpers"
+import { EnergyType } from "@/src/game/cards/CardData"
 
 export type EnergySelected = {
   neutral: { id: string; available: boolean; selected: boolean }[]

@@ -1,9 +1,10 @@
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
 import { DECK_LIST_CARD_IMAGE_WIDTH_REMS, DECK_LIST_CARD_WIDTH_REMS, DeckListCard } from "./DeckListCard"
-import { cardDataMap } from "@/src/game/Cards"
 import { sortCardNames } from "@/src/game/helpers"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
+import { cardDataMap } from "@/src/game/cards/AllCards"
+import { CardName } from "@/src/game/cards/CardData"
 
 export const DROPPABLE_ID_DECKLIST = "droppable-decklist"
 
@@ -27,7 +28,7 @@ export const DeckList = () => {
       if (!event.active.id.toString().startsWith("draggable-inventory-card-")) {
         return
       }
-      const draggedCardName = event.active.id.toString().split("draggable-inventory-card-")[1]
+      const draggedCardName = event.active.id.toString().split("draggable-inventory-card-")[1] as CardName
       if (!Object.keys(cardDataMap).includes(draggedCardName)) {
         throw Error(`Dragged card not found by name: ${draggedCardName}`)
       }
@@ -53,8 +54,8 @@ export const DeckList = () => {
        */}
       {editDeck.deck.cardNames.length === 0 && <div style={{ width: `${DECK_LIST_CARD_WIDTH_REMS}rem` }} />}
 
-      {[...(Object.keys(cardTotalsMap) as unknown as number[])].map((cardNo) => (
-        <DeckListCard key={cardNo} cardNumber={cardNo} quantity={cardTotalsMap[cardNo]} />
+      {[...Object.keys(cardTotalsMap)].map((cardName) => (
+        <DeckListCard key={cardName} cardName={cardName} quantity={cardTotalsMap[cardName]} />
       ))}
     </div>
   )

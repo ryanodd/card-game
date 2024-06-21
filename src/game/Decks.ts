@@ -1,4 +1,6 @@
-export const deckMap = {
+import { Deck } from "./Deck"
+
+export const deckMap: Record<string, Deck> = {
   starterDeck: {
     id: "starterDeck",
     name: "Starter Deck",

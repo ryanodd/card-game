@@ -1,8 +1,8 @@
-import { EnergyType } from "@/src/game/Cards"
 import { EnergyIcon } from "./EnergyIcon"
 import { EnergySelected, findEnergyById, useDuelUIStore } from "../hooks/useDuelUIStore"
 
 import styles from "./Energy.module.css"
+import { EnergyType } from "@/src/game/cards/CardData"
 
 export type ClickableEnergyProps = {
   index: number

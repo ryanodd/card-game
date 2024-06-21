@@ -1,7 +1,5 @@
-import { useGameStore } from "../react/hooks/useGameStore"
-import { DuelAnimation } from "./Animations"
-import { AnimatedDuelState, CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
-import { random } from "./randomNumber"
+import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
+import { random } from "../randomNumber"
 
 // Generates a random int from 0 to max-1
 // Should use game seed randomness
@@ -112,31 +110,6 @@ export const duelWinner = (duel: DuelState): PlayerID | "draw" | null => {
     return "opponent"
   }
   return null
-}
-
-export const addAnimationToDuel = (inputDuel: DuelState, animation: DuelAnimation) => {
-  if (!("animationQueue" in inputDuel)) {
-    throw Error("Tried to add an animation to a non-static duel")
-  }
-
-  const game = useGameStore.getState().game
-
-  let duel = inputDuel
-  // Little trick to get the duelData without the animation
-  const { animationQueue: omittedAnimationQueue, ...duelCopy } = window.structuredClone(duel)
-
-  const animationMultiplier = game.settings.debug.enabled ? game.settings.debug.animationMultiplier : 1
-
-  duel.animationQueue.push({
-    ...duelCopy,
-    animation: { ...animation, duration: animation.duration * animationMultiplier },
-  })
-  return duel
-}
-
-export const getAnimatedDuelState = (duel: DuelState): DuelState | AnimatedDuelState => {
-  const nextAnimation = "animationQueue" in duel ? duel.animationQueue[0] : null
-  return nextAnimation ?? duel
 }
 
 export const getCardStateByInstanceId = (duel: DuelState, instanceId: string): CardState => {

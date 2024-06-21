@@ -1,12 +1,12 @@
-import { DuelState, PlayerID } from "@/src/game/DuelData"
 import styles from "./PlayerFaceArea.module.css"
 import { EnergyIcon } from "../EnergyIcon"
 import { ClickableEnergy } from "../ClickableEnergy"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
-import { getDuelPlayerById } from "@/src/game/DuelHelpers"
 import { HeroPreview } from "../HeroPreview"
 import { heroDataMap } from "@/src/game/Hero"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
+import { DuelState, PlayerID } from "@/src/game/duel/DuelData"
 
 export type PlayerFaceAreaProps = {
   duel: DuelState
