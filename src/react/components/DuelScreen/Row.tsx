@@ -126,6 +126,8 @@ export const Row = ({ duel, index }: RowProps) => {
 
   const humanHalfHighlighted = humanHalfSelectable
 
+  console.log(humanHalfSelectable)
+
   return (
     <div className={`${styles.row}`}>
       <SortableContext items={sortableItemIdsForHumanRowHalf} strategy={horizontalListSortingStrategy}>

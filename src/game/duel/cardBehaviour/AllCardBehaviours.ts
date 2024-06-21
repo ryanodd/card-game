@@ -51,7 +51,7 @@ export async function ember_foxling_after_attack(inputDuel: DuelState, playerId:
   let duel = inputDuel
   const opponent = getDuelPlayerById(duel, getOtherPlayerId(playerId))
 
-  duel = await playAnimation(duel, { id: "EMBER_FOXLING", durationMs: 600, attackingCardId: instanceId })
+  duel = await playAnimation(duel, { id: "EMBER_FOXLING", durationMs: 600, endLag: true, attackingCardId: instanceId })
 
   opponent.health -= 1
   return duel

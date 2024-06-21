@@ -82,10 +82,8 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
   const animationAttackEnd =
     duel.currentAnimation?.id === "ATTACK_END" && rowIndex === duel.currentAnimation?.rowIndex && isInAttackingPosition
 
-  if (duel.currentAnimation?.id === "ATTACK_START" && isInAttackingPosition) {
-    console.log(duel.currentAnimation.rowIndex, rowIndex)
-    console.log(animationAttackStart)
-  }
+  const animationEmberFoxling =
+    duel.currentAnimation?.id === "EMBER_FOXLING" && duel.currentAnimation.attackingCardId === cardState.instanceId
 
   return (
     <div
@@ -95,6 +93,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
       data-player-id={playerId}
       data-animation-attack-start={animationAttackStart}
       data-animation-attack-end={animationAttackEnd}
+      data-animation-ember-foxling={animationEmberFoxling}
       ref={setNodeRef}
       {...attributes}
       {...listeners}

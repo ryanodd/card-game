@@ -12,7 +12,7 @@ export async function combatPhase(inputDuel: DuelState) {
   for (let x = 0; x < duel.human.rows.length; x++) {
     duel = await playAnimation(duel, {
       id: "ATTACK_START",
-      duration: 200,
+      durationMs: 200,
       rowIndex: x,
     })
     const humanAttackingCard = duel.human.rows[x][0]
@@ -40,6 +40,14 @@ export async function combatPhase(inputDuel: DuelState) {
     ) {
       dealDamageToPlayer(duel, "human", opponentAttackingCard.attack)
     }
+
+    duel = await playAnimation(duel, {
+      id: "ATTACK_END",
+      durationMs: 200,
+      endLag: true,
+      rowIndex: x,
+    })
+
     //Trigger effects of attacking cards
     const humanAfterAttackEffect = cardBehaviourMap[humanAttackingCard?.name ?? ""]?.effects?.afterAttack
     if (humanAttackingCard && humanAfterAttackEffect !== undefined) {
@@ -49,12 +57,6 @@ export async function combatPhase(inputDuel: DuelState) {
     if (opponentAttackingCard && opponentAfterAttackEffect !== undefined) {
       duel = await opponentAfterAttackEffect(duel, "opponent", opponentAttackingCard.instanceId)
     }
-
-    duel = await playAnimation(duel, {
-      id: "ATTACK_END",
-      duration: 200,
-      rowIndex: x,
-    })
 
     // Check for death & remove cards
     if (humanAttackingCard && getCardByInstanceId(duel, humanAttackingCard.instanceId).health === 0) {

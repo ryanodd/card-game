@@ -1,12 +1,22 @@
-import { delayMs } from "../../helpers"
+import { useGameStore } from "@/src/react/hooks/useGameStore"
 import { DuelAnimation } from "../AnimationData"
 import { DuelState } from "../DuelData"
 import { saveDuelAndRefreshUI } from "./saveAndRerenderUI"
+import { delayMs } from "../../helpers"
+
+// After most animations, some endlag so stuff isn't happening so fast
+const BUFFER_MS = 500
 
 export const playAnimation = async (duel: DuelState, animation: DuelAnimation) => {
-  duel.currentAnimation = animation
+  const game = useGameStore.getState().game
+  const debugAnimationMultiplier = game.settings.debug.enabled ? game.settings.debug.animationMultiplier : 1
+  const msToDelay = animation.durationMs * debugAnimationMultiplier
+
+  duel.currentAnimation = { ...animation, durationMs: msToDelay }
   saveDuelAndRefreshUI(duel)
-  await delayMs(animation.durationMs)
+
+  await delayMs(msToDelay + (animation.endLag ? BUFFER_MS : 0))
+
   duel.currentAnimation = null // Clear the animation when done - Could this cause visible flashes between animations?
   return duel
 }

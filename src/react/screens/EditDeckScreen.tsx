@@ -11,6 +11,7 @@ import { DeckList } from "../components/EditDeckScreen/DeckList"
 import { InventoryCard } from "../components/EditDeckScreen/InventoryCard"
 import { EditDeckCancelDialog } from "../components/EditDeckScreen/EditDeckCancelDialog"
 import { cardDataMap } from "@/src/game/cards/AllCards"
+import { CardName } from "@/src/game/cards/CardName"
 
 export type EditDeckScreenProps = {}
 
@@ -55,7 +56,7 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
     <MainView>
       <GameBackground />
       <DragOverlay dropAnimation={null}>
-        {draggedCardName !== null && <InventoryCard cardData={cardDataMap[draggedCardName]} />}
+        {draggedCardName !== null && <InventoryCard cardData={cardDataMap[draggedCardName as CardName]} />}
       </DragOverlay>
       <div className="absolute-fill inset-0 z-10 flex flex-col p-2 gap-2">
         <h1 className="text-3xl font-semibold text-gray-900">{editDeck.deck.name}</h1>

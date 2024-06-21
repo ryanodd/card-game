@@ -6,6 +6,7 @@ export enum AnimationID {
 
 export type DuelAnimation = {
   durationMs: number
+  endLag?: boolean
 } & (
   | {
       id: "PAUSE"

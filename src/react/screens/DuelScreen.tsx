@@ -58,27 +58,13 @@ export type DuelScreenProps = {}
 export const DuelScreen = ({}: DuelScreenProps) => {
   const { game } = useGameStore()
   const { duel } = useDuelState()
-  const {
-    cardIdDragging,
-    humanHandCardIds,
-    setHumanHandCardIds,
-    humanAllRowCardIds,
-    setHumanAllRowCardIds,
-    setCardIdDragging,
-  } = useDuelUIStore()
+  const { cardIdDragging, humanHandCardIds, setHumanHandCardIds, humanAllRowCardIds, setHumanAllRowCardIds } =
+    useDuelUIStore()
 
   useEffect(() => {
     resetDuelUIStore(duel)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // Set up animation duration injection, every time the duel is showing an animation
-  useEffect(() => {
-    let root = document.documentElement
-    if (duel.currentAnimation !== null) {
-      root.style.setProperty("--current-animation-duration", `${duel.currentAnimation?.durationMs}ms`) // If this is undefined is that a problem?
-    }
-  }, [duel])
 
   // This animates the card dragging between hand/rows.
   // On drag over, simply handle a row change, by adding the dragged item to the end of the new row.
