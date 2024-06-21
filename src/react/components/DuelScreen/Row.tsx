@@ -114,7 +114,6 @@ export const Row = ({ duel, index }: RowProps) => {
         if (activeIndex === -1) {
           throw Error(`Couldn't find where this card was dragged to. Supposedly ${event.over?.id?.toString()}`)
         }
-        console.log(activeIndex, duel.human.rows[index], event.over?.id?.toString()?.split("draggable-card-")?.[1])
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: { targetType: "rowSpace", playerId: "human", rowIndex: index, positionIndex: activeIndex },

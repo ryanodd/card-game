@@ -1,4 +1,5 @@
-import { CardData, CardName } from "./CardData"
+import { CardData } from "./CardData"
+import { CardName } from "./CardName"
 
 let cards: CardData[] = []
 

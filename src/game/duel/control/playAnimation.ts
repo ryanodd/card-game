@@ -6,7 +6,7 @@ import { saveDuelAndRefreshUI } from "./saveAndRerenderUI"
 export const playAnimation = async (duel: DuelState, animation: DuelAnimation) => {
   duel.currentAnimation = animation
   saveDuelAndRefreshUI(duel)
-  await delayMs(animation.duration)
+  await delayMs(animation.durationMs)
   duel.currentAnimation = null // Clear the animation when done - Could this cause visible flashes between animations?
   return duel
 }

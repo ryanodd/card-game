@@ -27,7 +27,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
 
   const selectable =
     !duelWinner(duel) &&
-    !("animation" in duel) &&
+    duel.currentAnimation === null &&
     choiceId === "TAKE_TURN" &&
     !cardIdDragging &&
     takeTurn_getValidHandTargets(duel).includes(cardState.instanceId)
@@ -80,10 +80,12 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     rowIndex === duel.currentAnimation?.rowIndex &&
     isInAttackingPosition
   const animationAttackEnd =
-    "animation" in duel &&
-    duel.currentAnimation?.id === "ATTACK_END" &&
-    rowIndex === duel.currentAnimation?.rowIndex &&
-    isInAttackingPosition
+    duel.currentAnimation?.id === "ATTACK_END" && rowIndex === duel.currentAnimation?.rowIndex && isInAttackingPosition
+
+  if (duel.currentAnimation?.id === "ATTACK_START" && isInAttackingPosition) {
+    console.log(duel.currentAnimation.rowIndex, rowIndex)
+    console.log(animationAttackStart)
+  }
 
   return (
     <div

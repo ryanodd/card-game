@@ -75,8 +75,8 @@ export const DuelScreen = ({}: DuelScreenProps) => {
   // Set up animation duration injection, every time the duel is showing an animation
   useEffect(() => {
     let root = document.documentElement
-    if ("animation" in duel) {
-      root.style.setProperty("--current-animation-duration", `${duel.currentAnimation?.duration}ms`) // If this is undefined is that a problem?
+    if (duel.currentAnimation !== null) {
+      root.style.setProperty("--current-animation-duration", `${duel.currentAnimation?.durationMs}ms`) // If this is undefined is that a problem?
     }
   }, [duel])
 

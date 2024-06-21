@@ -34,7 +34,7 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
 
   const buttonText = getText(duel)
   const pressable =
-    duel.choice.playerId !== "opponent" && !duelWinner(duel) && !("animation" in duel) && buttonText !== null
+    duel.choice.playerId !== "opponent" && !duelWinner(duel) && duel.currentAnimation === null && buttonText !== null
 
   const highlighted = pressable && choiceId === "TAKE_TURN" && takeTurn_getValidHandTargets(duel).length === 0
 

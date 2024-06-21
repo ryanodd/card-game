@@ -19,7 +19,7 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
 
   const playAreaSelectable =
     !duelWinner(duel) &&
-    !("animation" in duel) &&
+    duel.currentAnimation === null &&
     choiceId === "TAKE_TURN" &&
     cardIdDragging !== null &&
     takeTurn_getValidTargetsForCard(duel, cardIdDragging, getEnergyCountsFromSelected(energySelected)).find(

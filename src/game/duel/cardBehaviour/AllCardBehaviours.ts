@@ -6,7 +6,8 @@ import { playerDrawN } from "../actions/playerDrawN"
 import { removeCard } from "../actions/removeCard"
 import { Target } from "../choices/ChoiceData"
 import { getDefaultCreatureTargets } from "../choices/takeTurn/getDefaultCreatureTargets"
-import { getDefaultSpellTargets } from "../choices/takeTurn/getDefaultEnergyTargets"
+import { getDefaultEnergyTargets } from "../choices/takeTurn/getDefaultEnergyTargets"
+import { getDefaultSpellTargets } from "../choices/takeTurn/getDefaultSpellTargets"
 import { playAnimation } from "../control/playAnimation"
 import { CardBehaviour } from "./CardBehaviourData"
 
@@ -50,7 +51,7 @@ export async function ember_foxling_after_attack(inputDuel: DuelState, playerId:
   let duel = inputDuel
   const opponent = getDuelPlayerById(duel, getOtherPlayerId(playerId))
 
-  duel = await playAnimation(duel, { id: "EMBER_FOXLING", duration: 600, attackingCardId: instanceId })
+  duel = await playAnimation(duel, { id: "EMBER_FOXLING", durationMs: 600, attackingCardId: instanceId })
 
   opponent.health -= 1
   return duel
@@ -101,33 +102,33 @@ export async function startle_play(inputDuel: DuelState, playerId: PlayerID, ins
 
 export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   "Fire Energy": {
-    getValidTargets: getDefaultSpellTargets,
+    getValidTargets: getDefaultEnergyTargets,
     effects: {
       play: fire_energy,
     },
   },
   "Water Energy": {
-    getValidTargets: getDefaultSpellTargets,
+    getValidTargets: getDefaultEnergyTargets,
     effects: {
       play: water_energy,
     },
   },
 
   "Earth Energy": {
-    getValidTargets: getDefaultSpellTargets,
+    getValidTargets: getDefaultEnergyTargets,
     effects: {
       play: earth_energy,
     },
   },
 
   "Air Energy": {
-    getValidTargets: getDefaultSpellTargets,
+    getValidTargets: getDefaultEnergyTargets,
     effects: {
       play: air_energy,
     },
   },
   "Golden Friend": {
-    getValidTargets: getDefaultSpellTargets,
+    getValidTargets: getDefaultCreatureTargets,
   },
 
   "Snake Network": {

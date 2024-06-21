@@ -5,7 +5,7 @@ export enum AnimationID {
 }
 
 export type DuelAnimation = {
-  duration: number
+  durationMs: number
 } & (
   | {
       id: "PAUSE"
