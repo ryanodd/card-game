@@ -1,5 +1,5 @@
 import { Deck, EditDeckState } from "./Deck"
-import { CardName } from "./cards/CardData"
+import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
 
 export type ScreenState =

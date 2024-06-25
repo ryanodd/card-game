@@ -1,8 +1,8 @@
-import { DuelState } from "@/src/game/DuelData"
 import styles from "./Hand.module.css"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
 
 import { DuelCard } from "./DuelCard"
+import { DuelState } from "@/src/game/duel/DuelData"
 
 export type OpponentHandProps = {
   duel: DuelState

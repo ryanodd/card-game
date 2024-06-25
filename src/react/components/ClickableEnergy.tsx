@@ -2,7 +2,7 @@ import { EnergyIcon } from "./EnergyIcon"
 import { EnergySelected, findEnergyById, useDuelUIStore } from "../hooks/useDuelUIStore"
 
 import styles from "./Energy.module.css"
-import { EnergyType } from "@/src/game/cards/CardData"
+import { EnergyType } from "@/src/game/duel/EnergyData"
 
 export type ClickableEnergyProps = {
   index: number
@@ -25,7 +25,6 @@ const onEnergyClick = (
 export const ClickableEnergy = ({ index, id, energyType }: ClickableEnergyProps) => {
   const { energySelected, setEnergySelected } = useDuelUIStore()
   const energy = findEnergyById(energySelected, id)
-  const selected = energy.selected
 
   return (
     <button

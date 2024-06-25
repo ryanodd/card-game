@@ -1,5 +1,6 @@
-import { DuelState, PlayerID } from "../DuelData"
+import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
+import { PlayerID } from "../PlayerData"
 
 export type PlayerDrawNParams = {
   numberToDraw: number

@@ -3,7 +3,6 @@ import { Button } from "../designSystem/Button"
 import styles from "../designSystem/MenuButton.module.css"
 import { useCallback } from "react"
 import { useGameStore } from "../../hooks/useGameStore"
-import { rollCardAttack } from "@/src/game/Actions"
 
 export const DuelMenuButton = () => {
   const { game, setGame } = useGameStore()

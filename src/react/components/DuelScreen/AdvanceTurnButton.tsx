@@ -40,9 +40,9 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
 
   return (
     <Button
-      className={`font-medium border-2 w-40 h-12 flex justify-center items-center ${
-        !pressable ? buttonStyles.unpressable : ""
-      } ${highlighted ? styles.highlighted : ""}
+      className={`w-52 flex justify-center items-center ${!pressable ? buttonStyles.unpressable : ""} ${
+        highlighted ? styles.highlighted : ""
+      }
       }`}
       onClick={async () => {
         if (choiceId === "TAKE_TURN") {
@@ -51,6 +51,7 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
         }
       }}
       disabled={!pressable}
+      data-size="large"
       data-variant={highlighted ? "primary" : "secondary"}
     >
       {buttonText}

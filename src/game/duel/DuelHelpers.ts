@@ -1,5 +1,7 @@
-import { CardState, DuelState, EnergyCounts, PlayerID } from "./DuelData"
+import { CardState, DuelState } from "./DuelData"
 import { random } from "../randomNumber"
+import { PlayerID } from "./PlayerData"
+import { EnergyCounts } from "./EnergyData"
 
 // Generates a random int from 0 to max-1
 // Should use game seed randomness

@@ -1,5 +1,6 @@
-import { DuelState, PlayerID } from "../DuelData"
+import { DuelState } from "../DuelData"
 import { getCurrentDuelPlayer } from "../DuelHelpers"
+import { PlayerID } from "../PlayerData"
 
 export type PlayerGainEnergyParams = {
   playerId: PlayerID

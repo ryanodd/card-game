@@ -1,17 +1,19 @@
 import { CardName } from "../cards/CardName"
 import { DuelAnimation } from "./AnimationData"
+import { EnergyCounts } from "./EnergyData"
+import { PlayerID } from "./PlayerData"
 
 import { ChoiceID } from "./choices/ChoiceData"
 
-export type PlayerID = "human" | "opponent"
-
-export type EnergyCounts = {
-  neutral: number
-  fire: number
-  water: number
-  earth: number
-  air: number
-}
+export type Modifier =
+  | {
+      type: "attackChange"
+      amount: number
+    }
+  | {
+      id: "healthChange"
+      amount: number
+    }
 
 export type CardState = {
   name: CardName
@@ -19,6 +21,7 @@ export type CardState = {
 
   cost: EnergyCounts
   cardType: "creature" | "spell" | "energy"
+  modifiers: Modifier[]
   attack?: number
   health?: number
   initialHealth?: number

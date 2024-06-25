@@ -1,4 +1,5 @@
-import { DuelState, EnergyCounts } from "../../DuelData"
+import { DuelState } from "../../DuelData"
+import { EnergyCounts } from "../../EnergyData"
 import { playCardFromHand } from "../../actions/playCard"
 import { Target } from "../ChoiceData"
 

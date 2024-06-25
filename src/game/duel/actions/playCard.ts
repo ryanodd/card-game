@@ -1,7 +1,11 @@
-import { DuelState, EnergyCounts, PlayerID } from "../DuelData"
+import { DuelState } from "../DuelData"
 import { getCurrentDuelPlayer, isEnergySufficient } from "../DuelHelpers"
+import { EnergyCounts } from "../EnergyData"
+import { PlayerID } from "../PlayerData"
 import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
 import { Target } from "../choices/ChoiceData"
+import { playAnimation } from "../control/playAnimation"
+import { checkForDeaths } from "./checkForDeaths"
 
 export type PlayCardParams = {
   playerId: PlayerID
@@ -43,13 +47,17 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
   // Put creature in space
   if (playedCard.cardType === "creature" && target.targetType === "rowSpace") {
     const row = player.rows[target.rowIndex]
-
     row.splice(target.positionIndex, 0, playedCard)
+    if (duel.currentPlayerId === "opponent") {
+      duel = await playAnimation(duel, { id: "SUMMON", durationMs: 200, endLag: true, cardId })
+    }
 
     if (cardBehaviour.effects?.summon) {
       duel = await cardBehaviour.effects.summon(duel, duel.currentPlayerId, playedCard.instanceId)
     }
   }
+
+  duel = await checkForDeaths(duel)
 
   if (playedCard.cardType === "energy" && target.targetType === "playArea") {
     player.playedEnergyThisTurn = true

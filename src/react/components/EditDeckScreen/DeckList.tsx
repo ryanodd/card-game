@@ -4,7 +4,7 @@ import { sortCardNames } from "@/src/game/helpers"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
 import { cardDataMap } from "@/src/game/cards/AllCards"
-import { CardName } from "@/src/game/cards/CardData"
+import { CardName } from "@/src/game/cards/CardName"
 
 export const DROPPABLE_ID_DECKLIST = "droppable-decklist"
 

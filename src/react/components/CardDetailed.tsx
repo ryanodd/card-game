@@ -69,18 +69,27 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
           )}rem`,
         }}
       />
+      <div className={`${cardStyles.cardCaptionRow}`}>
+        <span className={`${cardStyles.cardCaptionLeftSection}`}></span>
+        {cardData.rarity !== "base" && (
+          <div className={`${cardStyles.rarityIndicator}`} data-rarity={cardData.rarity} />
+        )}
+        {!cardData.complete && <span className="justify-self-end text-sm text-red-950">Incomplete</span>}
+      </div>
 
-      <p className={`${cardStyles.cardText} text-sm rounded-md px-2 py-4 grow leading-4`}>{cardData.text}</p>
+      <div className={cardStyles.textContainer}>
+        <p className={`${cardStyles.cardText}  `}>{cardData.text}</p>
+      </div>
       <div className={`${cardStyles.cardFooter} h-8 -mb-2 -mx-2 gap-2`}>
         {cardData.attack !== undefined && (
           <div className={`${cardStyles.attackIndicator} pl-2 pr-2.5 rounded-tr-xl `}>
-            <h2 className="text-2xl text-shadow">{getAttackText(cardData, cardState)}</h2>
+            <h2 className="text-2xl text-outline">{getAttackText(cardData, cardState)}</h2>
           </div>
         )}
 
         {cardData.health !== undefined && (
           <div className={`${cardStyles.healthIndicator} w-10 rounded-tl-xl pl-0.5`}>
-            <h2 className="text-2xl text-shadow">{cardData.health}</h2>
+            <h2 className="text-2xl text-outline">{cardData.health}</h2>
           </div>
         )}
       </div>

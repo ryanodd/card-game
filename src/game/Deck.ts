@@ -1,4 +1,4 @@
-import { CardName } from "./cards/CardData"
+import { CardName } from "./cards/CardName"
 
 export type Deck = {
   id: string

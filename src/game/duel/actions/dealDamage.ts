@@ -1,5 +1,6 @@
-import { DuelState, PlayerID } from "../DuelData"
+import { DuelState } from "../DuelData"
 import { getCardByInstanceId, getDuelPlayerById } from "../DuelHelpers"
+import { PlayerID } from "../PlayerData"
 
 export const dealDamageToCreature = (duel: DuelState, cardInstanceId: string, damageAmount: number) => {
   let newDuel = duel

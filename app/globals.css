@@ -43,7 +43,7 @@ body {
   }
 }
 
-.text-shadow {
+.text-outline {
   padding-left: 4px;
   margin-left: -4px;
   padding-right: 4px;
@@ -51,12 +51,12 @@ body {
   text-shadow: 1px 1px 0.5px black, 1px -1px 0.5px black, -1px 1px 0.5px black, -1px -1px 0.5px black;
 }
 
-.text-shadow-2 {
+.text-outline-2 {
   padding-left: 4px;
   margin-left: -4px;
   padding-right: 4px;
   margin-right: -4px;
-  text-shadow: 1px 1px 0.5px black, 1px -1px 0.5px black, -1px 1px 0.5px black, -1px -1px 0.5px black;
+  text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
 }
 
 svg {

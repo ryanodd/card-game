@@ -4,9 +4,9 @@ import { Tooltip } from "../Tooltip"
 import { useCallback } from "react"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
-import { CardName } from "@/src/game/cards/CardData"
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
+import { CardName } from "@/src/game/cards/CardName"
 
 export const DECK_LIST_CARD_WIDTH_REMS = 20
 export const DECK_LIST_CARD_IMAGE_WIDTH_REMS = 16
@@ -75,7 +75,7 @@ export const DeckListCard = ({ cardName, quantity }: DeckListCardProps) => {
           }}
         >
           {quantity > 1 && <span className={`${styles.deckListCardNumber}`}>{`${quantity}x`}</span>}
-          <span className={`${styles.deckListCardText} text-shadow `}>{cardData.name}</span>
+          <span className={`${styles.deckListCardText} text-outline `}>{cardData.name}</span>
           <div className="flex flex-row">{getCostIcons(cardData)}</div>
         </div>
       </button>

@@ -1,0 +1,6 @@
+.footer {
+  @apply w-full px-4 py-4 flex justify-end bg-slate-200 bg-opacity-20;
+}
+.footerRow {
+  @apply flex px-2 gap-2;
+}

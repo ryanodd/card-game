@@ -32,9 +32,6 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
   const DROPPABLE_ID = `droppable-play-area`
   const { isOver, setNodeRef } = useDroppable({ id: DROPPABLE_ID, disabled: !playAreaSelectable })
 
-  console.log(playAreaSelectable)
-  console.log("---")
-
   // TODO we definitely want to keep a part of this - playing energy should target the entire play area
   useDndMonitor({
     onDragEnd: async (event) => {
@@ -66,6 +63,7 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
         data-highlighted={playAreaHighlighted}
         data-dragging-over={isOver}
       />
+      <div className={styles.playAreaBackground} />
       {duel.human.rows.map((row, i) => {
         return <Row key={i} duel={duel} index={i} />
       })}

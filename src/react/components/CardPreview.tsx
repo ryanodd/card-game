@@ -58,20 +58,20 @@ export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, set
         className={`${styles.card} ${styles.card_size} ${styles.card_border} relative`}
         data-background={cardData.energyType}
       >
-        {showCostIcons && <div className="absolute -top-2 -left-2 z-20 flex">{getCostIcons()}</div>}
+        {showCostIcons && <div className="absolute -top-2 -left-2 z-10 flex">{getCostIcons()}</div>}
         <div className={`${styles.image_border} relative`}>
           <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
         </div>
         <div className={`${styles.cardFooter}`}>
-          {cardState.attack && (
+          {cardState.attack !== undefined && (
             <div className={`${styles.attackIndicator} pl-1.5 pr-2 h-8 rounded-tr-xl`}>
-              <h2 className={`${"text-2xl"} font-semibold text-shadow`}>{getAttackText(cardData, cardState)}</h2>
+              <h2 className={`${"text-2xl"} font-semibold text-outline`}>{getAttackText(cardData, cardState)}</h2>
             </div>
           )}
           {cardState.health !== undefined && cardState.initialHealth !== undefined && (
             <div className={`${styles.healthIndicator} w-8 h-8 rounded-tl-xl`}>
               <h2
-                className={`text-2xl font-semibold text-shadow ${
+                className={`text-2xl font-semibold text-outline ${
                   cardState.health < cardState.initialHealth ? "text-red-300" : ""
                 }`}
               >

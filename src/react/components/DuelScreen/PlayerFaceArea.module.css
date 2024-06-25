@@ -4,11 +4,10 @@
 
 .player_element_number {
   @apply font-normal text-2xl;
-  text-shadow: rgba(0, 0, 0, 0.4) 2px 2px 2px;
+  text-outline: rgba(0, 0, 0, 0.4) 2px 2px 2px;
 }
 
 .animated_health_value {
-  text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
   @apply absolute right-0 -bottom-3 text-red-500 font-bold;
   animation: health_update 1000ms forwards;
 }
@@ -32,6 +31,21 @@
   0% {
   }
   100% {
-    transform: translate(3px,3px);
+    transform: translate(3px, 3px);
+  }
+}
+
+.energyRowAnimationArea[data-animation-energy-added="true"] {
+  animation: energy_added_animation 800ms ease-in-out;
+}
+@keyframes energy_added_animation {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
   }
 }

@@ -99,13 +99,16 @@ export const Row = ({ duel, index }: RowProps) => {
 
       // Moved to container, but not a specific slot - plop down at the end?? Maybe this needs more thinking.
       if (event.over?.id.toString() === DROPPABLE_ID) {
+        const indexToPlay = humanRowCardIds.length - 1
+        console.log(`Playing card at index ${indexToPlay}`)
+
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
           target: {
             targetType: "rowSpace",
             playerId: "human",
             rowIndex: index,
-            positionIndex: 0,
+            positionIndex: indexToPlay,
           },
           energyPaid: getEnergyCountsFromSelected(energySelected),
         })
@@ -114,8 +117,10 @@ export const Row = ({ duel, index }: RowProps) => {
         if (activeIndex === -1) {
           throw Error(`Couldn't find where this card was dragged to. Supposedly ${event.over?.id?.toString()}`)
         }
+        console.log(`Playing card at index ${activeIndex}`)
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
+
           target: { targetType: "rowSpace", playerId: "human", rowIndex: index, positionIndex: activeIndex },
           energyPaid: getEnergyCountsFromSelected(energySelected),
         })
@@ -126,12 +131,10 @@ export const Row = ({ duel, index }: RowProps) => {
 
   const humanHalfHighlighted = humanHalfSelectable
 
-  console.log(humanHalfSelectable)
-
   return (
     <div className={`${styles.row}`}>
       <SortableContext items={sortableItemIdsForHumanRowHalf} strategy={horizontalListSortingStrategy}>
-        <div className={`${styles.rowHalf} ${styles.rowHumanHalf}`}>
+        <div className={`${styles.rowHalf} ${styles.rowHumanHalf}`} data-top={index === 0} data-bottom={index === 1}>
           <div
             className={`${styles.rowHalfDropTarget}`}
             data-selectable={humanHalfSelectable}
@@ -142,7 +145,9 @@ export const Row = ({ duel, index }: RowProps) => {
           {getHumanCards()}
         </div>
       </SortableContext>
-      <div className={`${styles.rowHalf}`}>{getOpponentCards()}</div>
+      <div className={`${styles.rowHalf}`} data-left={index === 0} data-bottom={index === 1}>
+        {getOpponentCards()}
+      </div>
     </div>
   )
 }

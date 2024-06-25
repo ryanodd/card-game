@@ -68,3 +68,60 @@
     filter: contrast(200%);
   }
 }
+
+/* .duelCard[data-animation-summon="true"] {
+  animation: summon var(--current-animation-duration) ease-out;
+}
+
+@keyframes summon {
+  0% {
+    filter: brightness(100%);
+  }
+  50% {
+    filter: brightness(400%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
+} */
+
+.duelCard[data-animation-opponent-summon="true"] {
+  animation: opponent-summon var(--current-animation-duration);
+}
+
+@keyframes opponent-summon {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0.05;
+  }
+  100% {
+    transform: translateY(0px);
+    opaicty: 1;
+  }
+}
+
+.duelCard[data-animation-destroy-start="true"] {
+  animation: destroy-start var(--current-animation-duration);
+}
+
+@keyframes destroy-start {
+  0% {
+    filter: brightness(100%);
+    opacity: 1;
+  }
+  100% {
+    filter: brightness(0%);
+    opacity: 0;
+  }
+}
+
+.duelCard[data-animation-destroy-end="true"] {
+  animation: destroy-end var(--current-animation-duration);
+}
+
+@keyframes destroy-end {
+  0% {
+  }
+  100% {
+  }
+}

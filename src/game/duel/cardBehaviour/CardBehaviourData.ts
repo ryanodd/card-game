@@ -1,4 +1,5 @@
-import { DuelState, PlayerID } from "../DuelData"
+import { DuelState } from "../DuelData"
+import { PlayerID } from "../PlayerData"
 import { Target } from "../choices/ChoiceData"
 
 export type CardBehaviour = {
@@ -7,6 +8,7 @@ export type CardBehaviour = {
     play?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string, target: Target) => Promise<DuelState>
     summon?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Promise<DuelState>
     afterAttack?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Promise<DuelState>
+    support?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Promise<DuelState>
     attackModifier?: (
       inputDuel: DuelState,
       playerId: PlayerID,

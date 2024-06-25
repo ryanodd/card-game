@@ -4,8 +4,8 @@ export type GoldTotalProps = {
 
 export const GoldTotal = ({ value }: GoldTotalProps) => {
   return (
-    <div className="bg-stone-700 bg-opacity-50 rounded-md px-2 py-1">
-      <span>Gold: {value}</span>
+    <div className=" ">
+      <span className="text-xl text-outline">Gold: {value}</span>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { DuelState } from "../DuelData"
 import { getCardByInstanceId } from "../DuelHelpers"
 import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
 import { playAnimation } from "../control/playAnimation"
+import { checkForDeaths } from "./checkForDeaths"
 import { creaturesTrade } from "./creaturesTrade"
 import { dealDamageToPlayer } from "./dealDamage"
 import { removeCard } from "./removeCard"
@@ -10,13 +11,34 @@ export async function combatPhase(inputDuel: DuelState) {
   let duel = inputDuel
 
   for (let x = 0; x < duel.human.rows.length; x++) {
+    const humanAttackingCard = duel.human.rows[x][0]
+    const opponentAttackingCard = duel.opponent.rows[x][0]
+
+    if (humanAttackingCard === undefined && opponentAttackingCard === undefined) {
+      continue
+    }
+
+    // Trigger effects of support cards
+    for (let y = 1; y < duel.human.rows[x].length; y++) {
+      const card = duel.human.rows[x][y]
+      const supportEffect = cardBehaviourMap[card?.name ?? ""]?.effects?.support
+      if (supportEffect !== undefined) {
+        duel = await supportEffect(duel, "human", card.instanceId)
+      }
+    }
+    for (let y = 1; y < duel.opponent.rows[x].length; y++) {
+      const card = duel.opponent.rows[x][y]
+      const supportEffect = cardBehaviourMap[card?.name ?? ""]?.effects?.support
+      if (supportEffect !== undefined) {
+        duel = await supportEffect(duel, "opponent", card.instanceId)
+      }
+    }
+
     duel = await playAnimation(duel, {
       id: "ATTACK_START",
       durationMs: 200,
       rowIndex: x,
     })
-    const humanAttackingCard = duel.human.rows[x][0]
-    const opponentAttackingCard = duel.opponent.rows[x][0]
 
     //Trade
     if (humanAttackingCard !== undefined && opponentAttackingCard !== undefined) {
@@ -58,13 +80,7 @@ export async function combatPhase(inputDuel: DuelState) {
       duel = await opponentAfterAttackEffect(duel, "opponent", opponentAttackingCard.instanceId)
     }
 
-    // Check for death & remove cards
-    if (humanAttackingCard && getCardByInstanceId(duel, humanAttackingCard.instanceId).health === 0) {
-      removeCard(duel, humanAttackingCard.instanceId)
-    }
-    if (opponentAttackingCard && getCardByInstanceId(duel, opponentAttackingCard.instanceId).health === 0) {
-      removeCard(duel, opponentAttackingCard.instanceId)
-    }
+    duel = await checkForDeaths(duel)
   }
 
   return duel

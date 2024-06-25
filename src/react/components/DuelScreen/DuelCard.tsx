@@ -9,10 +9,11 @@ import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDrag
 
 import cardStyles from "../Card.module.css"
 import { useSortable } from "@dnd-kit/sortable"
-import { CardState, DuelState, PlayerID } from "@/src/game/duel/DuelData"
+import { CardState, DuelState } from "@/src/game/duel/DuelData"
 import { duelWinner, getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
 import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
 import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
+import { PlayerID } from "@/src/game/duel/PlayerData"
 
 export type DuelCardProps = {
   duel: DuelState
@@ -66,6 +67,11 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     row.some((card) => card.instanceId === cardState.instanceId)
   )
 
+  const animationOpponentSummon =
+    duel.currentAnimation?.id === "SUMMON" &&
+    duel.currentAnimation.cardId === cardState.instanceId &&
+    playerId === "opponent"
+
   // TODO summoning sickness
   const isInAttackingPosition =
     duel.human.rows[rowIndex]?.findIndex((card) => {
@@ -82,6 +88,11 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
   const animationAttackEnd =
     duel.currentAnimation?.id === "ATTACK_END" && rowIndex === duel.currentAnimation?.rowIndex && isInAttackingPosition
 
+  const animationDestroyStart =
+    duel.currentAnimation?.id === "DESTROY_START" && duel.currentAnimation?.cardIds.includes(cardState.instanceId)
+  const animationDestroyEnd =
+    duel.currentAnimation?.id === "DESTROY_END" && duel.currentAnimation?.cardIds.includes(cardState.instanceId)
+
   const animationEmberFoxling =
     duel.currentAnimation?.id === "EMBER_FOXLING" && duel.currentAnimation.attackingCardId === cardState.instanceId
 
@@ -91,8 +102,11 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
         selectable ? cardStyles.card_selectable : ""
       } ${highlighted ? cardStyles.card_highlighted : ""}`}
       data-player-id={playerId}
+      data-animation-opponent-summon={animationOpponentSummon}
       data-animation-attack-start={animationAttackStart}
       data-animation-attack-end={animationAttackEnd}
+      data-animation-destroy-start={animationDestroyStart}
+      data-animation-destroy-end={animationDestroyEnd}
       data-animation-ember-foxling={animationEmberFoxling}
       ref={setNodeRef}
       {...attributes}

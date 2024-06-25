@@ -1,5 +1,6 @@
-import { DuelState, EnergyCounts } from "../../DuelData"
+import { DuelState } from "../../DuelData"
 import { getCardByInstanceId, isEnergySufficient } from "../../DuelHelpers"
+import { EnergyCounts } from "../../EnergyData"
 import { cardBehaviourMap } from "../../cardBehaviour/AllCardBehaviours"
 import { Target } from "../ChoiceData"
 

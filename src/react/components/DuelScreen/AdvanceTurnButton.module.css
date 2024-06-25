@@ -1,5 +1,5 @@
 .highlighted {
-  animation: filter-animation 1s infinite;
+  animation: highlighted-animation 0.8s infinite;
 }
 
 .attack_color {
@@ -10,15 +10,16 @@
   @apply bg-cyan-400;
 }
 
-@keyframes filter-animation {
+@keyframes highlighted-animation {
   0% {
+    background-color: #13a947;
   }
 
-  35% {
-    filter: brightness(120%);
+  20% {
+    background-color: #59e489;
   }
 
   100% {
-    
+    background-color: #13a947;
   }
 }

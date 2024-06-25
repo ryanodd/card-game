@@ -6,6 +6,8 @@ import { deckMap } from "@/src/game/Decks"
 import { GameBackground } from "../components/GameBackground"
 import { GoldTotal } from "../components/GoldTotal"
 import { createNewDuel } from "@/src/game/duel/createNewDuel"
+import { SettingsDialog } from "../components/SettingsDialog"
+import { Footer } from "../components/Footer"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()
@@ -34,31 +36,41 @@ export const MainMenuScreen = () => {
   return (
     <MainView>
       <GameBackground />
-      <div className="w-full h-full flex flex-col p-4">
-        <div className="flex flex-col justify-center items-center gap-4 grow">
+      <div className="h-full flex flex-col">
+        <div className="grow flex flex-col justify-center items-center gap-4  p-4">
           <h1 className="text-3xl">{"It's a card game!"}</h1>
           <h2>{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
           <div className="flex flex-col mt-8 gap-4">
-            <Button data-variant="primary" data-size="large" onClick={onStartDuelClick}>
-              Play Now
-            </Button>
-            <Button data-size="large" onClick={onCampaignClick}>
-              Campaign
-            </Button>
-            <Button data-size="large" onClick={onShopClick}>
-              Shop
-            </Button>
-            <Button data-size="large" onClick={onManageDeckClick}>
-              Manage decks
-            </Button>
-            <Button data-size="large" onClick={onDragAndDropDemoClick}>
-              Drag and drop demo
-            </Button>
+            <div className="flex flex-col gap-4">
+              <Button data-variant="primary" data-size="large" onClick={onStartDuelClick}>
+                Play Now
+              </Button>
+              <Button data-size="large" onClick={onCampaignClick}>
+                Campaign
+              </Button>
+            </div>
+            <div className="flex flex-col mt-8 gap-4">
+              <div className="flex gap-4">
+                <Button className="w-48 flex-grow" data-size="large" onClick={onManageDeckClick}>
+                  Decks
+                </Button>
+                <Button className="w-48 flex-grow" data-size="large" onClick={onManageDeckClick}>
+                  Collection
+                </Button>
+              </div>
+              <Button data-size="large" onClick={onShopClick}>
+                Shop
+              </Button>
+            </div>
+            <div className="flex flex-col mt-8 gap-4">
+              <SettingsDialog trigger={<Button data-size="large">Settings</Button>} />
+              <Button data-size="large" onClick={onDragAndDropDemoClick}>
+                Drag and drop demo
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="flex justify-end">
-          <GoldTotal value={game.gold} />
-        </div>
+        <Footer />
       </div>
     </MainView>
   )

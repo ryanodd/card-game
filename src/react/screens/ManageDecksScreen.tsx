@@ -33,12 +33,15 @@ export const DeckCell = ({ deck }: DeckCellProps) => {
   return (
     <li
       key={`${deck.id}`}
-      className={`${styles.deckCell} rounded-md bg-stone-700 flex flex-col p-4 gap-2 shadow-lg relative h-72`}
+      className={`${styles.deckCell} rounded-md bg-stone-200 flex flex-col p-4 gap-2 shadow-lg relative h-72`}
     >
-      {game.activeDeckId === deck.id && (
-        <p className="absolute -top-2 -right-2 bg-red-500 rounded-full text-sm px-1">Active</p>
-      )}
-      <h3 className="text-xl">{deck.name}</h3>
+      <div className="flex justify-between">
+        <h3 className=" text-xl text-stone-900">{deck.name}</h3>
+        {game.activeDeckId === deck.id && <p className=" bg-red-600 rounded-full text-sm px-3 py-1">Active</p>}
+      </div>
+      <h4 className="text-md text-stone-900">
+        {deck.cardNames.length} {`${deck.cardNames.length === 1 ? "card" : "cards"}`}
+      </h4>
       <div className="flex-grow" />
       <div className="flex gap-1 self-end">
         {game.activeDeckId !== deck.id && (
@@ -80,10 +83,10 @@ export const ManageDecksScreen = () => {
   return (
     <MainView>
       <GameBackground />
-      <div className="w-full h-full flex p-4 flex-col">
+      <div className="w-full h-full flex p-4 flex-col justify-between">
         <h1 className="text-5xl">Decks</h1>
-        <div className="flex-grow overflow-y-scroll">
-          <ul className={`${styles.deckGrid} grid auto-rows-fr p-4 gap-4 items-center`}>
+        <div className=" align-middle overflow-y-scroll">
+          <ul className={`${styles.deckGrid} grid auto-rows-fr p-4 gap-8 items-center`}>
             {game.decks.map((deck, i) => (
               <DeckCell key={i} deck={deck} />
             ))}

@@ -8,6 +8,7 @@ cards.push({
   imageSrc: "/card-art/energyFire.png",
   imageCenterYPercent: 50,
   rarity: "base",
+  complete: true,
   energyType: "fire",
   cardType: "energy",
   cost: {
@@ -24,6 +25,7 @@ cards.push({
   imageSrc: "/card-art/energyWater.png",
   imageCenterYPercent: 50,
   rarity: "base",
+  complete: true,
   energyType: "water",
   cardType: "energy",
   cost: {
@@ -40,6 +42,7 @@ cards.push({
   imageSrc: "/card-art/energyEarth.png",
   imageCenterYPercent: 53,
   rarity: "base",
+  complete: true,
   energyType: "earth",
   cardType: "energy",
   cost: {
@@ -56,6 +59,7 @@ cards.push({
   imageSrc: "/card-art/energyAir.png",
   imageCenterYPercent: 50,
   rarity: "base",
+  complete: true,
   energyType: "air",
   cardType: "energy",
   cost: {
@@ -72,6 +76,7 @@ cards.push({
   imageSrc: "/card-art/goldenFriend.png",
   imageCenterYPercent: 40,
   rarity: "common",
+  complete: true,
   energyType: "neutral",
   cardType: "creature",
   attack: 2,
@@ -91,6 +96,7 @@ cards.push({
   imageSrc: "/card-art/snakeNetwork.png",
   imageCenterYPercent: 75,
   rarity: "uncommon",
+  complete: false,
   energyType: "earth",
   cardType: "creature",
   attack: 1,
@@ -109,6 +115,7 @@ cards.push({
   imageSrc: "/card-art/emberFoxling.png",
   imageCenterYPercent: 70,
   rarity: "uncommon",
+  complete: false,
   energyType: "fire",
   cardType: "creature",
   attack: 2,
@@ -128,6 +135,7 @@ cards.push({
   imageSrc: "/card-art/wingedBull.png",
   imageCenterYPercent: 24,
   rarity: "common",
+  complete: false,
   energyType: "air",
   cardType: "creature",
   attack: 3,
@@ -146,6 +154,7 @@ cards.push({
   imageSrc: "/card-art/greenwingCaller.png",
   imageCenterYPercent: 40,
   rarity: "common",
+  complete: false,
   energyType: "air",
   cardType: "creature",
   attack: 3,
@@ -164,6 +173,7 @@ cards.push({
   imageSrc: "/card-art/elderSaurus.png",
   imageCenterYPercent: 45,
   rarity: "common",
+  complete: true,
   energyType: "neutral",
   cardType: "creature",
   attack: 5,
@@ -177,17 +187,16 @@ cards.push({
   },
 })
 
-// Support: when a creature in your active slot is destroyed, gets +3 attack
-// or, Enrage: +2 attack
 cards.push({
   name: "Vengeful Flamewing",
   imageSrc: "/card-art/vengefulFlamewing.png",
   imageCenterYPercent: 45,
   rarity: "rare",
+  complete: false,
   energyType: "multi",
   cardType: "creature",
-  attack: 2,
-  health: 4,
+  attack: 3,
+  health: 3,
   cost: {
     neutral: 1,
     fire: 1,
@@ -195,6 +204,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  text: "Enrage: +2 attack.",
 })
 
 cards.push({
@@ -202,6 +212,7 @@ cards.push({
   imageSrc: "/card-art/sludgeAmphibian.png",
   imageCenterYPercent: 30,
   rarity: "common",
+  complete: false,
   energyType: "water",
   cardType: "creature",
   attack: 3,
@@ -219,7 +230,8 @@ cards.push({
   name: "Merfin Yodeler",
   imageSrc: "/card-art/merfinYodeler.png",
   imageCenterYPercent: 20,
-  rarity: "common",
+  rarity: "uncommon",
+  complete: false,
   energyType: "water",
   cardType: "creature",
   attack: 2,
@@ -231,13 +243,15 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  text: "Support: If this creature is in the top row, the attacking creature of the top row gets +1 attack and +1 health.",
 })
 
 cards.push({
-  name: "Girabu, Colossal Guardian",
+  name: "Spirit Giant",
   imageSrc: "/card-art/girabucolossalGuardian.png",
   imageCenterYPercent: 51,
-  rarity: "mythic",
+  rarity: "legendary",
+  complete: false,
   energyType: "fire",
   cardType: "creature",
   attack: 5,
@@ -257,6 +271,7 @@ cards.push({
   imageSrc: "/card-art/fairyBuckFly.png",
   imageCenterYPercent: 18,
   rarity: "rare",
+  complete: false,
   energyType: "multi",
   cardType: "creature",
   attack: 2,
@@ -275,6 +290,7 @@ cards.push({
   imageSrc: "/card-art/nyrethLightEater.png",
   imageCenterYPercent: 60,
   rarity: "mythic",
+  complete: false,
   energyType: "multi",
   cardType: "creature",
   attack: 7,
@@ -294,6 +310,7 @@ cards.push({
   imageSrc: "/card-art/komodoTeacher.png",
   imageCenterYPercent: 50,
   rarity: "epic",
+  complete: false,
   energyType: "water",
   cardType: "creature",
   attack: 2,
@@ -311,7 +328,8 @@ cards.push({
   name: "Living Hillside",
   imageSrc: "/card-art/livingHillside.png",
   imageCenterYPercent: 20,
-  rarity: "uncommon",
+  rarity: "common",
+  complete: false,
   energyType: "earth",
   cardType: "creature",
   attack: 2,
@@ -328,8 +346,9 @@ cards.push({
 cards.push({
   name: "Stegowulf",
   imageSrc: "/card-art/stegowulf.png",
-  imageCenterYPercent: 40,
+  imageCenterYPercent: 45,
   rarity: "epic",
+  complete: false,
   energyType: "earth",
   cardType: "creature",
   attack: 3,
@@ -349,6 +368,7 @@ cards.push({
   imageSrc: "/card-art/eerieVision.png",
   imageCenterYPercent: 20,
   rarity: "rare",
+  complete: false,
   energyType: "air",
   cardType: "spell",
   attack: undefined,
@@ -368,6 +388,7 @@ cards.push({
   imageSrc: "/card-art/startle.png",
   imageCenterYPercent: 50,
   rarity: "rare",
+  complete: false,
   energyType: "multi",
   cardType: "spell",
   attack: undefined,
@@ -387,6 +408,7 @@ cards.push({
   imageSrc: "/card-art/sonicDragon.png",
   imageCenterYPercent: 30,
   rarity: "uncommon",
+  complete: false,
   energyType: "air",
   cardType: "creature",
   attack: 5,
@@ -399,7 +421,70 @@ cards.push({
     air: 1,
   },
   text: "Support: 20% chance to cause the opposing attacking creature to miss.",
-  keywords: ["Support"],
+  keywords: ["support"],
+})
+
+cards.push({
+  name: "Cave Swimmer",
+  imageSrc: "/card-art/caveSwimmer.png",
+  imageCenterYPercent: 70,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "water",
+  cardType: "creature",
+  attack: 1,
+  health: 2,
+  cost: {
+    neutral: 1,
+    fire: 0,
+    water: 1,
+    earth: 0,
+    air: 0,
+  },
+  text: "Support: has a 10% chance of drawing a card.",
+  keywords: ["support"],
+})
+
+cards.push({
+  name: "Darkwoods Hyena",
+  imageSrc: "/card-art/darkwoodsHyena.png",
+  imageCenterYPercent: 50,
+  rarity: "rare",
+  complete: false,
+  energyType: "earth",
+  cardType: "creature",
+  attack: 2,
+  health: 3,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 1,
+    air: 0,
+  },
+  text: "Support: has a 50% change to gain +1 attack.",
+  keywords: ["support"],
+})
+
+cards.push({
+  name: "Monstrous Flamebeast",
+  imageSrc: "/card-art/monstrousFlamebeast.png",
+  imageCenterYPercent: 40,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "fire",
+  cardType: "creature",
+  attack: 4,
+  health: 3,
+  cost: {
+    neutral: 3,
+    fire: 1,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: "Trample",
+  keywords: ["trample"],
 })
 
 // Ideas
@@ -407,7 +492,10 @@ cards.push({
 // - wind: Target creature in an inactive slot swaps places with the active slot
 // - wind: destroy monument
 // - earth: monument, gives all creatures +2 health
-// - neutral/blue: draw a card
+// - blue: draw cards
+// - green: lil guys
+// - green: deathrattle
+// - red: attack buff
 
 export const cardDataMap: Record<CardName, CardData> = cards.reduce((cardsByName, card) => {
   cardsByName[card.name] = card

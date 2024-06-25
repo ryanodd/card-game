@@ -13,13 +13,13 @@ export const createCardsFromNames = (cardNames: CardName[]): CardState[] => {
     const card = cardDataMap[cardNames[x]]
     cards.push({
       instanceId: v4(),
-
       name: card.name,
       cost: card.cost,
       cardType: card.cardType,
       attack: card.attack,
       health: card.health,
       initialHealth: card.health,
+      modifiers: [],
     })
   }
   return cards

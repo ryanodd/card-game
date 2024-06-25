@@ -27,9 +27,11 @@ export const resetDuelUIStore = (duel: DuelState) => {
   // Reset rows
   uiState.setHumanAllRowCardIds(
     duel.human.rows.map((row) => {
-      return row.map((cardState) => {
-        return cardState.instanceId
-      })
+      return row
+        .map((cardState) => {
+          return cardState.instanceId
+        })
+        .reverse()
     })
   )
 }

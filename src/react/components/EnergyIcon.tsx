@@ -3,23 +3,26 @@ import FireSVG from "../assets/fire.svg"
 import WaterSVG from "../assets/water.svg"
 import EarthSVG from "../assets/earth.svg"
 import AirSVG from "../assets/air.svg"
+import { EnergyType } from "@/src/game/duel/EnergyData"
 
 export type EnergyIconProps = {
   energyType: EnergyType
   size: EnergyIconSize
   amount?: number
+  available?: boolean
 }
 
 export type EnergyIconSize = "small" | "large"
 
-export const EnergyIcon = ({ energyType, amount, size }: EnergyIconProps) => {
+export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconProps) => {
   const getEnergySvg = () => {
     if (energyType === "neutral") {
       return (
         <div
-          className={`${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
+          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
             styles.neutral_element
           }`}
+          data-available={available ?? true}
         >
           <p className="text-md font-bold">{amount ?? 1}</p>
         </div>
@@ -28,7 +31,9 @@ export const EnergyIcon = ({ energyType, amount, size }: EnergyIconProps) => {
     if (energyType === "fire") {
       return (
         <div
-          className={`${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${styles.fire_element}`}
+          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
+            styles.fire_element
+          }`}
         >
           <FireSVG />
         </div>
@@ -37,9 +42,10 @@ export const EnergyIcon = ({ energyType, amount, size }: EnergyIconProps) => {
     if (energyType === "water") {
       return (
         <div
-          className={`${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
+          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
             styles.water_element
           }`}
+          data-available={available ?? true}
         >
           <WaterSVG />
         </div>
@@ -48,9 +54,10 @@ export const EnergyIcon = ({ energyType, amount, size }: EnergyIconProps) => {
     if (energyType === "earth") {
       return (
         <div
-          className={`${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
+          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
             styles.earth_element
           }`}
+          data-available={available ?? true}
         >
           <EarthSVG />
         </div>
@@ -59,7 +66,10 @@ export const EnergyIcon = ({ energyType, amount, size }: EnergyIconProps) => {
     if (energyType === "air") {
       return (
         <div
-          className={`${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${styles.air_element}`}
+          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
+            styles.air_element
+          }`}
+          data-available={available ?? true}
         >
           <AirSVG />
         </div>

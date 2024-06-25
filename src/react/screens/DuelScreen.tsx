@@ -96,7 +96,8 @@ export const DuelScreen = ({}: DuelScreenProps) => {
           throw Error("rowIndex undefined??")
         }
         const newRowIndexesIds = humanAllRowCardIds
-        newRowIndexesIds[rowIndexTo] = [...humanAllRowCardIds[rowIndexTo], draggedCardId]
+        newRowIndexesIds[rowIndexTo] = [draggedCardId, ...humanAllRowCardIds[rowIndexTo]]
+
         setHumanAllRowCardIds(newRowIndexesIds)
         setHumanHandCardIds(humanHandCardIds.filter((cardId) => cardId !== draggedCardId))
 
@@ -122,7 +123,7 @@ export const DuelScreen = ({}: DuelScreenProps) => {
           throw Error("rowIndex undefined??")
         }
         const newRowIndexesIds = humanAllRowCardIds
-        newRowIndexesIds[rowIndexTo] = [...humanAllRowCardIds[rowIndexTo], draggedCardId]
+        newRowIndexesIds[rowIndexTo] = [draggedCardId, ...humanAllRowCardIds[rowIndexTo]]
         newRowIndexesIds[rowIndexFrom] = humanAllRowCardIds[rowIndexFrom].filter((cardId) => cardId !== draggedCardId)
         setHumanAllRowCardIds(newRowIndexesIds)
       }

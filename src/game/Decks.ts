@@ -1,4 +1,5 @@
 import { Deck } from "./Deck"
+import { CardName } from "./cards/CardName"
 
 export const deckMap: Record<string, Deck> = {
   starterDeck: {
@@ -29,33 +30,33 @@ export const deckMap: Record<string, Deck> = {
       "Ember Foxling",
       "Ember Foxling",
       "Ember Foxling",
-      "Ember Foxling",
 
       "Golden Friend",
       "Golden Friend",
+      "Golden Friend",
 
       "Winged Bull",
       "Winged Bull",
       "Winged Bull",
-      "Winged Bull",
 
       "Vengeful Flamewing",
       "Vengeful Flamewing",
       "Vengeful Flamewing",
-      "Vengeful Flamewing",
 
-      "Greenwing Caller",
       "Greenwing Caller",
       "Greenwing Caller",
       "Greenwing Caller",
 
       "Elder Saurus",
-      "Elder Saurus",
+
+      "Sonic Dragon",
+      "Sonic Dragon",
+      "Sonic Dragon",
 
       "Eerie Vision",
       "Eerie Vision",
 
-      "Girabu, Colossal Guardian",
+      "Spirit Giant",
       "Nyreth, Light Eater",
     ],
   },
@@ -85,16 +86,14 @@ export const deckMap: Record<string, Deck> = {
       "Water Energy",
 
       "Golden Friend",
-      "Golden Friend",
-      "Golden Friend",
-      "Golden Friend",
 
       "Merfin Yodeler",
       "Merfin Yodeler",
       "Merfin Yodeler",
-      "Merfin Yodeler",
 
-      "Snake Network",
+      "Cave Swimmer",
+      "Cave Swimmer",
+
       "Snake Network",
       "Snake Network",
       "Snake Network",
@@ -102,9 +101,7 @@ export const deckMap: Record<string, Deck> = {
       "Komodo Teacher",
       "Komodo Teacher",
       "Komodo Teacher",
-      "Komodo Teacher",
 
-      "Sludge Amphibian",
       "Sludge Amphibian",
       "Sludge Amphibian",
 
@@ -113,12 +110,13 @@ export const deckMap: Record<string, Deck> = {
 
       "Stegowulf",
       "Stegowulf",
-      "Stegowulf",
 
       "Living Hillside",
       "Living Hillside",
       "Living Hillside",
-      "Living Hillside",
+
+      "Darkwoods Hyena",
+      "Darkwoods Hyena",
     ],
   },
 }

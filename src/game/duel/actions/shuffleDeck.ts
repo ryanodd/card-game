@@ -1,6 +1,7 @@
 import { shuffleArray } from "../../randomNumber"
-import { DuelState, PlayerID } from "../DuelData"
+import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
+import { PlayerID } from "../PlayerData"
 
 export const shuffleDeck = (inputDuel: DuelState, playerId: PlayerID) => {
   let duel = inputDuel

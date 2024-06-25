@@ -1,7 +1,7 @@
 import styles from "./Hero.module.css"
 import Image from "next/image"
 import { HeroData } from "@/src/game/Hero"
-import { PlayerID } from "@/src/game/DuelData"
+import { PlayerID } from "@/src/game/duel/PlayerData"
 
 export type HeroPreviewProps = {
   playerId: PlayerID

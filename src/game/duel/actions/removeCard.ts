@@ -1,6 +1,6 @@
 import { DuelState } from "../DuelData"
 
-export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
+export async function removeCard(inputDuel: DuelState, cardInstanceId: string) {
   const duel = inputDuel
   const humanHand = duel.human.hand
   for (let x = 0; x < humanHand.length; x++) {
@@ -19,6 +19,7 @@ export const removeCard = (inputDuel: DuelState, cardInstanceId: string) => {
   const humanRows = duel.human.rows
   for (let x = 0; x < humanRows.length; x++) {
     const row = humanRows[x]
+
     for (let y = 0; y < row.length; y++) {
       if (row[y].instanceId === cardInstanceId) {
         row.splice(y, 1)

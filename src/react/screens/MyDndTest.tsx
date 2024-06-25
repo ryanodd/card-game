@@ -15,6 +15,8 @@ import { useCallback, useState } from "react"
 import { CSS } from "@dnd-kit/utilities"
 import { GameBackground } from "../components/GameBackground"
 import { MainView } from "../components/MainView"
+import { Button } from "../components/designSystem/Button"
+import { useGameStore } from "../hooks/useGameStore"
 
 const findContainerDroppableIdByDraggableId = (items: MyDndTestState, id: UniqueIdentifier) => {
   if (id in items) {
@@ -35,6 +37,11 @@ export const MyDndTest = ({}: MyDndTestProps) => {
     row2: ["7"],
     humanHand: ["1", "2", "3"],
   })
+
+  const { game, setGame } = useGameStore()
+  const onBackClick = () => {
+    setGame({ ...game, screen: { id: "mainMenu" } })
+  }
 
   const [draggingId, setDraggingId] = useState<UniqueIdentifier | null>(null)
 
@@ -110,7 +117,7 @@ export const MyDndTest = ({}: MyDndTestProps) => {
     >
       <MainView>
         <GameBackground />
-        <div className="flex flex-col p-8 gap-8 bg-stone-300">
+        <div className="grow-1 flex flex-col p-8 gap-8">
           <MyDndTestRow droppableId="opponentHand" itemIds={displayedItems.opponentHand} />
           <MyDndTestRow droppableId="row1" itemIds={displayedItems.row1} />
           <MyDndTestRow droppableId="row2" itemIds={displayedItems.row2} />
@@ -119,6 +126,11 @@ export const MyDndTest = ({}: MyDndTestProps) => {
         <DragOverlay>
           {draggingId ? <MyDndTestItemSprite text={draggingId.toString()} isDraggingInOverlay /> : null}
         </DragOverlay>
+        <div className="flex justify-between p-4">
+          <Button className="flex items-center" onClick={onBackClick}>
+            ⬅ Back
+          </Button>
+        </div>
       </MainView>
     </DndContext>
   )

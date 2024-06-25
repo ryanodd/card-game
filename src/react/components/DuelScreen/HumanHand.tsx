@@ -1,4 +1,3 @@
-import { CardState, DuelState } from "@/src/game/DuelData"
 import { CardPreview } from "../CardPreview"
 import styles from "./Hand.module.css"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
@@ -8,6 +7,7 @@ import { animateLayoutChanges } from "@/src/utils/reactDndHelpers"
 import { useCallback, useMemo } from "react"
 import { useDndMonitor } from "@dnd-kit/core"
 import { DraggableMyDndTestItem } from "../../screens/MyDndTest"
+import { DuelState } from "@/src/game/duel/DuelData"
 
 export type HumanHandProps = {
   duel: DuelState
