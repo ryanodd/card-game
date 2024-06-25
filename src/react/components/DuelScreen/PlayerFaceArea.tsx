@@ -149,7 +149,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
       <div className="relative">
         <HeroPreview playerId={playerId} heroData={heroDataMap[player.heroId]} />
         <div className={`${styles.player_health_positioning} rounded-full bg-red-600 border border-neutral-900 px-2`}>
-          <h2 className="font-medium text-2xl">{Math.max(0, player.health)}</h2>
+          <h2 className="font-medium text-2xl text-white">{Math.max(0, player.health)}</h2>
           {animatedHealthValue && (
             <h2 key={animationKey} className={`${styles.animated_health_value} font-medium text-4xl text-outline-2`}>
               {Math.max(animatedHealthValue)}

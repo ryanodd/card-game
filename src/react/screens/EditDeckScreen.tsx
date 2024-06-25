@@ -7,11 +7,12 @@ import { InventoryBrowser } from "../components/EditDeckScreen/InventoryBrowser"
 import { useGameStore } from "../hooks/useGameStore"
 import { DragOverlay, useDndContext } from "@dnd-kit/core"
 import { Button } from "../components/designSystem/Button"
-import { DeckList } from "../components/EditDeckScreen/DeckList"
+import { DeckListColumn } from "../components/EditDeckScreen/DeckListColumn"
 import { InventoryCard } from "../components/EditDeckScreen/InventoryCard"
 import { EditDeckCancelDialog } from "../components/EditDeckScreen/EditDeckCancelDialog"
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
+import { Footer } from "../components/Footer"
 
 export type EditDeckScreenProps = {}
 
@@ -58,17 +59,20 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
       <DragOverlay dropAnimation={null}>
         {draggedCardName !== null && <InventoryCard cardData={cardDataMap[draggedCardName as CardName]} />}
       </DragOverlay>
-      <div className="absolute-fill inset-0 z-10 flex flex-col p-2 gap-2">
-        <h1 className="text-3xl font-semibold text-gray-900">{editDeck.deck.name}</h1>
-        <div className="flex-grow flex overflow-hidden relative">
-          <InventoryBrowser />
-          <DeckList />
+      <div className="absolute-fill inset-0 z-10 flex flex-col">
+        <div className="flex flex-col overflow-hidden p-2 gap-2">
+          <h1 className="text-5xl text-stone-50">{editDeck.deck.name}</h1>
+          <div className="flex-grow flex overflow-hidden relative">
+            <InventoryBrowser />
+            <DeckListColumn />
+          </div>
         </div>
-        <div className="flex">
-          {editDeck.deck.cardNames.length === 0 ? <Button onClick={onCancel}>Cancel</Button> : <EditDeckCancelDialog />}
-          <div className="flex-grow" />
-          <Button onClick={onDoneClick}>Done</Button>
-        </div>
+        <Footer
+          leftContent={
+            editDeck.deck.cardNames.length === 0 ? <Button onClick={onCancel}>Cancel</Button> : <EditDeckCancelDialog />
+          }
+          rightContent={<Button onClick={onDoneClick}>Done</Button>}
+        />
       </div>
     </MainView>
   )

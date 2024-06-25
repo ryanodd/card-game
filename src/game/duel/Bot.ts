@@ -1,10 +1,11 @@
+import { getRandomInt, getRandomSeed } from "@/src/utils/randomNumber"
 import {
   autoPayElements,
   getEnergyButtonsForPlayer,
   getEnergyCountsFromSelected,
 } from "../../react/hooks/useDuelUIStore"
 import { DuelState } from "./DuelData"
-import { getCurrentDuelPlayer, getRandomInt } from "./DuelHelpers"
+import { getCurrentDuelPlayer } from "./DuelHelpers"
 import { takeTurn_executeAdvance } from "./choices/takeTurn/executeAdvance"
 import { takeTurn_executePlayCard } from "./choices/takeTurn/executePlayCard"
 import { takeTurn_getValidHandTargets } from "./choices/takeTurn/getValidHandTargets"
@@ -30,11 +31,14 @@ export async function opponentTakeTurn(inputDuel: DuelState) {
     return duel
   }
 
-  const cardIdToPlay = handTargets[getRandomInt(handTargets.length)]
+  const cardIdToPlay = handTargets[getRandomInt(handTargets.length, getRandomSeed())]
   const emptyEnergySelected = getEnergyButtonsForPlayer(getCurrentDuelPlayer(duel))
   const elementsToPay = getEnergyCountsFromSelected(autoPayElements(duel, cardIdToPlay, emptyEnergySelected))
   const targets = takeTurn_getValidTargetsForCard(duel, cardIdToPlay, elementsToPay)
-  const targetToPlay = targets[getRandomInt(targets.length)]
+
+  // Choose target completely randomly.
+  const targetToPlay = targets[getRandomInt(targets.length, getRandomSeed())]
   duel = await takeTurn_executePlayCard(duel, { cardIdToPlay, target: targetToPlay, energyPaid: elementsToPay })
+
   return duel
 }

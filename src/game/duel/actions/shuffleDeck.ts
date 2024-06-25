@@ -1,4 +1,4 @@
-import { shuffleArray } from "../../randomNumber"
+import { shuffleArray } from "@/src/utils/randomNumber"
 import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
 import { PlayerID } from "../PlayerData"

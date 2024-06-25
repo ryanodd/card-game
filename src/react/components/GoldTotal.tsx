@@ -5,7 +5,7 @@ export type GoldTotalProps = {
 export const GoldTotal = ({ value }: GoldTotalProps) => {
   return (
     <div className=" ">
-      <span className="text-xl text-outline">Gold: {value}</span>
+      <span className="text-xl text-stone-50 text-outline">Gold: {value}</span>
     </div>
   )
 }

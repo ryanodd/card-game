@@ -9,7 +9,6 @@ export enum AnimationID {
 
 export type DuelAnimation = {
   durationMs: number
-  endLag?: boolean
 } & (
   | {
       id: "PAUSE"
@@ -27,6 +26,11 @@ export type DuelAnimation = {
       rowIndex: number
     }
   | {
+      id: "MISS"
+      rowIndex: number
+      defendingCardId: string
+    }
+  | {
       id: "DESTROY_START"
       cardIds: string[]
     }
@@ -38,6 +42,22 @@ export type DuelAnimation = {
       id: "ENERGY_ADDED"
       playerId: PlayerID
       energyType: EnergyType
+    }
+  | {
+      id: "BURN"
+      cardId: string
+    }
+  | {
+      id: "POISON"
+      cardId: string
+    }
+  | {
+      id: "STUN"
+      cardId: string
+    }
+  | {
+      id: "ROLL_FAIL"
+      cardId: string
     }
   | {
       id: "EMBER_FOXLING"
@@ -57,6 +77,22 @@ export type DuelAnimation = {
     }
   | {
       id: "DARKWOODS_HYENA"
+      cardId: string
+    }
+  | {
+      id: "DRAGON_CUB"
+      cardId: string
+    }
+  | {
+      id: "JOLTBIRD_AGENT"
+      cardId: string
+    }
+  | {
+      id: "BRASH_SPLASHER"
+      cardId: string
+    }
+  | {
+      id: "FLAME_SENTINTEL"
       cardId: string
     }
 )

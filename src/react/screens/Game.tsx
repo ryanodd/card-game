@@ -10,6 +10,7 @@ import { EditDeckScreen } from "./EditDeckScreen"
 import { MyDndTest } from "./MyDndTest"
 import { CampaignSelectScreen } from "./CampaignSelectScreen"
 import { ShopScreen } from "./ShopScreen"
+import { CollectionScreen } from "./CollectionScreen"
 
 export const Game = () => {
   const forceUpdate = useForceUpdate()
@@ -38,6 +39,7 @@ export const Game = () => {
         {game.screen.id === "shop" && <ShopScreen />}
         {game.screen.id === "manageDecks" && <ManageDecksScreen />}
         {game.screen.id === "editDeck" && <EditDeckScreen />}
+        {game.screen.id === "collection" && <CollectionScreen />}
         {game.screen.id === "duel" && <DuelScreen />}
         {game.screen.id === "dragAndDropDemo" && <MyDndTest />}
         {/* {game.screen.id === "duelEnd" && <DuelEndScreen />} */}

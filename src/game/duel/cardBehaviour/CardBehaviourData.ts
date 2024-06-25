@@ -4,6 +4,10 @@ import { Target } from "../choices/ChoiceData"
 
 export type CardBehaviour = {
   getValidTargets: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Target[]
+  keywords?: {
+    trample?: boolean
+    enrage?: boolean
+  }
   effects?: {
     play?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string, target: Target) => Promise<DuelState>
     summon?: (inputDuel: DuelState, playerId: PlayerID, instanceId: string) => Promise<DuelState>

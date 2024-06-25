@@ -8,6 +8,7 @@ export type ScreenState =
   | { id: "shop" }
   | { id: "manageDecks" }
   | EditDeckState
+  | { id: "collection" }
   | DuelState
   | { id: "dragAndDropDemo" } // | { id: "duelEnd" }
 

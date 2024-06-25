@@ -62,7 +62,7 @@
 
 @keyframes highlight-animation {
   50% {
-    filter: brightness(130%);
+    filter: brightness(140%);
   }
 }
 

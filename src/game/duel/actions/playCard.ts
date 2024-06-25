@@ -49,7 +49,7 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
     const row = player.rows[target.rowIndex]
     row.splice(target.positionIndex, 0, playedCard)
     if (duel.currentPlayerId === "opponent") {
-      duel = await playAnimation(duel, { id: "SUMMON", durationMs: 200, endLag: true, cardId })
+      duel = await playAnimation(duel, { id: "SUMMON", durationMs: 200, cardId })
     }
 
     if (cardBehaviour.effects?.summon) {

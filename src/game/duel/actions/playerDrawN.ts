@@ -2,12 +2,7 @@ import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
 import { PlayerID } from "../PlayerData"
 
-export type PlayerDrawNParams = {
-  numberToDraw: number
-  playerId: PlayerID
-}
-
-export const playerDrawN = (inputDuel: DuelState, { numberToDraw, playerId }: PlayerDrawNParams) => {
+export async function playerDrawN(inputDuel: DuelState, playerId: PlayerID, numberToDraw: number) {
   let duel = inputDuel
   const player = getDuelPlayerById(duel, playerId)
   for (let x = 0; x < numberToDraw; x++) {
@@ -17,5 +12,7 @@ export const playerDrawN = (inputDuel: DuelState, { numberToDraw, playerId }: Pl
     }
     player.hand.push(cardDrawn)
   }
+  // duel = await playAnimation(duel, { id: "DRAW", durationMs: 800, })
+  // duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   return duel
 }

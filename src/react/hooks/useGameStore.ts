@@ -19,7 +19,7 @@ export const allCardsGameState: GameState = {
   },
   currentCampaign: undefined,
   campaignCompletion: {},
-  decks: [deckMap["starterDeck"], deckMap["firstOpponent"]],
+  decks: [deckMap["testDeck"], deckMap["starterDeck"], deckMap["firstOpponent"]],
   gold: 200,
   settings: {
     debug: {

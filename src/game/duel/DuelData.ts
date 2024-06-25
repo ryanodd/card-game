@@ -5,15 +5,32 @@ import { PlayerID } from "./PlayerData"
 
 import { ChoiceID } from "./choices/ChoiceData"
 
-export type Modifier =
-  | {
-      type: "attackChange"
-      amount: number
-    }
-  | {
-      id: "healthChange"
-      amount: number
-    }
+export type AttackChangeModifier = {
+  id: "attackChange"
+  amount: number
+}
+
+export type HealthChangeModifier = {
+  id: "healthChange"
+  amount: number
+}
+
+export type BurnModifier = {
+  id: "burn"
+  quantity: number
+}
+
+export type StunModifier = {
+  id: "stun"
+  quantity: number
+}
+
+export type PoisonModifier = {
+  id: "poison"
+  quantity: number
+}
+
+export type Modifier = AttackChangeModifier | HealthChangeModifier | BurnModifier | StunModifier | PoisonModifier
 
 export type CardState = {
   name: CardName

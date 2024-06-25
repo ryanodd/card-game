@@ -5,6 +5,7 @@ import { useGameStore } from "../hooks/useGameStore"
 import { deckMap } from "@/src/game/Decks"
 import { GameBackground } from "../components/GameBackground"
 import { campaignData } from "@/src/game/Campaign"
+import { Footer } from "../components/Footer"
 
 export const CampaignSelectScreen = () => {
   const { game, setGame } = useGameStore()
@@ -17,21 +18,25 @@ export const CampaignSelectScreen = () => {
   return (
     <MainView>
       <GameBackground />
-      <div className="w-full h-full flex flex-col p-4">
-        <div className="flex flex-col items-center gap-4 grow">
-          <h1 className="text-3xl">Campaign Select</h1>
-          <h2>Active deck: {getActiveDeck(game)?.name ?? "None"}</h2>
-          <div className="flex flex-col mt-8 gap-4">
+      <div className="w-full h-full flex flex-col">
+        <div className="flex flex-col p-8 gap-8 grow">
+          <h1 className="text-5xl text-stone-50">Campaign Select</h1>
+          <h2 className="text-lg text-stone-50">Active deck: {getActiveDeck(game)?.name ?? "None"}</h2>
+          <div className="grow flex items-center justify-center gap-4">
             {campaignData.map((campaign) => (
-              <Button key={campaign.id}>{campaign.title}</Button>
+              <Button data-size="large" key={campaign.id}>
+                {campaign.title}
+              </Button>
             ))}
           </div>
         </div>
-        <div className="flex justify-start">
-          <Button className="flex items-center" onClick={onBackClick}>
-            ⬅ Back
-          </Button>
-        </div>
+        <Footer
+          leftContent={
+            <Button className="flex items-center" onClick={onBackClick}>
+              ⬅ Back
+            </Button>
+          }
+        />
       </div>
     </MainView>
   )

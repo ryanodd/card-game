@@ -1,0 +1,105 @@
+.duelCardAnimationLayer {
+  @apply absolute -inset-0 z-20 pointer-events-none flex items-center justify-center;
+}
+
+.duelCardAnimationLayer[data-modifier-burn="true"] > .duelCardAnimationLayerDrawing {
+  @apply bg-red-400 rounded-full shadow-lg w-10 h-10;
+}
+
+.duelCardAnimationLayer[data-modifier-stun="true"] > .duelCardAnimationLayerDrawing {
+  @apply bg-yellow-400 rounded-full shadow-lg w-10 h-10;
+}
+
+.duelCardAnimationLayer[data-modifier-poison="true"] > .duelCardAnimationLayerDrawing {
+  @apply bg-green-400 rounded-full shadow-lg w-10 h-10;
+}
+
+.duelCardAnimationLayer[data-animation-burn="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #ff8e31, #ff1b1b);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: burn var(--current-animation-duration);
+}
+
+@keyframes burn {
+  0% {
+    transform: rotate(0turn);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0.99turn);
+    opacity: 0;
+  }
+}
+
+.duelCardAnimationLayer[data-animation-stun="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #f0ff45, #fcdd32);
+
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: stun var(--current-animation-duration);
+}
+
+@keyframes stun {
+  0% {
+    transform: rotate(0turn);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0.99turn);
+    opacity: 0;
+  }
+}
+
+.duelCardAnimationLayer[data-animation-roll-fail="true"] > .duelCardAnimationLayerDrawing {
+  @apply bg-red-600 rounded-full shadow-lg w-20 h-20;
+  animation: roll_fail var(--current-animation-duration);
+}
+
+@keyframes roll_fail {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.duelCardAnimationLayer[data-animation-ember-foxling="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #ff9f45, #ee502d);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: ember_foxling var(--current-animation-duration);
+}
+
+@keyframes ember_foxling {
+  0% {
+    transform: rotate(0turn);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0.99turn);
+    opacity: 0;
+  }
+}

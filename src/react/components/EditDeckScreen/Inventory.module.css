@@ -6,8 +6,12 @@
   @apply flex flex-wrap overflow-y-scroll gap-2.5;
 }
 
+.deckListColumn {
+  @apply shrink-0 bg-stone-800 flex flex-col  overflow-y-scroll justify-start;
+}
+
 .deckList {
-  @apply shrink-0 overflow-y-scroll flex flex-col justify-start;
+  @apply grow flex flex-col gap-1 p-1;
 }
 
 .deckListCardContent {
@@ -16,10 +20,10 @@
 
 .deckListCardNumber {
   @apply absolute -left-0 z-10;
-  @apply bg-red-500 bg-opacity-75 rounded-full w-8 h-8;
+  @apply bg-red-500 text-white bg-opacity-75 rounded-full w-8 h-8;
   @apply flex justify-center items-center;
 }
 
 .deckListCardText {
-  @apply text-xl flex-grow text-ellipsis line-clamp-2 justify-self-start text-left;
+  @apply text-xl text-stone-50 flex-grow text-ellipsis line-clamp-2 justify-self-start text-left;
 }

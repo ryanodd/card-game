@@ -3,14 +3,14 @@ import { playerDrawN } from "./playerDrawN"
 import { shuffleDeck } from "./shuffleDeck"
 import { turnStart } from "./turnStart"
 
-export const duelSetup = (inputDuel: DuelState) => {
+export async function duelSetup(inputDuel: DuelState) {
   let duel = inputDuel
 
   duel = shuffleDeck(duel, "human")
   duel = shuffleDeck(duel, "opponent")
 
-  duel = playerDrawN(duel, { playerId: "human", numberToDraw: 6 })
-  duel = playerDrawN(duel, { playerId: "opponent", numberToDraw: 6 })
+  duel = await playerDrawN(duel, "human", 6)
+  duel = await playerDrawN(duel, "opponent", 6)
 
   // TODO randomize
   const humanGoesFirst = true
@@ -22,7 +22,7 @@ export const duelSetup = (inputDuel: DuelState) => {
     duel.currentPlayerId === "opponent"
   }
 
-  duel = turnStart(duel)
+  duel = await turnStart(duel)
 
   return duel
 }

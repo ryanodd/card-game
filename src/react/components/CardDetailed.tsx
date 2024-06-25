@@ -74,7 +74,7 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
         {cardData.rarity !== "base" && (
           <div className={`${cardStyles.rarityIndicator}`} data-rarity={cardData.rarity} />
         )}
-        {!cardData.complete && <span className="justify-self-end text-sm text-red-950">Incomplete</span>}
+        {!cardData.complete && <span className="justify-self-end self-center text-xs text-red-950">Incomplete</span>}
       </div>
 
       <div className={cardStyles.textContainer}>
@@ -83,13 +83,13 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
       <div className={`${cardStyles.cardFooter} h-8 -mb-2 -mx-2 gap-2`}>
         {cardData.attack !== undefined && (
           <div className={`${cardStyles.attackIndicator} pl-2 pr-2.5 rounded-tr-xl `}>
-            <h2 className="text-2xl text-outline">{getAttackText(cardData, cardState)}</h2>
+            <h2 className="text-2xl text-stone-50 text-outline">{getAttackText(cardData, cardState)}</h2>
           </div>
         )}
 
         {cardData.health !== undefined && (
           <div className={`${cardStyles.healthIndicator} w-10 rounded-tl-xl pl-0.5`}>
-            <h2 className="text-2xl text-outline">{cardData.health}</h2>
+            <h2 className="text-2xl text-stone-50 text-outline">{cardData.health}</h2>
           </div>
         )}
       </div>

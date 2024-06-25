@@ -30,7 +30,11 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
   }
 
   if (duel.choice.id === "TAKE_TURN" && !duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
-    return "Spend energy to play cards. You may play one energy card per turn."
+    return "Click & drag cards to play them. Start by playing energy cards."
+  }
+
+  if (duel.choice.id === "TAKE_TURN" && duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
+    return "Good job! Now you'll have that energy to spend on cards every turn. (You may only play 1 energy per turn)"
   }
 
   if (duel.choice.id === "TAKE_TURN") {
@@ -38,12 +42,12 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
 
     // Can play cards
     if (handTargets.length > 0) {
-      return "Play cards by spending elements."
+      return "Play cards, if you have enough energy."
     }
 
     // Can't play cards
     if (handTargets.length === 0) {
-      if (duel.turnNumber === 0) {
+      if (duel.turnNumber === 1) {
         return "Can't afford to play any more cards. End your turn."
       }
       return null
@@ -75,8 +79,8 @@ export const DuelPrompt = ({ duel }: DuelPromptProps) => {
   }
 
   return (
-    <div className="absolute right-8 bottom-60 z-20 w-80 flex flex-col gap-2 bg-slate-600 rounded-lg shadow-md p-4">
-      <h2>{promptMessage}</h2>
+    <div className="absolute right-8 bottom-60 z-20 w-80 flex flex-col gap-2 bg-slate-800 rounded-lg shadow-md py-4 px-4">
+      <h2 className="text-stone-50">{promptMessage}</h2>
       {buttonText !== null && (
         <button
           className={`${buttonStyles.button}`}

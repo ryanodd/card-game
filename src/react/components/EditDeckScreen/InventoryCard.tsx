@@ -29,6 +29,6 @@ export const InventoryCard = ({ cardData }: CardProps) => {
           <CardDetailed cardData={cardData} />
         </button>
       }
-    ></InventoryCardFocusDialog>
+    />
   )
 }

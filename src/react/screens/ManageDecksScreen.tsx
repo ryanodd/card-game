@@ -7,6 +7,7 @@ import { v4 } from "uuid"
 import { GameBackground } from "../components/GameBackground"
 import { Deck } from "@/src/game/Deck"
 import styles from "./ManageDecksScreen.module.css"
+import { Footer } from "../components/Footer"
 
 export type DeckCellProps = {
   deck: Deck
@@ -37,7 +38,9 @@ export const DeckCell = ({ deck }: DeckCellProps) => {
     >
       <div className="flex justify-between">
         <h3 className=" text-xl text-stone-900">{deck.name}</h3>
-        {game.activeDeckId === deck.id && <p className=" bg-red-600 rounded-full text-sm px-3 py-1">Active</p>}
+        {game.activeDeckId === deck.id && (
+          <p className=" bg-red-600 rounded-full text-sm text-white px-3 py-1">Active</p>
+        )}
       </div>
       <h4 className="text-md text-stone-900">
         {deck.cardNames.length} {`${deck.cardNames.length === 1 ? "card" : "cards"}`}
@@ -83,26 +86,30 @@ export const ManageDecksScreen = () => {
   return (
     <MainView>
       <GameBackground />
-      <div className="w-full h-full flex p-4 flex-col justify-between">
-        <h1 className="text-5xl">Decks</h1>
-        <div className=" align-middle overflow-y-scroll">
-          <ul className={`${styles.deckGrid} grid auto-rows-fr p-4 gap-8 items-center`}>
-            {game.decks.map((deck, i) => (
-              <DeckCell key={i} deck={deck} />
-            ))}
-            <li>
-              <Button data-variant="primary" className="flex flex-col items-center" onClick={onCreateNewDeck}>
-                <span className="text-4xl">+</span>
-                <span>New deck</span>
-              </Button>
-            </li>
-          </ul>
+      <div className="w-full h-full flex flex-col justify-between">
+        <div className="grow flex flex-col p-8 gap-8">
+          <h1 className="text-5xl text-stone-50">Decks</h1>
+          <div className=" align-middle overflow-y-scroll">
+            <ul className={`${styles.deckGrid} grid auto-rows-fr gap-8 items-center`}>
+              {game.decks.map((deck, i) => (
+                <DeckCell key={i} deck={deck} />
+              ))}
+              <li>
+                <Button data-variant="primary" className="flex flex-col items-center" onClick={onCreateNewDeck}>
+                  <span className="text-4xl">+</span>
+                  <span>New deck</span>
+                </Button>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="flex justify-between">
-          <Button className="flex items-center" onClick={onBackClick}>
-            ⬅ Back
-          </Button>
-        </div>
+        <Footer
+          leftContent={
+            <Button className="flex items-center" onClick={onBackClick}>
+              ⬅ Back
+            </Button>
+          }
+        />
       </div>
     </MainView>
   )

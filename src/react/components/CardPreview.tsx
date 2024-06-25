@@ -65,14 +65,16 @@ export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, set
         <div className={`${styles.cardFooter}`}>
           {cardState.attack !== undefined && (
             <div className={`${styles.attackIndicator} pl-1.5 pr-2 h-8 rounded-tr-xl`}>
-              <h2 className={`${"text-2xl"} font-semibold text-outline`}>{getAttackText(cardData, cardState)}</h2>
+              <h2 className={`${"text-2xl"} text-stone-50 font-semibold text-outline`}>
+                {getAttackText(cardData, cardState)}
+              </h2>
             </div>
           )}
           {cardState.health !== undefined && cardState.initialHealth !== undefined && (
             <div className={`${styles.healthIndicator} w-8 h-8 rounded-tl-xl`}>
               <h2
-                className={`text-2xl font-semibold text-outline ${
-                  cardState.health < cardState.initialHealth ? "text-red-300" : ""
+                className={`text-2xl  font-semibold text-outline ${
+                  cardState.health < cardState.initialHealth ? "text-red-300" : "text-stone-50"
                 }`}
               >
                 {cardState.health}

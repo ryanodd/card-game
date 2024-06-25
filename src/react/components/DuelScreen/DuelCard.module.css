@@ -1,4 +1,22 @@
-.duelCard[data-animation-attack-start="true"][data-player-id="human"] {
+.duelCardFilterLayer[data-modifier-burn="true"] {
+  > * {
+    filter: sepia(150%);
+  }
+}
+
+.duelCardFilterLayer[data-modifier-stun="true"] {
+  > * {
+    filter: brightness(130%);
+  }
+}
+
+.duelCardFilterLayer[data-modifier-poison="true"] {
+  > * {
+    filter: contrast(150%);
+  }
+}
+
+.duelCardFilterLayer[data-animation-attack-start="true"][data-player-id="human"] {
   > * {
     z-index: 20;
     animation: attack_start_human var(--current-animation-duration) ease-in;
@@ -14,7 +32,7 @@
   }
 }
 
-.duelCard[data-animation-attack-start="true"][data-player-id="opponent"] {
+.duelCardFilterLayer[data-animation-attack-start="true"][data-player-id="opponent"] {
   > * {
     z-index: 20;
     animation: attack_start_opponent var(--current-animation-duration) ease-in;
@@ -30,7 +48,7 @@
   }
 }
 
-.duelCard[data-animation-attack-end="true"][data-player-id="human"] {
+.duelCardFilterLayer[data-animation-attack-end="true"][data-player-id="human"] {
   > * {
     z-index: 20;
     animation: attack_end_human var(--current-animation-duration) ease-out;
@@ -46,7 +64,7 @@
   }
 }
 
-.duelCard[data-animation-attack-end="true"][data-player-id="opponent"] {
+.duelCardFilterLayer[data-animation-attack-end="true"][data-player-id="opponent"] {
   > * {
     z-index: 20;
     animation: attack_end_opponent var(--current-animation-duration) ease-out;
@@ -62,30 +80,7 @@
   }
 }
 
-.duelCard[data-animation-ember-foxling="true"] {
-  > * {
-    z-index: 20;
-    filter: contrast(200%);
-  }
-}
-
-/* .duelCard[data-animation-summon="true"] {
-  animation: summon var(--current-animation-duration) ease-out;
-}
-
-@keyframes summon {
-  0% {
-    filter: brightness(100%);
-  }
-  50% {
-    filter: brightness(400%);
-  }
-  100% {
-    filter: brightness(100%);
-  }
-} */
-
-.duelCard[data-animation-opponent-summon="true"] {
+.duelCardFilterLayer[data-animation-opponent-summon="true"] {
   animation: opponent-summon var(--current-animation-duration);
 }
 
@@ -100,7 +95,7 @@
   }
 }
 
-.duelCard[data-animation-destroy-start="true"] {
+.duelCardFilterLayer[data-animation-destroy-start="true"] {
   animation: destroy-start var(--current-animation-duration);
 }
 
@@ -115,7 +110,7 @@
   }
 }
 
-.duelCard[data-animation-destroy-end="true"] {
+.duelCardFilterLayer[data-animation-destroy-end="true"] {
   animation: destroy-end var(--current-animation-duration);
 }
 
@@ -123,5 +118,68 @@
   0% {
   }
   100% {
+  }
+}
+
+@keyframes animationActiveFilter {
+  0% {
+    filter: brightness(100%) contrast(100%);
+  }
+  20% {
+    filter: brightness(125%) contrast(150%);
+  }
+  80% {
+    filter: brightness(125%) contrast(150%);
+  }
+  100% {
+    filter: brightness(100%) contrast(100%);
+  }
+}
+
+.duelCardFilterLayer[data-animation-burn="true"] {
+  > * {
+    animation: burn var(--current-animation-duration);
+  }
+}
+
+@keyframes burn {
+  0% {
+    filter: brightness(100%) contrast(100%);
+  }
+  20% {
+    filter: brightness(50%) contrast(150%);
+  }
+  80% {
+    filter: brightness(50%) contrast(150%);
+  }
+  100% {
+    filter: brightness(100%) contrast(100%);
+  }
+}
+
+.duelCardFilterLayer[data-animation-stun="true"] {
+  > * {
+    animation: stun var(--current-animation-duration);
+  }
+}
+
+@keyframes stun {
+  0% {
+    filter: brightness(100%) contrast(100%);
+  }
+  20% {
+    filter: brightness(50%) contrast(150%);
+  }
+  80% {
+    filter: brightness(50%) contrast(150%);
+  }
+  100% {
+    filter: brightness(100%) contrast(100%);
+  }
+}
+
+.duelCardFilterLayer[data-animation-ember-foxling="true"] {
+  > * {
+    animation: animationActiveFilter var(--current-animation-duration);
   }
 }

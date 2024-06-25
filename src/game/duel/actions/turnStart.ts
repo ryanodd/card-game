@@ -2,7 +2,7 @@ import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
 import { playerDrawN } from "./playerDrawN"
 
-export const turnStart = (inputDuel: DuelState) => {
+export async function turnStart(inputDuel: DuelState) {
   let duel = inputDuel
 
   // Reset energy
@@ -16,7 +16,7 @@ export const turnStart = (inputDuel: DuelState) => {
   }
   player.playedEnergyThisTurn = false
 
-  duel = playerDrawN(duel, { numberToDraw: 1, playerId: duel.currentPlayerId })
+  duel = await playerDrawN(duel, duel.currentPlayerId, 1)
 
   duel.choice = { id: "TAKE_TURN", playerId: duel.currentPlayerId }
   return duel

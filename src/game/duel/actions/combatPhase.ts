@@ -1,11 +1,12 @@
 import { DuelState } from "../DuelData"
 import { getCardByInstanceId } from "../DuelHelpers"
 import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
-import { playAnimation } from "../control/playAnimation"
+import { BUFFER_MS, playAnimation } from "../control/playAnimation"
 import { checkForDeaths } from "./checkForDeaths"
 import { creaturesTrade } from "./creaturesTrade"
 import { dealDamageToPlayer } from "./dealDamage"
 import { removeCard } from "./removeCard"
+import { decreaseStun } from "./stun"
 
 export async function combatPhase(inputDuel: DuelState) {
   let duel = inputDuel
@@ -18,15 +19,20 @@ export async function combatPhase(inputDuel: DuelState) {
       continue
     }
 
+    const humanAttackingCardStunned =
+      humanAttackingCard?.modifiers.find((modifier) => modifier.id === "stun") !== undefined
+    const opponentAttackingCardStunned =
+      opponentAttackingCard?.modifiers.find((modifier) => modifier.id === "stun") !== undefined
+
     // Trigger effects of support cards
-    for (let y = 1; y < duel.human.rows[x].length; y++) {
+    for (let y = duel.human.rows[x].length - 1; y >= 1; y--) {
       const card = duel.human.rows[x][y]
       const supportEffect = cardBehaviourMap[card?.name ?? ""]?.effects?.support
       if (supportEffect !== undefined) {
         duel = await supportEffect(duel, "human", card.instanceId)
       }
     }
-    for (let y = 1; y < duel.opponent.rows[x].length; y++) {
+    for (let y = duel.opponent.rows[x].length - 1; y >= 1; y--) {
       const card = duel.opponent.rows[x][y]
       const supportEffect = cardBehaviourMap[card?.name ?? ""]?.effects?.support
       if (supportEffect !== undefined) {
@@ -42,13 +48,14 @@ export async function combatPhase(inputDuel: DuelState) {
 
     //Trade
     if (humanAttackingCard !== undefined && opponentAttackingCard !== undefined) {
-      duel = creaturesTrade(duel, humanAttackingCard.instanceId, opponentAttackingCard.instanceId)
+      duel = await creaturesTrade(duel, humanAttackingCard.instanceId, opponentAttackingCard.instanceId)
     }
     // Human damage to Opponent face
     else if (
       humanAttackingCard !== undefined &&
       humanAttackingCard.cardType === "creature" &&
       humanAttackingCard.attack !== undefined &&
+      !humanAttackingCardStunned &&
       opponentAttackingCard === undefined
     ) {
       dealDamageToPlayer(duel, "opponent", humanAttackingCard.attack)
@@ -58,6 +65,7 @@ export async function combatPhase(inputDuel: DuelState) {
       opponentAttackingCard !== undefined &&
       opponentAttackingCard.cardType === "creature" &&
       opponentAttackingCard.attack !== undefined &&
+      !opponentAttackingCardStunned &&
       humanAttackingCard === undefined
     ) {
       dealDamageToPlayer(duel, "human", opponentAttackingCard.attack)
@@ -66,18 +74,26 @@ export async function combatPhase(inputDuel: DuelState) {
     duel = await playAnimation(duel, {
       id: "ATTACK_END",
       durationMs: 200,
-      endLag: true,
       rowIndex: x,
     })
+    duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
 
-    //Trigger effects of attacking cards
+    // Trigger effects of attacking cards
     const humanAfterAttackEffect = cardBehaviourMap[humanAttackingCard?.name ?? ""]?.effects?.afterAttack
-    if (humanAttackingCard && humanAfterAttackEffect !== undefined) {
+    if (humanAttackingCard && humanAfterAttackEffect !== undefined && !humanAttackingCardStunned) {
       duel = await humanAfterAttackEffect(duel, "human", humanAttackingCard.instanceId)
     }
     const opponentAfterAttackEffect = cardBehaviourMap[opponentAttackingCard?.name ?? ""]?.effects?.afterAttack
-    if (opponentAttackingCard && opponentAfterAttackEffect !== undefined) {
+    if (opponentAttackingCard && opponentAfterAttackEffect !== undefined && !opponentAttackingCardStunned) {
       duel = await opponentAfterAttackEffect(duel, "opponent", opponentAttackingCard.instanceId)
+    }
+
+    // Tick stunned creatures
+    if (humanAttackingCardStunned) {
+      duel = await decreaseStun(duel, humanAttackingCard.instanceId)
+    }
+    if (opponentAttackingCardStunned) {
+      duel = await decreaseStun(duel, opponentAttackingCard.instanceId)
     }
 
     duel = await checkForDeaths(duel)

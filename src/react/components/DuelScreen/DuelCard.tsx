@@ -1,13 +1,15 @@
 import { autoPayElements, getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 
 import { CSS } from "@dnd-kit/utilities"
-import styles from "./DuelCard.module.css"
+
 import { CardPreview } from "../CardPreview"
 
 import { useDndMonitor, useDraggable } from "@dnd-kit/core"
 import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
 
 import cardStyles from "../Card.module.css"
+import animationFilterStyles from "./DuelCard.module.css"
+import animationLayerStyles from "./DuelCardAnimationLayer.module.css"
 import { useSortable } from "@dnd-kit/sortable"
 import { CardState, DuelState } from "@/src/game/duel/DuelData"
 import { duelWinner, getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
@@ -67,6 +69,10 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     row.some((card) => card.instanceId === cardState.instanceId)
   )
 
+  const modifierBurn = cardState.modifiers.find((modifier) => modifier.id === "burn") !== undefined
+  const modifierStun = cardState.modifiers.find((modifier) => modifier.id === "stun") !== undefined
+  const modifierPoison = cardState.modifiers.find((modifier) => modifier.id === "poison") !== undefined
+
   const animationOpponentSummon =
     duel.currentAnimation?.id === "SUMMON" &&
     duel.currentAnimation.cardId === cardState.instanceId &&
@@ -93,33 +99,67 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
   const animationDestroyEnd =
     duel.currentAnimation?.id === "DESTROY_END" && duel.currentAnimation?.cardIds.includes(cardState.instanceId)
 
+  const animationBurn = duel.currentAnimation?.id === "BURN" && duel.currentAnimation.cardId === cardState.instanceId
+  const animationStun = duel.currentAnimation?.id === "STUN" && duel.currentAnimation.cardId === cardState.instanceId
+
+  const animationRollFail =
+    duel.currentAnimation?.id === "ROLL_FAIL" && duel.currentAnimation.cardId === cardState.instanceId
+
   const animationEmberFoxling =
     duel.currentAnimation?.id === "EMBER_FOXLING" && duel.currentAnimation.attackingCardId === cardState.instanceId
 
   return (
     <div
-      className={`${styles.duelCard} relative ${isDragging ? "opacity-0" : ""} ${
-        selectable ? cardStyles.card_selectable : ""
-      } ${highlighted ? cardStyles.card_highlighted : ""}`}
+      className={` relative ${isDragging ? "opacity-0" : ""} ${selectable ? cardStyles.card_selectable : ""} ${
+        highlighted ? cardStyles.card_highlighted : ""
+      }`}
       data-player-id={playerId}
-      data-animation-opponent-summon={animationOpponentSummon}
-      data-animation-attack-start={animationAttackStart}
-      data-animation-attack-end={animationAttackEnd}
-      data-animation-destroy-start={animationDestroyStart}
-      data-animation-destroy-end={animationDestroyEnd}
-      data-animation-ember-foxling={animationEmberFoxling}
       ref={setNodeRef}
       {...attributes}
       {...listeners}
       style={style}
     >
-      <CardPreview
-        duel={duel}
-        cardState={cardState}
-        isTooltipOpen={isTooltipOpen}
-        setIsTooltipOpen={setIsTooltipOpen}
-        showCostIcons
-      />
+      <div
+        className={`${animationLayerStyles.duelCardAnimationLayer} `}
+        data-modifier-burn={modifierBurn}
+        data-modifier-stun={modifierStun}
+        data-modifier-poison={modifierPoison}
+        data-animation-opponent-summon={animationOpponentSummon}
+        data-animation-attack-start={animationAttackStart}
+        data-animation-attack-end={animationAttackEnd}
+        data-animation-destroy-start={animationDestroyStart}
+        data-animation-destroy-end={animationDestroyEnd}
+        data-animation-burn={animationBurn}
+        data-animation-stun={animationStun}
+        data-animation-roll-fail={animationRollFail}
+        data-animation-ember-foxling={animationEmberFoxling}
+      >
+        <div className={`${animationLayerStyles.duelCardAnimationLayerDrawing}`} />
+      </div>
+      <div
+        className={`${animationFilterStyles.duelCardFilterLayer} `}
+        data-player-id={playerId}
+        data-modifier-burn={modifierBurn}
+        data-modifier-stun={modifierStun}
+        data-modifier-poison={modifierPoison}
+        data-animation-opponent-summon={animationOpponentSummon}
+        data-animation-attack-start={animationAttackStart}
+        data-animation-attack-end={animationAttackEnd}
+        data-animation-destroy-start={animationDestroyStart}
+        data-animation-destroy-end={animationDestroyEnd}
+        data-animation-burn={animationBurn}
+        data-animation-stun={animationStun}
+        data-animation-roll-fail={animationRollFail}
+        data-animation-ember-foxling={animationEmberFoxling}
+      >
+        <CardPreview
+          duel={duel}
+          cardState={cardState}
+          isTooltipOpen={isTooltipOpen}
+          setIsTooltipOpen={setIsTooltipOpen}
+          showCostIcons
+        />
+      </div>
     </div>
   )
 }

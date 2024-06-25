@@ -27,6 +27,9 @@ export const MainMenuScreen = () => {
   const onManageDeckClick = () => {
     setGame({ ...game, screen: { id: "manageDecks" } })
   }
+  const onCollectionClick = () => {
+    setGame({ ...game, screen: { id: "collection" } })
+  }
   const onStartDuelClick = () => {
     setGame({ ...game, screen: createNewDuel({ game, opponentDeck: deckMap.firstOpponent }) })
   }
@@ -38,8 +41,8 @@ export const MainMenuScreen = () => {
       <GameBackground />
       <div className="h-full flex flex-col">
         <div className="grow flex flex-col justify-center items-center gap-4  p-4">
-          <h1 className="text-3xl">{"It's a card game!"}</h1>
-          <h2>{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
+          <h1 className="text-3xl text-stone-50">{"It's a card game!"}</h1>
+          <h2 className="text-lg text-stone-50">{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
           <div className="flex flex-col mt-8 gap-4">
             <div className="flex flex-col gap-4">
               <Button data-variant="primary" data-size="large" onClick={onStartDuelClick}>
@@ -54,7 +57,7 @@ export const MainMenuScreen = () => {
                 <Button className="w-48 flex-grow" data-size="large" onClick={onManageDeckClick}>
                   Decks
                 </Button>
-                <Button className="w-48 flex-grow" data-size="large" onClick={onManageDeckClick}>
+                <Button className="w-48 flex-grow" data-size="large" onClick={onCollectionClick}>
                   Collection
                 </Button>
               </div>
