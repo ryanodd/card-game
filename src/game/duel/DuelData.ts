@@ -3,16 +3,18 @@ import { DuelAnimation } from "./AnimationData"
 import { EnergyCounts } from "./EnergyData"
 import { PlayerID } from "./PlayerData"
 
-import { ChoiceID } from "./choices/ChoiceData"
+import { ChoiceData } from "./choices/ChoiceData"
+
+export const GAME_START_NUM_TO_DRAW = 6
 
 export type AttackChangeModifier = {
   id: "attackChange"
-  amount: number
+  quantity: number
 }
 
 export type HealthChangeModifier = {
   id: "healthChange"
-  amount: number
+  quantity: number
 }
 
 export type BurnModifier = {
@@ -35,14 +37,22 @@ export type Modifier = AttackChangeModifier | HealthChangeModifier | BurnModifie
 export type CardState = {
   name: CardName
   instanceId: string
-
   cost: EnergyCounts
-  cardType: "creature" | "spell" | "energy"
   modifiers: Modifier[]
-  attack?: number
-  health?: number
-  initialHealth?: number
-}
+} & (
+  | {
+      cardType: "creature"
+      attack: number
+      health: number
+      damage: number
+    }
+  | {
+      cardType: "spell"
+    }
+  | {
+      cardType: "energy"
+    }
+)
 
 export type PlayerState = {
   heroId: string
@@ -51,18 +61,22 @@ export type PlayerState = {
   deck: CardState[]
   discard: CardState[]
   rows: CardState[][]
+  cardSelect: CardState[]
   energy: EnergyCounts
   energyIncome: EnergyCounts
   playedEnergyThisTurn: boolean
   drawnDead: boolean
 }
 
+export type DuelCompleteData = {
+  winner: PlayerID | "draw"
+  goldReward: number
+}
+
 export type DuelState = {
   id: "duel"
-  choice: {
-    id: ChoiceID
-    playerId: PlayerID
-  }
+
+  choice: ChoiceData
   currentAnimation: DuelAnimation | null
 
   human: PlayerState
@@ -71,4 +85,6 @@ export type DuelState = {
   playerGoingFirst: PlayerID
   currentPlayerId: PlayerID
   turnNumber: number
+
+  duelCompleteData: DuelCompleteData | null
 }

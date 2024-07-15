@@ -11,7 +11,12 @@
   outline: none;
 }
 
-.menuButtonItem:hover {
+.menuButtonItem[data-disabled] {
+  @apply text-neutral-400;
+  pointer-events: none;
+}
+
+.menuButtonItem:hover:not([data-disabled]) {
   @apply bg-sky-300 cursor-pointer;
 }
 

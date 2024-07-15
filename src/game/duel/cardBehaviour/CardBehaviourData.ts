@@ -19,11 +19,17 @@ export type CardBehaviour = {
       instanceId: string,
       attackAmount: number
     ) => number | "miss"
-    opponentAttackModifier?: (
+    opposingAttackModifier?: (
       inputDuel: DuelState,
       playerId: PlayerID,
       instanceId: string,
       attackAmount: number
     ) => number | "miss"
+    selectCards?: (
+      inputDuel: DuelState,
+      playerId: PlayerID,
+      instanceId: string,
+      cardsSelected: string[]
+    ) => Promise<DuelState>
   }
 }

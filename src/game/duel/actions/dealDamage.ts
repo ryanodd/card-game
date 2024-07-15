@@ -6,12 +6,16 @@ export async function dealDamageToCreature(duel: DuelState, cardInstanceId: stri
   let newDuel = duel
   let damageAmount = inputDamageAmount
   const cardState = getCardByInstanceId(newDuel, cardInstanceId)
+  if (cardState.cardType !== "creature") {
+    throw Error(`Tried to deal damage to non-creature ${cardState.name}`)
+  }
 
   const burnModifier = cardState.modifiers.find((modifier) => modifier.id === "burn")
   if (burnModifier !== undefined) {
     damageAmount += 1
   }
-  cardState.health = Math.max(0, (cardState.health ?? 0) - damageAmount)
+  cardState.damage += damageAmount
+
   return newDuel
 }
 

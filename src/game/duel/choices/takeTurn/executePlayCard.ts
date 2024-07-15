@@ -11,6 +11,10 @@ export async function takeTurn_executePlayCard(
     energyPaid: EnergyCounts
   }
 ) {
+  if (duel.choice.id !== "TAKE_TURN") {
+    throw Error("Tried to play card when it wasn't time to play a card")
+  }
+
   duel = await playCardFromHand(duel, {
     playerId: duel.currentPlayerId,
     cardId: params.cardIdToPlay,

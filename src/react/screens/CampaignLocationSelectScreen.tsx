@@ -6,8 +6,9 @@ import { deckMap } from "@/src/game/Decks"
 import { GameBackground } from "../components/GameBackground"
 import { campaignData } from "@/src/game/Campaign"
 import { Footer } from "../components/Footer"
+import { LocationSelect } from "../components/CampaignLocationSelectScreen/LocationSelect"
 
-export const CampaignSelectScreen = () => {
+export const CampaignLocationSelectScreen = () => {
   const { game, setGame } = useGameStore()
 
   const onCampaignSelect = ({}) => {}
@@ -22,13 +23,7 @@ export const CampaignSelectScreen = () => {
         <div className="flex flex-col p-8 gap-8 grow">
           <h1 className="text-5xl text-stone-50">Campaign Select</h1>
           <h2 className="text-lg text-stone-50">Active deck: {getActiveDeck(game)?.name ?? "None"}</h2>
-          <div className="grow flex items-center justify-center gap-4">
-            {campaignData.map((campaign) => (
-              <Button data-size="large" key={campaign.id}>
-                {campaign.title}
-              </Button>
-            ))}
-          </div>
+          <LocationSelect />
         </div>
         <Footer
           leftContent={

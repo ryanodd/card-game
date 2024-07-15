@@ -16,6 +16,7 @@ import { duelWinner, getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
 import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
 import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
 import { PlayerID } from "@/src/game/duel/PlayerData"
+import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
 
 export type DuelCardProps = {
   duel: DuelState
@@ -37,10 +38,15 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
 
   const highlighted = selectable && !cardIdDragging
 
+  let rowIndex: number = getDuelPlayerById(duel, playerId).rows.findIndex((row) =>
+    row.some((card) => card.instanceId === cardState.instanceId)
+  )
+
   const DRAGGABLE_ID = `draggable-card-${cardState.instanceId}`
   const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
     id: DRAGGABLE_ID,
   })
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -57,17 +63,13 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
         setEnergySelected(autoPayElements(duel, cardState.instanceId, energySelected))
       }
     },
-    onDragEnd: (event) => {
-      if (event.active.id !== DRAGGABLE_ID) {
-        return
-      }
-      resetDuelUIStore(duel)
-    },
+    // There's a bug here where onDragEnd doesn't get called for the dragged card. So I try to handle one-time things in DuelScreen instead
+    // onDragEnd: (event) => {
+    // if (event.active.id !== DRAGGABLE_ID) {
+    //   return
+    // }
+    // },
   })
-
-  let rowIndex: number = getDuelPlayerById(duel, playerId).rows.findIndex((row) =>
-    row.some((card) => card.instanceId === cardState.instanceId)
-  )
 
   const modifierBurn = cardState.modifiers.find((modifier) => modifier.id === "burn") !== undefined
   const modifierStun = cardState.modifiers.find((modifier) => modifier.id === "stun") !== undefined
@@ -108,6 +110,15 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
   const animationEmberFoxling =
     duel.currentAnimation?.id === "EMBER_FOXLING" && duel.currentAnimation.attackingCardId === cardState.instanceId
 
+  const animationCaveSwimmer =
+    duel.currentAnimation?.id === "CAVE_SWIMMER" && duel.currentAnimation.cardId === cardState.instanceId
+
+  const animationBrashSplasherSentinel =
+    duel.currentAnimation?.id === "BRASH_SPLASHER" && duel.currentAnimation.cardId === cardState.instanceId
+
+  const animationFlameSentinel =
+    duel.currentAnimation?.id === "FLAME_SENTINEL" && duel.currentAnimation.cardId === cardState.instanceId
+
   return (
     <div
       className={` relative ${isDragging ? "opacity-0" : ""} ${selectable ? cardStyles.card_selectable : ""} ${
@@ -133,6 +144,9 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
         data-animation-stun={animationStun}
         data-animation-roll-fail={animationRollFail}
         data-animation-ember-foxling={animationEmberFoxling}
+        data-animation-cave-swimmer={animationCaveSwimmer}
+        data-animation-brash-splasher={animationBrashSplasherSentinel}
+        data-animation-flame-sentinel={animationFlameSentinel}
       >
         <div className={`${animationLayerStyles.duelCardAnimationLayerDrawing}`} />
       </div>

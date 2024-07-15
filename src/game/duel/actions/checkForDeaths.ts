@@ -1,6 +1,7 @@
 import { DuelState } from "../DuelData"
 import { getAllCards } from "../DuelHelpers"
 import { playAnimation } from "../control/playAnimation"
+import { getEffectiveHealth } from "../helpers/getEffectiveHealth"
 import { destroyCard } from "./destroyCard"
 import { removeCard } from "./removeCard"
 
@@ -11,7 +12,7 @@ export async function checkForDeaths(inputDuel: DuelState) {
   const cardsToDestroy = []
   for (let x = 0; x < cards.length; x++) {
     const card = cards[x]
-    if (card.cardType === "creature" && card?.health !== undefined && card.health <= 0) {
+    if (card.cardType === "creature" && card.damage >= getEffectiveHealth(card)) {
       cardsToDestroy.push(card.instanceId)
     }
   }

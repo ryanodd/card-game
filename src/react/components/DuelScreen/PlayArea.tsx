@@ -1,4 +1,5 @@
 import styles from "./PlayArea.module.css"
+import animationLayerStyles from "./PlayAreaAnimationLayer.module.css"
 
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
@@ -54,8 +55,14 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
     },
   })
 
+  const animationAncestralPresence = duel.currentAnimation?.id === "ANCESTRAL_PRESENCE"
+
   return (
     <div className={`${styles.playArea}`}>
+      <div
+        className={animationLayerStyles.playAreaAnimationLayer}
+        data-animation-ancestral-presence={animationAncestralPresence}
+      />
       <div
         className={`${styles.playAreaDropTarget}`}
         ref={setNodeRef}

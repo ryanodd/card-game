@@ -8,6 +8,7 @@ import { GoldTotal } from "../components/GoldTotal"
 import { createNewDuel } from "@/src/game/duel/createNewDuel"
 import { SettingsDialog } from "../components/SettingsDialog"
 import { Footer } from "../components/Footer"
+import { DuelSetupDialog } from "../components/DuelSetup/DuelSetupDialog"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()
@@ -30,11 +31,9 @@ export const MainMenuScreen = () => {
   const onCollectionClick = () => {
     setGame({ ...game, screen: { id: "collection" } })
   }
-  const onStartDuelClick = () => {
-    setGame({ ...game, screen: createNewDuel({ game, opponentDeck: deckMap.firstOpponent }) })
-  }
-  const onDragAndDropDemoClick = () => {
-    setGame({ ...game, screen: { id: "dragAndDropDemo" } })
+
+  const onPacksClick = () => {
+    setGame({ ...game, screen: { id: "packs" } })
   }
   return (
     <MainView>
@@ -45,9 +44,15 @@ export const MainMenuScreen = () => {
           <h2 className="text-lg text-stone-50">{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
           <div className="flex flex-col mt-8 gap-4">
             <div className="flex flex-col gap-4">
-              <Button data-variant="primary" data-size="large" onClick={onStartDuelClick}>
-                Play Now
-              </Button>
+              <DuelSetupDialog
+                trigger={
+                  <Button data-variant="primary" data-size="large">
+                    Play Now
+                  </Button>
+                }
+                challengeId="playNow"
+              />
+
               <Button data-size="large" onClick={onCampaignClick}>
                 Campaign
               </Button>
@@ -64,12 +69,12 @@ export const MainMenuScreen = () => {
               <Button data-size="large" onClick={onShopClick}>
                 Shop
               </Button>
+              <Button data-size="large" onClick={onPacksClick}>
+                Packs
+              </Button>
             </div>
             <div className="flex flex-col mt-8 gap-4">
               <SettingsDialog trigger={<Button data-size="large">Settings</Button>} />
-              <Button data-size="large" onClick={onDragAndDropDemoClick}>
-                Drag and drop demo
-              </Button>
             </div>
           </div>
         </div>

@@ -4,23 +4,47 @@ import { v4 } from "uuid"
 import { GameState, getActiveDeck } from "../GameData"
 import { Deck } from "../Deck"
 import { CardName } from "../cards/CardName"
+import { CardData } from "../cards/CardData"
 
 export const STARTING_HEALTH = 20
+
+export const cardDataToCardState = (cardData: CardData): CardState => {
+  switch (cardData.cardType) {
+    case "creature":
+      return {
+        instanceId: v4(),
+        name: cardData.name,
+        cost: cardData.cost,
+        cardType: cardData.cardType,
+        attack: cardData.attack,
+        health: cardData.health,
+        damage: 0,
+        modifiers: [],
+      }
+    case "spell":
+      return {
+        instanceId: v4(),
+        name: cardData.name,
+        cost: cardData.cost,
+        cardType: cardData.cardType,
+        modifiers: [],
+      }
+    case "energy":
+      return {
+        instanceId: v4(),
+        name: cardData.name,
+        cost: cardData.cost,
+        cardType: cardData.cardType,
+        modifiers: [],
+      }
+  }
+}
 
 export const createCardsFromNames = (cardNames: CardName[]): CardState[] => {
   const cards: CardState[] = []
   for (let x = 0; x < cardNames.length; x++) {
-    const card = cardDataMap[cardNames[x]]
-    cards.push({
-      instanceId: v4(),
-      name: card.name,
-      cost: card.cost,
-      cardType: card.cardType,
-      attack: card.attack,
-      health: card.health,
-      initialHealth: card.health,
-      modifiers: [],
-    })
+    const cardData = cardDataMap[cardNames[x]]
+    cards.push(cardDataToCardState(cardData))
   }
   return cards
 }
@@ -39,6 +63,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
       hand: [],
       discard: [],
       rows: [[], []],
+      cardSelect: [],
       energy: {
         neutral: 0,
         fire: 0,
@@ -63,6 +88,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
       hand: [],
       discard: [],
       rows: [[], []],
+      cardSelect: [],
       energy: {
         neutral: 0,
         fire: 0,
@@ -86,6 +112,8 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
     playerGoingFirst: "human",
     currentPlayerId: "human",
     turnNumber: 1,
+
+    duelCompleteData: null,
   }
   return duel
 }

@@ -1,0 +1,32 @@
+.duelCompleteContent {
+  @apply flex flex-col gap-6;
+}
+
+.duelCompleteTitle {
+  @apply self-center text-stone-50 font-semibold text-6xl;
+}
+.duelCompleteDescription {
+  @apply mb-8 self-center text-stone-50 text-xl;
+}
+
+.goldSection {
+  @apply self-center flex gap-2;
+}
+
+.goldRewardAmount {
+  @apply text-xl text-green-500;
+  animation: popupAppear 500ms;
+}
+
+@keyframes popupAppear {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}

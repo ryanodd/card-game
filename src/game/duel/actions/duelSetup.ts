@@ -1,16 +1,15 @@
 import { DuelState } from "../DuelData"
-import { playerDrawN } from "./playerDrawN"
+import { drawToCardSelect } from "./drawToCardSelect"
+import { drawToHand } from "./drawToHand"
 import { shuffleDeck } from "./shuffleDeck"
+import { startMulligan } from "./startMulligan"
 import { turnStart } from "./turnStart"
 
 export async function duelSetup(inputDuel: DuelState) {
   let duel = inputDuel
 
-  duel = shuffleDeck(duel, "human")
-  duel = shuffleDeck(duel, "opponent")
-
-  duel = await playerDrawN(duel, "human", 6)
-  duel = await playerDrawN(duel, "opponent", 6)
+  duel = await shuffleDeck(duel, "human")
+  duel = await shuffleDeck(duel, "opponent")
 
   // TODO randomize
   const humanGoesFirst = true
@@ -22,7 +21,7 @@ export async function duelSetup(inputDuel: DuelState) {
     duel.currentPlayerId === "opponent"
   }
 
-  duel = await turnStart(duel)
+  duel = await startMulligan(duel, duel.playerGoingFirst)
 
   return duel
 }

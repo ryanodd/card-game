@@ -21,7 +21,7 @@ export const EditDeckCancelDialog = () => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={`${styles.dialogOverlay}`} />
-        <Dialog.Content className={`${styles.dialogContent}`}>
+        <Dialog.Content className={`${styles.dialogContent}`} data-size="sm">
           <Dialog.Title className={`${styles.dialogTitle}`}>Cancel</Dialog.Title>
           <Dialog.Description className={`${styles.dialogDescription}`}>
             Are you sure you want to cancel without saving?

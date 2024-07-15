@@ -17,8 +17,14 @@ import { CardPreview } from "../components/CardPreview"
 import { DebugMenu } from "../components/DuelScreen/DebugMenu"
 import { useDuelUIStore } from "../hooks/useDuelUIStore"
 import { HumanHand } from "../components/DuelScreen/HumanHand"
-import { getCardByInstanceId } from "@/src/game/duel/DuelHelpers"
+import { duelWinner, getCardByInstanceId } from "@/src/game/duel/DuelHelpers"
 import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
+import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
+import { DuelCompleteContent } from "../components/DuelComplete/DuelCompleteContent"
+import { DuelCompleteDialog } from "../components/DuelComplete/DuelCompleteDialog"
+import { CardSelectDialog } from "../components/DuelScreen/CardSelectDialog"
+import { Portal } from "@radix-ui/react-portal"
+import { ControlButtonPopup } from "../components/DuelScreen/ControlButtonPopup"
 
 // Throws error if given a non-rowHumanHalf droppableId
 const getRowIndexFromDroppableId = (droppableId: string): number | undefined => {
@@ -58,8 +64,15 @@ export type DuelScreenProps = {}
 export const DuelScreen = ({}: DuelScreenProps) => {
   const { game } = useGameStore()
   const { duel } = useDuelState()
-  const { cardIdDragging, humanHandCardIds, setHumanHandCardIds, humanAllRowCardIds, setHumanAllRowCardIds } =
-    useDuelUIStore()
+
+  const {
+    cardIdDragging,
+    humanHandCardIds,
+    setHumanHandCardIds,
+    humanAllRowCardIds,
+    setHumanAllRowCardIds,
+    debugEnabled,
+  } = useDuelUIStore()
 
   useEffect(() => {
     resetDuelUIStore(duel)
@@ -95,6 +108,15 @@ export const DuelScreen = ({}: DuelScreenProps) => {
         if (rowIndexTo === undefined) {
           throw Error("rowIndex undefined??")
         }
+
+        // Don't allow dragging into play area when unselectable (btw we still allow drag and drop within hand)
+        const choiceId = duel.choice.id
+        const selectable =
+          !duelWinner(duel) && choiceId === "TAKE_TURN" && takeTurn_getValidHandTargets(duel).includes(draggedCardId)
+        if (!selectable) {
+          return
+        }
+
         const newRowIndexesIds = humanAllRowCardIds
         newRowIndexesIds[rowIndexTo] = [draggedCardId, ...humanAllRowCardIds[rowIndexTo]]
 
@@ -128,8 +150,12 @@ export const DuelScreen = ({}: DuelScreenProps) => {
         setHumanAllRowCardIds(newRowIndexesIds)
       }
     },
-    [humanHandCardIds, humanAllRowCardIds, setHumanHandCardIds, setHumanAllRowCardIds] // Careful of bugs here
+    [duel, humanHandCardIds, humanAllRowCardIds, setHumanHandCardIds, setHumanAllRowCardIds] // Careful of bugs here
   )
+
+  const handleDragEnd = useCallback(() => {
+    resetDuelUIStore(duel)
+  }, [duel])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -152,9 +178,8 @@ export const DuelScreen = ({}: DuelScreenProps) => {
         // collisionDetection={closestCenter}
 
         onDragOver={handleDragOver}
-
-        // Handled by many various droppable targets with useDndMonitor
-        // onDragEnd={handleDragEnd}
+        // Also handled by many various droppable targets with useDndMonitor
+        onDragEnd={handleDragEnd}
 
         // Handled by DuelCard:
         // onDragStart={handleDragStart}
@@ -170,30 +195,32 @@ export const DuelScreen = ({}: DuelScreenProps) => {
             />
           )}
         </DragOverlay>
+        <DuelCompleteDialog />
+        <CardSelectDialog duel={duel} />
         <div className="absolute inset-0 z-10 flex flex-col justify-between gap-4 items-center">
-          <div className="w-full max-w-7xl flex justify-between items-center gap-4 p-4">
-            <DeckPile />
+          <div className="w-full flex justify-between items-center gap-4 p-4 relative">
             <OpponentHand duel={duel} />
-            <PlayerFaceArea duel={duel} playerId="opponent" />
+            <DeckPile />
           </div>
 
           <div className="flex justify-center gap-4 items-center">
+            <PlayerFaceArea duel={duel} playerId="human" />
             <PlayArea duel={duel} />
+            <PlayerFaceArea duel={duel} playerId="opponent" />
+          </div>
+          <div className="w-full flex justify-between items-center p-4 gap-4 relative">
+            <DeckPile />
+            <HumanHand duel={duel} cardIds={humanHandCardIds} />
             <div className="flex flex-col gap-2">
               <AdvanceTurnButton duel={duel} />
             </div>
           </div>
-          <div className="w-full max-w-7xl flex justify-between items-center p-4 gap-4">
-            <PlayerFaceArea duel={duel} playerId="human" />
-            <HumanHand duel={duel} cardIds={humanHandCardIds} />
-            <DeckPile />
-          </div>
           <DuelMenuButton />
         </div>
-        {game.settings.debug.enabled && <DebugMenu />}
+        {debugEnabled && <DebugMenu />}
         <DuelPrompt duel={duel} />
+        <ControlButtonPopup duel={duel} />
       </DndContext>
-      {/* <MyDndTest duel={duel} /> */}
     </MainView>
   )
 }

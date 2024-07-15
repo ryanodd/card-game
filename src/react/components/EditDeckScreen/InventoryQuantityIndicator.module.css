@@ -1,0 +1,19 @@
+.inventoryQuantityContainer {
+  @apply flex p-2 gap-2 justify-center;
+}
+
+.inventoryQuantityPip {
+  @apply w-6 h-6 rounded-full;
+}
+
+.inventoryQuantityPip[data-type="unavailable"] {
+  @apply bg-stone-800;
+}
+
+.inventoryQuantityPip[data-type="available"] {
+  @apply bg-orange-400;
+}
+
+.inventoryQuantityPip[data-type="active"] {
+  @apply border border-stone-50 bg-orange-200;
+}

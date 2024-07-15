@@ -9,6 +9,7 @@ import { DuelState } from "@/src/game/duel/DuelData"
 import { takeTurn_executePlayCard } from "@/src/game/duel/choices/takeTurn/executePlayCard"
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
 import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
+import { getCardByInstanceId } from "@/src/game/duel/DuelHelpers"
 
 export type RowProps = {
   duel: DuelState
@@ -69,7 +70,7 @@ export const Row = ({ duel, index }: RowProps) => {
 
   const isOver = over
     ? (DROPPABLE_ID === over.id && active?.data.current?.type !== "container") ||
-      humanRowCardIds.some((cardId) => cardId === over.id)
+      humanRowCardIds.includes(over.id.toString().split("draggable-card-")[1] ?? "N/A")
     : false
 
   const humanHalfSelectable =
@@ -77,7 +78,10 @@ export const Row = ({ duel, index }: RowProps) => {
     cardIdDragging !== null &&
     takeTurn_getValidTargetsForCard(duel, cardIdDragging, getEnergyCountsFromSelected(energySelected)).find(
       (target) => {
-        return target.targetType === "rowSpace" && target.rowIndex === index
+        return (
+          (target.targetType === "rowSpace" && target.rowIndex === index) ||
+          (target.targetType === "playerRow" && target.rowIndex === index && target.playerId === "human")
+        )
       }
     ) !== undefined
 
@@ -97,10 +101,23 @@ export const Row = ({ duel, index }: RowProps) => {
         .map((card) => card.instanceId)
         .indexOf(event.over?.id?.toString()?.split("draggable-card-")?.[1] ?? "N/A")
 
+      const draggedCard = getCardByInstanceId(duel, draggedCardInstanceId)
+
+      if (draggedCard.cardType === "spell") {
+        const newDuel = await takeTurn_executePlayCard(duel, {
+          cardIdToPlay: draggedCardInstanceId,
+          target: {
+            targetType: "playerRow",
+            playerId: "human",
+            rowIndex: index,
+          },
+          energyPaid: getEnergyCountsFromSelected(energySelected),
+        })
+        saveAndAdvanceDuelUntilChoiceOrWinner(newDuel)
+      }
       // Moved to container, but not a specific slot - plop down at the end?? Maybe this needs more thinking.
-      if (event.over?.id.toString() === DROPPABLE_ID) {
+      else if (event.over?.id.toString() === DROPPABLE_ID) {
         const indexToPlay = humanRowCardIds.length - 1
-        console.log(`Playing card at index ${indexToPlay}`)
 
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
@@ -117,7 +134,6 @@ export const Row = ({ duel, index }: RowProps) => {
         if (activeIndex === -1) {
           throw Error(`Couldn't find where this card was dragged to. Supposedly ${event.over?.id?.toString()}`)
         }
-        console.log(`Playing card at index ${activeIndex}`)
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
 
@@ -145,9 +161,7 @@ export const Row = ({ duel, index }: RowProps) => {
           {getHumanCards()}
         </div>
       </SortableContext>
-      <div className={`${styles.rowHalf}`} data-left={index === 0} data-bottom={index === 1}>
-        {getOpponentCards()}
-      </div>
+      <div className={`${styles.rowHalf}`}>{getOpponentCards()}</div>
     </div>
   )
 }

@@ -1,0 +1,26 @@
+.playAreaAnimationLayer {
+  @apply pointer-events-none absolute w-full h-full inset-0 z-30;
+}
+
+.playAreaAnimationLayer[data-animation-ancestral-presence="true"] {
+  @apply bg-violet-700;
+  animation: ancestralPresence var(--current-animation-duration);
+}
+
+@keyframes ancestralPresence {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.3;
+  }
+
+  80% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

@@ -8,9 +8,10 @@ import { MainMenuScreen } from "./MainMenuScreen"
 import { ManageDecksScreen } from "./ManageDecksScreen"
 import { EditDeckScreen } from "./EditDeckScreen"
 import { MyDndTest } from "./MyDndTest"
-import { CampaignSelectScreen } from "./CampaignSelectScreen"
+import { CampaignLocationSelectScreen } from "./CampaignLocationSelectScreen"
 import { ShopScreen } from "./ShopScreen"
 import { CollectionScreen } from "./CollectionScreen"
+import { PackScreen } from "./PackScreen"
 
 export const Game = () => {
   const forceUpdate = useForceUpdate()
@@ -35,14 +36,13 @@ export const Game = () => {
     <Tooltip.Provider skipDelayDuration={0}>
       <DndContext sensors={sensors}>
         {game.screen.id === "mainMenu" && <MainMenuScreen />}
-        {game.screen.id === "campaignSelect" && <CampaignSelectScreen />}
+        {game.screen.id === "campaignSelect" && <CampaignLocationSelectScreen />}
         {game.screen.id === "shop" && <ShopScreen />}
+        {game.screen.id === "packs" && <PackScreen />}
         {game.screen.id === "manageDecks" && <ManageDecksScreen />}
         {game.screen.id === "editDeck" && <EditDeckScreen />}
         {game.screen.id === "collection" && <CollectionScreen />}
         {game.screen.id === "duel" && <DuelScreen />}
-        {game.screen.id === "dragAndDropDemo" && <MyDndTest />}
-        {/* {game.screen.id === "duelEnd" && <DuelEndScreen />} */}
       </DndContext>
     </Tooltip.Provider>
   )

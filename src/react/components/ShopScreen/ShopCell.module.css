@@ -1,0 +1,7 @@
+.shopCell {
+  @apply flex flex-col items-center gap-2;
+}
+
+.shopPrice {
+  @apply text-xl text-stone-100;
+}

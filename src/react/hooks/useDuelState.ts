@@ -6,6 +6,7 @@ export type DuelStorePayload = {
   setDuel: (newDuel: DuelState) => void
 }
 
+// This can only be used on the duel screen. All these ts-ignores are a consequence of that
 export const useDuelState = () => {
   const { game, setGame } = useGameStore()
 
@@ -17,11 +18,16 @@ export const useDuelState = () => {
   const setDuel = (duel: DuelState) => {
     setGame({
       ...game,
-      screen: duel,
+      screen: {
+        ...game.screen,
+        // @ts-ignore
+        duel,
+      },
     })
   }
   return {
-    duel: game.screen as DuelState,
+    // @ts-ignore
+    duel: game.screen.duel as DuelState,
     setDuel,
   }
 }
@@ -36,7 +42,11 @@ export const getDuelState = () => {
   const setDuel = (duel: DuelState) => {
     setGame({
       ...game,
-      screen: duel,
+      screen: {
+        ...game.screen,
+        // @ts-ignore
+        duel,
+      },
     })
   }
 

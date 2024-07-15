@@ -40,9 +40,6 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
   player.energy.air -= energyPaid.air
 
   const cardBehaviour = cardBehaviourMap[playedCard.name]
-  if (cardBehaviour.effects?.play) {
-    duel = await cardBehaviour.effects.play(duel, duel.currentPlayerId, playedCard.instanceId, target)
-  }
 
   // Put creature in space
   if (playedCard.cardType === "creature" && target.targetType === "rowSpace") {
@@ -55,6 +52,14 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
     if (cardBehaviour.effects?.summon) {
       duel = await cardBehaviour.effects.summon(duel, duel.currentPlayerId, playedCard.instanceId)
     }
+  }
+
+  if (cardBehaviour.effects?.play) {
+    duel = await cardBehaviour.effects.play(duel, duel.currentPlayerId, playedCard.instanceId, target)
+  }
+
+  if (playedCard.cardType === "energy" || playedCard.cardType === "spell") {
+    player.discard.push(playedCard)
   }
 
   duel = await checkForDeaths(duel)

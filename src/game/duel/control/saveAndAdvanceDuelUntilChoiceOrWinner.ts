@@ -1,6 +1,7 @@
 import { executeChoiceForOpponent } from "../Bot"
 import { DuelState } from "../DuelData"
 import { duelWinner } from "../DuelHelpers"
+import { onDuelWinner } from "./onDuelWinner"
 import { playAnimation } from "./playAnimation"
 import { saveDuelAndRefreshUI } from "./saveAndRerenderUI"
 
@@ -12,7 +13,7 @@ export async function saveAndAdvanceDuelUntilChoiceOrWinner(duel: DuelState) {
   }
 
   if (duelWinner(duel)) {
-    duel.choice = { id: "CONFIRM_DUEL_END", playerId: "human" }
+    onDuelWinner(duel)
     saveDuelAndRefreshUI(duel)
     return
   }

@@ -1,5 +1,5 @@
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
-import { DECK_LIST_CARD_IMAGE_WIDTH_REMS, DECK_LIST_CARD_WIDTH_REMS, DeckListCard } from "./DeckListCard"
+import { DECK_LIST_CARD_WIDTH_REMS, DeckListCard } from "./DeckListCard"
 import { sortCardNames } from "@/src/game/helpers"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"

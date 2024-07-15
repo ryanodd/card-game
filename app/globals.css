@@ -36,13 +36,6 @@ body {
   right: 0;
 }
 
-.pass-pointer-events {
-  pointer-events: none;
-  > * {
-    pointer-events: auto;
-  }
-}
-
 .text-outline {
   padding-left: 4px;
   margin-left: -4px;

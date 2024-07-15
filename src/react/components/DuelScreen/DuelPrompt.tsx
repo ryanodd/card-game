@@ -16,13 +16,11 @@ export type DuelPromptProps = {
 
 export const useGetPromptMessage = (duel: DuelState): string | null => {
   const { cardIdDragging, energySelected } = useDuelUIStore()
+
   const choiceId = duel.choice.id
 
-  if (duelWinner(duel) === "human") {
-    return "Victory! The opponent is defeated."
-  }
-  if (duelWinner(duel) === "opponent") {
-    return "You lost..."
+  if (duelWinner(duel) !== null) {
+    return null
   }
 
   if (duel.choice.id === "CONFIRM_DUEL_START") {
@@ -34,7 +32,7 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
   }
 
   if (duel.choice.id === "TAKE_TURN" && duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
-    return "Good job! Now you'll have that energy to spend on cards every turn. (You may only play 1 energy per turn)"
+    return "Nice. Now you'll have that energy to spend on cards every turn. (You may only play 1 energy per turn)"
   }
 
   if (duel.choice.id === "TAKE_TURN") {
@@ -58,10 +56,6 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
 }
 
 export const getButtonText = (duel: DuelState) => {
-  if (duelWinner(duel) !== null) {
-    return "End Duel"
-  }
-
   if (duel.choice.id === "CONFIRM_DUEL_START") {
     return "Start"
   }
@@ -88,14 +82,6 @@ export const DuelPrompt = ({ duel }: DuelPromptProps) => {
             if (duel.choice.id === "CONFIRM_DUEL_START") {
               const nextDuel = await confirmStart_execute(duel)
               saveAndAdvanceDuelUntilChoiceOrWinner(nextDuel)
-            }
-            if (duel.choice.id === "CONFIRM_DUEL_END") {
-              const nextDuel = await duelEnd(duel)
-              await saveAndAdvanceDuelUntilChoiceOrWinner(nextDuel)
-              setGame({
-                ...game,
-                screen: { id: "mainMenu" },
-              })
             }
           }}
         >

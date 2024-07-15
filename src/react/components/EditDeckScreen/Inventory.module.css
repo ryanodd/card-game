@@ -7,11 +7,11 @@
 }
 
 .deckListColumn {
-  @apply shrink-0 bg-stone-800 flex flex-col  overflow-y-scroll justify-start;
+  @apply shrink-0 bg-stone-800 flex flex-col;
 }
 
 .deckList {
-  @apply grow flex flex-col gap-1 p-1;
+  @apply grow flex flex-col gap-1 p-1 overflow-y-scroll justify-start;
 }
 
 .deckListCardContent {

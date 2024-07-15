@@ -64,6 +64,10 @@ export type DuelAnimation = {
       attackingCardId: string
     }
   | {
+      id: "WINGED_BULL"
+      cardId: string
+    }
+  | {
       id: "EERIE_VISION"
       cardId: string
     }
@@ -92,7 +96,15 @@ export type DuelAnimation = {
       cardId: string
     }
   | {
-      id: "FLAME_SENTINTEL"
+      id: "FLAME_SENTINEL"
       cardId: string
+    }
+  | {
+      id: "SMOLDERING_SHOT"
+      cardId: string
+    }
+  | {
+      id: "ANCESTRAL_PRESENCE"
+      playerId: PlayerID
     }
 )

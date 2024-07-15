@@ -4,6 +4,7 @@ import { sortCardNames } from "@/src/game/helpers"
 import styles from "./Inventory.module.css"
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
+import { InventoryCardCell } from "./InventoryCardCell"
 
 export type InventoryBrowserProps = {}
 
@@ -14,7 +15,7 @@ export const InventoryBrowser = ({}: InventoryBrowserProps) => {
   return (
     <div className={`flex-grow ${styles.inventoryGrid}`}>
       {cardList.map((cardName) => (
-        <InventoryCard key={cardName} cardData={cardDataMap[cardName]}></InventoryCard>
+        <InventoryCardCell key={cardName} cardData={cardDataMap[cardName]} />
       ))}
     </div>
   )

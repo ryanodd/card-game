@@ -1,0 +1,19 @@
+.checkboxRow {
+  @apply flex items-center gap-2;
+}
+
+.checkboxRoot {
+  @apply w-6 h-6 border border-stone-700 rounded-sm flex justify-center items-center;
+}
+
+.checkboxIndicator {
+  @apply bg-sky-500 rounded-sm;
+}
+
+.checkboxCheckmarkIcon {
+  @apply w-4 h-4;
+}
+
+.checkboxLabel {
+  @apply text-base text-stone-50;
+}

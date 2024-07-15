@@ -28,14 +28,14 @@
 }
 
 .button:disabled {
-  @apply bg-stone-400 border-stone-400;
+  @apply bg-stone-500 border-stone-500;
 }
 
 .button[data-variant="destructive"] {
   @apply bg-red-500 text-white border-none;
 }
 
-.button[data-variant="destructive"]:hover {
+.button[data-variant="destructive"]:hover:not(:disabled) {
   @apply bg-red-400;
 }
 

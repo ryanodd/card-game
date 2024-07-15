@@ -2,6 +2,7 @@ import { DuelState } from "../DuelData"
 import { getCardByInstanceId } from "../DuelHelpers"
 import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
 import { BUFFER_MS, playAnimation } from "../control/playAnimation"
+import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { checkForDeaths } from "./checkForDeaths"
 import { creaturesTrade } from "./creaturesTrade"
 import { dealDamageToPlayer } from "./dealDamage"
@@ -54,21 +55,19 @@ export async function combatPhase(inputDuel: DuelState) {
     else if (
       humanAttackingCard !== undefined &&
       humanAttackingCard.cardType === "creature" &&
-      humanAttackingCard.attack !== undefined &&
       !humanAttackingCardStunned &&
       opponentAttackingCard === undefined
     ) {
-      dealDamageToPlayer(duel, "opponent", humanAttackingCard.attack)
+      dealDamageToPlayer(duel, "opponent", getEffectiveAttack(humanAttackingCard))
     }
     // Opponent damage to Human face
     else if (
       opponentAttackingCard !== undefined &&
       opponentAttackingCard.cardType === "creature" &&
-      opponentAttackingCard.attack !== undefined &&
       !opponentAttackingCardStunned &&
       humanAttackingCard === undefined
     ) {
-      dealDamageToPlayer(duel, "human", opponentAttackingCard.attack)
+      dealDamageToPlayer(duel, "human", getEffectiveAttack(opponentAttackingCard))
     }
 
     duel = await playAnimation(duel, {

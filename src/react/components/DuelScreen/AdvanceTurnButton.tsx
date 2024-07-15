@@ -28,8 +28,6 @@ export type AdvanceTurnButtonProps = {
 }
 
 export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
-  const { cardIdDragging } = useDuelUIStore()
-
   const choiceId = duel.choice.id
 
   const buttonText = getText(duel)

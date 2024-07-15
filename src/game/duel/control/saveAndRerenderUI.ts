@@ -11,10 +11,17 @@ export const saveDuelAndRefreshUI = (duel: DuelState) => {
     root.style.setProperty("--current-animation-duration", `${duel.currentAnimation?.durationMs}ms`) // If this is undefined is that a problem?
   }
 
-  // I don't know the correct order of these 2, though it may not matter
+  // I don't know the correct order of these 2, though it may not matter:
+
   // (1)
   const { setDuel } = getDuelState()
   setDuel(duel)
+
+  // (1.5) set cardIdDragging to null so any currently-dragging card appears back in the user's hand
+  // this doeesn't actually work, I think react-dnd needs onDragEnd to fire to properly cleanup/rerender the sortable areas
+  // const { setCardIdDragging } = useDuelUIStore.getState()
+  // setCardIdDragging(null)
+
   // (2)
   resetDuelUIStore(duel)
 

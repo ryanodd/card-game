@@ -1,0 +1,7 @@
+.locationSelectContainer {
+  @apply grow flex justify-between items-center gap-4 relative;
+}
+
+.pathDashedLine {
+  @apply -z-10 w-full h-full absolute;
+}

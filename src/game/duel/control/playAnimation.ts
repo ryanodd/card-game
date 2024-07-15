@@ -9,7 +9,7 @@ export const BUFFER_MS = 700
 
 export const playAnimation = async (duel: DuelState, animation: DuelAnimation) => {
   const game = useGameStore.getState().game
-  const debugAnimationMultiplier = game.settings.debug.enabled ? game.settings.debug.animationMultiplier : 1
+  const debugAnimationMultiplier = game.settings.animationMultiplier
   const msToDelay = animation.durationMs * debugAnimationMultiplier
 
   duel.currentAnimation = { ...animation, durationMs: msToDelay }

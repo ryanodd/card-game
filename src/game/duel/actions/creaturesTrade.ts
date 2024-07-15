@@ -1,6 +1,7 @@
 import { DuelState } from "../DuelData"
 import { getCardByInstanceId } from "../DuelHelpers"
 import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
+import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { dealDamageToCreature } from "./dealDamage"
 import { performTrampleDamage } from "./performTrampleDamage"
 
@@ -15,12 +16,7 @@ export async function creaturesTrade(inputDuel: DuelState, attackingCardId: stri
   const attackingCardStunned = attackingCard.modifiers.find((modifier) => modifier.id === "stun") !== undefined
   const defendingCardStunned = defendingCard.modifiers.find((modifier) => modifier.id === "stun") !== undefined
 
-  if (
-    attackingCard?.cardType !== "creature" ||
-    defendingCard?.cardType !== "creature" ||
-    attackingCard?.attack === undefined ||
-    defendingCard?.attack === undefined
-  ) {
+  if (attackingCard?.cardType !== "creature" || defendingCard?.cardType !== "creature") {
     throw Error("Tried to engage in combat with non-creature")
   }
 
@@ -28,14 +24,14 @@ export async function creaturesTrade(inputDuel: DuelState, attackingCardId: stri
     if (cardBehaviourMap[attackingCard.name].keywords?.trample) {
       duel = await performTrampleDamage(duel, attackingCard)
     } else {
-      duel = await dealDamageToCreature(duel, defendingCardId, attackingCard.attack)
+      duel = await dealDamageToCreature(duel, defendingCardId, getEffectiveAttack(attackingCard))
     }
   }
   if (!defendingCardStunned) {
     if (cardBehaviourMap[defendingCard.name].keywords?.trample) {
       duel = await performTrampleDamage(duel, attackingCard)
     } else {
-      duel = await dealDamageToCreature(duel, attackingCardId, defendingCard.attack)
+      duel = await dealDamageToCreature(duel, attackingCardId, getEffectiveAttack(defendingCard))
     }
   }
 

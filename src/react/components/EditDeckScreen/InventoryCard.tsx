@@ -1,22 +1,27 @@
-import cardStyles from "../Card.module.css"
-import inventoryStyles from "./Inventory.module.css"
-import Image from "next/image"
-import { Tooltip } from "../Tooltip"
-import { CardDetailed, getCostIcons } from "../CardDetailed"
+import { CardDetailed } from "../CardDetailed"
 import { useDraggable } from "@dnd-kit/core"
-import { useCallback, useEffect, useState } from "react"
-import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
+import { useCallback } from "react"
 import { InventoryCardFocusDialog } from "./InventoryCardFocusDialog"
-import { getAttackText } from "@/src/game/helpers"
 import { CardData } from "@/src/game/cards/CardData"
+import { useGameStore } from "../../hooks/useGameStore"
 
 export type CardProps = {
   cardData: CardData
 }
 
 export const InventoryCard = ({ cardData }: CardProps) => {
+  const { game } = useGameStore()
+
+  const deckQuantity =
+    game.screen.id === "editDeck"
+      ? game.screen.deck.cardNames.filter((cardName) => cardName === cardData.name).length
+      : 0
+
+  const quantityOwned = game.collection[cardData.name]
+
   const { attributes, listeners, setNodeRef } = useDraggable({
     id: `draggable-inventory-card-${cardData.name}`,
+    disabled: deckQuantity >= quantityOwned,
   })
 
   const onClick = useCallback(() => {}, [])

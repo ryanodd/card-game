@@ -46,14 +46,3 @@ export const sortCardNames = (cardNames: CardName[]) => {
     return -1
   })
 }
-
-export const getAttackText = (cardData: CardData, cardState?: CardState) => {
-  // apply buffs/debuffs
-  if (cardState !== undefined) {
-  }
-  if (cardData.attack === undefined) {
-    return ""
-  }
-
-  return cardData.attack
-}

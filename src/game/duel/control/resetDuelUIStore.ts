@@ -2,6 +2,8 @@ import { getEnergyButtonsForPlayer, useDuelUIStore } from "@/src/react/hooks/use
 import { DuelState } from "../DuelData"
 
 export const resetDuelUIStore = (duel: DuelState) => {
+  // TODO bug here when resetDuelUIStore is called beteen animations while the user is dragging a hand card, it gets dropped...
+  // What does mtga do in this case?
   const uiState = useDuelUIStore.getState()
   uiState.setCardIdDragging(null)
 
@@ -14,6 +16,7 @@ export const resetDuelUIStore = (duel: DuelState) => {
   const humanHandStateCardIds = duel.human.hand.map((cardState) => {
     return cardState.instanceId
   })
+
   const newHumanHandUICardIds = [
     ...humanHandUICardIds.filter((cardId) => {
       return humanHandStateCardIds.includes(cardId)

@@ -81,13 +81,7 @@
   }
 }
 
-.duelCardAnimationLayer[data-animation-ember-foxling="true"] > .duelCardAnimationLayerDrawing {
-  background: linear-gradient(to top right, #ff9f45, #ee502d);
-  @apply rounded-full shadow-lg w-20 h-20;
-  animation: ember_foxling var(--current-animation-duration);
-}
-
-@keyframes ember_foxling {
+@keyframes spin {
   0% {
     transform: rotate(0turn);
     opacity: 0;
@@ -102,4 +96,34 @@
     transform: rotate(0.99turn);
     opacity: 0;
   }
+}
+
+.duelCardAnimationLayer[data-animation-ember-foxling="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #ff9f45, #ee502d);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: spin var(--current-animation-duration);
+}
+
+.duelCardAnimationLayer[data-animation-cave-swimmer="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #31a7d9, #2bd1ff);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: spin var(--current-animation-duration);
+}
+
+.duelCardAnimationLayer[data-animation-flame-sentinel="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #ff9f45, #ee502d);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: spin var(--current-animation-duration);
+}
+
+.duelCardAnimationLayer[data-animation-brash-splasher="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #31a7d9, #2bd1ff);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: spin var(--current-animation-duration);
+}
+
+.duelCardAnimationLayer[data-animation-flame-sentinel="true"] > .duelCardAnimationLayerDrawing {
+  background: linear-gradient(to top right, #ff9f45, #ee502d);
+  @apply rounded-full shadow-lg w-20 h-20;
+  animation: spin var(--current-animation-duration);
 }

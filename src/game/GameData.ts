@@ -1,22 +1,44 @@
-import { Deck, EditDeckState } from "./Deck"
+import { CampaignLocationId } from "./Campaign"
+import { Deck } from "./Deck"
 import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
+import { PackRarity } from "./shop/PackData"
+
+export type MainMenuState = {
+  id: "mainMenu"
+}
+
+export type DuelScreenState = {
+  id: "duel"
+  duel: DuelState
+  debugUiOpen: boolean
+}
+
+export type EditDeckState = {
+  id: "editDeck"
+  deck: Deck
+}
 
 export type ScreenState =
-  | { id: "mainMenu" }
+  | MainMenuState
   | { id: "campaignSelect" }
   | { id: "shop" }
+  | { id: "packs" }
   | { id: "manageDecks" }
   | EditDeckState
   | { id: "collection" }
-  | DuelState
-  | { id: "dragAndDropDemo" } // | { id: "duelEnd" }
+  | DuelScreenState
 
 export type SettingsState = {
-  debug: {
-    enabled: boolean
-    animationMultiplier: number
-  }
+  animationMultiplier: number
+  godMode: boolean
+}
+
+export const COLLECTION_MAX_PER_CARD = 3
+
+export type CampaignLocationCompletionData = {
+  unlocked: boolean
+  completed: boolean
 }
 
 export type GameState = {
@@ -28,9 +50,10 @@ export type GameState = {
     round: number
     deck: Deck
   }
-  campaignCompletion: Record<string, boolean>
+  campaignCompletion: Record<CampaignLocationId, CampaignLocationCompletionData>
   decks: Deck[]
   gold: number
+  packs: Record<PackRarity, number>
   settings: SettingsState
 }
 

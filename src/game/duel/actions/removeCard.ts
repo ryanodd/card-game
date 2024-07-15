@@ -27,6 +27,13 @@ export async function removeCard(inputDuel: DuelState, cardInstanceId: string) {
     }
   }
 
+  const humanCardSelect = duel.human.cardSelect
+  for (let x = 0; x < humanCardSelect.length; x++) {
+    if (humanCardSelect[x].instanceId === cardInstanceId) {
+      humanCardSelect.splice(x, 1)
+    }
+  }
+
   const opponentHand = duel.opponent.hand
   for (let x = 0; x < opponentHand.length; x++) {
     if (opponentHand[x].instanceId === cardInstanceId) {
@@ -48,6 +55,13 @@ export async function removeCard(inputDuel: DuelState, cardInstanceId: string) {
       if (row[y].instanceId === cardInstanceId) {
         row.splice(y, 1)
       }
+    }
+  }
+
+  const opponentCardSelect = duel.opponent.cardSelect
+  for (let x = 0; x < opponentCardSelect.length; x++) {
+    if (opponentCardSelect[x].instanceId === cardInstanceId) {
+      opponentCardSelect.splice(x, 1)
     }
   }
 

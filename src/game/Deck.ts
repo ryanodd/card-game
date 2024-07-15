@@ -7,8 +7,3 @@ export type Deck = {
   name: string
   cardNames: CardName[]
 }
-
-export type EditDeckState = {
-  id: "editDeck"
-  deck: Deck
-}

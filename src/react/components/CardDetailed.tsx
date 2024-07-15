@@ -2,7 +2,6 @@ import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
 import cardStyles from "./Card.module.css"
 
-import { getAttackText } from "@/src/game/helpers"
 import { CardData } from "@/src/game/cards/CardData"
 import { CardState } from "@/src/game/duel/DuelData"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
@@ -54,7 +53,7 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
         <h2 className={`${cardStyles.cardName} tracking-tight`}>{cardData.name}</h2>
       </div>
       <Image
-        className="object-cover self-center rounded-md shadow-md"
+        className="object-cover self-center rounded-md shadow-md pointer-events-none"
         src={cardData.imageSrc}
         alt={cardData.name}
         width={512}
@@ -81,13 +80,13 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
         <p className={`${cardStyles.cardText}  `}>{cardData.text}</p>
       </div>
       <div className={`${cardStyles.cardFooter} h-8 -mb-2 -mx-2 gap-2`}>
-        {cardData.attack !== undefined && (
+        {cardData.cardType === "creature" && (
           <div className={`${cardStyles.attackIndicator} pl-2 pr-2.5 rounded-tr-xl `}>
-            <h2 className="text-2xl text-stone-50 text-outline">{getAttackText(cardData, cardState)}</h2>
+            <h2 className="text-2xl text-stone-50 text-outline">{cardData.attack}</h2>
           </div>
         )}
 
-        {cardData.health !== undefined && (
+        {cardData.cardType === "creature" && (
           <div className={`${cardStyles.healthIndicator} w-10 rounded-tl-xl pl-0.5`}>
             <h2 className="text-2xl text-stone-50 text-outline">{cardData.health}</h2>
           </div>

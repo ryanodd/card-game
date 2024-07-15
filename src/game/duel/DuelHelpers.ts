@@ -2,6 +2,7 @@ import { CardState, DuelState } from "./DuelData"
 import { PlayerID } from "./PlayerData"
 import { EnergyCounts } from "./EnergyData"
 import { getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
+import { Target } from "./choices/ChoiceData"
 
 export const getDuelPlayerById = (duel: DuelState, playerId: PlayerID) => {
   return playerId === "human" ? duel.human : duel.opponent
@@ -80,6 +81,11 @@ export const getAllCardsForPlayer = (duel: DuelState, playerId: PlayerID): CardS
         cards.push(humanRows[x][y])
       }
     }
+
+    const humanCardSelect = duel.human.cardSelect
+    for (let x = 0; x < humanCardSelect.length; x++) {
+      cards.push(humanCardSelect[x])
+    }
   }
   if (playerId === "opponent") {
     const opponentHand = duel.opponent.hand
@@ -97,6 +103,11 @@ export const getAllCardsForPlayer = (duel: DuelState, playerId: PlayerID): CardS
       for (let y = 0; y < opponentRows[x].length; y++) {
         cards.push(opponentRows[x][y])
       }
+    }
+
+    const opponentCardSelect = duel.opponent.cardSelect
+    for (let x = 0; x < opponentCardSelect.length; x++) {
+      cards.push(opponentCardSelect[x])
     }
   }
   return cards

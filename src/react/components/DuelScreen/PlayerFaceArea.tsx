@@ -145,7 +145,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
   ])
 
   return (
-    <div className={`flex relative ${shaking ? styles.shaking : ""}`} onAnimationEnd={onAnimationEnd}>
+    <div className={`flex flex-col relative ${shaking ? styles.shaking : ""}`} onAnimationEnd={onAnimationEnd}>
       <div className="relative">
         <HeroPreview playerId={playerId} heroData={heroDataMap[player.heroId]} />
         <div className={`${styles.player_health_positioning} rounded-full bg-red-600 border border-neutral-900 px-2`}>
@@ -157,27 +157,27 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
           )}
         </div>
       </div>
-      <div className={`flex flex-col gap-1 py-1 justify-center items-start`}>
+      <div className={`flex gap-1 px-1 justify-center items-start`}>
         <div
-          className={`${styles.energyRowAnimationArea} h-10 bg-red-600 rounded-r-xl shadow-md border border-neutral-900 flex items-center gap-1 p-2`}
+          className={`${styles.energyRowAnimationArea} w-10 bg-red-600 rounded-b-xl shadow-md border border-neutral-900 flex flex-col items-center gap-1 p-2`}
           data-animation-energy-added={animationEnergyAddedType === "fire"}
         >
           {getFire(playerId)}
         </div>
         <div
-          className={`${styles.energyRowAnimationArea} h-10 bg-violet-600 rounded-r-xl shadow-md border border-neutral-900 flex items-center gap-1 p-2`}
+          className={`${styles.energyRowAnimationArea} w-10 bg-violet-600 rounded-b-xl shadow-md border border-neutral-900 flex flex-col items-center gap-1 p-2`}
           data-animation-energy-added={animationEnergyAddedType === "air"}
         >
           {getAir(playerId)}
         </div>
         <div
-          className={`${styles.energyRowAnimationArea} h-10 bg-lime-600 rounded-r-xl shadow-md border border-neutral-900 flex items-center gap-1 p-2`}
+          className={`${styles.energyRowAnimationArea} w-10 bg-lime-600 rounded-b-xl shadow-md border border-neutral-900 flex flex-col items-center gap-1 p-2`}
           data-animation-energy-added={animationEnergyAddedType === "earth"}
         >
           {getEarth(playerId)}
         </div>
         <div
-          className={`${styles.energyRowAnimationArea} h-10 bg-sky-600 rounded-r-xl border shadow-md border-neutral-900 flex items-center gap-1 p-2`}
+          className={`${styles.energyRowAnimationArea} w-10 bg-sky-600 rounded-b-xl border shadow-md border-neutral-900 flex flex-col items-center gap-1 p-2`}
           data-animation-energy-added={animationEnergyAddedType === "water"}
         >
           {getWater(playerId)}

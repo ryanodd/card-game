@@ -1,0 +1,42 @@
+.cardSelectContent {
+  @apply flex flex-col items-center gap-16;
+}
+
+.cardSelectTitle {
+  @apply text-7xl font-semibold text-stone-50;
+}
+
+.cardSelectDescription {
+  @apply text-xl text-stone-50;
+}
+
+.cardSelectRow {
+  @apply flex gap-6;
+}
+
+.cardSelectButton {
+  @apply relative;
+}
+
+.cardSelectButton[data-selected="true"][data-choice-id="MULLIGAN"] {
+  @apply before:block before:absolute before:-inset-2 before:bg-rose-500 before:blur-sm;
+  /* @apply brightness-75; */
+}
+
+.cardSelectButtonMulliganIndicator {
+  @apply absolute -bottom-8 text-8xl font-bold text-rose-500;
+  left: 4.6rem;
+}
+
+.cardSelectButton[data-selected="true"][data-choice-id="CARD_SELECT"] {
+  @apply before:block before:absolute before:-inset-2 before:bg-lime-500 before:blur-sm;
+}
+
+.cardSelectButtonSelectedIndicator {
+  @apply absolute -bottom-8 text-8xl font-bold text-lime-500;
+  left: 4.6rem;
+}
+
+.cardSelectButtonRow {
+  @apply flex gap-2;
+}

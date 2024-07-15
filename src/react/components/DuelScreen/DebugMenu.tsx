@@ -18,10 +18,7 @@ export const DebugMenu = ({}: DebugMenuProps) => {
         ...game,
         settings: {
           ...game.settings,
-          debug: {
-            ...game.settings.debug,
-            animationMultiplier: multiplier,
-          },
+          animationMultiplier: multiplier,
         },
       })
     },
@@ -30,7 +27,7 @@ export const DebugMenu = ({}: DebugMenuProps) => {
 
   return (
     <div className={`${styles.debugMenuContent}`}>
-      <p>{duel.currentAnimation ? duel.currentAnimation?.id : duel.choice.id}</p>
+      <p className="text-stone-50">{duel.currentAnimation ? duel.currentAnimation?.id : duel.choice.id}</p>
       <div className={`${styles.debugMenuRow}`}>
         <Button
           onClick={() => {
@@ -57,7 +54,7 @@ export const DebugMenu = ({}: DebugMenuProps) => {
               onClick={() => {
                 setAnimationDurationMultiplier(option)
               }}
-              disabled={game.settings.debug.animationMultiplier === option}
+              disabled={game.settings.animationMultiplier === option}
             >
               {`${option}x`}
             </Button>

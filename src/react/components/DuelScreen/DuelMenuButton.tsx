@@ -3,32 +3,29 @@ import { Button } from "../designSystem/Button"
 import styles from "../designSystem/MenuButton.module.css"
 import { useCallback } from "react"
 import { useGameStore } from "../../hooks/useGameStore"
+import { useDuelState } from "../../hooks/useDuelState"
+import { useDuelUIStore } from "../../hooks/useDuelUIStore"
 
 export const DuelMenuButton = () => {
   const { game, setGame } = useGameStore()
-  const onQuit = useCallback(() => {
-    setGame({
-      ...game,
-      screen: {
-        id: "mainMenu",
+  const { duel, setDuel } = useDuelState()
+  const { debugEnabled, setDebugEnabled } = useDuelUIStore()
+  const onConcede = useCallback(() => {
+    setDuel({
+      ...duel,
+      duelCompleteData: {
+        winner: "opponent",
+        goldReward: 0,
       },
     })
-  }, [game, setGame])
+  }, [duel, setDuel])
 
   const onToggleDebug = useCallback(() => {
-    setGame({
-      ...game,
-      settings: {
-        ...game.settings,
-        debug: {
-          ...game.settings.debug,
-          enabled: !game.settings.debug.enabled,
-        },
-      },
-    })
-  }, [game, setGame])
+    setDebugEnabled(!debugEnabled)
+  }, [debugEnabled, setDebugEnabled])
+
   return (
-    <MenuButton.Root>
+    <MenuButton.Root modal={false}>
       <MenuButton.Trigger asChild>
         <Button className="absolute z-10 right-4 top-4">☰</Button>
       </MenuButton.Trigger>
@@ -37,8 +34,12 @@ export const DuelMenuButton = () => {
           <MenuButton.Item className={`${styles.menuButtonItem}`} onClick={onToggleDebug}>
             Toggle debug mode
           </MenuButton.Item>
-          <MenuButton.Item className={`${styles.menuButtonItem}`} onClick={onQuit}>
-            Quit
+          <MenuButton.Item
+            className={`${styles.menuButtonItem}`}
+            disabled={duel.currentAnimation !== null}
+            onClick={onConcede}
+          >
+            Concede
           </MenuButton.Item>
           <MenuButton.Arrow className={`${styles.menuButtonArrow}`} />
         </MenuButton.Content>

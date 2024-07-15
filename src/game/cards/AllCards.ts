@@ -92,8 +92,8 @@ cards.push({
 
 // Support: the opposing active creature has a 20% chance of getting poisoned
 cards.push({
-  name: "Snake Network",
-  imageSrc: "/card-art/snakeNetwork.png",
+  name: "Bed of Snakes",
+  imageSrc: "/card-art/bedOfSnakes.png",
   imageCenterYPercent: 75,
   rarity: "uncommon",
   complete: false,
@@ -102,20 +102,21 @@ cards.push({
   attack: 1,
   health: 3,
   cost: {
-    neutral: 0,
+    neutral: 1,
     fire: 0,
     water: 0,
     earth: 1,
     air: 0,
   },
+  text: "When Bed of Snakes attacks, 50% chance to poison a random enemy creature in this row.",
 })
 
 cards.push({
   name: "Ember Foxling",
   imageSrc: "/card-art/emberFoxling.png",
   imageCenterYPercent: 70,
-  rarity: "uncommon",
-  complete: false,
+  rarity: "rare",
+  complete: true,
   energyType: "fire",
   cardType: "creature",
   attack: 2,
@@ -138,7 +139,7 @@ cards.push({
   complete: false,
   energyType: "air",
   cardType: "creature",
-  attack: 3,
+  attack: 2,
   health: 2,
   cost: {
     neutral: 1,
@@ -147,6 +148,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  text: "When played: if Winged Bull is in the front of the row, 50% chance to gain +2 attack.",
 })
 
 cards.push({
@@ -195,8 +197,8 @@ cards.push({
   complete: false,
   energyType: "multi",
   cardType: "creature",
-  attack: 3,
-  health: 3,
+  attack: 2,
+  health: 4,
   cost: {
     neutral: 1,
     fire: 1,
@@ -204,7 +206,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  text: "Enrage: +2 attack.",
+  text: "When Vengeful flamewing attacks, if it isn't at maximum health, do +3 damage.",
 })
 
 cards.push({
@@ -253,17 +255,18 @@ cards.push({
   imageCenterYPercent: 51,
   rarity: "legendary",
   complete: false,
-  energyType: "fire",
+  energyType: "earth",
   cardType: "creature",
   attack: 5,
-  health: 6,
+  health: 5,
   cost: {
     neutral: 3,
-    fire: 2,
+    fire: 0,
     water: 0,
-    earth: 0,
+    earth: 2,
     air: 0,
   },
+  text: "When played: if there is a friendly creature in front of Spirit Giant, gain +3/+3.",
 })
 
 // When attacking this creature, your opponent has a 25% chance to miss.
@@ -323,13 +326,14 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  text: "Support: 40% chance to give a random friendly creature in this row +1/+1. 40% chance to draw a card.",
 })
 
 cards.push({
   name: "Living Hillside",
   imageSrc: "/card-art/livingHillside.png",
   imageCenterYPercent: 20,
-  rarity: "common",
+  rarity: "uncommon",
   complete: false,
   energyType: "earth",
   cardType: "creature",
@@ -372,8 +376,6 @@ cards.push({
   complete: false,
   energyType: "air",
   cardType: "spell",
-  attack: undefined,
-  health: undefined,
   cost: {
     neutral: 1,
     fire: 0,
@@ -392,8 +394,6 @@ cards.push({
   complete: false,
   energyType: "multi",
   cardType: "spell",
-  attack: undefined,
-  health: undefined,
   cost: {
     neutral: 0,
     fire: 1,
@@ -401,7 +401,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  text: "Return target creature to its owner's hand.",
+  text: "Return the front creature in target row to its owner's hand.",
 })
 
 cards.push({
@@ -421,7 +421,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
-  text: "Support: 20% chance to cause the opposing attacking creature to miss.",
+  text: "Support: 20% chance to stun the front enemy creature in this row.",
   keywords: ["support"],
 })
 
@@ -430,10 +430,10 @@ cards.push({
   imageSrc: "/card-art/caveSwimmer.png",
   imageCenterYPercent: 70,
   rarity: "uncommon",
-  complete: false,
+  complete: true,
   energyType: "water",
   cardType: "creature",
-  attack: 1,
+  attack: 2,
   health: 2,
   cost: {
     neutral: 1,
@@ -450,7 +450,7 @@ cards.push({
   name: "Darkwoods Hyena",
   imageSrc: "/card-art/darkwoodsHyena.png",
   imageCenterYPercent: 50,
-  rarity: "rare",
+  rarity: "uncommon",
   complete: false,
   energyType: "earth",
   cardType: "creature",
@@ -463,7 +463,7 @@ cards.push({
     earth: 1,
     air: 0,
   },
-  text: "Support: has a 50% change to gain +1 attack.",
+  text: "Support: has a 50% chance to gain +1 attack.",
   keywords: ["support"],
 })
 
@@ -493,11 +493,9 @@ cards.push({
   imageSrc: "/card-art/ancestralPresence.png",
   imageCenterYPercent: 30,
   rarity: "rare",
-  complete: false,
+  complete: true,
   energyType: "air",
   cardType: "spell",
-  attack: undefined,
-  health: undefined,
   cost: {
     neutral: 1,
     fire: 0,
@@ -525,14 +523,14 @@ cards.push({
     earth: 1,
     air: 0,
   },
-  text: "When Canyon Burrower attacks, 20% chance for opposing creature to miss.",
+  text: "When Canyon Burrower attacks, 30% chance for opposing creature to miss.",
 })
 
 cards.push({
   name: "Dragon Cub",
   imageSrc: "/card-art/dragonCub.png",
   imageCenterYPercent: 30,
-  rarity: "uncommon",
+  rarity: "common",
   complete: true,
   energyType: "fire",
   cardType: "creature",
@@ -545,7 +543,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  text: "Support: 20% chance to burn opposing creature.",
+  text: "Support: 30% chance to burn opposing creature.",
   keywords: ["support"],
 })
 
@@ -583,10 +581,11 @@ cards.push({
   cost: {
     neutral: 3,
     fire: 0,
-    water: 3,
+    water: 2,
     earth: 0,
     air: 0,
   },
+  text: "When played: draw 2 cards. When Hydrus, Seaborn Titan attacks, heal your hero equal to the number of cards in your hand.",
 })
 
 cards.push({
@@ -594,7 +593,7 @@ cards.push({
   imageSrc: "/card-art/flameSentinel.png",
   imageCenterYPercent: 50,
   rarity: "rare",
-  complete: false,
+  complete: true,
   energyType: "fire",
   cardType: "creature",
   attack: 1,
@@ -606,7 +605,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
-  text: "Support: deal 1 damage to a random enemy target.",
+  text: "Support: deal 1 damage to a random enemy creature.",
   keywords: ["support"],
 })
 
@@ -615,7 +614,7 @@ cards.push({
   imageSrc: "/card-art/brashSplasher.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
-  complete: false,
+  complete: true,
   energyType: "water",
   cardType: "creature",
   attack: 2,
@@ -654,8 +653,8 @@ cards.push({
   name: "Something Bandit",
   imageSrc: "/card-art/somethingBandit.png",
   imageCenterYPercent: 50,
-  rarity: "uncommon",
-  complete: false,
+  rarity: "common",
+  complete: true,
   energyType: "water",
   cardType: "creature",
   attack: 3,
@@ -705,15 +704,15 @@ cards.push({
   },
 })
 cards.push({
-  name: "Fire Water Dragon",
-  imageSrc: "/card-art/fireWaterDragon.png",
+  name: "Ilstrom, Tidal Inferno",
+  imageSrc: "/card-art/ilstromTidalInferno.png",
   imageCenterYPercent: 50,
   rarity: "legendary",
   complete: false,
   energyType: "multi",
   cardType: "creature",
-  attack: 2,
-  health: 2,
+  attack: 5,
+  health: 5,
   cost: {
     neutral: 3,
     fire: 1,
@@ -721,6 +720,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  text: "When Ilstrom, Tidal Inferno enters the battlefield, deal 2 damage to the opponent. Support: if you have 3 or more creatures in play, 50% chance for opponent to discard a random card.",
 })
 cards.push({
   name: "Helix Stag",
@@ -731,7 +731,7 @@ cards.push({
   energyType: "earth",
   cardType: "creature",
   attack: 3,
-  health: 4,
+  health: 3,
   cost: {
     neutral: 2,
     fire: 0,
@@ -739,6 +739,7 @@ cards.push({
     earth: 1,
     air: 0,
   },
+  text: "When Helix Stag enters the battlefield, all friendly creatures gain +1 health.",
 })
 cards.push({
   name: "Bonehide Mole",
@@ -757,6 +758,8 @@ cards.push({
     earth: 1,
     air: 0,
   },
+  keywords: ["shield"],
+  text: "Shield",
 })
 cards.push({
   name: "Neojia Tamer",
@@ -785,14 +788,15 @@ cards.push({
   energyType: "earth",
   cardType: "creature",
   attack: 2,
-  health: 4,
+  health: 2,
   cost: {
-    neutral: 2,
+    neutral: 1,
     fire: 0,
     water: 0,
     earth: 1,
     air: 0,
   },
+  text: "When Huddolin enters the battlefield, give +1 health to a random friendly creature.",
 })
 cards.push({
   name: "Opaldrake Thrasher",
@@ -820,8 +824,6 @@ cards.push({
   complete: false,
   energyType: "fire",
   cardType: "spell",
-  attack: undefined,
-  health: undefined,
   cost: {
     neutral: 1,
     fire: 1,
@@ -840,7 +842,7 @@ cards.push({
   complete: false,
   energyType: "fire",
   cardType: "creature",
-  attack: 4,
+  attack: 5,
   health: 4,
   cost: {
     neutral: 2,
@@ -849,6 +851,7 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  text: "Trample. Before Saurongar the Smotherer attacks, add burn 1 to each enemy creature in this row.",
 })
 cards.push({
   name: "Time Collapse",
@@ -858,8 +861,6 @@ cards.push({
   complete: false,
   energyType: "air",
   cardType: "spell",
-  attack: undefined,
-  health: undefined,
   cost: {
     neutral: 2,
     fire: 0,
@@ -885,6 +886,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  text: "Support: Add +1 burn to a random enemy creature.",
 })
 cards.push({
   name: "Emerald Makasaur",
@@ -939,6 +941,7 @@ cards.push({
     earth: 0,
     air: 1,
   },
+  text: "Support: 5% chance to deal 3 damage to each enemy creature in this row.",
 })
 cards.push({
   name: "Red Crab Brawler",
@@ -948,7 +951,7 @@ cards.push({
   complete: false,
   energyType: "water",
   cardType: "creature",
-  attack: 4,
+  attack: 3,
   health: 2,
   cost: {
     neutral: 2,
@@ -957,6 +960,8 @@ cards.push({
     earth: 0,
     air: 0,
   },
+  keywords: ["shield"],
+  text: "Shield",
 })
 cards.push({
   name: "Sicklehorn Grazer",
@@ -977,7 +982,68 @@ cards.push({
   },
 })
 
+cards.push({
+  name: "Pike Lancer",
+  imageSrc: "/card-art/pikeLancer.png",
+  imageCenterYPercent: 45,
+  rarity: "rare",
+  complete: false,
+  energyType: "water",
+  cardType: "creature",
+  attack: 2,
+  health: 4,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 2,
+    earth: 0,
+    air: 0,
+  },
+  text: "Before Pike Lancer attacks, deal 2 damage to the opposing creature.",
+})
+
+cards.push({
+  name: "Hyllophant",
+  imageSrc: "/card-art/hyllophant.png",
+  imageCenterYPercent: 55,
+  rarity: "common",
+  complete: false,
+  energyType: "earth",
+  cardType: "creature",
+  attack: 3,
+  health: 4,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 1,
+    air: 0,
+  },
+})
+
+cards.push({
+  name: "Violet Sagebeast",
+  imageSrc: "/card-art/violetSagebeast.png",
+  imageCenterYPercent: 38,
+  rarity: "rare",
+  complete: false,
+  energyType: "earth",
+  cardType: "creature",
+  attack: 3,
+  health: 3,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 1,
+    air: 0,
+  },
+  text: "Whenever you play a card, give friendly attacking creature in this row +1 health.",
+})
+
 // Ideas
+// - When this creature takes damage, restore it to full health (Mythic?)
+// - cards (in target row?) fight until they can't any more
 // - fire attack: 2 mana, 3 damage to something
 // - wind: Target creature in an inactive slot swaps places with the active slot
 // - wind: destroy monument

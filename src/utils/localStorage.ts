@@ -3,12 +3,18 @@ import { GameState } from "../game/GameData"
 const LOCAL_STORAGE_KEY = "saveData"
 
 export const saveGameToLocalStorage = (gameData: GameState) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(gameData))
+  if (typeof window === "undefined") {
+    return
+  }
+  window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(gameData))
 }
 
 export const loadGameFromLocalStorage = () => {
-  const jsonString = localStorage.getItem(LOCAL_STORAGE_KEY)
-  if (jsonString === null) {
+  if (typeof window === "undefined") {
+    return null
+  }
+  const jsonString = window.localStorage.getItem(LOCAL_STORAGE_KEY)
+  if (!jsonString) {
     return null
   }
   // TODO this is defeinitely not rigorous to cheaters. Maybe even bugs.

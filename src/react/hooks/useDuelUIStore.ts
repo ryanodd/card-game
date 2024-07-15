@@ -64,8 +64,13 @@ export type DuelUIStorePayload = {
 
   energySelected: EnergySelected
   setEnergySelected: (energy: EnergySelected) => void
-
   resetEnergySelected: (duel: DuelState) => void
+
+  debugEnabled: boolean
+  setDebugEnabled: (debugEnabled: boolean) => void
+
+  dialogShowBattlefield: boolean
+  setDialogShowBattlefield: (dialogShowBattlefield: boolean) => void
 }
 
 export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
@@ -86,8 +91,17 @@ export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
     air: [],
   },
   setEnergySelected: (newEnergy) => set({ energySelected: newEnergy }),
-
   resetEnergySelected: () => {},
+
+  debugEnabled: false,
+  setDebugEnabled: (debugEnabled) => {
+    set({ debugEnabled })
+  },
+
+  dialogShowBattlefield: false,
+  setDialogShowBattlefield: (dialogShowBattlefield) => {
+    set({ dialogShowBattlefield })
+  },
 }))
 
 export const selectEnergyOfType = (
