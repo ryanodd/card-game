@@ -19,6 +19,8 @@
 html {
   user-select: none;
   touch-action: none;
+
+  font-family: var(--font-volkhorn);
 }
 
 body {

@@ -4,6 +4,7 @@ import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
 import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { dealDamageToCreature } from "./dealDamage"
 import { performTrampleDamage } from "./performTrampleDamage"
+import { decreaseStun } from "./stun"
 
 // Creatures ass part of the combat phase.
 // In this function, the fact that we call them attacking & defending card is lolz. They're the same really
@@ -13,25 +14,50 @@ export async function creaturesTrade(inputDuel: DuelState, attackingCardId: stri
   const attackingCard = getCardByInstanceId(duel, attackingCardId)
   const defendingCard = getCardByInstanceId(duel, defendingCardId)
 
-  const attackingCardStunned = attackingCard.modifiers.find((modifier) => modifier.id === "stun") !== undefined
-  const defendingCardStunned = defendingCard.modifiers.find((modifier) => modifier.id === "stun") !== undefined
-
   if (attackingCard?.cardType !== "creature" || defendingCard?.cardType !== "creature") {
     throw Error("Tried to engage in combat with non-creature")
   }
 
-  if (!attackingCardStunned) {
+  let attackingDamageAmount: number | "miss" = getEffectiveAttack(attackingCard)
+  attackingDamageAmount =
+    cardBehaviourMap[attackingCard.name].effects?.attackModifier?.(
+      duel,
+      attackingCard.instanceId,
+      attackingCard.attack
+    ) ?? attackingDamageAmount
+  attackingDamageAmount =
+    cardBehaviourMap[defendingCard.name].effects?.opposingAttackModifier?.(
+      duel,
+      attackingCard.instanceId,
+      defendingCard.attack
+    ) ?? attackingDamageAmount
+
+  let defendingDamageAmount: number | "miss" = getEffectiveAttack(defendingCard)
+  defendingDamageAmount =
+    cardBehaviourMap[defendingCard.name].effects?.attackModifier?.(
+      duel,
+      defendingCard.instanceId,
+      defendingCard.attack
+    ) ?? defendingDamageAmount
+  defendingDamageAmount =
+    cardBehaviourMap[attackingCard.name].effects?.opposingAttackModifier?.(
+      duel,
+      attackingCard.instanceId,
+      defendingCard.attack
+    ) ?? defendingDamageAmount
+
+  if (attackingDamageAmount !== "miss") {
     if (cardBehaviourMap[attackingCard.name].keywords?.trample) {
       duel = await performTrampleDamage(duel, attackingCard)
     } else {
-      duel = await dealDamageToCreature(duel, defendingCardId, getEffectiveAttack(attackingCard))
+      duel = await dealDamageToCreature(duel, defendingCardId, attackingDamageAmount)
     }
   }
-  if (!defendingCardStunned) {
+  if (defendingDamageAmount !== "miss") {
     if (cardBehaviourMap[defendingCard.name].keywords?.trample) {
       duel = await performTrampleDamage(duel, attackingCard)
     } else {
-      duel = await dealDamageToCreature(duel, attackingCardId, getEffectiveAttack(defendingCard))
+      duel = await dealDamageToCreature(duel, attackingCardId, defendingDamageAmount)
     }
   }
 

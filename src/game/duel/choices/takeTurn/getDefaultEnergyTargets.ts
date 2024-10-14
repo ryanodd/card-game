@@ -1,9 +1,10 @@
 import { DuelState } from "../../DuelData"
-import { getDuelPlayerById } from "../../DuelHelpers"
+import { getDuelPlayerById, getPlayerIdByCardInstanceId } from "../../DuelHelpers"
 import { PlayerID } from "../../PlayerData"
 import { Target } from "../ChoiceData"
 
-export const getDefaultEnergyTargets = (duel: DuelState, playerId: PlayerID, instanceId: string): Target[] => {
+export const getDefaultEnergyTargets = (duel: DuelState, instanceId: string): Target[] => {
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   if (getDuelPlayerById(duel, playerId).playedEnergyThisTurn) {
     return []
   }

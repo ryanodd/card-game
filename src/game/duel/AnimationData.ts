@@ -19,11 +19,11 @@ export type DuelAnimation = {
     }
   | {
       id: "ATTACK_START"
-      rowIndex: number
+      cardId: string
     }
   | {
       id: "ATTACK_END"
-      rowIndex: number
+      cardId: string
     }
   | {
       id: "MISS"

@@ -20,6 +20,6 @@ export async function cardSelect_execute(inputDuel: DuelState, selectedCardIds: 
     throw Error("The card that triggered this selectCard phase could be found to continue the duel.")
   }
 
-  duel = await selectCardsEffect(duel, playerId, triggerCard.instanceId, selectedCardIds)
+  duel = await selectCardsEffect(duel, playerId, selectedCardIds)
   return duel
 }

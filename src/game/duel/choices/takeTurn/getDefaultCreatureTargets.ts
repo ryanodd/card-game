@@ -3,7 +3,7 @@ import { getDuelPlayerById } from "../../DuelHelpers"
 import { PlayerID } from "../../PlayerData"
 import { Target } from "../ChoiceData"
 
-export const getDefaultCreatureTargets = (duel: DuelState, playerId: PlayerID, instanceId: string) => {
+export const getDefaultCreatureTargets = (duel: DuelState, instanceId: string) => {
   const validTargets: Target[] = []
   const playerRows = getDuelPlayerById(duel, duel.currentPlayerId).rows
   for (let x = 0; x < playerRows.length; x++) {

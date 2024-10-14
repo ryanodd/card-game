@@ -764,20 +764,21 @@ cards.push({
 cards.push({
   name: "Neojia Tamer",
   imageSrc: "/card-art/neojiaTamer.png",
-  imageCenterYPercent: 44,
+  imageCenterYPercent: 46,
   rarity: "rare",
   complete: false,
   energyType: "fire",
   cardType: "creature",
-  attack: 3,
-  health: 3,
+  attack: 2,
+  health: 2,
   cost: {
-    neutral: 2,
+    neutral: 1,
     fire: 1,
     water: 0,
     earth: 0,
     air: 0,
   },
+  text: "Summon a 1/1 beast in the other lane ",
 })
 cards.push({
   name: "Huddolin",
@@ -1039,6 +1040,45 @@ cards.push({
     air: 0,
   },
   text: "Whenever you play a card, give friendly attacking creature in this row +1 health.",
+})
+
+cards.push({
+  name: "Moltsteed Racer",
+  imageSrc: "/card-art/moltsteedRacer.png",
+  imageCenterYPercent: 55,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "fire",
+  cardType: "creature",
+  attack: 3,
+  health: 2,
+  cost: {
+    neutral: 2,
+    fire: 1,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: "Charge",
+})
+
+cards.push({
+  name: "Volcanic Shellster",
+  imageSrc: "/card-art/volcanicShellster.png",
+  imageCenterYPercent: 65,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "fire",
+  cardType: "creature",
+  attack: 2,
+  health: 2,
+  cost: {
+    neutral: 1,
+    fire: 1,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
 })
 
 // Ideas

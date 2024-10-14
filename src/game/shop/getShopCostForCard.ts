@@ -11,19 +11,19 @@ export const getShopCostForCard = (cardName: CardName) => {
     costToReturn = 0
   }
   if (cardData.rarity === "common") {
-    costToReturn = 50
+    costToReturn = 80
   }
   if (cardData.rarity === "uncommon") {
-    costToReturn = 100
+    costToReturn = 160
   }
   if (cardData.rarity === "rare") {
-    costToReturn = 250
+    costToReturn = 420
   }
   if (cardData.rarity === "epic") {
-    costToReturn = 500
+    costToReturn = 750
   }
   if (cardData.rarity === "legendary") {
-    costToReturn = 1000
+    costToReturn = 1200
   }
   if (cardData.rarity === "mythic") {
     costToReturn = 2500

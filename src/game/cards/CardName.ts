@@ -53,3 +53,5 @@ export type CardName =
   | "Pike Lancer"
   | "Hyllophant"
   | "Violet Sagebeast"
+  | "Moltsteed Racer"
+  | "Volcanic Shellster"

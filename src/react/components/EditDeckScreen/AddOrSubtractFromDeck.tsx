@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
-import { sortCardNames } from "@/src/game/helpers"
+import { sortDeckListNames } from "@/src/game/helpers"
 import { CardData } from "@/src/game/cards/CardData"
 import { Button } from "../designSystem/Button"
 import { COLLECTION_MAX_PER_CARD } from "@/src/game/GameData"
@@ -26,7 +26,7 @@ export const AddOrSubtractFromDeck = ({ cardData }: AddOrSubtractFromDeckProps) 
       ...editDeck,
       deck: {
         ...editDeck.deck,
-        cardNames: sortCardNames([cardData.name, ...editDeck.deck.cardNames]),
+        cardNames: sortDeckListNames([cardData.name, ...editDeck.deck.cardNames]),
       },
     }
     setEditDeck(newEditDeckState)

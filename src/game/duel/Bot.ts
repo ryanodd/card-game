@@ -1,19 +1,19 @@
-import { getRandomInt, getRandomSeed } from "@/src/utils/randomNumber"
+import { getRandomInt, getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
 import {
   autoPayElements,
   getEnergyButtonsForPlayer,
   getEnergyCountsFromSelected,
 } from "../../react/hooks/useDuelUIStore"
 import { DuelState } from "./DuelData"
-import { getCurrentDuelPlayer } from "./DuelHelpers"
+import { getCardByInstanceId, getCurrentDuelPlayer } from "./DuelHelpers"
 import { takeTurn_executeAdvance } from "./choices/takeTurn/executeAdvance"
 import { takeTurn_executePlayCard } from "./choices/takeTurn/executePlayCard"
-import { takeTurn_getValidHandTargets } from "./choices/takeTurn/getValidHandTargets"
 import { takeTurn_getValidTargetsForCard } from "./choices/takeTurn/getValidTargetsForCard"
 import { cardSelect_execute } from "./choices/cardSelect"
 import { mulligan_execute } from "./choices/mulligan"
 import { EnergyCounts } from "./EnergyData"
 import { cardDataMap } from "../cards/AllCards"
+import { takeTurn_getPlayableHandCardIds } from "./choices/takeTurn/getPlayableHandCardIds"
 
 export async function executeChoiceForOpponent(inputDuel: DuelState): Promise<DuelState> {
   let duel = inputDuel
@@ -37,19 +37,31 @@ export async function executeChoiceForOpponent(inputDuel: DuelState): Promise<Du
 export async function opponentTakeTurn(inputDuel: DuelState) {
   let duel = inputDuel
 
-  const handTargets = takeTurn_getValidHandTargets(duel)
-  if (handTargets.length === 0) {
+  const playableCardIds = takeTurn_getPlayableHandCardIds(duel)
+  if (playableCardIds.length === 0) {
     duel = await takeTurn_executeAdvance(duel)
     return duel
   }
 
-  const cardIdToPlay = handTargets[getRandomInt(handTargets.length, getRandomSeed())]
+  // Select which card to play - energy cards get priority
+  let playableEnergyCardIds = playableCardIds.filter((cardId) => {
+    return getCardByInstanceId(duel, cardId).cardType === "energy"
+  })
+  const cardIdToPlay =
+    playableEnergyCardIds.length > 0
+      ? getRandomItemFromArray(playableEnergyCardIds, getRandomSeed())
+      : getRandomItemFromArray(playableCardIds, getRandomSeed())
+
+  if (cardIdToPlay === undefined) {
+    throw Error("No cards to play, somehow.")
+  }
+
+  // Select where to play card
   const emptyEnergySelected = getEnergyButtonsForPlayer(getCurrentDuelPlayer(duel))
   const elementsToPay = getEnergyCountsFromSelected(autoPayElements(duel, cardIdToPlay, emptyEnergySelected))
   const targets = takeTurn_getValidTargetsForCard(duel, cardIdToPlay, elementsToPay)
-
-  // Choose target completely randomly.
   const targetToPlay = targets[getRandomInt(targets.length, getRandomSeed())]
+
   duel = await takeTurn_executePlayCard(duel, { cardIdToPlay, target: targetToPlay, energyPaid: elementsToPay })
 
   return duel

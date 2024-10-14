@@ -1,3 +1,9 @@
+.duelCardFilterLayer[data-modifier-summoning-sickness="true"] {
+  > * {
+    filter: brightness(75%);
+  }
+}
+
 .duelCardFilterLayer[data-modifier-burn="true"] {
   > * {
     filter: sepia(150%);
@@ -28,7 +34,7 @@
     transform: translateX(0px);
   }
   100% {
-    transform: translateX(50px);
+    transform: translateX(80px);
   }
 }
 
@@ -44,7 +50,7 @@
     transform: translateX(0px);
   }
   100% {
-    transform: translateX(-50px);
+    transform: translateX(-80px);
   }
 }
 
@@ -57,7 +63,7 @@
 
 @keyframes attack_end_human {
   0% {
-    transform: translateX(50px);
+    transform: translateX(80px);
   }
   100% {
     transform: translateX(0px);
@@ -73,7 +79,7 @@
 
 @keyframes attack_end_opponent {
   0% {
-    transform: translateX(-50px);
+    transform: translateX(-80px);
   }
   100% {
     transform: translateX(0px);

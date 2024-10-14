@@ -3,9 +3,11 @@ import { CardName } from "../../cards/CardName"
 import { DuelState } from "../DuelData"
 import {
   getCardByInstanceId,
+  getDuelPlayerByCardInstanceId,
   getDuelPlayerById,
   getOpposingAttackingCreatureByCardId,
   getOtherPlayerId,
+  getPlayerIdByCardInstanceId,
   getPlayerRowByCardInstanceId,
   getRandomCreatureInPlayForPlayer,
   getRowIndexByCardInstanceId,
@@ -25,9 +27,9 @@ import { stun } from "../actions/stun"
 import { checkForDeaths } from "../actions/checkForDeaths"
 import { scryEnd, scryStart } from "../actions/scry"
 
-export async function fire_energy(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function fire_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-  const player = getDuelPlayerById(duel, playerId)
+  const player = getDuelPlayerByCardInstanceId(duel, instanceId)
   player.energyIncome.fire += 1
   player.energy.fire += 1
   duel = await removeCard(duel, instanceId)
@@ -35,9 +37,9 @@ export async function fire_energy(inputDuel: DuelState, playerId: PlayerID, inst
   return duel
 }
 
-export async function water_energy(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function water_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-  const player = getDuelPlayerById(duel, playerId)
+  const player = getDuelPlayerByCardInstanceId(duel, instanceId)
 
   player.energyIncome.water += 1
   player.energy.water += 1
@@ -46,9 +48,9 @@ export async function water_energy(inputDuel: DuelState, playerId: PlayerID, ins
   return duel
 }
 
-export async function earth_energy(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function earth_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-  const player = getDuelPlayerById(duel, playerId)
+  const player = getDuelPlayerByCardInstanceId(duel, instanceId)
   player.energyIncome.earth += 1
   player.energy.earth += 1
   duel = await removeCard(duel, instanceId)
@@ -56,9 +58,10 @@ export async function earth_energy(inputDuel: DuelState, playerId: PlayerID, ins
   return duel
 }
 
-export async function air_energy(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function air_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-  const player = getDuelPlayerById(duel, playerId)
+  const player = getDuelPlayerByCardInstanceId(duel, instanceId)
+
   player.energyIncome.air += 1
   player.energy.air += 1
   duel = await removeCard(duel, instanceId)
@@ -66,9 +69,9 @@ export async function air_energy(inputDuel: DuelState, playerId: PlayerID, insta
   return duel
 }
 
-export async function ember_foxling_after_attack(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function ember_foxling_after_attack(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-  const opponent = getDuelPlayerById(duel, getOtherPlayerId(playerId))
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
 
   duel = await playAnimation(duel, { id: "EMBER_FOXLING", durationMs: 800, attackingCardId: instanceId })
   duel = await dealDamageToPlayer(duel, getOtherPlayerId(playerId), 1)
@@ -76,7 +79,7 @@ export async function ember_foxling_after_attack(inputDuel: DuelState, playerId:
   return duel
 }
 
-export async function winged_bull_play(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function winged_bull_play(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const row = getPlayerRowByCardInstanceId(inputDuel, instanceId)
   if (row === undefined) {
@@ -92,12 +95,7 @@ export async function winged_bull_play(inputDuel: DuelState, playerId: PlayerID,
   return duel
 }
 
-export function stegowulf_attack_modifier(
-  inputDuel: DuelState,
-  playerId: PlayerID,
-  instanceId: string,
-  attackAmount: number
-) {
+export function stegowulf_attack_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
   const row = getPlayerRowByCardInstanceId(inputDuel, instanceId)
   if (row === undefined) {
     throw Error("Stegowulf attack modifier: Couldn't find Stegowulf's row")
@@ -108,12 +106,7 @@ export function stegowulf_attack_modifier(
   return attackAmount
 }
 
-export function stegowulf_opponent_attack_modifier(
-  inputDuel: DuelState,
-  playerId: PlayerID,
-  instanceId: string,
-  attackAmount: number
-) {
+export function stegowulf_opponent_attack_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 20) {
     return "miss"
@@ -121,23 +114,18 @@ export function stegowulf_opponent_attack_modifier(
   return attackAmount
 }
 
-export async function eerie_vision_play(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function eerie_vision_play(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   duel = await playAnimation(duel, { id: "EERIE_VISION", durationMs: 800, cardId: instanceId })
 
   duel = await scryStart(duel, playerId, 3, instanceId)
   return duel
 }
 
-export async function eerie_vision_select_cards(
-  inputDuel: DuelState,
-  playerId: PlayerID,
-  instanceId: string,
-  selectedCardIds: string[]
-) {
+export async function eerie_vision_select_cards(inputDuel: DuelState, instanceId: string, selectedCardIds: string[]) {
   let duel = inputDuel
-
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   duel = await scryEnd(duel, playerId, selectedCardIds)
 
   duel = await drawToHand(duel, playerId, 1)
@@ -150,7 +138,7 @@ export async function eerie_vision_select_cards(
   return duel
 }
 
-export async function startle_play(inputDuel: DuelState, playerId: PlayerID, instanceId: string, target: Target) {
+export async function startle_play(inputDuel: DuelState, instanceId: string, target: Target) {
   let duel = inputDuel
   duel = await playAnimation(duel, { id: "STARTLE", durationMs: 800, cardId: instanceId })
   // TODO
@@ -158,9 +146,9 @@ export async function startle_play(inputDuel: DuelState, playerId: PlayerID, ins
   return duel
 }
 
-export async function cave_swimmer_support(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function cave_swimmer_support(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   // 10% chance to draw
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 10) {
@@ -174,7 +162,7 @@ export async function cave_swimmer_support(inputDuel: DuelState, playerId: Playe
   return duel
 }
 
-export async function darkwoods_hyena_support(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function darkwoods_hyena_support(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
 
   // 50% chance to gain attack
@@ -193,8 +181,9 @@ export async function darkwoods_hyena_support(inputDuel: DuelState, playerId: Pl
   return duel
 }
 
-export async function joltbird_agent_support(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function joltbird_agent_support(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
 
   // Get opposing attacking creature
   const randomOpposingCreature = getRandomCreatureInPlayForPlayer(duel, getOtherPlayerId(playerId))
@@ -219,8 +208,9 @@ export async function joltbird_agent_support(inputDuel: DuelState, playerId: Pla
   return duel
 }
 
-export async function dragon_cub_support(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function dragon_cub_support(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   const rowIndex = getRowIndexByCardInstanceId(duel, instanceId)
   if (rowIndex === undefined) {
     throw Error("Dragon cub isn't in a row!'")
@@ -245,8 +235,9 @@ export async function dragon_cub_support(inputDuel: DuelState, playerId: PlayerI
   return duel
 }
 
-export async function brash_splasher_after_attack(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function brash_splasher_after_attack(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
 
   // 50% chance to draw
   const random100 = getRandomInt(100, getRandomSeed())
@@ -261,8 +252,9 @@ export async function brash_splasher_after_attack(inputDuel: DuelState, playerId
   return duel
 }
 
-export async function support_flame_sentinel(inputDuel: DuelState, playerId: PlayerID, instanceId: string) {
+export async function support_flame_sentinel(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   const targetCreature = getRandomCreatureInPlayForPlayer(duel, getOtherPlayerId(playerId))
   if (targetCreature === undefined) {
     return duel
@@ -273,12 +265,7 @@ export async function support_flame_sentinel(inputDuel: DuelState, playerId: Pla
   return duel
 }
 
-export async function smoldering_shot_play(
-  inputDuel: DuelState,
-  playerId: PlayerID,
-  instanceId: string,
-  target: Target
-) {
+export async function smoldering_shot_play(inputDuel: DuelState, instanceId: string, target: Target) {
   let duel = inputDuel
   if (target.targetType !== "playerRow") {
     throw Error("Smoldering shot played in non player-row")
@@ -293,14 +280,24 @@ export async function smoldering_shot_play(
   return duel
 }
 
-export async function ancestral_presence_play(
+export function canyon_burrower_opposing_attack_modifier(
   inputDuel: DuelState,
-  playerId: PlayerID,
   instanceId: string,
-  target: Target
+  attackAmount: number
 ) {
+  // 30% chance to burn
+  const random100 = getRandomInt(100, getRandomSeed())
+  if (random100 < 30) {
+    return "miss"
+  }
+
+  return attackAmount
+}
+
+export async function ancestral_presence_play(inputDuel: DuelState, instanceId: string, target: Target) {
   let duel = inputDuel
-  const player = getDuelPlayerById(duel, playerId)
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
+  const player = getDuelPlayerByCardInstanceId(duel, instanceId)
 
   duel = await playAnimation(duel, { id: "ANCESTRAL_PRESENCE", durationMs: 800, playerId })
 
@@ -454,6 +451,9 @@ export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   },
   "Canyon Burrower": {
     getValidTargets: getDefaultCreatureTargets,
+    effects: {
+      opposingAttackModifier: canyon_burrower_opposing_attack_modifier,
+    },
   },
   "Dragon Cub": {
     getValidTargets: getDefaultCreatureTargets,
@@ -500,4 +500,6 @@ export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   "Pike Lancer": { getValidTargets: getDefaultCreatureTargets },
   Hyllophant: { getValidTargets: getDefaultCreatureTargets },
   "Violet Sagebeast": { getValidTargets: getDefaultCreatureTargets },
+  "Moltsteed Racer": { getValidTargets: getDefaultCreatureTargets },
+  "Volcanic Shellster": { getValidTargets: getDefaultCreatureTargets },
 }

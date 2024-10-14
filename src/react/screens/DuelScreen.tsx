@@ -19,12 +19,12 @@ import { useDuelUIStore } from "../hooks/useDuelUIStore"
 import { HumanHand } from "../components/DuelScreen/HumanHand"
 import { duelWinner, getCardByInstanceId } from "@/src/game/duel/DuelHelpers"
 import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
-import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
 import { DuelCompleteContent } from "../components/DuelComplete/DuelCompleteContent"
 import { DuelCompleteDialog } from "../components/DuelComplete/DuelCompleteDialog"
 import { CardSelectDialog } from "../components/DuelScreen/CardSelectDialog"
 import { Portal } from "@radix-ui/react-portal"
 import { ControlButtonPopup } from "../components/DuelScreen/ControlButtonPopup"
+import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 
 // Throws error if given a non-rowHumanHalf droppableId
 const getRowIndexFromDroppableId = (droppableId: string): number | undefined => {
@@ -112,7 +112,7 @@ export const DuelScreen = ({}: DuelScreenProps) => {
         // Don't allow dragging into play area when unselectable (btw we still allow drag and drop within hand)
         const choiceId = duel.choice.id
         const selectable =
-          !duelWinner(duel) && choiceId === "TAKE_TURN" && takeTurn_getValidHandTargets(duel).includes(draggedCardId)
+          !duelWinner(duel) && choiceId === "TAKE_TURN" && takeTurn_getPlayableHandCardIds(duel).includes(draggedCardId)
         if (!selectable) {
           return
         }

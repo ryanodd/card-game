@@ -1,6 +1,7 @@
 import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
 import { drawToHand } from "./drawToHand"
+import { resetSummoningSickness } from "./resetSummoningSickness"
 
 export async function turnStart(inputDuel: DuelState) {
   let duel = inputDuel
@@ -17,6 +18,8 @@ export async function turnStart(inputDuel: DuelState) {
   player.playedEnergyThisTurn = false
 
   duel = await drawToHand(duel, duel.currentPlayerId, 1)
+
+  duel = await resetSummoningSickness(duel, duel.currentPlayerId)
 
   duel.choice = { id: "TAKE_TURN", playerId: duel.currentPlayerId }
   return duel

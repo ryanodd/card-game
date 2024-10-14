@@ -5,6 +5,7 @@ export type ChoiceID = "CONFIRM_DUEL_START" | "MULLIGAN" | "TAKE_TURN" | "SCRY"
 export type ChoiceData = {
   playerId: PlayerID
 } & (
+  | { id: "CONFIRM_DUEL_START" }
   | {
       id: "TAKE_TURN"
     }

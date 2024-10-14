@@ -9,7 +9,6 @@ export type ControlButtonPopupProps = {
 export const ControlButtonPopup = ({ duel }: ControlButtonPopupProps) => {
   const { dialogShowBattlefield, setDialogShowBattlefield } = useDuelUIStore()
 
-  console.log(dialogShowBattlefield, duel.choice.id)
   const showCardSelectButton =
     (duel.choice.id === "MULLIGAN" || duel.choice.id === "CARD_SELECT") && dialogShowBattlefield
   const showPopup = showCardSelectButton

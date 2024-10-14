@@ -27,11 +27,6 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
     throw Error("Can't afford to play this card (or paid too much)")
   }
 
-  // Remove from hand
-  player.hand = player.hand.filter((card) => {
-    return card.instanceId !== cardId
-  })
-
   // Pay energy
   player.energy.neutral -= energyPaid.neutral
   player.energy.fire -= energyPaid.fire
@@ -41,24 +36,35 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
 
   const cardBehaviour = cardBehaviourMap[playedCard.name]
 
+  // Remove from hand
+  player.hand = player.hand.filter((card) => {
+    return card.instanceId !== cardId
+  })
   // Put creature in space
   if (playedCard.cardType === "creature" && target.targetType === "rowSpace") {
     const row = player.rows[target.rowIndex]
     row.splice(target.positionIndex, 0, playedCard)
+    playedCard.summoningSickness = true
     if (duel.currentPlayerId === "opponent") {
       duel = await playAnimation(duel, { id: "SUMMON", durationMs: 200, cardId })
     }
 
     if (cardBehaviour.effects?.summon) {
-      duel = await cardBehaviour.effects.summon(duel, duel.currentPlayerId, playedCard.instanceId)
+      duel = await cardBehaviour.effects.summon(duel, playedCard.instanceId)
     }
   }
 
-  if (cardBehaviour.effects?.play) {
-    duel = await cardBehaviour.effects.play(duel, duel.currentPlayerId, playedCard.instanceId, target)
+  if (playedCard.cardType === "energy" || playedCard.cardType === "spell") {
+    player.inPlay = playedCard
   }
 
+  if (cardBehaviour.effects?.play) {
+    duel = await cardBehaviour.effects.play(duel, playedCard.instanceId, target)
+  }
+
+  // Put card in discard
   if (playedCard.cardType === "energy" || playedCard.cardType === "spell") {
+    player.inPlay = null
     player.discard.push(playedCard)
   }
 

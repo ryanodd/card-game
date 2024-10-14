@@ -1,6 +1,6 @@
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
 import { DECK_LIST_CARD_WIDTH_REMS, DeckListCard } from "./DeckListCard"
-import { sortCardNames } from "@/src/game/helpers"
+import { sortDeckListNames } from "@/src/game/helpers"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
 import { cardDataMap } from "@/src/game/cards/AllCards"
@@ -37,7 +37,7 @@ export const DeckListColumn = () => {
         ...editDeck,
         deck: {
           ...editDeck.deck,
-          cardNames: sortCardNames([draggedCardName, ...editDeck.deck.cardNames]),
+          cardNames: sortDeckListNames([draggedCardName, ...editDeck.deck.cardNames]),
         },
       }
       setEditDeck(newEditDeckState)

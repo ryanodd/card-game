@@ -5,10 +5,10 @@ import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuel
 import { useGameStore } from "../../hooks/useGameStore"
 import { DuelState } from "@/src/game/duel/DuelData"
 import { duelWinner } from "@/src/game/duel/DuelHelpers"
-import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
 import { confirmStart_execute } from "@/src/game/duel/choices/confirmStart"
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
 import { duelEnd } from "@/src/game/duel/actions/duelEnd"
+import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 
 export type DuelPromptProps = {
   duel: DuelState
@@ -36,11 +36,11 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
   }
 
   if (duel.choice.id === "TAKE_TURN") {
-    const handTargets = takeTurn_getValidHandTargets(duel)
+    const handTargets = takeTurn_getPlayableHandCardIds(duel)
 
     // Can play cards
     if (handTargets.length > 0) {
-      return "Play cards, if you have enough energy."
+      return "Play cards using your available energy."
     }
 
     // Can't play cards

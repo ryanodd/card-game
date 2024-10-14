@@ -13,10 +13,10 @@ import animationLayerStyles from "./DuelCardAnimationLayer.module.css"
 import { useSortable } from "@dnd-kit/sortable"
 import { CardState, DuelState } from "@/src/game/duel/DuelData"
 import { duelWinner, getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
-import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
 import { resetDuelUIStore } from "@/src/game/duel/control/resetDuelUIStore"
 import { PlayerID } from "@/src/game/duel/PlayerData"
 import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
+import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 
 export type DuelCardProps = {
   duel: DuelState
@@ -34,7 +34,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     duel.currentAnimation === null &&
     choiceId === "TAKE_TURN" &&
     !cardIdDragging &&
-    takeTurn_getValidHandTargets(duel).includes(cardState.instanceId)
+    takeTurn_getPlayableHandCardIds(duel).includes(cardState.instanceId)
 
   const highlighted = selectable && !cardIdDragging
 
@@ -71,6 +71,8 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     // },
   })
 
+  const summoningSickness = cardState.cardType === "creature" && cardState.summoningSickness
+
   const modifierBurn = cardState.modifiers.find((modifier) => modifier.id === "burn") !== undefined
   const modifierStun = cardState.modifiers.find((modifier) => modifier.id === "stun") !== undefined
   const modifierPoison = cardState.modifiers.find((modifier) => modifier.id === "poison") !== undefined
@@ -80,21 +82,10 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     duel.currentAnimation.cardId === cardState.instanceId &&
     playerId === "opponent"
 
-  // TODO summoning sickness
-  const isInAttackingPosition =
-    duel.human.rows[rowIndex]?.findIndex((card) => {
-      return card.instanceId === cardState.instanceId
-    }) === 0 ||
-    duel.opponent.rows[rowIndex]?.findIndex((card) => {
-      return card.instanceId === cardState.instanceId
-    }) === 0
-
   const animationAttackStart =
-    duel.currentAnimation?.id === "ATTACK_START" &&
-    rowIndex === duel.currentAnimation?.rowIndex &&
-    isInAttackingPosition
+    duel.currentAnimation?.id === "ATTACK_START" && duel.currentAnimation.cardId === cardState.instanceId
   const animationAttackEnd =
-    duel.currentAnimation?.id === "ATTACK_END" && rowIndex === duel.currentAnimation?.rowIndex && isInAttackingPosition
+    duel.currentAnimation?.id === "ATTACK_END" && duel.currentAnimation.cardId === cardState.instanceId
 
   const animationDestroyStart =
     duel.currentAnimation?.id === "DESTROY_START" && duel.currentAnimation?.cardIds.includes(cardState.instanceId)
@@ -153,6 +144,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
       <div
         className={`${animationFilterStyles.duelCardFilterLayer} `}
         data-player-id={playerId}
+        data-modifier-summoning-sickness={summoningSickness}
         data-modifier-burn={modifierBurn}
         data-modifier-stun={modifierStun}
         data-modifier-poison={modifierPoison}

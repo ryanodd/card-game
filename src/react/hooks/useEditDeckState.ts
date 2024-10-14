@@ -1,6 +1,7 @@
-import { Deck, EditDeckState } from "@/src/game/Deck"
+import { Deck } from "@/src/game/Deck"
 import { useGameStore } from "./useGameStore"
 import { Dispatch, SetStateAction } from "react"
+import { EditDeckState } from "@/src/game/GameData"
 
 export const createNewEditDeckState = (deck: Deck): EditDeckState => {
   return {

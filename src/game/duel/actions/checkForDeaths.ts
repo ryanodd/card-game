@@ -12,6 +12,7 @@ export async function checkForDeaths(inputDuel: DuelState) {
   const cardsToDestroy = []
   for (let x = 0; x < cards.length; x++) {
     const card = cards[x]
+
     if (card.cardType === "creature" && card.damage >= getEffectiveHealth(card)) {
       cardsToDestroy.push(card.instanceId)
     }

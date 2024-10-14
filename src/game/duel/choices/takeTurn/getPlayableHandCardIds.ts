@@ -2,7 +2,7 @@ import { DuelState } from "../../DuelData"
 import { getCardByInstanceId, getCurrentDuelPlayer, isEnergySufficient } from "../../DuelHelpers"
 import { takeTurn_getValidTargetsForCard } from "./getValidTargetsForCard"
 
-export const takeTurn_getValidHandTargets = (duel: DuelState): string[] => {
+export const takeTurn_getPlayableHandCardIds = (duel: DuelState): string[] => {
   const playerHand = getCurrentDuelPlayer(duel).hand
   const energyCounts = getCurrentDuelPlayer(duel).energy
   const cardsAfforded = []
@@ -12,10 +12,10 @@ export const takeTurn_getValidHandTargets = (duel: DuelState): string[] => {
       cardsAfforded.push(card.instanceId)
     }
   }
-  const cardsAffordedWithTargets = cardsAfforded.filter((cardInstanceId) => {
+  const cardsAffordedWithValidTargets = cardsAfforded.filter((cardInstanceId) => {
     const card = getCardByInstanceId(duel, cardInstanceId)
     const targets = takeTurn_getValidTargetsForCard(duel, cardInstanceId)
     return targets.length > 0
   })
-  return cardsAffordedWithTargets
+  return cardsAffordedWithValidTargets
 }

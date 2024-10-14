@@ -15,7 +15,7 @@ export const takeTurn_getValidTargetsForCard = (
 
   const card = getCardByInstanceId(duel, cardIdToPlay)
   const cardData = cardBehaviourMap[card.name]
-  const validTargets = cardData.getValidTargets(duel, duel.currentPlayerId, cardIdToPlay)
+  const validTargets = cardData.getValidTargets(duel, cardIdToPlay)
 
   return validTargets
 }

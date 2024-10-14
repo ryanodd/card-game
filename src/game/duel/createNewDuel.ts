@@ -19,6 +19,7 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
         attack: cardData.attack,
         health: cardData.health,
         damage: 0,
+        summoningSickness: false,
         modifiers: [],
       }
     case "spell":
@@ -64,6 +65,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
       discard: [],
       rows: [[], []],
       cardSelect: [],
+      inPlay: null,
       energy: {
         neutral: 0,
         fire: 0,
@@ -89,6 +91,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
       discard: [],
       rows: [[], []],
       cardSelect: [],
+      inPlay: null,
       energy: {
         neutral: 0,
         fire: 0,

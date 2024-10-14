@@ -45,6 +45,7 @@ export type CardState = {
       attack: number
       health: number
       damage: number
+      summoningSickness: boolean
     }
   | {
       cardType: "spell"
@@ -61,6 +62,7 @@ export type PlayerState = {
   deck: CardState[]
   discard: CardState[]
   rows: CardState[][]
+  inPlay: CardState | null
   cardSelect: CardState[]
   energy: EnergyCounts
   energyIncome: EnergyCounts

@@ -3,11 +3,11 @@ import { getDuelPlayerById } from "../../DuelHelpers"
 import { PlayerID } from "../../PlayerData"
 import { Target } from "../ChoiceData"
 
-export const getDefaultSpellTargets = (duel: DuelState, playerId: PlayerID, instanceId: string): Target[] => {
+export const getDefaultSpellTargets = (duel: DuelState, instanceId: string): Target[] => {
   return [{ targetType: "playArea" }]
 }
 
-export const getDefaultPlayerRowSpellTargets = (duel: DuelState, playerId: PlayerID, instanceId: string): Target[] => {
+export const getDefaultPlayerRowSpellTargets = (duel: DuelState, instanceId: string): Target[] => {
   const targets: Target[] = []
   for (let x = 0; x < duel.human.rows.length; x++) {
     targets.push({ targetType: "playerRow", playerId: "human", rowIndex: x })

@@ -5,9 +5,9 @@ import { useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { Button } from "../designSystem/Button"
 import { duelWinner } from "@/src/game/duel/DuelHelpers"
 import { DuelState } from "@/src/game/duel/DuelData"
-import { takeTurn_getValidHandTargets } from "@/src/game/duel/choices/takeTurn/getValidHandTargets"
 import { takeTurn_executeAdvance } from "@/src/game/duel/choices/takeTurn/executeAdvance"
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
+import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 
 const getText = (duel: DuelState): string | null => {
   if (duelWinner(duel) !== null) {
@@ -34,7 +34,7 @@ export const AdvanceTurnButton = ({ duel }: AdvanceTurnButtonProps) => {
   const pressable =
     duel.choice.playerId !== "opponent" && !duelWinner(duel) && duel.currentAnimation === null && buttonText !== null
 
-  const highlighted = pressable && choiceId === "TAKE_TURN" && takeTurn_getValidHandTargets(duel).length === 0
+  const highlighted = pressable && choiceId === "TAKE_TURN" && takeTurn_getPlayableHandCardIds(duel).length === 0
 
   return (
     <Button
