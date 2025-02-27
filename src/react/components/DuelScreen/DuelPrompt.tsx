@@ -28,11 +28,11 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
   }
 
   if (duel.choice.id === "TAKE_TURN" && !duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
-    return "Click & drag cards to play them. Start by playing energy cards."
+    return "Click & drag cards to play them! Start by playing energy cards."
   }
 
   if (duel.choice.id === "TAKE_TURN" && duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
-    return "Nice. Now you'll have that energy to spend on cards every turn. (You may only play 1 energy per turn)"
+    return "Nice. Now you'll have that energy to spend on cards every turn. (You may only play 1 energy card per turn)"
   }
 
   if (duel.choice.id === "TAKE_TURN") {

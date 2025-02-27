@@ -1,5 +1,5 @@
 .button {
-  @apply shadow-sm;
+  @apply shadow-sm shrink-0 flex items-center justify-center;
 }
 
 .button {
@@ -7,15 +7,16 @@
   @apply py-1.5 px-3 rounded-md text-base;
 }
 
+.button[data-icon-only="true"] {
+  @apply w-10 h-10 px-1 py-1;
+}
+
 .button[data-size="large"] {
   @apply py-3 px-6 rounded-lg text-xl font-semibold;
 }
 
-.button[data-variant="primary"] {
-  @apply bg-emerald-500 text-white border-none;
-}
-.button[data-variant="primary"]:hover {
-  @apply bg-emerald-700;
+.button[data-icon-only="true"][data-size="large"] {
+  @apply w-4 h-4 px-1 py-1;
 }
 
 .button {
@@ -23,12 +24,15 @@
   @apply bg-stone-100 text-gray-950 border border-stone-300;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   @apply bg-stone-300;
 }
 
-.button:disabled {
-  @apply bg-stone-500 border-stone-500;
+.button[data-variant="primary"] {
+  @apply bg-emerald-500 text-white border-none;
+}
+.button[data-variant="primary"]:hover:not(:disabled) {
+  @apply bg-emerald-700;
 }
 
 .button[data-variant="destructive"] {
@@ -37,6 +41,18 @@
 
 .button[data-variant="destructive"]:hover:not(:disabled) {
   @apply bg-red-400;
+}
+
+.button[data-variant="tertiary"] {
+  @apply bg-transparent text-white border-none;
+}
+
+.button[data-variant="tertiary"]:hover:not(:disabled) {
+  @apply bg-opacity-10 bg-stone-100;
+}
+
+.button:disabled {
+  @apply bg-stone-500 border-stone-500;
 }
 
 .unpressable {

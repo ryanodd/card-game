@@ -35,6 +35,9 @@ export const MainMenuScreen = () => {
   const onPacksClick = () => {
     setGame({ ...game, screen: { id: "packs" } })
   }
+
+  const godMode = game.settings.godMode
+
   return (
     <MainView>
       <GameBackground />
@@ -52,10 +55,11 @@ export const MainMenuScreen = () => {
                 }
                 challengeId="playNow"
               />
-
-              <Button data-size="large" onClick={onCampaignClick}>
-                Campaign
-              </Button>
+              {godMode && (
+                <Button data-size="large" onClick={onCampaignClick}>
+                  Campaign
+                </Button>
+              )}
             </div>
             <div className="flex flex-col mt-8 gap-4">
               <div className="flex gap-4">
@@ -69,9 +73,11 @@ export const MainMenuScreen = () => {
               <Button data-size="large" onClick={onShopClick}>
                 Shop
               </Button>
-              <Button data-size="large" onClick={onPacksClick}>
-                Packs
-              </Button>
+              {godMode && (
+                <Button data-size="large" onClick={onPacksClick}>
+                  Packs
+                </Button>
+              )}
             </div>
             <div className="flex flex-col mt-8 gap-4">
               <SettingsDialog trigger={<Button data-size="large">Settings</Button>} />

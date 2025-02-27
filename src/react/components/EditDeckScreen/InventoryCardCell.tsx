@@ -2,12 +2,14 @@ import { CardData } from "@/src/game/cards/CardData"
 import { InventoryCard } from "./InventoryCard"
 import { useGameStore } from "../../hooks/useGameStore"
 import { InventoryQuantityIndicator } from "./InventoryQuantityIndicator"
+import { CardDetailed } from "../CardDetailed"
 
-export type CardProps = {
+export type InventoryCardProps = {
   cardData: CardData
+  draggable?: boolean
 }
 
-export const InventoryCardCell = ({ cardData }: CardProps) => {
+export const InventoryCardCell = ({ cardData, draggable = false }: InventoryCardProps) => {
   const { game } = useGameStore()
 
   const collectionQuantity = game.collection[cardData.name]
@@ -18,7 +20,8 @@ export const InventoryCardCell = ({ cardData }: CardProps) => {
 
   return (
     <div className="flex flex-col">
-      <InventoryCard cardData={cardData} />
+      {draggable ? <InventoryCard cardData={cardData} /> : <CardDetailed cardData={cardData} />}
+
       {cardData.rarity !== "base" && (
         <InventoryQuantityIndicator quantity={collectionQuantity} quantityInDeck={deckQuantity} />
       )}

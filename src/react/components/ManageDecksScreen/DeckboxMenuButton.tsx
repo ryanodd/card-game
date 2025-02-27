@@ -1,10 +1,8 @@
 import * as MenuButton from "@radix-ui/react-dropdown-menu"
 import { Button } from "../designSystem/Button"
 import styles from "../designSystem/MenuButton.module.css"
-import { useCallback } from "react"
-import { useGameStore } from "../../hooks/useGameStore"
-import { useDuelState } from "../../hooks/useDuelState"
 import { DeleteDeckDialog } from "./DeleteDeckDialog"
+import { Menu } from "../designSystem/Icon"
 
 export type DeckboxMenuButtonProps = {
   deckId: string
@@ -16,7 +14,9 @@ export const DeckboxMenuButton = ({ deckId }: DeckboxMenuButtonProps) => {
   return (
     <MenuButton.Root modal={false}>
       <MenuButton.Trigger asChild>
-        <Button className="">☰</Button>
+        <Button data-icon-only>
+          <Menu />
+        </Button>
       </MenuButton.Trigger>
       <MenuButton.Portal>
         <MenuButton.Content align="end" className={`${styles.menuButtonContent} z-10`} sideOffset={5}>

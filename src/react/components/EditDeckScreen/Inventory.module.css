@@ -1,9 +1,13 @@
+.inventoryContainer {
+  @apply grow flex flex-row items-center px-4;
+}
+
 .inventory_card_size {
   @apply w-64 h-96;
 }
 
 .inventoryGrid {
-  @apply flex flex-wrap overflow-y-scroll gap-2.5;
+  @apply h-full flex flex-wrap justify-center overflow-y-scroll gap-2.5;
 }
 
 .deckListColumn {

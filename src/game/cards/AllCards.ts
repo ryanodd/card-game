@@ -272,7 +272,7 @@ cards.push({
 // When attacking this creature, your opponent has a 25% chance to miss.
 cards.push({
   name: "Fairy Buckfly",
-  imageSrc: "/card-art/fairyBuckFly.png",
+  imageSrc: "/card-art/fairyBuckfly.png",
   imageCenterYPercent: 18,
   rarity: "rare",
   complete: false,
@@ -801,7 +801,7 @@ cards.push({
 })
 cards.push({
   name: "Opaldrake Thrasher",
-  imageSrc: "/card-art/opalDrakeThrasher.png",
+  imageSrc: "/card-art/opaldrakeThrasher.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: false,

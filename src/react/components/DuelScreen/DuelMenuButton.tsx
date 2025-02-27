@@ -5,6 +5,7 @@ import { useCallback } from "react"
 import { useGameStore } from "../../hooks/useGameStore"
 import { useDuelState } from "../../hooks/useDuelState"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
+import { Menu } from "../designSystem/Icon"
 
 export const DuelMenuButton = () => {
   const { game, setGame } = useGameStore()
@@ -27,7 +28,9 @@ export const DuelMenuButton = () => {
   return (
     <MenuButton.Root modal={false}>
       <MenuButton.Trigger asChild>
-        <Button className="absolute z-10 right-4 top-4">☰</Button>
+        <Button className="absolute z-10 right-4 top-4" data-variant="tertiary" data-icon-only>
+          <Menu />
+        </Button>
       </MenuButton.Trigger>
       <MenuButton.Portal>
         <MenuButton.Content align="end" className={`${styles.menuButtonContent} z-10`} sideOffset={5}>

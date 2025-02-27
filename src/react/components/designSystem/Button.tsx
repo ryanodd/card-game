@@ -4,8 +4,9 @@ import styles from "./Button.module.css"
 type Props = {
   children?: ReactNode
   "data-size"?: "small" | "large"
-  "data-variant"?: "primary" | "secondary" | "destructive"
+  "data-variant"?: "primary" | "secondary" | "destructive" | "tertiary"
   "data-loading"?: boolean
+  "data-icon-only"?: boolean
 }
 
 export type ButtonProps = ComponentPropsWithoutRef<"button"> & Props

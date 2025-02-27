@@ -3,6 +3,7 @@ import { useCallback } from "react"
 import { useGameStore } from "../../hooks/useGameStore"
 import { Button } from "../designSystem/Button"
 import styles from "../designSystem/Dialog.module.css"
+import { Close } from "../designSystem/Icon"
 
 export const EditDeckCancelDialog = () => {
   const { game, setGame } = useGameStore()
@@ -17,7 +18,9 @@ export const EditDeckCancelDialog = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button>Cancel</Button>
+        <Button data-variant="tertiary" className={`${styles.dialogCloseButton}`}>
+          <Close />
+        </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={`${styles.dialogOverlay}`} />

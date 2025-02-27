@@ -1,7 +1,6 @@
 import { cardDataMap } from "./cards/AllCards"
 import { CardData } from "./cards/CardData"
 import { CardName } from "./cards/CardName"
-import { CardState } from "./duel/DuelData"
 
 export const hasDuplicates = (array: any[]) => {
   return new Set(array).size !== array.length

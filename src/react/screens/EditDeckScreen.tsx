@@ -60,10 +60,10 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
         {draggedCardName !== null && <InventoryCard cardData={cardDataMap[draggedCardName as CardName]} />}
       </DragOverlay>
       <div className="absolute-fill inset-0 z-10 flex flex-col">
-        <div className="flex flex-col overflow-hidden p-2 gap-2">
+        <div className="grow flex flex-col overflow-hidden p-2 gap-2">
           <h1 className="text-5xl text-stone-50">{editDeck.deck.name}</h1>
           <div className="flex-grow flex overflow-hidden relative">
-            <InventoryBrowser />
+            <InventoryBrowser cardsDraggable />
             <DeckListColumn />
           </div>
         </div>
