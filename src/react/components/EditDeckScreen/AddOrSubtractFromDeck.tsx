@@ -14,7 +14,7 @@ export const AddOrSubtractFromDeck = ({ cardData }: AddOrSubtractFromDeckProps) 
   const { editDeck, setEditDeck } = useEditDeckState()
   const { game } = useGameStore()
 
-  const numInDeck = editDeck.deck.cardNames.reduce((matches, cardName) => {
+  const numInDeck = editDeck.cardNames.reduce((matches, cardName) => {
     return cardName === cardData.name ? [...matches, cardName] : matches
   }, [] as string[]).length
 
@@ -24,28 +24,22 @@ export const AddOrSubtractFromDeck = ({ cardData }: AddOrSubtractFromDeckProps) 
   const onAddCard = useCallback(() => {
     const newEditDeckState = {
       ...editDeck,
-      deck: {
-        ...editDeck.deck,
-        cardNames: sortDeckListNames([cardData.name, ...editDeck.deck.cardNames]),
-      },
+      cardNames: sortDeckListNames([cardData.name, ...editDeck.cardNames]),
     }
     setEditDeck(newEditDeckState)
   }, [editDeck, cardData.name, setEditDeck])
 
   const onSubtractCard = useCallback(() => {
-    const removedCardIndex = editDeck.deck.cardNames.findIndex((value) => value === cardData.name)
+    const removedCardIndex = editDeck.cardNames.findIndex((value) => value === cardData.name)
     if (removedCardIndex === -1) {
       throw Error(`Removed card not found in deck: ${cardData.name}`)
     }
 
-    const newCardNames = [...editDeck.deck.cardNames]
+    const newCardNames = [...editDeck.cardNames]
     newCardNames.splice(removedCardIndex, 1)
     setEditDeck({
-      id: editDeck.id,
-      deck: {
-        ...editDeck.deck,
-        cardNames: newCardNames,
-      },
+      ...editDeck,
+      cardNames: newCardNames,
     })
   }, [editDeck, cardData.name, setEditDeck])
 

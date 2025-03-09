@@ -9,7 +9,7 @@ export type DuelCompleteDialogProps = {}
 export const DuelCompleteDialog = ({}: DuelCompleteDialogProps) => {
   const [open, setOpen] = useState(false)
   const { game } = useGameStore()
-  const isDuelComplete = game.screen.id === "duel" && game.screen.duel.duelCompleteData !== null
+  const isDuelComplete = game.screen.id === "duel" && game.screen.duel.winner !== null
   useEffect(() => {
     if (isDuelComplete) {
       setOpen(true)

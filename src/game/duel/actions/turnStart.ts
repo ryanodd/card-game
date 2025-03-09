@@ -1,21 +1,15 @@
 import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
+import { heroBehaviourMap } from "../heroBehaviour/AllHeroBehaviour"
 import { drawToHand } from "./drawToHand"
 import { resetSummoningSickness } from "./resetSummoningSickness"
 
 export async function turnStart(inputDuel: DuelState) {
   let duel = inputDuel
 
-  // Reset energy
   const player = getDuelPlayerById(duel, duel.currentPlayerId)
-  player.energy = {
-    fire: player.energyIncome.fire,
-    water: player.energyIncome.water,
-    earth: player.energyIncome.earth,
-    air: player.energyIncome.air,
-    neutral: player.energyIncome.neutral,
-  }
-  player.playedEnergyThisTurn = false
+  const heroTurnStartBehaviour = heroBehaviourMap[player.hero.name].turnStart
+  heroTurnStartBehaviour?.(duel, duel.currentPlayerId)
 
   duel = await drawToHand(duel, duel.currentPlayerId, 1)
 

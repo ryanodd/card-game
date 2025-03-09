@@ -3,7 +3,6 @@ import { getAllCards } from "../DuelHelpers"
 import { playAnimation } from "../control/playAnimation"
 import { getEffectiveHealth } from "../helpers/getEffectiveHealth"
 import { destroyCard } from "./destroyCard"
-import { removeCard } from "./removeCard"
 
 export async function checkForDeaths(inputDuel: DuelState) {
   let duel = inputDuel

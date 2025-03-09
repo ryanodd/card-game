@@ -13,6 +13,8 @@ import { EditDeckCancelDialog } from "../components/EditDeckScreen/EditDeckCance
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
 import { Footer } from "../components/Footer"
+import { Deck } from "@/src/game/Deck"
+import { v4 } from "uuid"
 
 export type EditDeckScreenProps = {}
 
@@ -32,14 +34,29 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
   }, [])
 
   const onDoneClick = () => {
-    const replaceIndex = game.decks.findIndex((deck) => deck.id === editDeck.deck.id)
-
+    if (editDeck.heroName === null) {
+      throw new Error("Tried to create a deck without selecting a hero!")
+    }
     // New Deck
-    if (replaceIndex === -1) {
-      game.decks = [...game.decks, editDeck.deck]
+    if (editDeck.deckId === null) {
+      game.decks = [
+        ...game.decks,
+        {
+          id: v4(),
+          name: editDeck.deckName,
+          heroName: editDeck.heroName,
+          cardNames: editDeck.cardNames,
+        },
+      ]
       // Existing Deck
     } else {
-      game.decks[replaceIndex] = editDeck.deck // Is this redundant lol? (Were we saving as we go, just by reference?)
+      const replaceIndex = game.decks.findIndex((deck) => deck.id === editDeck.id)
+      game.decks[replaceIndex] = {
+        id: editDeck.deckId,
+        name: editDeck.deckName,
+        heroName: editDeck.heroName,
+        cardNames: editDeck.cardNames,
+      }
     }
 
     // Save
@@ -61,7 +78,7 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
       </DragOverlay>
       <div className="absolute-fill inset-0 z-10 flex flex-col">
         <div className="grow flex flex-col overflow-hidden p-2 gap-2">
-          <h1 className="text-5xl text-stone-50">{editDeck.deck.name}</h1>
+          <h1 className="text-5xl text-stone-50">{editDeck.deckName}</h1>
           <div className="flex-grow flex overflow-hidden relative">
             <InventoryBrowser cardsDraggable />
             <DeckListColumn />
@@ -69,7 +86,7 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
         </div>
         <Footer
           leftContent={
-            editDeck.deck.cardNames.length === 0 ? <Button onClick={onCancel}>Cancel</Button> : <EditDeckCancelDialog />
+            editDeck.cardNames.length === 0 ? <Button onClick={onCancel}>Cancel</Button> : <EditDeckCancelDialog />
           }
           rightContent={<Button onClick={onDoneClick}>Done</Button>}
         />

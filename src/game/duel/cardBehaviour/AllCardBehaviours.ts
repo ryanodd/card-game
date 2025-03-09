@@ -18,7 +18,6 @@ import { drawToHand } from "../actions/drawToHand"
 import { removeCard } from "../actions/removeCard"
 import { Target } from "../choices/ChoiceData"
 import { getDefaultCreatureTargets } from "../choices/takeTurn/getDefaultCreatureTargets"
-import { getDefaultEnergyTargets } from "../choices/takeTurn/getDefaultEnergyTargets"
 import { getDefaultPlayerRowSpellTargets, getDefaultSpellTargets } from "../choices/takeTurn/getDefaultSpellTargets"
 import { BUFFER_MS, playAnimation } from "../control/playAnimation"
 import { CardBehaviour } from "./CardBehaviourData"
@@ -30,7 +29,7 @@ import { scryEnd, scryStart } from "../actions/scry"
 export async function fire_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const player = getDuelPlayerByCardInstanceId(duel, instanceId)
-  player.energyIncome.fire += 1
+
   player.energy.fire += 1
   duel = await removeCard(duel, instanceId)
 
@@ -41,7 +40,6 @@ export async function water_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const player = getDuelPlayerByCardInstanceId(duel, instanceId)
 
-  player.energyIncome.water += 1
   player.energy.water += 1
   duel = await removeCard(duel, instanceId)
 
@@ -51,7 +49,7 @@ export async function water_energy(inputDuel: DuelState, instanceId: string) {
 export async function earth_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const player = getDuelPlayerByCardInstanceId(duel, instanceId)
-  player.energyIncome.earth += 1
+
   player.energy.earth += 1
   duel = await removeCard(duel, instanceId)
 
@@ -62,7 +60,6 @@ export async function air_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const player = getDuelPlayerByCardInstanceId(duel, instanceId)
 
-  player.energyIncome.air += 1
   player.energy.air += 1
   duel = await removeCard(duel, instanceId)
 
@@ -324,32 +321,6 @@ export async function ancestral_presence_play(inputDuel: DuelState, instanceId: 
 }
 
 export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
-  "Fire Energy": {
-    getValidTargets: getDefaultEnergyTargets,
-    effects: {
-      play: fire_energy,
-    },
-  },
-  "Water Energy": {
-    getValidTargets: getDefaultEnergyTargets,
-    effects: {
-      play: water_energy,
-    },
-  },
-
-  "Earth Energy": {
-    getValidTargets: getDefaultEnergyTargets,
-    effects: {
-      play: earth_energy,
-    },
-  },
-
-  "Air Energy": {
-    getValidTargets: getDefaultEnergyTargets,
-    effects: {
-      play: air_energy,
-    },
-  },
   "Golden Friend": {
     getValidTargets: getDefaultCreatureTargets,
   },

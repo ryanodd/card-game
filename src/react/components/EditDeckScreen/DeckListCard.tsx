@@ -26,19 +26,16 @@ export const DeckListCard = ({ cardName, quantity }: DeckListCardProps) => {
   const { editDeck, setEditDeck } = useEditDeckState()
 
   const onClick = useCallback(() => {
-    const removedCardIndex = editDeck.deck.cardNames.findIndex((value) => value === cardData.name)
+    const removedCardIndex = editDeck.cardNames.findIndex((value) => value === cardData.name)
     if (removedCardIndex === -1) {
       throw Error(`Removed card not found in deck: ${cardData.name}`)
     }
 
-    const newCardNames = [...editDeck.deck.cardNames]
+    const newCardNames = [...editDeck.cardNames]
     newCardNames.splice(removedCardIndex, 1)
     setEditDeck({
-      id: editDeck.id,
-      deck: {
-        ...editDeck.deck,
-        cardNames: newCardNames,
-      },
+      ...editDeck,
+      cardNames: newCardNames,
     })
   }, [editDeck, cardData.name, setEditDeck])
 

@@ -1,3 +1,4 @@
+import { getDuelGoldReward } from "@/src/game/duel/control/onDuelWinner"
 import { useGameStore } from "../../hooks/useGameStore"
 import { GoldTotal } from "../GoldTotal"
 import { Button } from "../designSystem/Button"
@@ -7,7 +8,6 @@ export type DuelCompleteContentProps = {}
 
 export const DuelCompleteContent = ({}) => {
   const { game, setGame } = useGameStore()
-  const duelCompleteData = game.screen.id === "duel" ? game.screen.duel.duelCompleteData : null
 
   const onConfirm = () => {
     setGame({
@@ -16,25 +16,35 @@ export const DuelCompleteContent = ({}) => {
     })
   }
 
-  if (duelCompleteData === null) {
+  const duel = game.screen.id === "duel" ? game.screen.duel : null
+  const duelComplete = duel?.winner !== null
+  if (!duel || !duelComplete) {
     return null
   }
 
+  const goldReward = getDuelGoldReward(duel)
+
   return (
-    <div className={styles.duelCompleteContent}>
-      <h1 className={styles.duelCompleteTitle}>{duelCompleteData.winner === "human" ? "You win" : "You lose"}</h1>
-      <h2 className={styles.duelCompleteDescription}>
-        {duelCompleteData.winner === "human" ? "Nice." : `"Womp womp"`}
-      </h2>
-      <div className={styles.goldSection}>
-        <GoldTotal value={game.gold} />
-        {duelCompleteData.goldReward > 0 && (
-          <p className={styles.goldRewardAmount}>+{duelCompleteData.goldReward} gold</p>
-        )}
+    duel && (
+      <div className={styles.duelCompleteContent}>
+        <h1 className={styles.duelCompleteTitle}>
+          {duel.winner === "human" && "You win"}
+          {duel.winner === "opponent" && "You lose"}
+          {duel.winner === "draw" && "It was a draw?"}
+        </h1>
+        <h2 className={styles.duelCompleteDescription}>
+          {duel.winner === "human" && "Nice."}
+          {duel.winner === "opponent" && `"Womp womp"`}
+          {duel.winner === "draw" && "That's rare."}
+        </h2>
+        <div className={styles.goldSection}>
+          <GoldTotal value={game.gold} />
+          {goldReward > 0 && <p className={styles.goldRewardAmount}>+{goldReward} gold</p>}
+        </div>
+        <Button data-variant="primary" data-size="large" onClick={onConfirm}>
+          OK
+        </Button>
       </div>
-      <Button data-variant="primary" data-size="large" onClick={onConfirm}>
-        OK
-      </Button>
-    </div>
+    )
   )
 }

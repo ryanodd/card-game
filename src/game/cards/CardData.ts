@@ -26,7 +26,4 @@ export type CardData =
       | {
           cardType: "spell"
         }
-      | {
-          cardType: "energy"
-        }
     )

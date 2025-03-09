@@ -14,10 +14,6 @@
   }
 }
 
-.energy[data-available="false"] {
-  filter: brightness(0%);
-}
-
 .neutral_element {
   @apply bg-slate-300;
 }

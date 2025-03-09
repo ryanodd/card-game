@@ -13,7 +13,7 @@ export const DeckListColumn = () => {
   const { editDeck, setEditDeck } = useEditDeckState()
 
   const cardTotalsMap: Record<string, number> = {}
-  editDeck.deck.cardNames.forEach((cardName) => {
+  editDeck.cardNames.forEach((cardName) => {
     cardTotalsMap[cardName] = cardTotalsMap[cardName] ? cardTotalsMap[cardName] + 1 : 1
   })
 
@@ -35,10 +35,8 @@ export const DeckListColumn = () => {
       }
       const newEditDeckState = {
         ...editDeck,
-        deck: {
-          ...editDeck.deck,
-          cardNames: sortDeckListNames([draggedCardName, ...editDeck.deck.cardNames]),
-        },
+
+        cardNames: sortDeckListNames([draggedCardName, ...editDeck.cardNames]),
       }
       setEditDeck(newEditDeckState)
     },
@@ -54,7 +52,7 @@ export const DeckListColumn = () => {
          * for image cropping reasons, the image determines the width of this deck list.
          * When we're empty, maintain width with this empty div.
          */}
-        {editDeck.deck.cardNames.length === 0 && <div style={{ width: `${DECK_LIST_CARD_WIDTH_REMS}rem` }} />}
+        {editDeck.cardNames.length === 0 && <div style={{ width: `${DECK_LIST_CARD_WIDTH_REMS}rem` }} />}
       </div>
 
       <DeckListFooter />

@@ -2,7 +2,9 @@ export const getRandomSeed = () => {
   return (Math.random() * 2 ** 32) >>> 0
 }
 
-// Splitmix32 algorithm
+/**
+ * Splitmix32 algorithm
+ */
 export const random = (seed: number) => {
   seed |= 0
   seed = (seed + 0x9e3779b9) | 0
@@ -13,7 +15,9 @@ export const random = (seed: number) => {
   return ((t = t ^ (t >>> 15)) >>> 0) / 4294967296
 }
 
-// For generating seed from string
+/**
+ * For generating seed from string
+ */
 export const cyrb128 = (str: string) => {
   let h1 = 1779033703,
     h2 = 3144134277,
@@ -38,13 +42,18 @@ export const getSeedFromString = (str: string) => {
   return cyrb128(str)[0]
 }
 
-// Generates a random int from 0 to max-1
+/**
+ * Generates a random int from 0 to max-1
+ */
 export const getRandomInt = (max: number, seed: number): number => {
   return Math.floor(random(seed) * max)
 }
 
-/* Randomize array in-place using Durstenfeld shuffle algorithm */
-// needs N seeds? get a better algorithm?
+/**
+ * Randomize array in-place using Durstenfeld shuffle algorithm
+ * needs N seeds? get a better algorithm?
+ */
+
 export const shuffleArray = (array: any[]) => {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(random(getRandomSeed()) * (i + 1))
@@ -61,6 +70,9 @@ export function getRandomItemFromArray<T>(list: T[], seed: number): T | undefine
   return list[getRandomInt(list.length, seed)]
 }
 
+/**
+ * Changes each day. Always UTC time zone.
+ */
 export const getDateString = () => {
-  return new Date().toISOString().slice(0, 10) // Changes each day. Always UTC time zone.
+  return new Date().toISOString().slice(0, 10)
 }

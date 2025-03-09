@@ -8,11 +8,9 @@ import { createNewEditDeckState } from "../../hooks/useEditDeckState"
 export const DeckGrid = () => {
   const { game, setGame } = useGameStore()
   const onCreateNewDeck = () => {
-    const newDeck = { id: v4(), name: "My Deck", cardNames: [] }
-
     setGame({
       ...game,
-      screen: createNewEditDeckState(newDeck),
+      screen: createNewEditDeckState(null),
     })
   }
   return (

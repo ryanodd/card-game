@@ -18,9 +18,7 @@ export const EditDeckCancelDialog = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button data-variant="tertiary" className={`${styles.dialogCloseButton}`}>
-          <Close />
-        </Button>
+        <Button>Cancel</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={`${styles.dialogOverlay}`} />
@@ -30,7 +28,9 @@ export const EditDeckCancelDialog = () => {
             Are you sure you want to cancel without saving?
           </Dialog.Description>
           <Dialog.Close asChild>
-            <button className={`${styles.dialogCloseButton}`}>Close</button>
+            <Button className={`${styles.dialogCloseButton}`} data-variant="tertiary" data-icon-only>
+              <Close />
+            </Button>
           </Dialog.Close>
           <div className="flex p-2 gap-2 justify-end">
             <Dialog.Close asChild>

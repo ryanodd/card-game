@@ -3,7 +3,7 @@ import { EnergyIcon } from "../EnergyIcon"
 import { ClickableEnergy } from "../ClickableEnergy"
 import { EnergySelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { HeroPreview } from "../HeroPreview"
-import { heroDataMap } from "@/src/game/Hero"
+import { heroDataMap } from "@/src/game/heroes/AllHeroes"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
 import { DuelState } from "@/src/game/duel/DuelData"
@@ -50,7 +50,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
         )
       }
     } else {
-      for (let x = 0; x < player.energyIncome.fire; x++) {
+      for (let x = 0; x < player.energy.fire; x++) {
         list.push(<EnergyIcon energyType="fire" size="large" available={x < player.energy.fire} key={x} />)
       }
     }
@@ -72,7 +72,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
         )
       }
     } else {
-      for (let x = 0; x < player.energyIncome.water; x++) {
+      for (let x = 0; x < player.energy.water; x++) {
         list.push(<EnergyIcon energyType="water" size="large" available={x < player.energy.water} key={x} />)
       }
     }
@@ -93,7 +93,7 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
         )
       }
     } else {
-      for (let x = 0; x < player.energyIncome.earth; x++) {
+      for (let x = 0; x < player.energy.earth; x++) {
         list.push(<EnergyIcon energyType="earth" size="large" available={x < player.energy.earth} key={x} />)
       }
     }
@@ -109,45 +109,39 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
         )
       }
     } else {
-      for (let x = 0; x < player.energyIncome.air; x++) {
+      for (let x = 0; x < player.energy.air; x++) {
         list.push(<EnergyIcon energyType="air" size="large" available={x < player.energy.air} key={x} />)
       }
     }
     return list
   }
 
-  const [animationEnergyAddedType, setAnimationEnergyAddedType] = useState<EnergyType | null>(null)
+  const [animationEnergyAddedToggle, setAnimationEnergyAddedToggle] = useState<boolean>(false)
 
-  const oldEnergyIncome = useRef<EnergyCounts>({ ...player.energyIncome })
+  const oldEnergyTotals = useRef<EnergyCounts>({ ...player.energy })
   useEffect(() => {
-    if (!oldEnergyIncome.current) {
+    if (!oldEnergyTotals.current) {
       return
     }
-    if (player.energyIncome.fire > oldEnergyIncome.current.fire) {
-      setAnimationEnergyAddedType("fire")
+    if (player.energy.fire > oldEnergyTotals.current.fire) {
+      setAnimationEnergyAddedToggle((toggle) => !toggle)
     }
-    if (player.energyIncome.water > oldEnergyIncome.current.water) {
-      setAnimationEnergyAddedType("water")
+    if (player.energy.water > oldEnergyTotals.current.water) {
+      setAnimationEnergyAddedToggle((toggle) => !toggle)
     }
-    if (player.energyIncome.earth > oldEnergyIncome.current.earth) {
-      setAnimationEnergyAddedType("earth")
+    if (player.energy.earth > oldEnergyTotals.current.earth) {
+      setAnimationEnergyAddedToggle((toggle) => !toggle)
     }
-    if (player.energyIncome.air > oldEnergyIncome.current.air) {
-      setAnimationEnergyAddedType("air")
+    if (player.energy.air > oldEnergyTotals.current.air) {
+      setAnimationEnergyAddedToggle((toggle) => !toggle)
     }
-    oldEnergyIncome.current = { ...player.energyIncome }
-  }, [
-    player.energyIncome,
-    player.energyIncome.fire,
-    player.energyIncome.water,
-    player.energyIncome.earth,
-    player.energyIncome.air,
-  ])
+    oldEnergyTotals.current = { ...player.energy }
+  }, [player.energy, player.energy.fire, player.energy.water, player.energy.earth, player.energy.air])
 
   return (
     <div className={`flex flex-col relative ${shaking ? styles.shaking : ""}`} onAnimationEnd={onAnimationEnd}>
       <div className="relative">
-        <HeroPreview playerId={playerId} heroData={heroDataMap[player.heroId]} />
+        <HeroPreview playerId={playerId} heroData={heroDataMap[player.hero.name]} />
         <div className={`${styles.player_health_positioning} rounded-full bg-red-600 border border-neutral-900 px-2`}>
           <h2 className="font-medium text-2xl text-white">{Math.max(0, player.health)}</h2>
           {animatedHealthValue && (
@@ -158,28 +152,10 @@ export const PlayerFaceArea = ({ duel, playerId }: PlayerFaceAreaProps) => {
         </div>
       </div>
       <div className={`flex gap-1 px-1 justify-center items-start`}>
-        <div
-          className={`${styles.energyRowAnimationArea} w-10 bg-red-600 rounded-b-xl shadow-md border border-neutral-900 flex flex-col items-center gap-1 p-2`}
-          data-animation-energy-added={animationEnergyAddedType === "fire"}
-        >
+        <div className={`${styles.energyRow}`} data-animation-energy-added-toggle={animationEnergyAddedToggle}>
           {getFire(playerId)}
-        </div>
-        <div
-          className={`${styles.energyRowAnimationArea} w-10 bg-violet-600 rounded-b-xl shadow-md border border-neutral-900 flex flex-col items-center gap-1 p-2`}
-          data-animation-energy-added={animationEnergyAddedType === "air"}
-        >
           {getAir(playerId)}
-        </div>
-        <div
-          className={`${styles.energyRowAnimationArea} w-10 bg-lime-600 rounded-b-xl shadow-md border border-neutral-900 flex flex-col items-center gap-1 p-2`}
-          data-animation-energy-added={animationEnergyAddedType === "earth"}
-        >
           {getEarth(playerId)}
-        </div>
-        <div
-          className={`${styles.energyRowAnimationArea} w-10 bg-sky-600 rounded-b-xl border shadow-md border-neutral-900 flex flex-col items-center gap-1 p-2`}
-          data-animation-energy-added={animationEnergyAddedType === "water"}
-        >
           {getWater(playerId)}
         </div>
       </div>

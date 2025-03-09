@@ -29,11 +29,8 @@ export const ClickableEnergy = ({ index, id, energyType }: ClickableEnergyProps)
   return (
     <button
       onClick={() => {
-        if (energy.available) {
-          onEnergyClick(index, energyType, energySelected, setEnergySelected)
-        }
+        onEnergyClick(index, energyType, energySelected, setEnergySelected)
       }}
-      data-available={energy.available}
       data-selected={energy.selected}
       className={styles.energy}
     >

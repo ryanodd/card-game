@@ -14,9 +14,7 @@ export const InventoryCardCell = ({ cardData, draggable = false }: InventoryCard
 
   const collectionQuantity = game.collection[cardData.name]
   const deckQuantity =
-    game.screen.id === "editDeck"
-      ? game.screen.deck.cardNames.filter((cardName) => cardName === cardData.name).length
-      : 0
+    game.screen.id === "editDeck" ? game.screen.cardNames.filter((cardName) => cardName === cardData.name).length : 0
 
   return (
     <div className="flex flex-col">

@@ -2,11 +2,6 @@
   @apply absolute -top-2 left-1/2 -translate-x-1/2;
 }
 
-.player_element_number {
-  @apply font-normal text-2xl;
-  text-outline: rgba(0, 0, 0, 0.4) 2px 2px 2px;
-}
-
 .animated_health_value {
   @apply absolute right-0 -bottom-3 text-red-500 font-bold;
   animation: health_update 1000ms forwards;
@@ -35,9 +30,15 @@
   }
 }
 
-.energyRowAnimationArea[data-animation-energy-added="true"] {
+.energyRow {
+  @apply w-full flex flex-row flex-wrap items-center gap-1 p-2;
+}
+
+.energyRow[data-animation-energy-added-toggle="true"],
+.energyRow[data-animation-energy-added-toggle="false"] {
   animation: energy_added_animation 800ms ease-in-out;
 }
+
 @keyframes energy_added_animation {
   0% {
     transform: scale(1);

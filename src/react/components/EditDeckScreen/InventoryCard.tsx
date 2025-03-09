@@ -13,9 +13,7 @@ export const InventoryCard = ({ cardData }: CardProps) => {
   const { game } = useGameStore()
 
   const deckQuantity =
-    game.screen.id === "editDeck"
-      ? game.screen.deck.cardNames.filter((cardName) => cardName === cardData.name).length
-      : 0
+    game.screen.id === "editDeck" ? game.screen.cardNames.filter((cardName) => cardName === cardData.name).length : 0
 
   const quantityOwned = game.collection[cardData.name]
 

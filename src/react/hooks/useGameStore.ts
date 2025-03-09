@@ -12,10 +12,6 @@ export const ALL_CARDS_COLLECTION: Record<CardName, number> = {
     prev[cardData.name] = DECK_MIN_SIZE
     return prev
   }, {} as Record<CardName, number>),
-  "Fire Energy": DECK_MIN_SIZE,
-  "Water Energy": DECK_MIN_SIZE,
-  "Earth Energy": DECK_MIN_SIZE,
-  "Air Energy": DECK_MIN_SIZE,
 }
 
 export const RYANS_FAVORITE_TEST_COLLECTION: Record<CardName, number> = {
@@ -25,10 +21,6 @@ export const RYANS_FAVORITE_TEST_COLLECTION: Record<CardName, number> = {
   }, {} as Record<CardName, number>),
   "Golden Friend": 1,
   "Elder Saurus": 1,
-  "Fire Energy": DECK_MIN_SIZE,
-  "Water Energy": DECK_MIN_SIZE,
-  "Earth Energy": DECK_MIN_SIZE,
-  "Air Energy": DECK_MIN_SIZE,
 }
 
 export const STARTING_COLLECTION: Record<CardName, number> = {
@@ -38,10 +30,6 @@ export const STARTING_COLLECTION: Record<CardName, number> = {
   }, {} as Record<CardName, number>),
   "Golden Friend": 2,
   "Elder Saurus": 2,
-  "Fire Energy": DECK_MIN_SIZE,
-  "Water Energy": DECK_MIN_SIZE,
-  "Earth Energy": DECK_MIN_SIZE,
-  "Air Energy": DECK_MIN_SIZE,
 }
 
 export const NO_PACKS: Record<PackRarity, number> = {

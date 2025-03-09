@@ -3,6 +3,7 @@ import { ReactNode, useCallback, useState } from "react"
 import { useGameStore } from "../../hooks/useGameStore"
 import { Button } from "../designSystem/Button"
 import styles from "../designSystem/Dialog.module.css"
+import { Close } from "../designSystem/Icon"
 
 export type ShopBuyConfirmDialogProps = {
   cardName: string
@@ -23,7 +24,9 @@ export const ShopBuyConfirmDialog = ({ cardName, cost, onConfirm, trigger }: Sho
             Buy {cardName} for {cost} gold?
           </Dialog.Description>
           <Dialog.Close asChild>
-            <button className={`${styles.dialogCloseButton}`}>Close</button>
+            <Button className={`${styles.dialogCloseButton}`} data-variant="tertiary" data-icon-only>
+              <Close />
+            </Button>
           </Dialog.Close>
           <div className="flex p-2 gap-2 justify-end">
             <Dialog.Close asChild>

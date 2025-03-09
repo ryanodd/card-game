@@ -1,7 +1,11 @@
 .mobileUnsupportedOverlay {
   @apply absolute inset-0;
   @apply bg-stone-500;
-  @apply flex flex-col items-center justify-center gap-4 text-stone-100;
+  @apply flex flex-col items-center justify-center p-8 gap-4 text-stone-100;
+}
+
+.mobileUnsupportedText {
+  @apply text-center;
 }
 
 @media (min-width: 1000px) {

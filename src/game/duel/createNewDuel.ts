@@ -5,6 +5,8 @@ import { GameState, getActiveDeck } from "../GameData"
 import { Deck } from "../Deck"
 import { CardName } from "../cards/CardName"
 import { CardData } from "../cards/CardData"
+import { getRandomInt, getRandomSeed } from "@/src/utils/randomNumber"
+import { heroDataMap } from "../heroes/AllHeroes"
 
 export const STARTING_HEALTH = 20
 
@@ -23,14 +25,6 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
         modifiers: [],
       }
     case "spell":
-      return {
-        instanceId: v4(),
-        name: cardData.name,
-        cost: cardData.cost,
-        cardType: cardData.cardType,
-        modifiers: [],
-      }
-    case "energy":
       return {
         instanceId: v4(),
         name: cardData.name,
@@ -57,8 +51,12 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
   }
   const duel: DuelState = {
     id: "duel",
+    info: {
+      goldReward: 8 + getRandomInt(4, getRandomSeed()),
+      tutorial: true,
+    },
     human: {
-      heroId: "hero1",
+      hero: heroDataMap[deck.heroName],
       health: STARTING_HEALTH,
       deck: createCardsFromNames(deck.cardNames),
       hand: [],
@@ -73,18 +71,10 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
         earth: 0,
         air: 0,
       },
-      energyIncome: {
-        neutral: 0,
-        fire: 0,
-        water: 0,
-        earth: 0,
-        air: 0,
-      },
       drawnDead: false,
-      playedEnergyThisTurn: false,
     },
     opponent: {
-      heroId: "hero2",
+      hero: heroDataMap[opponentDeck.heroName],
       health: STARTING_HEALTH,
       deck: createCardsFromNames(opponentDeck.cardNames),
       hand: [],
@@ -99,15 +89,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
         earth: 0,
         air: 0,
       },
-      energyIncome: {
-        neutral: 0,
-        fire: 0,
-        water: 0,
-        earth: 0,
-        air: 0,
-      },
       drawnDead: false,
-      playedEnergyThisTurn: false,
     },
 
     currentAnimation: null,
@@ -116,7 +98,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
     currentPlayerId: "human",
     turnNumber: 1,
 
-    duelCompleteData: null,
+    winner: null,
   }
   return duel
 }

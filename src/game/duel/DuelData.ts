@@ -1,11 +1,12 @@
 import { CardName } from "../cards/CardName"
+import { HeroData } from "../heroes/HeroData"
 import { DuelAnimation } from "./AnimationData"
 import { EnergyCounts } from "./EnergyData"
 import { PlayerID } from "./PlayerData"
 
 import { ChoiceData } from "./choices/ChoiceData"
 
-export const GAME_START_NUM_TO_DRAW = 6
+export const GAME_START_NUM_TO_DRAW = 4
 
 export type AttackChangeModifier = {
   id: "attackChange"
@@ -50,13 +51,10 @@ export type CardState = {
   | {
       cardType: "spell"
     }
-  | {
-      cardType: "energy"
-    }
 )
 
 export type PlayerState = {
-  heroId: string
+  hero: HeroData
   health: number
   hand: CardState[]
   deck: CardState[]
@@ -65,18 +63,17 @@ export type PlayerState = {
   inPlay: CardState | null
   cardSelect: CardState[]
   energy: EnergyCounts
-  energyIncome: EnergyCounts
-  playedEnergyThisTurn: boolean
   drawnDead: boolean
 }
 
-export type DuelCompleteData = {
-  winner: PlayerID | "draw"
+export type DuelInfo = {
   goldReward: number
+  tutorial: true
 }
 
 export type DuelState = {
   id: "duel"
+  info: DuelInfo
 
   choice: ChoiceData
   currentAnimation: DuelAnimation | null
@@ -88,5 +85,5 @@ export type DuelState = {
   currentPlayerId: PlayerID
   turnNumber: number
 
-  duelCompleteData: DuelCompleteData | null
+  winner: null | PlayerID | "draw"
 }

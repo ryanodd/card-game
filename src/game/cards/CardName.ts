@@ -1,8 +1,4 @@
 export type CardName =
-  | "Fire Energy"
-  | "Water Energy"
-  | "Earth Energy"
-  | "Air Energy"
   | "Golden Friend"
   | "Bed of Snakes"
   | "Ember Foxling"

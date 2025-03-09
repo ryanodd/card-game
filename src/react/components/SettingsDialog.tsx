@@ -6,6 +6,7 @@ import { Button } from "./designSystem/Button"
 import { GameState } from "@/src/game/GameData"
 import { deckMap } from "@/src/game/Decks"
 import { Checkbox } from "./designSystem/Checkbox"
+import { Close } from "./designSystem/Icon"
 
 export type SettingsDialogProps = {
   trigger: ReactNode
@@ -49,7 +50,9 @@ export const SettingsDialog = ({ trigger }: SettingsDialogProps) => {
           <Dialog.Title className={`${styles.dialogTitle}`}>Settings</Dialog.Title>
           {/* <Dialog.Description className={`${styles.dialogDescription}`}>Lorem Ipsum</Dialog.Description> */}
           <Dialog.Close asChild>
-            <button className={`${styles.dialogCloseButton}`}>Close</button>
+            <Button className={`${styles.dialogCloseButton}`} data-variant="tertiary" data-icon-only>
+              <Close />
+            </Button>
           </Dialog.Close>
           <form onSubmit={onSubmit}>
             <div className="flex flex-col p-4 gap-4">

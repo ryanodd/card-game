@@ -2,11 +2,15 @@ import { Deck } from "@/src/game/Deck"
 import { useGameStore } from "./useGameStore"
 import { Dispatch, SetStateAction } from "react"
 import { EditDeckState } from "@/src/game/GameData"
+import { v4 } from "uuid"
 
-export const createNewEditDeckState = (deck: Deck): EditDeckState => {
+export const createNewEditDeckState = (deck: Deck | null): EditDeckState => {
   return {
     id: "editDeck",
-    deck, // TODO might need a deep copy here
+    deckId: deck?.id ?? null,
+    deckName: deck?.name ?? "My deck",
+    heroName: deck?.heroName ?? null,
+    cardNames: deck?.cardNames ?? [],
   }
 }
 

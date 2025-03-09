@@ -7,7 +7,6 @@ import { DuelState } from "@/src/game/duel/DuelData"
 import { duelWinner } from "@/src/game/duel/DuelHelpers"
 import { confirmStart_execute } from "@/src/game/duel/choices/confirmStart"
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
-import { duelEnd } from "@/src/game/duel/actions/duelEnd"
 import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 
 export type DuelPromptProps = {
@@ -27,26 +26,18 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
     return "Ready to start?"
   }
 
-  if (duel.choice.id === "TAKE_TURN" && !duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
-    return "Click & drag cards to play them! Start by playing energy cards."
-  }
-
-  if (duel.choice.id === "TAKE_TURN" && duel.human.playedEnergyThisTurn && duel.turnNumber === 1) {
-    return "Nice. Now you'll have that energy to spend on cards every turn. (You may only play 1 energy card per turn)"
-  }
-
   if (duel.choice.id === "TAKE_TURN") {
     const handTargets = takeTurn_getPlayableHandCardIds(duel)
 
     // Can play cards
     if (handTargets.length > 0) {
-      return "Play cards using your available energy."
+      return "Play cards, which use up your energy orbs."
     }
 
     // Can't play cards
     if (handTargets.length === 0) {
       if (duel.turnNumber === 1) {
-        return "Can't afford to play any more cards. End your turn."
+        return "Can't afford to play any more cards. All you can do is end your turn."
       }
       return null
     }

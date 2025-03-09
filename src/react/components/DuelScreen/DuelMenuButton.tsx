@@ -14,10 +14,7 @@ export const DuelMenuButton = () => {
   const onConcede = useCallback(() => {
     setDuel({
       ...duel,
-      duelCompleteData: {
-        winner: "opponent",
-        goldReward: 0,
-      },
+      winner: "opponent",
     })
   }, [duel, setDuel])
 

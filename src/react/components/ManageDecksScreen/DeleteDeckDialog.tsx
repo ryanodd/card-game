@@ -3,6 +3,7 @@ import { ReactNode, useCallback } from "react"
 import { useGameStore } from "../../hooks/useGameStore"
 import { Button } from "../designSystem/Button"
 import styles from "../designSystem/Dialog.module.css"
+import { Close } from "../designSystem/Icon"
 
 export type DeleteDeckDialogProps = { trigger: ReactNode; deckId: string }
 
@@ -28,7 +29,9 @@ export const DeleteDeckDialog = ({ trigger, deckId }: DeleteDeckDialogProps) => 
             {`Are you sure you want to delete this deck?`}
           </Dialog.Description>
           <Dialog.Close asChild>
-            <button className={`${styles.dialogCloseButton}`}>Close</button>
+            <Button className={`${styles.dialogCloseButton}`} data-variant="tertiary" data-icon-only>
+              <Close />
+            </Button>
           </Dialog.Close>
           <div className="flex p-2 gap-2 justify-end">
             <Dialog.Close asChild>

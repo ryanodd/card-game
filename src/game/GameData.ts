@@ -2,6 +2,7 @@ import { CampaignLocationId } from "./Campaign"
 import { Deck } from "./Deck"
 import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
+import { HeroName } from "./duel/heroBehaviour/HeroName"
 import { PackRarity } from "./shop/PackData"
 
 export type MainMenuState = {
@@ -16,7 +17,10 @@ export type DuelScreenState = {
 
 export type EditDeckState = {
   id: "editDeck"
-  deck: Deck
+  deckId: string | null
+  deckName: string
+  heroName: HeroName | null
+  cardNames: CardName[]
 }
 
 export type ScreenState =

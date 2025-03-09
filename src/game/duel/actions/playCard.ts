@@ -54,7 +54,7 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
     }
   }
 
-  if (playedCard.cardType === "energy" || playedCard.cardType === "spell") {
+  if (playedCard.cardType === "spell") {
     player.inPlay = playedCard
   }
 
@@ -63,16 +63,12 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
   }
 
   // Put card in discard
-  if (playedCard.cardType === "energy" || playedCard.cardType === "spell") {
+  if (playedCard.cardType === "spell") {
     player.inPlay = null
     player.discard.push(playedCard)
   }
 
   duel = await checkForDeaths(duel)
-
-  if (playedCard.cardType === "energy" && target.targetType === "playArea") {
-    player.playedEnergyThisTurn = true
-  }
 
   return duel
 }

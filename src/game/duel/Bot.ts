@@ -43,14 +43,8 @@ export async function opponentTakeTurn(inputDuel: DuelState) {
     return duel
   }
 
-  // Select which card to play - energy cards get priority
-  let playableEnergyCardIds = playableCardIds.filter((cardId) => {
-    return getCardByInstanceId(duel, cardId).cardType === "energy"
-  })
-  const cardIdToPlay =
-    playableEnergyCardIds.length > 0
-      ? getRandomItemFromArray(playableEnergyCardIds, getRandomSeed())
-      : getRandomItemFromArray(playableCardIds, getRandomSeed())
+  // Select which card to play
+  const cardIdToPlay = getRandomItemFromArray(playableCardIds, getRandomSeed())
 
   if (cardIdToPlay === undefined) {
     throw Error("No cards to play, somehow.")
@@ -78,47 +72,14 @@ export async function opponentMulligan(inputDuel: DuelState) {
 
   const cards = getCurrentDuelPlayer(duel).cardSelect
   const picks = []
-  const numLands = cards.filter((card) => {
-    return card.cardType === "energy"
-  }).length
 
-  let numLandsToThrowAway = Math.max(0, numLands - Math.floor(cards.length / 2))
-  let numNonlandsToThrowAway = Math.max(0, cards.length - numLands - Math.floor(cards.length / 2))
-
-  const energyCounts: EnergyCounts = { neutral: 0, fire: 0, water: 0, earth: 0, air: 0 }
-  for (let x = 0; x < cards.length; x++) {
-    const card = cards[x]
-    const cardData = cardDataMap[card.name]
-    if (cardData.cardType !== "energy") {
-      continue
-    }
-    if (cardData.energyType === "neutral") {
-      energyCounts.neutral += 1
-    }
-    if (cardData.energyType === "fire") {
-      energyCounts.fire += 1
-    }
-    if (cardData.energyType === "water") {
-      energyCounts.water += 1
-    }
-    if (cardData.energyType === "earth") {
-      energyCounts.earth += 1
-    }
-    if (cardData.energyType === "air") {
-      energyCounts.air += 1
-    }
-  }
+  let numCardsToThrowAway = getRandomInt(cards.length, getRandomSeed())
 
   for (let x = 0; x < cards.length; x++) {
     const card = cards[x]
-    const cardData = cardDataMap[card.name]
-    if (cardData.cardType === "energy" && numLandsToThrowAway > 0) {
+    if (numCardsToThrowAway > 0) {
       picks.push(card.instanceId)
-      numLandsToThrowAway -= 1
-    }
-    if (cardData.cardType !== "energy" && numNonlandsToThrowAway > 0) {
-      picks.push(card.instanceId)
-      numNonlandsToThrowAway -= 1
+      numCardsToThrowAway -= 1
     }
   }
 
