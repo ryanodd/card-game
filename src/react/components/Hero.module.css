@@ -13,3 +13,119 @@
 .lit_dot {
   @apply bg-yellow-200 border border-neutral-900;
 }
+
+.heroName {
+  @apply ml-auto line-clamp-1 text-neutral-900;
+}
+
+.attackIndicator {
+  @apply border-t border-r border-neutral-900 bg-orange-400;
+  @apply flex justify-center items-center;
+}
+
+.healthIndicator {
+  @apply border-t border-l border-neutral-900 bg-rose-500;
+  @apply flex justify-center items-center;
+}
+
+.hero {
+  @apply shrink-0;
+  @apply flex flex-col items-stretch;
+}
+
+.hero[data-background="fire"] {
+  @apply bg-red-500;
+}
+
+.hero[data-background="water"] {
+  @apply bg-sky-500;
+}
+
+.hero[data-background="earth"] {
+  @apply bg-lime-500;
+}
+
+.hero[data-background="air"] {
+  @apply bg-purple-400;
+}
+
+.hero[data-background="multi"] {
+  @apply bg-yellow-500;
+}
+
+.hero[data-background="neutral"] {
+  @apply bg-slate-400;
+}
+
+.hero_selectable {
+  cursor: pointer;
+  &:hover {
+    filter: brightness(120%);
+  }
+}
+
+.hero_highlighted {
+  animation: highlight-animation 1s infinite;
+}
+
+@keyframes highlight-animation {
+  50% {
+    filter: brightness(140%);
+  }
+}
+
+.image_border {
+  @apply w-full rounded-sm overflow-hidden;
+}
+
+.full_hero_size {
+  @apply w-72 h-96;
+}
+
+.full_hero_border {
+  @apply rounded-2xl overflow-hidden border-slate-800 shadow-lg;
+  border-width: 6px;
+}
+
+.textContainer {
+  @apply grow bg-slate-200 bg-opacity-50 rounded-md shadow-md px-4 py-2 flex justify-center items-center;
+}
+
+.heroText {
+  @apply -mt-2 text-gray-950 text-left text-xs leading-3;
+}
+
+.heroCaptionRow {
+  @apply -mt-2 -mb-2 h-5 flex justify-between relative grow-0;
+}
+
+.heroCaptionLeftSection {
+  @apply: text-sm;
+}
+
+.rarityIndicator {
+  @apply z-10 absolute left-1/2 -translate-x-1/2 -top-2 border-2 border-slate-800 w-5 h-6 shadow-md rounded-full;
+}
+
+.rarityIndicator[data-rarity="common"] {
+  @apply bg-slate-400;
+}
+.rarityIndicator[data-rarity="uncommon"] {
+  @apply bg-green-500;
+}
+.rarityIndicator[data-rarity="rare"] {
+  @apply bg-blue-600;
+}
+.rarityIndicator[data-rarity="epic"] {
+  @apply bg-purple-500;
+}
+.rarityIndicator[data-rarity="legendary"] {
+  @apply bg-amber-500;
+}
+.rarityIndicator[data-rarity="mythic"] {
+  @apply bg-red-600;
+}
+
+.heroFooter {
+  @apply mt-auto justify-between items-end flex;
+}

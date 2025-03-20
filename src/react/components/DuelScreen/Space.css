@@ -7,7 +7,8 @@
 }
 
 .space[data-highlighted="true"] {
-  animation: highlight-animation 1s infinite;
+  filter: brightness(140%);
+  /* animation: highlight-animation 1s infinite; */
 }
 
 @keyframes highlight-animation {

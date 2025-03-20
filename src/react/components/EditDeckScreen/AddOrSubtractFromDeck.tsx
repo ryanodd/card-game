@@ -18,7 +18,7 @@ export const AddOrSubtractFromDeck = ({ cardData }: AddOrSubtractFromDeckProps) 
     return cardName === cardData.name ? [...matches, cardName] : matches
   }, [] as string[]).length
 
-  const quantityOwned = game.collection[cardData.name]
+  const quantityOwned = game.cardCollection[cardData.name]
   const godMode = game.settings.godMode
 
   const onAddCard = useCallback(() => {

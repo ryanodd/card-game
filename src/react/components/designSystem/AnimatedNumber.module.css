@@ -1,0 +1,16 @@
+.animatedNumber {
+  @apply absolute right-0 -bottom-3 text-red-500 font-bold;
+  animation: animated_number_update 1000ms forwards;
+}
+
+@keyframes animated_number_update {
+  0% {
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}

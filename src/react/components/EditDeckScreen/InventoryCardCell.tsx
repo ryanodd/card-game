@@ -12,17 +12,14 @@ export type InventoryCardProps = {
 export const InventoryCardCell = ({ cardData, draggable = false }: InventoryCardProps) => {
   const { game } = useGameStore()
 
-  const collectionQuantity = game.collection[cardData.name]
+  const collectionQuantity = game.cardCollection[cardData.name]
   const deckQuantity =
     game.screen.id === "editDeck" ? game.screen.cardNames.filter((cardName) => cardName === cardData.name).length : 0
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center">
       {draggable ? <InventoryCard cardData={cardData} /> : <CardDetailed cardData={cardData} />}
-
-      {cardData.rarity !== "base" && (
-        <InventoryQuantityIndicator quantity={collectionQuantity} quantityInDeck={deckQuantity} />
-      )}
+      <InventoryQuantityIndicator quantity={collectionQuantity} quantityInDeck={deckQuantity} />
     </div>
   )
 }

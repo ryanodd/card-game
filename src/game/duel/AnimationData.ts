@@ -1,15 +1,13 @@
 import { EnergyType } from "./EnergyData"
 import { PlayerID } from "./PlayerData"
 
-export enum AnimationID {
-  "ATTACK_START",
-  "ATTACK_END",
-  "PAUSE",
-}
-
 export type DuelAnimation = {
   durationMs: number
 } & (
+  | {
+      id: "DRAW"
+      cardId: string
+    }
   | {
       id: "PAUSE"
     }

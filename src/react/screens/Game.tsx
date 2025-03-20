@@ -11,7 +11,9 @@ import { MyDndTest } from "./MyDndTest"
 import { CampaignLocationSelectScreen } from "./CampaignLocationSelectScreen"
 import { ShopScreen } from "./ShopScreen"
 import { CollectionScreen } from "./CollectionScreen"
-import { PackScreen } from "./PackScreen"
+import { ManagePacksScreen } from "./ManagePacksScreen"
+import { LeagueScreen } from "./LeagueScreen"
+import { OpenPackScreen } from "./OpenPackScreen"
 
 export const Game = () => {
   const forceUpdate = useForceUpdate()
@@ -36,9 +38,11 @@ export const Game = () => {
     <Tooltip.Provider skipDelayDuration={0}>
       <DndContext sensors={sensors}>
         {game.screen.id === "mainMenu" && <MainMenuScreen />}
+        {game.screen.id === "league" && <LeagueScreen />}
         {game.screen.id === "campaignSelect" && <CampaignLocationSelectScreen />}
         {game.screen.id === "shop" && <ShopScreen />}
-        {game.screen.id === "packs" && <PackScreen />}
+        {game.screen.id === "managePacks" && <ManagePacksScreen />}
+        {game.screen.id === "openPack" && <OpenPackScreen />}
         {game.screen.id === "manageDecks" && <ManageDecksScreen />}
         {game.screen.id === "editDeck" && <EditDeckScreen />}
         {game.screen.id === "collection" && <CollectionScreen />}

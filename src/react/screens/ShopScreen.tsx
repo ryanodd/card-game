@@ -5,7 +5,8 @@ import { GameBackground } from "../components/GameBackground"
 import { useMemo } from "react"
 import { Footer } from "../components/Footer"
 import { ShopCell } from "../components/ShopScreen/ShopCell"
-import { decideShopCards } from "@/src/game/shop/decideShopCards"
+import { decideShopItems } from "@/src/game/shop/decideShopItems"
+import { ShopItem } from "@/src/game/shop/ShopItem"
 
 export const ShopScreen = () => {
   const { game, setGame } = useGameStore()
@@ -14,8 +15,8 @@ export const ShopScreen = () => {
     setGame({ ...game, screen: { id: "mainMenu" } })
   }
 
-  const cardsInShop = useMemo(() => {
-    return decideShopCards()
+  const shopItems = useMemo(() => {
+    return decideShopItems()
   }, [])
 
   return (
@@ -27,10 +28,12 @@ export const ShopScreen = () => {
             <h1 className="text-5xl text-stone-50">Shop</h1>
             <h2 className="text-xl text-stone-50">The shop&apos;s contents change daily.</h2>
           </div>
-          <div className="grow flex gap-4">
-            {cardsInShop.map((cardName) => {
-              return <ShopCell key={cardName} cardName={cardName} />
-            })}
+          <div className="grow flex items-center">
+            <div className="grow flex gap-4">
+              {shopItems.map((shopItem, i) => {
+                return <ShopCell key={i} shopItem={shopItem} />
+              })}
+            </div>
           </div>
         </div>
         <Footer

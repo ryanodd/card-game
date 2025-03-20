@@ -1,11 +1,14 @@
-import { DECK_MIN_SIZE } from "@/src/game/Deck"
-import { deckMap } from "@/src/game/Decks"
+import { DECK_MIN_SIZE } from "@/src/game/decks/Deck"
+import { deckMap } from "@/src/game/decks/Decks"
 import { GameState } from "@/src/game/GameData"
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
-import { PackRarity } from "@/src/game/shop/PackData"
+import { HeroName } from "@/src/game/duel/heroBehaviour/HeroName"
+import { heroDataMap } from "@/src/game/heroes/AllHeroes"
 import { loadGameFromLocalStorage, saveGameToLocalStorage } from "@/src/utils/localStorage"
 import { create } from "zustand"
+import { generateDeck } from "@/src/game/decks/generateDeck"
+import { createLeague } from "@/src/game/league/createLeague"
 
 export const ALL_CARDS_COLLECTION: Record<CardName, number> = {
   ...Object.values(cardDataMap).reduce((prev, cardData) => {
@@ -28,23 +31,26 @@ export const STARTING_COLLECTION: Record<CardName, number> = {
     prev[cardData.name] = 0
     return prev
   }, {} as Record<CardName, number>),
-  "Golden Friend": 2,
-  "Elder Saurus": 2,
+  "Golden Friend": 4,
+  "Zardian Raider": 4,
+  "Emerald Makasaur": 4,
+  "Elder Saurus": 4,
+  "Dragon Cub": 4,
 }
 
-export const NO_PACKS: Record<PackRarity, number> = {
-  common: 0,
-  uncommon: 0,
-  rare: 0,
-  epic: 0,
-  legendary: 0,
-  mythic: 0,
+export const ALL_HEROES_COLLECTION: Record<HeroName, boolean> = {
+  ...Object.values(heroDataMap).reduce((prev, heroData) => {
+    prev[heroData.name] = true
+    return prev
+  }, {} as Record<HeroName, boolean>),
 }
 
 export const newGameState: GameState = {
   screen: { id: "mainMenu" },
-  activeDeckId: "starterDeck",
-  collection: RYANS_FAVORITE_TEST_COLLECTION,
+  activeDeckId: deckMap["starterDeck"].id,
+  cardCollection: STARTING_COLLECTION,
+  heroCollection: ALL_HEROES_COLLECTION,
+  league: createLeague(),
   currentCampaign: undefined,
   campaignCompletion: {
     tutorial: { unlocked: true, completed: false },
@@ -52,9 +58,18 @@ export const newGameState: GameState = {
     location2: { unlocked: false, completed: false },
     location3: { unlocked: false, completed: false },
   },
-  decks: [deckMap["testDeck"], deckMap["starterDeck"], deckMap["firstOpponent"]],
+  decks: [
+    deckMap["starterDeck"],
+    generateDeck({ method: "hero", heroName: "Fire Hero" }),
+    generateDeck({ method: "hero", heroName: "Water Hero" }),
+    generateDeck({ method: "hero", heroName: "Earth Hero" }),
+    generateDeck({ method: "hero", heroName: "Air Hero" }),
+  ],
   gold: 500,
-  packs: NO_PACKS,
+  packs: {
+    "Standard Pack": 1,
+    "Elite Pack": 0,
+  },
   settings: {
     animationMultiplier: 1,
     godMode: false,

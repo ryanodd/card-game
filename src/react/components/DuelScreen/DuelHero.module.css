@@ -1,0 +1,23 @@
+.duelHero {
+  @apply w-40 h-40 relative rounded-xl shadow-lg border-4 border-zinc-800;
+}
+
+.duelHeroImageContainer {
+  @apply overflow-hidden rounded-lg;
+}
+
+.duelHeroHealthContainer {
+  @apply absolute -bottom-4 left-1/2 -translate-x-1/2;
+  @apply rounded-full bg-rose-600 border border-neutral-900 px-2;
+}
+
+.shaking {
+  animation: shaking_animation 50ms ease-in alternate infinite;
+}
+@keyframes shaking_animation {
+  0% {
+  }
+  100% {
+    transform: translate(3px, 3px);
+  }
+}

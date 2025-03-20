@@ -7,15 +7,17 @@
 }
 
 .inventoryGrid {
-  @apply h-full flex flex-wrap justify-center overflow-y-scroll gap-2.5;
+  @apply h-full grid justify-center gap-1;
+  grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+  /* @apply h-full flex flex-wrap justify-center overflow-y-scroll gap-2.5; */
 }
 
 .deckListColumn {
-  @apply shrink-0 bg-stone-800 flex flex-col;
+  @apply shrink-0 bg-stone-800 flex flex-col p-1 gap-1;
 }
 
 .deckList {
-  @apply grow flex flex-col gap-1 p-1 overflow-y-scroll justify-start;
+  @apply grow flex flex-col gap-1 overflow-y-scroll justify-start;
 }
 
 .deckListCardContent {
@@ -30,4 +32,17 @@
 
 .deckListCardText {
   @apply text-xl text-stone-50 flex-grow text-ellipsis line-clamp-2 justify-self-start text-left;
+}
+
+.heroCell {
+  @apply relative shrink-0 flex justify-end items-center p-2 rounded-md overflow-hidden;
+  @apply border-amber-400 border;
+}
+
+.heroCellContent {
+  @apply flex;
+}
+
+.heroCellText {
+  @apply text-white;
 }

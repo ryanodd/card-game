@@ -1,10 +1,10 @@
 .gameBackground {
   background: linear-gradient(-45deg, #6c584c, #5d3c2a, #354f52, #457b9d);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  /* background-size: 400% 400%; */
+  /* animation: gradient 15s ease infinite; */
 }
 
-@keyframes gradient {
+/* @keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
@@ -14,4 +14,4 @@
   100% {
     background-position: 0% 50%;
   }
-}
+} */

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Try this to identify performance issues with animations */
+
+/*
+* {
+  animation: none !important;
+}
+*/
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

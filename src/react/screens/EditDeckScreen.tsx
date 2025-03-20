@@ -13,7 +13,7 @@ import { EditDeckCancelDialog } from "../components/EditDeckScreen/EditDeckCance
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
 import { Footer } from "../components/Footer"
-import { Deck } from "@/src/game/Deck"
+import { Deck } from "@/src/game/decks/Deck"
 import { v4 } from "uuid"
 
 export type EditDeckScreenProps = {}
@@ -37,6 +37,7 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
     if (editDeck.heroName === null) {
       throw new Error("Tried to create a deck without selecting a hero!")
     }
+
     // New Deck
     if (editDeck.deckId === null) {
       game.decks = [
@@ -50,7 +51,8 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
       ]
       // Existing Deck
     } else {
-      const replaceIndex = game.decks.findIndex((deck) => deck.id === editDeck.id)
+      const replaceIndex = game.decks.findIndex((deck) => deck.id === editDeck.deckId)
+
       game.decks[replaceIndex] = {
         id: editDeck.deckId,
         name: editDeck.deckName,

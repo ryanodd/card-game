@@ -5,9 +5,10 @@ let cards: CardData[] = []
 
 cards.push({
   name: "Golden Friend",
-  imageSrc: "/card-art/goldenFriend.png",
+  imageSrcSmall: "/card-art/96x96/goldenFriend.png",
+  imageSrcLarge: "/card-art/512x512/goldenFriend.png",
   imageCenterYPercent: 55,
-  rarity: "common",
+  rarity: "base",
   complete: true,
   energyType: "neutral",
   cardType: "creature",
@@ -25,7 +26,8 @@ cards.push({
 // Support: the opposing active creature has a 20% chance of getting poisoned
 cards.push({
   name: "Bed of Snakes",
-  imageSrc: "/card-art/bedOfSnakes.png",
+  imageSrcSmall: "/card-art/96x96/bedOfSnakes.png",
+  imageSrcLarge: "/card-art/512x512/bedOfSnakes.png",
   imageCenterYPercent: 75,
   rarity: "uncommon",
   complete: false,
@@ -45,7 +47,8 @@ cards.push({
 
 cards.push({
   name: "Ember Foxling",
-  imageSrc: "/card-art/emberFoxling.png",
+  imageSrcSmall: "/card-art/96x96/emberFoxling.png",
+  imageSrcLarge: "/card-art/512x512/emberFoxling.png",
   imageCenterYPercent: 70,
   rarity: "rare",
   complete: true,
@@ -65,7 +68,8 @@ cards.push({
 
 cards.push({
   name: "Winged Bull",
-  imageSrc: "/card-art/wingedBull.png",
+  imageSrcSmall: "/card-art/96x96/wingedBull.png",
+  imageSrcLarge: "/card-art/512x512/wingedBull.png",
   imageCenterYPercent: 24,
   rarity: "common",
   complete: false,
@@ -85,7 +89,8 @@ cards.push({
 
 cards.push({
   name: "Greenwing Caller",
-  imageSrc: "/card-art/greenwingCaller.png",
+  imageSrcSmall: "/card-art/96x96/greenwingCaller.png",
+  imageSrcLarge: "/card-art/512x512/greenwingCaller.png",
   imageCenterYPercent: 40,
   rarity: "common",
   complete: false,
@@ -104,9 +109,10 @@ cards.push({
 
 cards.push({
   name: "Elder Saurus",
-  imageSrc: "/card-art/elderSaurus.png",
+  imageSrcSmall: "/card-art/96x96/elderSaurus.png",
+  imageSrcLarge: "/card-art/512x512/elderSaurus.png",
   imageCenterYPercent: 45,
-  rarity: "common",
+  rarity: "base",
   complete: true,
   energyType: "neutral",
   cardType: "creature",
@@ -123,7 +129,8 @@ cards.push({
 
 cards.push({
   name: "Vengeful Flamewing",
-  imageSrc: "/card-art/vengefulFlamewing.png",
+  imageSrcSmall: "/card-art/96x96/vengefulFlamewing.png",
+  imageSrcLarge: "/card-art/512x512/vengefulFlamewing.png",
   imageCenterYPercent: 45,
   rarity: "rare",
   complete: false,
@@ -143,7 +150,8 @@ cards.push({
 
 cards.push({
   name: "Sludge Amphibian",
-  imageSrc: "/card-art/sludgeAmphibian.png",
+  imageSrcSmall: "/card-art/96x96/sludgeAmphibian.png",
+  imageSrcLarge: "/card-art/512x512/sludgeAmphibian.png",
   imageCenterYPercent: 30,
   rarity: "common",
   complete: false,
@@ -162,7 +170,8 @@ cards.push({
 
 cards.push({
   name: "Merfin Yodeler",
-  imageSrc: "/card-art/merfinYodeler.png",
+  imageSrcSmall: "/card-art/96x96/merfinYodeler.png",
+  imageSrcLarge: "/card-art/512x512/merfinYodeler.png",
   imageCenterYPercent: 20,
   rarity: "uncommon",
   complete: false,
@@ -183,7 +192,8 @@ cards.push({
 
 cards.push({
   name: "Spirit Giant",
-  imageSrc: "/card-art/spiritGiant.png",
+  imageSrcSmall: "/card-art/96x96/spiritGiant.png",
+  imageSrcLarge: "/card-art/512x512/spiritGiant.png",
   imageCenterYPercent: 51,
   rarity: "legendary",
   complete: false,
@@ -204,7 +214,8 @@ cards.push({
 // When attacking this creature, your opponent has a 25% chance to miss.
 cards.push({
   name: "Fairy Buckfly",
-  imageSrc: "/card-art/fairyBuckfly.png",
+  imageSrcSmall: "/card-art/96x96/fairyBuckfly.png",
+  imageSrcLarge: "/card-art/512x512/fairyBuckfly.png",
   imageCenterYPercent: 18,
   rarity: "rare",
   complete: false,
@@ -223,7 +234,8 @@ cards.push({
 
 cards.push({
   name: "Nyreth, Light Eater",
-  imageSrc: "/card-art/nyrethLightEater.png",
+  imageSrcSmall: "/card-art/96x96/nyrethLightEater.png",
+  imageSrcLarge: "/card-art/512x512/nyrethLightEater.png",
   imageCenterYPercent: 60,
   rarity: "mythic",
   complete: false,
@@ -243,7 +255,8 @@ cards.push({
 // If this creature is in an inactive slot, the creature in the active slot gets +2 attack
 cards.push({
   name: "Komodo Teacher",
-  imageSrc: "/card-art/komodoTeacher.png",
+  imageSrcSmall: "/card-art/96x96/komodoTeacher.png",
+  imageSrcLarge: "/card-art/512x512/komodoTeacher.png",
   imageCenterYPercent: 50,
   rarity: "epic",
   complete: false,
@@ -263,7 +276,8 @@ cards.push({
 
 cards.push({
   name: "Living Hillside",
-  imageSrc: "/card-art/livingHillside.png",
+  imageSrcSmall: "/card-art/96x96/livingHillside.png",
+  imageSrcLarge: "/card-art/512x512/livingHillside.png",
   imageCenterYPercent: 20,
   rarity: "uncommon",
   complete: false,
@@ -282,7 +296,8 @@ cards.push({
 
 cards.push({
   name: "Stegowulf",
-  imageSrc: "/card-art/stegowulf.png",
+  imageSrcSmall: "/card-art/96x96/stegowulf.png",
+  imageSrcLarge: "/card-art/512x512/stegowulf.png",
   imageCenterYPercent: 45,
   rarity: "epic",
   complete: false,
@@ -302,7 +317,8 @@ cards.push({
 
 cards.push({
   name: "Eerie Vision",
-  imageSrc: "/card-art/eerieVision.png",
+  imageSrcSmall: "/card-art/96x96/eerieVision.png",
+  imageSrcLarge: "/card-art/512x512/eerieVision.png",
   imageCenterYPercent: 20,
   rarity: "rare",
   complete: false,
@@ -320,7 +336,8 @@ cards.push({
 
 cards.push({
   name: "Startle",
-  imageSrc: "/card-art/startle.png",
+  imageSrcSmall: "/card-art/96x96/startle.png",
+  imageSrcLarge: "/card-art/512x512/startle.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: false,
@@ -338,7 +355,8 @@ cards.push({
 
 cards.push({
   name: "Sonic Dragon",
-  imageSrc: "/card-art/sonicDragon.png",
+  imageSrcSmall: "/card-art/96x96/sonicDragon.png",
+  imageSrcLarge: "/card-art/512x512/sonicDragon.png",
   imageCenterYPercent: 30,
   rarity: "uncommon",
   complete: false,
@@ -359,7 +377,8 @@ cards.push({
 
 cards.push({
   name: "Cave Swimmer",
-  imageSrc: "/card-art/caveSwimmer.png",
+  imageSrcSmall: "/card-art/96x96/caveSwimmer.png",
+  imageSrcLarge: "/card-art/512x512/caveSwimmer.png",
   imageCenterYPercent: 70,
   rarity: "uncommon",
   complete: true,
@@ -380,7 +399,8 @@ cards.push({
 
 cards.push({
   name: "Darkwoods Hyena",
-  imageSrc: "/card-art/darkwoodsHyena.png",
+  imageSrcSmall: "/card-art/96x96/darkwoodsHyena.png",
+  imageSrcLarge: "/card-art/512x512/darkwoodsHyena.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
   complete: false,
@@ -401,7 +421,8 @@ cards.push({
 
 cards.push({
   name: "Monstrous Flamebeast",
-  imageSrc: "/card-art/monstrousFlamebeast.png",
+  imageSrcSmall: "/card-art/96x96/monstrousFlamebeast.png",
+  imageSrcLarge: "/card-art/512x512/monstrousFlamebeast.png",
   imageCenterYPercent: 40,
   rarity: "uncommon",
   complete: true,
@@ -422,7 +443,8 @@ cards.push({
 
 cards.push({
   name: "Ancestral Presence",
-  imageSrc: "/card-art/ancestralPresence.png",
+  imageSrcSmall: "/card-art/96x96/ancestralPresence.png",
+  imageSrcLarge: "/card-art/512x512/ancestralPresence.png",
   imageCenterYPercent: 30,
   rarity: "rare",
   complete: true,
@@ -440,7 +462,8 @@ cards.push({
 
 cards.push({
   name: "Canyon Burrower",
-  imageSrc: "/card-art/canyonBurrower.png",
+  imageSrcSmall: "/card-art/96x96/canyonBurrower.png",
+  imageSrcLarge: "/card-art/512x512/canyonBurrower.png",
   imageCenterYPercent: 30,
   rarity: "common",
   complete: false,
@@ -460,9 +483,10 @@ cards.push({
 
 cards.push({
   name: "Dragon Cub",
-  imageSrc: "/card-art/dragonCub.png",
+  imageSrcSmall: "/card-art/96x96/dragonCub.png",
+  imageSrcLarge: "/card-art/512x512/dragonCub.png",
   imageCenterYPercent: 30,
-  rarity: "common",
+  rarity: "base",
   complete: true,
   energyType: "fire",
   cardType: "creature",
@@ -481,7 +505,8 @@ cards.push({
 
 cards.push({
   name: "Glikki Forager",
-  imageSrc: "/card-art/glikkiTracker.png",
+  imageSrcSmall: "/card-art/96x96/glikkiTracker.png",
+  imageSrcLarge: "/card-art/512x512/glikkiTracker.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
   complete: false,
@@ -502,7 +527,8 @@ cards.push({
 
 cards.push({
   name: "Hydrus, Seaborn Titan",
-  imageSrc: "/card-art/hydrusSeabornTitan.png",
+  imageSrcSmall: "/card-art/96x96/hydrusSeabornTitan.png",
+  imageSrcLarge: "/card-art/512x512/hydrusSeabornTitan.png",
   imageCenterYPercent: 20,
   rarity: "mythic",
   complete: false,
@@ -522,7 +548,8 @@ cards.push({
 
 cards.push({
   name: "Flame Sentinel",
-  imageSrc: "/card-art/flameSentinel.png",
+  imageSrcSmall: "/card-art/96x96/flameSentinel.png",
+  imageSrcLarge: "/card-art/512x512/flameSentinel.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: true,
@@ -543,7 +570,8 @@ cards.push({
 
 cards.push({
   name: "Brash Splasher",
-  imageSrc: "/card-art/brashSplasher.png",
+  imageSrcSmall: "/card-art/96x96/brashSplasher.png",
+  imageSrcLarge: "/card-art/512x512/brashSplasher.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
   complete: true,
@@ -562,7 +590,8 @@ cards.push({
 })
 cards.push({
   name: "Joltbird Agent",
-  imageSrc: "/card-art/joltbirdAgent.png",
+  imageSrcSmall: "/card-art/96x96/joltbirdAgent.png",
+  imageSrcLarge: "/card-art/512x512/joltbirdAgent.png",
   imageCenterYPercent: 50,
   rarity: "epic",
   complete: true,
@@ -583,7 +612,8 @@ cards.push({
 
 cards.push({
   name: "Something Bandit",
-  imageSrc: "/card-art/somethingBandit.png",
+  imageSrcSmall: "/card-art/96x96/somethingBandit.png",
+  imageSrcLarge: "/card-art/512x512/somethingBandit.png",
   imageCenterYPercent: 50,
   rarity: "common",
   complete: true,
@@ -600,11 +630,12 @@ cards.push({
   },
 })
 cards.push({
-  name: "Something Raider",
-  imageSrc: "/card-art/somethingRaider.png",
+  name: "Zardian Raider",
+  imageSrcSmall: "/card-art/96x96/zardianRaider.png",
+  imageSrcLarge: "/card-art/512x512/zardianRaider.png",
   imageCenterYPercent: 40,
-  rarity: "common",
-  complete: false,
+  rarity: "base",
+  complete: true,
   energyType: "neutral",
   cardType: "creature",
   attack: 3,
@@ -619,7 +650,8 @@ cards.push({
 })
 cards.push({
   name: "Something Captain",
-  imageSrc: "/card-art/somethingCaptain.png",
+  imageSrcSmall: "/card-art/96x96/somethingCaptain.png",
+  imageSrcLarge: "/card-art/512x512/somethingCaptain.png",
   imageCenterYPercent: 50,
   rarity: "epic",
   complete: false,
@@ -637,7 +669,8 @@ cards.push({
 })
 cards.push({
   name: "Ilstrom, Tidal Inferno",
-  imageSrc: "/card-art/ilstromTidalInferno.png",
+  imageSrcSmall: "/card-art/96x96/ilstromTidalInferno.png",
+  imageSrcLarge: "/card-art/512x512/ilstromTidalInferno.png",
   imageCenterYPercent: 50,
   rarity: "legendary",
   complete: false,
@@ -656,7 +689,8 @@ cards.push({
 })
 cards.push({
   name: "Helix Stag",
-  imageSrc: "/card-art/helixStag.png",
+  imageSrcSmall: "/card-art/96x96/helixStag.png",
+  imageSrcLarge: "/card-art/512x512/helixStag.png",
   imageCenterYPercent: 50,
   rarity: "epic",
   complete: false,
@@ -675,7 +709,8 @@ cards.push({
 })
 cards.push({
   name: "Bonehide Mole",
-  imageSrc: "/card-art/bonehideMole.png",
+  imageSrcSmall: "/card-art/96x96/bonehideMole.png",
+  imageSrcLarge: "/card-art/512x512/bonehideMole.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
   complete: false,
@@ -695,7 +730,8 @@ cards.push({
 })
 cards.push({
   name: "Neojia Tamer",
-  imageSrc: "/card-art/neojiaTamer.png",
+  imageSrcSmall: "/card-art/96x96/neojiaTamer.png",
+  imageSrcLarge: "/card-art/512x512/neojiaTamer.png",
   imageCenterYPercent: 46,
   rarity: "rare",
   complete: false,
@@ -714,7 +750,8 @@ cards.push({
 })
 cards.push({
   name: "Huddolin",
-  imageSrc: "/card-art/huddolin.png",
+  imageSrcSmall: "/card-art/96x96/huddolin.png",
+  imageSrcLarge: "/card-art/512x512/huddolin.png",
   imageCenterYPercent: 50,
   rarity: "common",
   complete: false,
@@ -733,7 +770,8 @@ cards.push({
 })
 cards.push({
   name: "Opaldrake Thrasher",
-  imageSrc: "/card-art/opaldrakeThrasher.png",
+  imageSrcSmall: "/card-art/96x96/opaldrakeThrasher.png",
+  imageSrcLarge: "/card-art/512x512/opaldrakeThrasher.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: false,
@@ -751,7 +789,8 @@ cards.push({
 })
 cards.push({
   name: "Smoldering Shot",
-  imageSrc: "/card-art/smolderingShot.png",
+  imageSrcSmall: "/card-art/96x96/smolderingShot.png",
+  imageSrcLarge: "/card-art/512x512/smolderingShot.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: false,
@@ -769,7 +808,8 @@ cards.push({
 
 cards.push({
   name: "Saurongar The Smotherer",
-  imageSrc: "/card-art/saurongarTheSmotherer.png",
+  imageSrcSmall: "/card-art/96x96/saurongarTheSmotherer.png",
+  imageSrcLarge: "/card-art/512x512/saurongarTheSmotherer.png",
   imageCenterYPercent: 45,
   rarity: "mythic",
   complete: false,
@@ -788,7 +828,8 @@ cards.push({
 })
 cards.push({
   name: "Time Collapse",
-  imageSrc: "/card-art/timeCollapse.png",
+  imageSrcSmall: "/card-art/96x96/timeCollapse.png",
+  imageSrcLarge: "/card-art/512x512/timeCollapse.png",
   imageCenterYPercent: 50,
   rarity: "epic",
   complete: false,
@@ -804,7 +845,8 @@ cards.push({
 })
 cards.push({
   name: "Fairy Arsonist",
-  imageSrc: "/card-art/fairyArsonist.png",
+  imageSrcSmall: "/card-art/96x96/fairyArsonist.png",
+  imageSrcLarge: "/card-art/512x512/fairyArsonist.png",
   imageCenterYPercent: 60,
   rarity: "rare",
   complete: false,
@@ -823,10 +865,11 @@ cards.push({
 })
 cards.push({
   name: "Emerald Makasaur",
-  imageSrc: "/card-art/emeraldMakasaur.png",
+  imageSrcSmall: "/card-art/96x96/emeraldMakasaur.png",
+  imageSrcLarge: "/card-art/512x512/emeraldMakasaur.png",
   imageCenterYPercent: 60,
-  rarity: "common",
-  complete: false,
+  rarity: "base",
+  complete: true,
   energyType: "neutral",
   cardType: "creature",
   attack: 4,
@@ -841,7 +884,8 @@ cards.push({
 })
 cards.push({
   name: "Dazzling Fennec",
-  imageSrc: "/card-art/dazzlingFennec.png",
+  imageSrcSmall: "/card-art/96x96/dazzlingFennec.png",
+  imageSrcLarge: "/card-art/512x512/dazzlingFennec.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
   complete: false,
@@ -859,7 +903,8 @@ cards.push({
 })
 cards.push({
   name: "Astral Caller",
-  imageSrc: "/card-art/astralCaller.png",
+  imageSrcSmall: "/card-art/96x96/astralCaller.png",
+  imageSrcLarge: "/card-art/512x512/astralCaller.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: false,
@@ -878,7 +923,8 @@ cards.push({
 })
 cards.push({
   name: "Red Crab Brawler",
-  imageSrc: "/card-art/redCrabBrawler.png",
+  imageSrcSmall: "/card-art/96x96/redCrabBrawler.png",
+  imageSrcLarge: "/card-art/512x512/redCrabBrawler.png",
   imageCenterYPercent: 45,
   rarity: "uncommon",
   complete: false,
@@ -898,7 +944,8 @@ cards.push({
 })
 cards.push({
   name: "Sicklehorn Grazer",
-  imageSrc: "/card-art/sicklehornGrazer.png",
+  imageSrcSmall: "/card-art/96x96/sicklehornGrazer.png",
+  imageSrcLarge: "/card-art/512x512/sicklehornGrazer.png",
   imageCenterYPercent: 50,
   rarity: "rare",
   complete: false,
@@ -917,7 +964,8 @@ cards.push({
 
 cards.push({
   name: "Pike Lancer",
-  imageSrc: "/card-art/pikeLancer.png",
+  imageSrcSmall: "/card-art/96x96/pikeLancer.png",
+  imageSrcLarge: "/card-art/512x512/pikeLancer.png",
   imageCenterYPercent: 45,
   rarity: "rare",
   complete: false,
@@ -937,7 +985,8 @@ cards.push({
 
 cards.push({
   name: "Hyllophant",
-  imageSrc: "/card-art/hyllophant.png",
+  imageSrcSmall: "/card-art/96x96/hyllophant.png",
+  imageSrcLarge: "/card-art/512x512/hyllophant.png",
   imageCenterYPercent: 55,
   rarity: "common",
   complete: false,
@@ -956,7 +1005,8 @@ cards.push({
 
 cards.push({
   name: "Violet Sagebeast",
-  imageSrc: "/card-art/violetSagebeast.png",
+  imageSrcSmall: "/card-art/96x96/violetSagebeast.png",
+  imageSrcLarge: "/card-art/512x512/violetSagebeast.png",
   imageCenterYPercent: 38,
   rarity: "rare",
   complete: false,
@@ -976,7 +1026,8 @@ cards.push({
 
 cards.push({
   name: "Moltsteed Racer",
-  imageSrc: "/card-art/moltsteedRacer.png",
+  imageSrcSmall: "/card-art/96x96/moltsteedRacer.png",
+  imageSrcLarge: "/card-art/512x512/moltsteedRacer.png",
   imageCenterYPercent: 55,
   rarity: "uncommon",
   complete: false,
@@ -996,7 +1047,8 @@ cards.push({
 
 cards.push({
   name: "Volcanic Shellster",
-  imageSrc: "/card-art/volcanicShellster.png",
+  imageSrcSmall: "/card-art/96x96/volcanicShellster.png",
+  imageSrcLarge: "/card-art/512x512/volcanicShellster.png",
   imageCenterYPercent: 65,
   rarity: "uncommon",
   complete: false,
@@ -1012,6 +1064,8 @@ cards.push({
     air: 0,
   },
 })
+
+// Used https://www.iloveimg.com/ for image resizing
 
 // Ideas
 // - When this creature takes damage, restore it to full health (Mythic?)

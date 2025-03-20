@@ -3,7 +3,8 @@ import { PlayerID } from "../PlayerData"
 import { Target } from "../choices/ChoiceData"
 
 export type HeroBehaviour = {
-  turnStart: (inputDuel: DuelState, playerId: PlayerID) => Promise<DuelState>
+  produceTurnEnergy: (inputDuel: DuelState, playerId: PlayerID) => Promise<DuelState>
+  turnStart?: (inputDuel: DuelState, playerId: PlayerID) => Promise<DuelState>
   // keywords?: {
   //   trample?: boolean
   //   enrage?: boolean

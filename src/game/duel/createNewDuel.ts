@@ -1,14 +1,16 @@
 import { cardDataMap } from "../cards/AllCards"
-import { CardState, DuelState } from "./DuelData"
+import { CardState, DuelReward, DuelState } from "./DuelData"
 import { v4 } from "uuid"
 import { GameState, getActiveDeck } from "../GameData"
-import { Deck } from "../Deck"
+import { Deck } from "../decks/Deck"
 import { CardName } from "../cards/CardName"
 import { CardData } from "../cards/CardData"
-import { getRandomInt, getRandomSeed } from "@/src/utils/randomNumber"
 import { heroDataMap } from "../heroes/AllHeroes"
+import { LeagueGame } from "../league/leagueTypes"
+import { campaignChallengeMap } from "../Campaign"
+import { generateDeck } from "../decks/generateDeck"
 
-export const STARTING_HEALTH = 20
+export const STARTING_HEALTH = 15
 
 export const cardDataToCardState = (cardData: CardData): CardState => {
   switch (cardData.cardType) {
@@ -44,21 +46,84 @@ export const createCardsFromNames = (cardNames: CardName[]): CardState[] => {
   return cards
 }
 
-export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponentDeck: Deck }) => {
-  const deck = getActiveDeck(game)
-  if (deck === undefined) {
-    throw Error("Tried to start a new duel but no active deck found")
+export type DuelEntryPoint =
+  | {
+      duelType: "play-now"
+    }
+  | {
+      duelType: "league"
+      leagueGame: LeagueGame
+    }
+  | {
+      duelType: "campaign"
+      campaignChallengeId: string
+    }
+
+export const getDuelParamsFromEntryPoint = (game: GameState, entryPoint: DuelEntryPoint): DuelParams => {
+  const humanDeck = getActiveDeck(game)
+  if (humanDeck === undefined) {
+    throw Error("No active deck found")
   }
+
+  if (entryPoint.duelType === "league") {
+    const opponentLeaguePlayer = game.league.players[entryPoint.leagueGame.playerIdRight]
+    if (opponentLeaguePlayer.human) {
+      throw Error("League opponent is human")
+    }
+    const opponentDeck = opponentLeaguePlayer.deck
+    return {
+      humanDeck: humanDeck,
+      opponentDeck: opponentDeck,
+      reward: {
+        type: "gold",
+        goldQuantity: 20,
+      },
+      leagueGame: true,
+    }
+  }
+
+  if (entryPoint.duelType === "campaign") {
+    const campaignChallenge = campaignChallengeMap[entryPoint.campaignChallengeId]
+    const opponentDeck = campaignChallenge.opponentDeck
+    return {
+      humanDeck: humanDeck,
+      opponentDeck: opponentDeck,
+      reward: campaignChallenge.reward,
+    }
+  }
+
+  // last case - entryPoint.duelType === "play-now"
+  return {
+    humanDeck: humanDeck,
+    opponentDeck: generateDeck({ method: "completely-random" }),
+    reward: {
+      type: "gold",
+      goldQuantity: 20,
+    },
+    tutorial: true,
+  }
+}
+
+export type DuelParams = {
+  humanDeck: Deck
+  opponentDeck: Deck
+  reward?: DuelReward
+  leagueGame?: boolean
+  tutorial?: boolean
+}
+
+export const createNewDuel = ({ humanDeck, opponentDeck, reward, leagueGame, tutorial }: DuelParams) => {
   const duel: DuelState = {
     id: "duel",
     info: {
-      goldReward: 8 + getRandomInt(4, getRandomSeed()),
-      tutorial: true,
+      reward,
+      leagueGame: leagueGame === true,
+      tutorial: tutorial === true,
     },
     human: {
-      hero: heroDataMap[deck.heroName],
+      hero: heroDataMap[humanDeck.heroName],
       health: STARTING_HEALTH,
-      deck: createCardsFromNames(deck.cardNames),
+      deck: createCardsFromNames(humanDeck.cardNames),
       hand: [],
       discard: [],
       rows: [[], []],
@@ -71,6 +136,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
         earth: 0,
         air: 0,
       },
+      energyCapacity: 0,
       drawnDead: false,
     },
     opponent: {
@@ -89,6 +155,7 @@ export const createNewDuel = ({ game, opponentDeck }: { game: GameState; opponen
         earth: 0,
         air: 0,
       },
+      energyCapacity: 0,
       drawnDead: false,
     },
 

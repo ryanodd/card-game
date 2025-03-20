@@ -1,28 +1,66 @@
-.duelCardFilterLayer[data-modifier-summoning-sickness="true"] {
+.duelCardTransformLayer[data-modifier-summoning-sickness="true"] {
   > * {
     filter: brightness(75%);
   }
 }
 
-.duelCardFilterLayer[data-modifier-burn="true"] {
+.duelCardTransformLayer[data-modifier-burn="true"] {
   > * {
     filter: sepia(150%);
   }
 }
 
-.duelCardFilterLayer[data-modifier-stun="true"] {
+.duelCardTransformLayer[data-modifier-stun="true"] {
   > * {
     filter: brightness(130%);
   }
 }
 
-.duelCardFilterLayer[data-modifier-poison="true"] {
+.duelCardTransformLayer[data-modifier-poison="true"] {
   > * {
     filter: contrast(150%);
   }
 }
 
-.duelCardFilterLayer[data-animation-attack-start="true"][data-player-id="human"] {
+.duelCardTransformLayer[data-animation-draw="true"][data-player-id="human"] {
+  > * {
+    position: relative;
+    z-index: 20;
+    animation: draw_human var(--current-animation-duration) cubic-bezier(0, 1, 0.44, 1);
+  }
+}
+
+.duelCardTransformLayer[data-animation-draw="true"][data-player-id="opponent"] {
+  > * {
+    position: relative;
+    z-index: 20;
+    animation: draw_opponent var(--current-animation-duration) cubic-bezier(0, 1, 0.44, 1);
+  }
+}
+
+@keyframes draw_human {
+  0% {
+    opacity: 0.05;
+    transform: translateX(800px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes draw_opponent {
+  0% {
+    opacity: 0.05;
+    transform: translateX(-800px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+.duelCardTransformLayer[data-animation-attack-start="true"][data-player-id="human"] {
   > * {
     z-index: 20;
     animation: attack_start_human var(--current-animation-duration) ease-in;
@@ -38,7 +76,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-attack-start="true"][data-player-id="opponent"] {
+.duelCardTransformLayer[data-animation-attack-start="true"][data-player-id="opponent"] {
   > * {
     z-index: 20;
     animation: attack_start_opponent var(--current-animation-duration) ease-in;
@@ -54,7 +92,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-attack-end="true"][data-player-id="human"] {
+.duelCardTransformLayer[data-animation-attack-end="true"][data-player-id="human"] {
   > * {
     z-index: 20;
     animation: attack_end_human var(--current-animation-duration) ease-out;
@@ -70,7 +108,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-attack-end="true"][data-player-id="opponent"] {
+.duelCardTransformLayer[data-animation-attack-end="true"][data-player-id="opponent"] {
   > * {
     z-index: 20;
     animation: attack_end_opponent var(--current-animation-duration) ease-out;
@@ -86,7 +124,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-opponent-summon="true"] {
+.duelCardTransformLayer[data-animation-opponent-summon="true"] {
   animation: opponent-summon var(--current-animation-duration);
 }
 
@@ -101,7 +139,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-destroy-start="true"] {
+.duelCardTransformLayer[data-animation-destroy-start="true"] {
   animation: destroy-start var(--current-animation-duration);
 }
 
@@ -116,7 +154,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-destroy-end="true"] {
+.duelCardTransformLayer[data-animation-destroy-end="true"] {
   animation: destroy-end var(--current-animation-duration);
 }
 
@@ -142,7 +180,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-burn="true"] {
+.duelCardTransformLayer[data-animation-burn="true"] {
   > * {
     animation: burn var(--current-animation-duration);
   }
@@ -163,7 +201,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-stun="true"] {
+.duelCardTransformLayer[data-animation-stun="true"] {
   > * {
     animation: stun var(--current-animation-duration);
   }
@@ -184,7 +222,7 @@
   }
 }
 
-.duelCardFilterLayer[data-animation-ember-foxling="true"] {
+.duelCardTransformLayer[data-animation-ember-foxling="true"] {
   > * {
     animation: animationActiveFilter var(--current-animation-duration);
   }

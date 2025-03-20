@@ -1,0 +1,7 @@
+.leaguePlayer {
+  @apply flex flex-col;
+}
+
+.leaguePlayerName {
+  @apply text-base;
+}

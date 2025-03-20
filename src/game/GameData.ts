@@ -1,9 +1,10 @@
 import { CampaignLocationId } from "./Campaign"
-import { Deck } from "./Deck"
+import { Deck } from "./decks/Deck"
 import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
 import { HeroName } from "./duel/heroBehaviour/HeroName"
-import { PackRarity } from "./shop/PackData"
+import { League } from "./league/leagueTypes"
+import { PackVariant } from "./Packs"
 
 export type MainMenuState = {
   id: "mainMenu"
@@ -21,13 +22,21 @@ export type EditDeckState = {
   deckName: string
   heroName: HeroName | null
   cardNames: CardName[]
+  selectHeroDialogOpen: boolean
+}
+
+export type OpenPackState = {
+  id: "openPack"
+  cardsOpened: CardName[]
 }
 
 export type ScreenState =
   | MainMenuState
+  | { id: "league" }
   | { id: "campaignSelect" }
   | { id: "shop" }
-  | { id: "packs" }
+  | { id: "managePacks" }
+  | OpenPackState
   | { id: "manageDecks" }
   | EditDeckState
   | { id: "collection" }
@@ -38,7 +47,7 @@ export type SettingsState = {
   godMode: boolean
 }
 
-export const COLLECTION_MAX_PER_CARD = 3
+export const COLLECTION_MAX_PER_CARD = 4
 
 export type CampaignLocationCompletionData = {
   unlocked: boolean
@@ -48,7 +57,9 @@ export type CampaignLocationCompletionData = {
 export type GameState = {
   screen: ScreenState
   activeDeckId: string | null
-  collection: Record<CardName, number>
+  cardCollection: Record<CardName, number>
+  heroCollection: Record<HeroName, boolean>
+  league: League
   currentCampaign?: {
     campaignId: string
     round: number
@@ -57,11 +68,11 @@ export type GameState = {
   campaignCompletion: Record<CampaignLocationId, CampaignLocationCompletionData>
   decks: Deck[]
   gold: number
-  packs: Record<PackRarity, number>
+  packs: Record<PackVariant, number>
   settings: SettingsState
 }
 
-export const getActiveDeck = (game: GameState) => {
+export const getActiveDeck = (game: GameState): Deck | undefined => {
   return game.decks.find((deck) => {
     return deck.id === game.activeDeckId
   })

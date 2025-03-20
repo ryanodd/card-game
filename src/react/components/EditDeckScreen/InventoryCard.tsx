@@ -15,7 +15,7 @@ export const InventoryCard = ({ cardData }: CardProps) => {
   const deckQuantity =
     game.screen.id === "editDeck" ? game.screen.cardNames.filter((cardName) => cardName === cardData.name).length : 0
 
-  const quantityOwned = game.collection[cardData.name]
+  const quantityOwned = game.cardCollection[cardData.name]
 
   const { attributes, listeners, setNodeRef } = useDraggable({
     id: `draggable-inventory-card-${cardData.name}`,

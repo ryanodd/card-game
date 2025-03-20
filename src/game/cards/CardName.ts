@@ -29,7 +29,7 @@ export type CardName =
   | "Brash Splasher"
   | "Joltbird Agent"
   | "Something Bandit"
-  | "Something Raider"
+  | "Zardian Raider"
   | "Something Captain"
   | "Ilstrom, Tidal Inferno"
   | "Helix Stag"

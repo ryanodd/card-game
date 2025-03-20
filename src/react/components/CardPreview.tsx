@@ -10,7 +10,7 @@ import { getEffectiveHealth } from "@/src/game/duel/helpers/getEffectiveHealth"
 
 export const getCardHealthDisplayValue = (cardState: CardState) => {
   if (cardState.cardType === "creature") {
-    return Math.max(0, cardState.health - cardState.damage)
+    return cardState.health - cardState.damage
   }
   return 0
 }
@@ -66,7 +66,7 @@ export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, set
       >
         {showCostIcons && <div className="absolute -top-2 -left-2 z-10 flex">{getCostIcons()}</div>}
         <div className={`${styles.image_border} relative`}>
-          <Image src={cardData.imageSrc} alt={cardData.name} width={512} height={512} />
+          <Image src={cardData.imageSrcSmall} alt={cardData.name} width={512} height={512} />
         </div>
         <div className={`${styles.cardFooter}`}>
           {cardState.cardType === "creature" && (

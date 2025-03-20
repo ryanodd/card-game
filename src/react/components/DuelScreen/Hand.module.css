@@ -1,3 +1,7 @@
 .hand_container {
-  @apply absolute left-1/2 -translate-x-1/2 flex gap-2 p-2 overflow-x-scroll;
+  @apply absolute left-1/2 -translate-x-1/2 flex gap-2 p-2;
+}
+
+.opponent_hand_container {
+  @apply absolute left-1/2 -translate-x-1/2 flex flex-row-reverse gap-2 p-2;
 }

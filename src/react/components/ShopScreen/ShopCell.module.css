@@ -2,6 +2,18 @@
   @apply flex flex-col items-center gap-2;
 }
 
+.shopCellButton {
+  @apply rounded-md p-4;
+}
+
+.shopCellButton:hover:not(:disabled) {
+  @apply bg-opacity-30 bg-stone-100;
+}
+
 .shopPrice {
-  @apply text-xl text-stone-100;
+  @apply text-3xl font-semibold text-stone-100;
+}
+
+.shopPrice[data-can-afford="false"] {
+  @apply text-red-400;
 }

@@ -1,4 +1,4 @@
-import { DECK_MIN_SIZE } from "@/src/game/Deck"
+import { DECK_MIN_SIZE } from "@/src/game/decks/Deck"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 
 export const DeckListFooter = () => {

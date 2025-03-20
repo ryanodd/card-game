@@ -1,0 +1,20 @@
+.energyRow {
+  @apply grid grid-cols-5 justify-center gap-1;
+}
+
+.energyRow[data-animation-energy-added-toggle="true"],
+.energyRow[data-animation-energy-added-toggle="false"] {
+  animation: energy_added_animation 800ms ease-in-out;
+}
+
+@keyframes energy_added_animation {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

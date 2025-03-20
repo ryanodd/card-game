@@ -48,7 +48,7 @@ export const DeckListCard = ({ cardName, quantity }: DeckListCardProps) => {
       >
         <Image
           className="object-cover"
-          src={cardData.imageSrc}
+          src={cardData.imageSrcLarge}
           alt={cardData.name}
           width={512}
           height={512}
@@ -61,7 +61,7 @@ export const DeckListCard = ({ cardName, quantity }: DeckListCardProps) => {
               DECK_LIST_CARD_IMAGE_HEIGHT_REMS
             )}rem`,
           }}
-        ></Image>
+        />
         <div
           className={`${styles.deckListCardContent}`}
           style={{

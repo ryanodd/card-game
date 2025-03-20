@@ -1,3 +1,4 @@
+import { playAnimation } from "../control/playAnimation"
 import { DuelState } from "../DuelData"
 import { getDuelPlayerById } from "../DuelHelpers"
 import { PlayerID } from "../PlayerData"
@@ -11,8 +12,7 @@ export async function drawToHand(inputDuel: DuelState, playerId: PlayerID, numbe
       throw Error("No more cards left to draw") // TODO expected codepath
     }
     player.hand.push(cardDrawn)
+    duel = await playAnimation(duel, { id: "DRAW", durationMs: 500, cardId: cardDrawn.instanceId })
   }
-  // duel = await playAnimation(duel, { id: "DRAW", durationMs: 800, })
-  // duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   return duel
 }

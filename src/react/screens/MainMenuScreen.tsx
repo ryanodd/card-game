@@ -2,23 +2,24 @@ import { getActiveDeck } from "@/src/game/GameData"
 import { MainView } from "../components/MainView"
 import { Button } from "../components/designSystem/Button"
 import { useGameStore } from "../hooks/useGameStore"
-import { deckMap } from "@/src/game/Decks"
+import { deckMap } from "@/src/game/decks/Decks"
 import { GameBackground } from "../components/GameBackground"
 import { GoldTotal } from "../components/GoldTotal"
 import { createNewDuel } from "@/src/game/duel/createNewDuel"
 import { SettingsDialog } from "../components/SettingsDialog"
 import { Footer } from "../components/Footer"
-import { DuelSetupDialog } from "../components/DuelSetup/DuelSetupDialog"
+import { DefaultDialog } from "../components/designSystem/Dialog"
+import { DuelSetupContent } from "../components/DuelSetup/DuelSetupContent"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()
-  const onCampaignClick = () => {
-    // if (game.currentCampaign) {
-    //   setGame({ ...game, screen: { id: "" } })
-    // } else {
-    setGame({ ...game, screen: { id: "campaignSelect" } })
 
-    // }
+  const onLeagueClick = () => {
+    setGame({ ...game, screen: { id: "league" } })
+  }
+
+  const onCampaignClick = () => {
+    setGame({ ...game, screen: { id: "campaignSelect" } })
   }
 
   const onShopClick = () => {
@@ -33,7 +34,7 @@ export const MainMenuScreen = () => {
   }
 
   const onPacksClick = () => {
-    setGame({ ...game, screen: { id: "packs" } })
+    setGame({ ...game, screen: { id: "managePacks" } })
   }
 
   const godMode = game.settings.godMode
@@ -47,14 +48,17 @@ export const MainMenuScreen = () => {
           <h2 className="text-lg text-stone-50">{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
           <div className="flex flex-col mt-8 gap-4">
             <div className="flex flex-col gap-4">
-              <DuelSetupDialog
+              <DefaultDialog
                 trigger={
                   <Button data-variant="primary" data-size="large">
                     Play Now
                   </Button>
                 }
-                challengeId="playNow"
+                content={<DuelSetupContent duelEntryPoint={{ duelType: "play-now" }} />}
               />
+              <Button data-size="large" onClick={onLeagueClick}>
+                League
+              </Button>
               {godMode && (
                 <Button data-size="large" onClick={onCampaignClick}>
                   Campaign
@@ -73,11 +77,9 @@ export const MainMenuScreen = () => {
               <Button data-size="large" onClick={onShopClick}>
                 Shop
               </Button>
-              {godMode && (
-                <Button data-size="large" onClick={onPacksClick}>
-                  Packs
-                </Button>
-              )}
+              <Button data-size="large" onClick={onPacksClick}>
+                Packs
+              </Button>
             </div>
             <div className="flex flex-col mt-8 gap-4">
               <SettingsDialog trigger={<Button data-size="large">Settings</Button>} />

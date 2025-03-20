@@ -17,7 +17,7 @@ const INVENTORY_CARD_APPROXIMATE_WIDTH = 296
 
 export const InventoryBrowser = ({ cardsDraggable = false }: InventoryBrowserProps) => {
   const { game } = useGameStore()
-  const cardList = sortCardNames([...Object.keys(game.collection)] as CardName[])
+  const cardList = sortCardNames([...Object.keys(game.cardCollection)] as CardName[])
 
   const inventoryGridRef = useRef<HTMLDivElement | null>(null)
   const [cardsPerPage, setCardsPerPage] = useState(8)
@@ -42,7 +42,7 @@ export const InventoryBrowser = ({ cardsDraggable = false }: InventoryBrowserPro
   }, [cardsPerPage])
 
   const [currentPageNumber, setCurrentPageNumber] = useState(0)
-  const totalPages = Math.floor(cardList.length / cardsPerPage)
+  const totalPages = Math.ceil(cardList.length / cardsPerPage)
 
   return (
     <div className={styles.inventoryContainer}>

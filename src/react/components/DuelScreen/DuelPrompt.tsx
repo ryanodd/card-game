@@ -29,15 +29,15 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
   if (duel.choice.id === "TAKE_TURN") {
     const handTargets = takeTurn_getPlayableHandCardIds(duel)
 
-    // Can play cards
-    if (handTargets.length > 0) {
-      return "Play cards, which use up your energy orbs."
-    }
+    // // Can play cards
+    // if (handTargets.length > 0) {
+    //   return "Play cards, which spends energy."
+    // }
 
     // Can't play cards
     if (handTargets.length === 0) {
       if (duel.turnNumber === 1) {
-        return "Can't afford to play any more cards. All you can do is end your turn."
+        return "On your first turn, you only get 1 energy. You can't afford to play any cards. End your turn."
       }
       return null
     }
@@ -64,7 +64,7 @@ export const DuelPrompt = ({ duel }: DuelPromptProps) => {
   }
 
   return (
-    <div className="absolute right-8 bottom-60 z-20 w-80 flex flex-col gap-2 bg-slate-800 rounded-lg shadow-md py-4 px-4">
+    <div className="absolute right-4 bottom-72 z-20 w-72 flex flex-col gap-2 bg-slate-800 rounded-lg shadow-md py-4 px-4">
       <h2 className="text-stone-50">{promptMessage}</h2>
       {buttonText !== null && (
         <button

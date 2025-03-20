@@ -33,3 +33,7 @@
 .air_element {
   @apply bg-purple-400;
 }
+
+.emptyEnergyIcon {
+  @apply bg-stone-950;
+}

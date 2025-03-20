@@ -4,7 +4,6 @@ import styles from "./designSystem/Dialog.module.css"
 import { useGameStore } from "../hooks/useGameStore"
 import { Button } from "./designSystem/Button"
 import { GameState } from "@/src/game/GameData"
-import { deckMap } from "@/src/game/Decks"
 import { Checkbox } from "./designSystem/Checkbox"
 import { Close } from "./designSystem/Icon"
 
@@ -31,6 +30,11 @@ export const SettingsDialog = ({ trigger }: SettingsDialogProps) => {
     }
     console.log(JSON.stringify(game.decks.find((deck) => deck.id === game.activeDeckId)))
   }, [game.activeDeckId, game.decks])
+
+  const onClickClearLocalStorage = () => {
+    localStorage.clear()
+    window.location.reload()
+  }
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
@@ -69,7 +73,14 @@ export const SettingsDialog = ({ trigger }: SettingsDialogProps) => {
               />
 
               <div className="flex">
-                <Button onClick={onClickLogActiveDeck}>Log Active Deck</Button>
+                <Button type="button" onClick={onClickLogActiveDeck}>
+                  Log active deck
+                </Button>
+              </div>
+              <div className="flex">
+                <Button type="button" onClick={onClickClearLocalStorage}>
+                  Erase save data
+                </Button>
               </div>
             </div>
             <div className="flex p-2 gap-2 justify-end">

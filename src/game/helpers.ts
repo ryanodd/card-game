@@ -1,6 +1,7 @@
 import { cardDataMap } from "./cards/AllCards"
 import { CardData } from "./cards/CardData"
 import { CardName } from "./cards/CardName"
+import { EnergyCounts, EnergyType } from "./duel/EnergyData"
 
 export const hasDuplicates = (array: any[]) => {
   return new Set(array).size !== array.length
@@ -8,8 +9,33 @@ export const hasDuplicates = (array: any[]) => {
 
 export const delayMs = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
+export const getEnergyTotalFromEnergyCounts = (energyCounts: EnergyCounts) => {
+  return energyCounts.fire + energyCounts.water + energyCounts.earth + energyCounts.air + energyCounts.neutral
+}
+
 export const getConvertedEnergyCost = (cardData: CardData) => {
-  return cardData.cost.fire + cardData.cost.water + cardData.cost.earth + cardData.cost.air + cardData.cost.neutral
+  return getEnergyTotalFromEnergyCounts(cardData.cost)
+}
+
+export const getEnergyTypesFromEnergyCounts = (counts: EnergyCounts) => {
+  const energyTypesToReturn: EnergyType[] = []
+
+  if (counts.fire > 0) {
+    energyTypesToReturn.push("fire")
+  }
+  if (counts.water > 0) {
+    energyTypesToReturn.push("water")
+  }
+  if (counts.earth > 0) {
+    energyTypesToReturn.push("earth")
+  }
+  if (counts.air > 0) {
+    energyTypesToReturn.push("air")
+  }
+  if (counts.neutral > 0) {
+    energyTypesToReturn.push("neutral")
+  }
+  return energyTypesToReturn
 }
 
 export const sortCardNames = (cardNames: CardName[]) => {

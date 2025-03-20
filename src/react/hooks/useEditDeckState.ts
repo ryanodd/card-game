@@ -1,6 +1,5 @@
-import { Deck } from "@/src/game/Deck"
+import { Deck } from "@/src/game/decks/Deck"
 import { useGameStore } from "./useGameStore"
-import { Dispatch, SetStateAction } from "react"
 import { EditDeckState } from "@/src/game/GameData"
 import { v4 } from "uuid"
 
@@ -11,6 +10,7 @@ export const createNewEditDeckState = (deck: Deck | null): EditDeckState => {
     deckName: deck?.name ?? "My deck",
     heroName: deck?.heroName ?? null,
     cardNames: deck?.cardNames ?? [],
+    selectHeroDialogOpen: false,
   }
 }
 

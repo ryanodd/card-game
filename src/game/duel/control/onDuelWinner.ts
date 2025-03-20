@@ -1,9 +1,10 @@
 import { useGameStore } from "@/src/react/hooks/useGameStore"
 import { DuelState } from "../DuelData"
 import { duelWinner } from "../DuelHelpers"
+import { onLeagueGameComplete } from "../../league/onLeagueGameComplete"
 
-export const getDuelGoldReward = (duel: DuelState) => {
-  return duel.winner === "human" || duel.winner === "draw" ? duel.info.goldReward : 0
+export const getDuelReward = (duel: DuelState) => {
+  return duel.winner === "human" || duel.winner === "draw" ? duel.info.reward : undefined
 }
 
 export const onDuelWinner = (duel: DuelState) => {
@@ -14,7 +15,26 @@ export const onDuelWinner = (duel: DuelState) => {
 
   duel.winner = winner
 
-  // Add reward gold
   const { game, setGame } = useGameStore.getState()
-  setGame({ ...game, gold: game.gold + getDuelGoldReward(duel) })
+
+  // Add reward gold
+  const reward = getDuelReward(duel)
+
+  let nextGold = game.gold
+  if (reward?.type === "gold") {
+    nextGold += reward?.goldQuantity
+  }
+
+  const nextGame = {
+    ...game,
+    gold: nextGold,
+  }
+
+  // Progress league
+  if (duel.info.leagueGame) {
+    setGame(onLeagueGameComplete(nextGame, winner))
+    return
+  }
+
+  setGame(nextGame)
 }

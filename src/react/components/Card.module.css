@@ -1,5 +1,5 @@
 .card_size {
-  @apply w-28 h-40;
+  @apply w-24 h-32;
 }
 
 .card_border {
@@ -56,7 +56,7 @@
   }
 }
 
-.card_highlighted {
+/* .card_highlighted {
   animation: highlight-animation 1s infinite;
 }
 
@@ -64,7 +64,7 @@
   50% {
     filter: brightness(140%);
   }
-}
+} */
 
 .image_border {
   @apply w-full rounded-sm overflow-hidden;

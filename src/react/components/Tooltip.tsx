@@ -28,7 +28,13 @@ export function Tooltip({ children, content, open, defaultOpen, side, onOpenChan
   // }, [open])
 
   return (
-    <TooltipPrimitive.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange} disableHoverableContent>
+    <TooltipPrimitive.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      disableHoverableContent
+      delayDuration={200}
+    >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <TooltipPrimitive.Portal>
         <TooltipPrimitive.Content side={side} align="center" style={{ zIndex: 999 }} {...props}>

@@ -1,6 +1,7 @@
 import { getDateString, getRandomInt, getSeedFromString } from "@/src/utils/randomNumber"
 import { cardDataMap } from "../cards/AllCards"
 import { CardName } from "../cards/CardName"
+import { PackVariant } from "../Packs"
 
 const COST_VARIANCE = 20
 
@@ -33,6 +34,23 @@ export const getShopCostForCard = (cardName: CardName) => {
 
   const costModifier =
     -costModifierVariance + getRandomInt(costModifierVariance * 2, getSeedFromString(`${getDateString()}-${cardName}`))
+
+  return costToReturn + costModifier
+}
+
+export const getShopCostForPack = (packVariant: PackVariant) => {
+  let costToReturn = 0
+  if (packVariant === "Standard Pack") {
+    costToReturn = 100
+  }
+  if (packVariant === "Elite Pack") {
+    costToReturn = 400
+  }
+
+  const costModifierVariance = Math.floor(costToReturn / 5)
+
+  const costModifier =
+    -costModifierVariance + getRandomInt(costModifierVariance * 2, getSeedFromString(`${getDateString()}`))
 
   return costToReturn + costModifier
 }

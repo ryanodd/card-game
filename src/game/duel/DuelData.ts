@@ -6,7 +6,7 @@ import { PlayerID } from "./PlayerData"
 
 import { ChoiceData } from "./choices/ChoiceData"
 
-export const GAME_START_NUM_TO_DRAW = 4
+export const GAME_START_NUM_TO_DRAW = 3
 
 export type AttackChangeModifier = {
   id: "attackChange"
@@ -63,12 +63,19 @@ export type PlayerState = {
   inPlay: CardState | null
   cardSelect: CardState[]
   energy: EnergyCounts
+  energyCapacity: number
   drawnDead: boolean
 }
 
+export type DuelReward = {
+  type: "gold"
+  goldQuantity: number
+}
+
 export type DuelInfo = {
-  goldReward: number
-  tutorial: true
+  reward?: DuelReward
+  leagueGame: boolean
+  tutorial: boolean
 }
 
 export type DuelState = {

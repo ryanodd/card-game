@@ -1,0 +1,43 @@
+.heroDialogOverlay {
+  @apply fixed inset-0 z-40 opacity-80 bg-stone-900;
+  animation: overlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+.heroDialogContent {
+  @apply fixed top-1/2 left-1/2 z-50 flex flex-col p-8 gap-8;
+  animation: contentShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  transform: translate(-50%, -50%);
+
+  /* TODO figure out how we want this to scale, allowing unlimited heroes + filtering.
+    We probably want pages.
+  */
+  width: 680px;
+  /* min-width: 60vw;
+  max-width: 90vw; */
+}
+
+.heroDialogCloseButton {
+  @apply absolute top-0 right-0;
+}
+
+.heroSelectContent {
+  @apply flex flex-col items-center p-4 gap-4;
+}
+
+.heroSelectTitle {
+  @apply text-6xl font-semibold text-white;
+}
+
+.heroRow {
+  @apply flex flex-wrap gap-2 overflow-y-auto;
+}

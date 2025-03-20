@@ -5,7 +5,7 @@ import { GameBackground } from "../components/GameBackground"
 import { useDuelState } from "../hooks/useDuelState"
 import { DuelPrompt } from "../components/DuelScreen/DuelPrompt"
 import { useGameStore } from "../hooks/useGameStore"
-import { PlayerFaceArea } from "../components/DuelScreen/PlayerFaceArea"
+import { HeroArea } from "../components/DuelScreen/HeroArea"
 import { PlayArea } from "../components/DuelScreen/PlayArea"
 import { AdvanceTurnButton } from "../components/DuelScreen/AdvanceTurnButton"
 
@@ -204,20 +204,20 @@ export const DuelScreen = ({}: DuelScreenProps) => {
           </div>
 
           <div className="flex justify-center gap-4 items-center">
-            <PlayerFaceArea duel={duel} playerId="human" />
+            <HeroArea duel={duel} playerId="human" />
             <PlayArea duel={duel} />
-            <PlayerFaceArea duel={duel} playerId="opponent" />
+            <HeroArea duel={duel} playerId="opponent" />
           </div>
-          <div className="w-full flex justify-between items-center p-4 gap-4 relative">
-            <DeckPile />
+          <div className="w-full flex justify-end items-center p-4 gap-4 relative">
             <HumanHand duel={duel} cardIds={humanHandCardIds} />
-            <div className="flex flex-col gap-2">
-              <AdvanceTurnButton duel={duel} />
-            </div>
+            <DeckPile />
           </div>
           <DuelMenuButton />
         </div>
         {debugEnabled && <DebugMenu />}
+        <div className="absolute bottom-56 right-4 z-20">
+          <AdvanceTurnButton duel={duel} />
+        </div>
         <DuelPrompt duel={duel} />
         <ControlButtonPopup duel={duel} />
       </DndContext>

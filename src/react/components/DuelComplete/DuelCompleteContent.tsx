@@ -1,4 +1,3 @@
-import { getDuelGoldReward } from "@/src/game/duel/control/onDuelWinner"
 import { useGameStore } from "../../hooks/useGameStore"
 import { GoldTotal } from "../GoldTotal"
 import { Button } from "../designSystem/Button"
@@ -22,7 +21,7 @@ export const DuelCompleteContent = ({}) => {
     return null
   }
 
-  const goldReward = getDuelGoldReward(duel)
+  const goldReward = duel.info.reward?.goldQuantity
 
   return (
     duel && (
@@ -39,7 +38,8 @@ export const DuelCompleteContent = ({}) => {
         </h2>
         <div className={styles.goldSection}>
           <GoldTotal value={game.gold} />
-          {goldReward > 0 && <p className={styles.goldRewardAmount}>+{goldReward} gold</p>}
+
+          {goldReward !== undefined && <p className={styles.goldRewardAmount}>+{goldReward} gold</p>}
         </div>
         <Button data-variant="primary" data-size="large" onClick={onConfirm}>
           OK

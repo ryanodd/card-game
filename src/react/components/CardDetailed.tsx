@@ -54,7 +54,7 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
       </div>
       <Image
         className="object-cover self-center rounded-md shadow-md pointer-events-none"
-        src={cardData.imageSrc}
+        src={cardData.imageSrcLarge}
         alt={cardData.name}
         width={512}
         height={512}

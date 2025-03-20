@@ -1,5 +1,5 @@
 import { DuelState } from "../DuelData"
-import { getCurrentDuelPlayer } from "../DuelHelpers"
+import { getCurrentDuelPlayer, getDuelPlayerById } from "../DuelHelpers"
 import { PlayerID } from "../PlayerData"
 
 export type PlayerGainEnergyParams = {
@@ -25,4 +25,14 @@ export const playerGainEnergy = (
   player.energy.earth = Math.min(player.energy.earth + (earth ?? 0), MAX_ENERGY)
   player.energy.air = Math.min(player.energy.air + (air ?? 0), MAX_ENERGY)
   return duel
+}
+
+export const playerResetEnergy = (inputDuel: DuelState, playerId: PlayerID) => {
+  let duel = inputDuel
+  const player = getDuelPlayerById(duel, playerId)
+  player.energy.neutral = 0
+  player.energy.fire = 0
+  player.energy.water = 0
+  player.energy.earth = 0
+  player.energy.air = 0
 }

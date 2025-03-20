@@ -1,0 +1,21 @@
+.leagueNextGameSection {
+  @apply h-96 bg-stone-900 bg-opacity-40;
+  @apply text-white;
+  @apply flex flex-col gap-8 p-8;
+}
+
+.leagueNextGameInfo {
+  @apply flex items-center gap-4;
+}
+
+.leagueNextGameTitle {
+  @apply mr-8;
+}
+
+.leagueDeckInfo {
+  @apply flex items-center gap-8;
+}
+
+.leagueVs {
+  @apply text-lg font-bold;
+}

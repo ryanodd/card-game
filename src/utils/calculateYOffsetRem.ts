@@ -1,8 +1,9 @@
 import { CardData } from "../game/cards/CardData"
+import { HeroData } from "../game/heroes/HeroData"
 
 // Assumes actual srcImage is square, and matches displayImage width
-export const calculateTranslateYOffsetRem = (cardData: CardData, width: number, height: number) => {
-  const imageCenterYRem = width * (cardData.imageCenterYPercent / 100) // what the 'centerY' of the image is, in rem
+export const calculateTranslateYOffsetRem = (cardOrHeroData: CardData | HeroData, width: number, height: number) => {
+  const imageCenterYRem = width * (cardOrHeroData.imageCenterYPercent / 100) // what the 'centerY' of the image is, in rem
   const toCenterY = height / 2
   const translateYOffsetResult = toCenterY - imageCenterYRem
 

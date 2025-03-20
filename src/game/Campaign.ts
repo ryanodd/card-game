@@ -1,42 +1,38 @@
-import { Deck } from "./Deck"
-import { deckMap } from "./Decks"
+import { Deck } from "./decks/Deck"
+import { deckMap } from "./decks/Decks"
+import { DuelReward } from "./duel/DuelData"
 
-export type Reward = {
-  type: "gold"
-  quantity: number
-}
-
-export type Challenge = {
+export type CampaignChallenge = {
   id: string
   title: string
   opponentDeck: Deck
-  reward: Reward
+  reward: DuelReward
 }
 
-export const challengeMap: Record<string, Challenge> = {
+export const campaignChallengeMap: Record<string, CampaignChallenge> = {
   playNow: {
     id: "playNow",
     title: "Play now",
     opponentDeck: deckMap.firstOpponent,
-    reward: { type: "gold", quantity: 10 },
+    reward: { type: "gold", goldQuantity: 50 },
   },
   tutorial1: {
     id: "tutorial1",
     title: "Tutorial 1",
     opponentDeck: deckMap.firstOpponent,
-    reward: { type: "gold", quantity: 10 },
+    reward: { type: "gold", goldQuantity: 50 },
   },
   tutorial2: {
     id: "tutorial2",
     title: "Tutorial 2",
     opponentDeck: deckMap.firstOpponent,
-    reward: { type: "gold", quantity: 10 },
+    reward: { type: "gold", goldQuantity: 50 },
   },
   tutorial3: {
     id: "tutorial3",
     title: "Tutorial 3",
     opponentDeck: deckMap.firstOpponent,
-    reward: { type: "gold", quantity: 10 },
+    reward: { type: "gold", goldQuantity: 50 },
   },
 }
 

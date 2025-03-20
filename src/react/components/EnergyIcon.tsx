@@ -80,3 +80,15 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
 
   return getEnergySvg()
 }
+
+export type EmptyEnergyIconProps = {
+  size: EnergyIconSize
+}
+
+export const EmptyEnergyIcon = ({ size }: EmptyEnergyIconProps) => {
+  return (
+    <div
+      className={`${styles.emptyEnergyIcon} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large}`}
+    />
+  )
+}

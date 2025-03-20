@@ -14,5 +14,5 @@ export const OpponentHand = ({ duel }: OpponentHandProps) => {
   const cardsToRender = opponentHandCards.map((card) => {
     return <DuelCard duel={duel} key={card.instanceId} playerId="opponent" cardState={card} />
   })
-  return <div className={`${styles.hand_container} `}>{cardsToRender}</div>
+  return <div className={`${styles.opponent_hand_container} `}>{cardsToRender}</div>
 }

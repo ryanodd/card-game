@@ -4,14 +4,14 @@ import { useGameStore } from "../../hooks/useGameStore"
 import { Button } from "../designSystem/Button"
 import styles from "../designSystem/Dialog.module.css"
 import { Close } from "../designSystem/Icon"
+import { ShopItem } from "@/src/game/shop/ShopItem"
 
 export type ShopBuyConfirmDialogProps = {
-  cardName: string
-  cost: number
+  shopItem: ShopItem
   onConfirm: () => void
   trigger: ReactNode
 }
-export const ShopBuyConfirmDialog = ({ cardName, cost, onConfirm, trigger }: ShopBuyConfirmDialogProps) => {
+export const ShopBuyConfirmDialog = ({ shopItem, onConfirm, trigger }: ShopBuyConfirmDialogProps) => {
   const [open, setOpen] = useState(false)
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -19,9 +19,9 @@ export const ShopBuyConfirmDialog = ({ cardName, cost, onConfirm, trigger }: Sho
       <Dialog.Portal>
         <Dialog.Overlay className={`${styles.dialogOverlay}`} />
         <Dialog.Content className={`${styles.dialogContent}`} data-size="sm">
-          <Dialog.Title className={`${styles.dialogTitle}`}>Buy {cardName}?</Dialog.Title>
+          <Dialog.Title className={`${styles.dialogTitle}`}>Buy {shopItem.title}?</Dialog.Title>
           <Dialog.Description className={`${styles.dialogDescription}`}>
-            Buy {cardName} for {cost} gold?
+            Buy {shopItem.title} for {shopItem.price} gold?
           </Dialog.Description>
           <Dialog.Close asChild>
             <Button className={`${styles.dialogCloseButton}`} data-variant="tertiary" data-icon-only>

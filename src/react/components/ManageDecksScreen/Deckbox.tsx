@@ -1,4 +1,4 @@
-import { Deck } from "@/src/game/Deck"
+import { Deck } from "@/src/game/decks/Deck"
 import { useGameStore } from "../../hooks/useGameStore"
 import { createNewEditDeckState } from "../../hooks/useEditDeckState"
 import { Button } from "../designSystem/Button"

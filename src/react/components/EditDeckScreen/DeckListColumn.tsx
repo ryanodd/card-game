@@ -6,6 +6,10 @@ import styles from "./Inventory.module.css"
 import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
 import { DeckListFooter } from "./DeckListFooter"
+import { HeroCell } from "./HeroCell"
+import { DefaultDialog } from "../designSystem/Dialog"
+import { HeroSelectDialogContent } from "./HeroSelectDialogContent"
+import { HeroSelectDialog } from "./HeroSelectDialog"
 
 export const DROPPABLE_ID_DECKLIST = "droppable-decklist"
 
@@ -44,6 +48,15 @@ export const DeckListColumn = () => {
 
   return (
     <div ref={setNodeRef} className={`${styles.deckListColumn} ${isOver ? "brightness-125" : ""}`}>
+      <HeroSelectDialog
+        open={editDeck.selectHeroDialogOpen}
+        onOpenChange={(open: boolean) => {
+          setEditDeck({ ...editDeck, selectHeroDialogOpen: open })
+        }}
+        trigger={<HeroCell heroName={editDeck.heroName} />}
+        content={<HeroSelectDialogContent />}
+      />
+
       <div className={`${styles.deckList} `}>
         {[...Object.keys(cardTotalsMap)].map((cardName) => (
           <DeckListCard key={cardName} cardName={cardName} quantity={cardTotalsMap[cardName]} />

@@ -21,7 +21,9 @@
 
 .playAreaDropTarget[data-highlighted="true"][data-dragging-over="false"],
 .rowHalfDropTarget[data-highlighted="true"][data-dragging-over="false"] {
-  animation: highlight-animation 0.8s infinite ease-in-out;
+  @apply bg-sky-300 opacity-20;
+  filter: brightness(140%);
+  /* animation: highlight-animation 0.8s infinite ease-in-out; */
 }
 
 .playAreaDropTarget[data-dragging-over="true"][data-selectable="true"],

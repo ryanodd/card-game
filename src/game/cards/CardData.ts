@@ -8,7 +8,8 @@ export type Keyword = "support" | "trample" | "shield"
 export type CardData =
   | {
       name: CardName
-      imageSrc: string
+      imageSrcSmall: string
+      imageSrcLarge: string
       imageCenterYPercent: number
       rarity: Rarity
       complete: boolean

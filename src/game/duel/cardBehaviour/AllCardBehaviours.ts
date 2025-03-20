@@ -120,9 +120,8 @@ export async function eerie_vision_play(inputDuel: DuelState, instanceId: string
   return duel
 }
 
-export async function eerie_vision_select_cards(inputDuel: DuelState, instanceId: string, selectedCardIds: string[]) {
+export async function eerie_vision_select_cards(inputDuel: DuelState, playerId: PlayerID, selectedCardIds: string[]) {
   let duel = inputDuel
-  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   duel = await scryEnd(duel, playerId, selectedCardIds)
 
   duel = await drawToHand(duel, playerId, 1)
@@ -446,7 +445,7 @@ export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
     },
   },
   "Something Bandit": { getValidTargets: getDefaultCreatureTargets },
-  "Something Raider": { getValidTargets: getDefaultCreatureTargets },
+  "Zardian Raider": { getValidTargets: getDefaultCreatureTargets },
   "Something Captain": { getValidTargets: getDefaultCreatureTargets },
   "Ilstrom, Tidal Inferno": { getValidTargets: getDefaultCreatureTargets },
   "Helix Stag": { getValidTargets: getDefaultCreatureTargets },
