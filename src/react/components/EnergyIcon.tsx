@@ -1,9 +1,6 @@
 import styles from "./Energy.module.css"
-import FireSVG from "../assets/fire.svg"
-import WaterSVG from "../assets/water.svg"
-import EarthSVG from "../assets/earth.svg"
-import AirSVG from "../assets/air.svg"
 import { EnergyType } from "@/src/game/duel/EnergyData"
+import { Air, Earth, Fire, Water } from "./designSystem/Icon"
 
 export type EnergyIconProps = {
   energyType: EnergyType
@@ -35,7 +32,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
             styles.fire_element
           }`}
         >
-          <FireSVG />
+          <Fire className={styles.energyIcon} size="md" />
         </div>
       )
     }
@@ -47,7 +44,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
           }`}
           data-available={available ?? true}
         >
-          <WaterSVG />
+          <Water size="md" />
         </div>
       )
     }
@@ -59,7 +56,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
           }`}
           data-available={available ?? true}
         >
-          <EarthSVG />
+          <Earth size="md" />
         </div>
       )
     }
@@ -71,7 +68,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
           }`}
           data-available={available ?? true}
         >
-          <AirSVG />
+          <Air size="sm" />
         </div>
       )
     }

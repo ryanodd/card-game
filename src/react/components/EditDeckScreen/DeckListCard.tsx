@@ -4,9 +4,9 @@ import { Tooltip } from "../Tooltip"
 import { useCallback } from "react"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
 import { CardName } from "@/src/game/cards/CardName"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 
 export const DECK_LIST_CARD_WIDTH_REMS = 20
 export const DECK_LIST_CARD_IMAGE_WIDTH_REMS = 16

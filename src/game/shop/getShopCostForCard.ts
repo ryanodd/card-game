@@ -1,7 +1,7 @@
 import { getDateString, getRandomInt, getSeedFromString } from "@/src/utils/randomNumber"
-import { cardDataMap } from "../cards/AllCards"
 import { CardName } from "../cards/CardName"
-import { PackVariant } from "../Packs"
+import { PackVariant } from "./Packs"
+import { cardDataMap } from "../cards/allCards/allCards"
 
 const COST_VARIANCE = 20
 

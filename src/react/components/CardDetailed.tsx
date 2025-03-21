@@ -6,8 +6,8 @@ import { CardData } from "@/src/game/cards/CardData"
 import { CardState } from "@/src/game/duel/DuelData"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
 
-export const CARD_IMAGE_WIDTH_REMS = 16
-export const CARD_IMAGE_HEIGHT_REMS = 12
+export const CARD_IMAGE_WIDTH_REMS = 16 - 1.75
+export const CARD_IMAGE_HEIGHT_REMS = 11
 
 export type CardDetailedProps = {
   cardData: CardData
@@ -48,7 +48,7 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
       className={`${cardStyles.card} ${cardStyles.full_card_size} ${cardStyles.full_card_border} bg-zinc-300 relative p-2 gap-2`}
       data-background={cardData.energyType}
     >
-      <div className="flex gap-0.5 items-center -ml-1 -my-1">
+      <div className={`${cardStyles.cardNameContainer}`}>
         {getCostIcons(cardData)}
         <h2 className={`${cardStyles.cardName} tracking-tight`}>{cardData.name}</h2>
       </div>

@@ -2,9 +2,9 @@ import { MainView } from "../components/MainView"
 import { Button } from "../components/designSystem/Button"
 import { useGameStore } from "../hooks/useGameStore"
 import { GameBackground } from "../components/GameBackground"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardDetailed } from "../components/CardDetailed"
 import { Footer } from "../components/Footer"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 
 export const OpenPackScreen = () => {
   const { game, setGame } = useGameStore()
@@ -21,11 +21,11 @@ export const OpenPackScreen = () => {
       <div className="w-full h-full flex flex-col">
         <div className="grow flex flex-col p-8 gap-8">
           <div className="flex flex-col gap-4">
-            <h1 className="text-5xl text-stone-50">Open pack</h1>
+            <h1 className="text-5xl text-stone-50">Opened pack</h1>
           </div>
           <div className="grow flex gap-2">
-            {cardsOpened.map((cardName) => {
-              return <CardDetailed cardData={cardDataMap[cardName]} />
+            {cardsOpened.map((cardName, i) => {
+              return <CardDetailed key={i} cardData={cardDataMap[cardName]} />
             })}
           </div>
         </div>

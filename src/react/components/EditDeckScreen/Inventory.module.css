@@ -1,4 +1,15 @@
-.inventoryContainer {
+.inventoryBrowser {
+  @apply grow flex flex-col;
+}
+
+.inventoryFiltersContainer {
+  @apply flex gap-8 p-4;
+}
+.inventoryFiltersSection {
+  @apply flex gap-1;
+}
+
+.inventoryGridContainer {
   @apply grow flex flex-row items-center px-4;
 }
 
@@ -7,8 +18,10 @@
 }
 
 .inventoryGrid {
-  @apply h-full grid justify-center gap-1;
-  grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+  @apply h-full grid justify-center;
+
+  /* There is a value that must match this value in InventoryGrid.tsx! */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   /* @apply h-full flex flex-wrap justify-center overflow-y-scroll gap-2.5; */
 }
 

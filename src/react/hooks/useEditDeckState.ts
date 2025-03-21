@@ -1,9 +1,9 @@
 import { Deck } from "@/src/game/decks/Deck"
 import { useGameStore } from "./useGameStore"
-import { EditDeckState } from "@/src/game/GameData"
+import { EditDeckScreenState } from "@/src/game/GameData"
 import { v4 } from "uuid"
 
-export const createNewEditDeckState = (deck: Deck | null): EditDeckState => {
+export const createNewEditDeckState = (deck: Deck | null): EditDeckScreenState => {
   return {
     id: "editDeck",
     deckId: deck?.id ?? null,
@@ -22,14 +22,14 @@ export const useEditDeckState = () => {
     throw Error("Tried to use editDeck state when not on the deck building screen!")
   }
 
-  const setEditDeck = (editDeck: EditDeckState) => {
+  const setEditDeck = (editDeck: EditDeckScreenState) => {
     setGame({
       ...game,
       screen: editDeck,
     })
   }
   return {
-    editDeck: game.screen as EditDeckState,
+    editDeck: game.screen as EditDeckScreenState,
     setEditDeck,
   }
 }

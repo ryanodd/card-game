@@ -9,9 +9,9 @@ import { useState } from "react"
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
 import { confirmStart_execute } from "@/src/game/duel/choices/confirmStart"
 import { CardDetailed } from "../CardDetailed"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardDetailedScaled } from "../CardDetailedScaled"
 import { cardSelect_execute } from "@/src/game/duel/choices/cardSelect"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 
 export type CardSelectContentProps = {
   duel: DuelState

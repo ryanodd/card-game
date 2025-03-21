@@ -1,18 +1,15 @@
 import { CardData } from "@/src/game/cards/CardData"
 import { InventoryQuantityIndicator } from "../EditDeckScreen/InventoryQuantityIndicator"
 import { useGameStore } from "../../hooks/useGameStore"
-import { CardName } from "@/src/game/cards/CardName"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardDetailed } from "../CardDetailed"
 import styles from "./ShopCell.module.css"
 import { COLLECTION_MAX_PER_CARD } from "@/src/game/GameData"
 import { getShopCostForCard } from "@/src/game/shop/getShopCostForCard"
 import { ShopBuyConfirmDialog } from "./ShopBuyConfirmDialog"
-import { PackVariant } from "@/src/game/Packs"
-import { addPack } from "@/src/game/shop/addPack"
 import { buyShopItem } from "@/src/game/shop/buyShopItem"
 import { Pack } from "../PackScreen/Pack"
 import { ShopItem } from "@/src/game/shop/ShopItem"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 
 export type ShopCellProps = {
   shopItem: ShopItem

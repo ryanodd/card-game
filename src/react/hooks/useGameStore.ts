@@ -1,7 +1,6 @@
 import { DECK_MIN_SIZE } from "@/src/game/decks/Deck"
 import { deckMap } from "@/src/game/decks/Decks"
 import { GameState } from "@/src/game/GameData"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
 import { HeroName } from "@/src/game/duel/heroBehaviour/HeroName"
 import { heroDataMap } from "@/src/game/heroes/AllHeroes"
@@ -9,6 +8,7 @@ import { loadGameFromLocalStorage, saveGameToLocalStorage } from "@/src/utils/lo
 import { create } from "zustand"
 import { generateDeck } from "@/src/game/decks/generateDeck"
 import { createLeague } from "@/src/game/league/createLeague"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 
 export const ALL_CARDS_COLLECTION: Record<CardName, number> = {
   ...Object.values(cardDataMap).reduce((prev, cardData) => {

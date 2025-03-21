@@ -6,9 +6,9 @@
   @apply self-center text-stone-50  text-4xl;
 }
 
-.duelSetupReward {
+/* .duelSetupReward {
   @apply mb-8 self-center text-stone-50 text-xl;
-}
+} */
 
 .duelSetupActionRow {
   @apply self-stretch flex flex-row gap-4;

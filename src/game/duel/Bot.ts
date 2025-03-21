@@ -12,7 +12,6 @@ import { takeTurn_getValidTargetsForCard } from "./choices/takeTurn/getValidTarg
 import { cardSelect_execute } from "./choices/cardSelect"
 import { mulligan_execute } from "./choices/mulligan"
 import { EnergyCounts } from "./EnergyData"
-import { cardDataMap } from "../cards/AllCards"
 import { takeTurn_getPlayableHandCardIds } from "./choices/takeTurn/getPlayableHandCardIds"
 
 export async function executeChoiceForOpponent(inputDuel: DuelState): Promise<DuelState> {

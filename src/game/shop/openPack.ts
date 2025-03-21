@@ -1,80 +1,11 @@
-import { getRandomInt, getRandomItemFromArray, getRandomSeed } from "../utils/randomNumber"
-import { cardDataMap } from "./cards/AllCards"
-import { Rarity } from "./cards/CardData"
-import { CardName } from "./cards/CardName"
-import { GameState } from "./GameData"
+import { getRandomInt, getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
+import { Rarity } from "../cards/CardData"
+import { CardName } from "../cards/CardName"
+import { GameState } from "../GameData"
+import { packOddsByVariant, PackVariant, RarityOdds } from "./Packs"
+import { cardDataMap } from "../cards/allCards/allCards"
 
-export type PackVariant = "Standard Pack" | "Elite Pack" // | "mythic"
-
-export type RarityOdds = Record<Rarity, number>
-
-export type PackOdds = {
-  baseOdds: RarityOdds
-  finalCardOdds: RarityOdds
-}
-
-export const packOddsByVariant: Record<PackVariant, PackOdds> = {
-  "Standard Pack": {
-    baseOdds: {
-      base: 0,
-      common: 80,
-      uncommon: 17,
-      rare: 2,
-      epic: 0.9,
-      legendary: 0.09,
-      mythic: 0.01,
-    },
-    finalCardOdds: {
-      base: 0,
-      common: 0,
-      uncommon: 0,
-      rare: 92,
-      epic: 7,
-      legendary: 0.99,
-      mythic: 0.01,
-    },
-  },
-  "Elite Pack": {
-    baseOdds: {
-      base: 0,
-      common: 35,
-      uncommon: 35,
-      rare: 25,
-      epic: 4,
-      legendary: 0.45,
-      mythic: 0.05,
-    },
-    finalCardOdds: {
-      base: 0,
-      common: 0,
-      uncommon: 0,
-      rare: 0,
-      epic: 40,
-      legendary: 40,
-      mythic: 10,
-    },
-  },
-  // mythic: {
-  //   baseOdds: {
-  //     base: 0,
-  //     common: 80,
-  //     uncommon: 0,
-  //     rare: 0,
-  //     epic: 0,
-  //     legendary: 0,
-  //     mythic: 0,
-  //   },
-  //   finalCardOdds: {
-  //     base: 0,
-  //     common: 80,
-  //     uncommon: 0,
-  //     rare: 0,
-  //     epic: 0,
-  //     legendary: 0,
-  //     mythic: 0,
-  //   },
-  // },
-}
+const CARDS_PER_PACK = 4
 
 const cardNamesByRarity: Record<Rarity, CardName[]> = {
   base: Object.values(cardDataMap)
@@ -114,7 +45,6 @@ const cardNamesByRarity: Record<Rarity, CardName[]> = {
     .map((cardData) => cardData.name),
 }
 
-const CARDS_PER_PACK = 4
 // Smallest possible percent difference between card rarities
 const RANDOMNESS_SENSITIVITY = 0.001
 
@@ -124,7 +54,7 @@ export const getRandomRarityByRarityOdds = (rarityodds: RarityOdds) => {
 
   let raritySelected: Rarity = "base"
   let runningTotal = 0
-  for (let [rarity, odd] of Object.entries(rarityodds)) {
+  for (const [rarity, odd] of Object.entries(rarityodds)) {
     runningTotal += odd
     if (rarityPercentile < runningTotal) {
       raritySelected = rarity as Rarity

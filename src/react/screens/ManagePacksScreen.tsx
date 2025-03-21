@@ -4,7 +4,7 @@ import { useGameStore } from "../hooks/useGameStore"
 import { GameBackground } from "../components/GameBackground"
 import { Footer } from "../components/Footer"
 import { PackCell } from "../components/PackScreen/PackCell"
-import { PackVariant } from "@/src/game/Packs"
+import { PackVariant } from "@/src/game/shop/Packs"
 
 export const ManagePacksScreen = () => {
   const { game, setGame } = useGameStore()
@@ -23,7 +23,7 @@ export const ManagePacksScreen = () => {
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl text-stone-50">Packs</h1>
           </div>
-          <div className="grow flex gap-2">
+          <div className="grow flex items-center gap-2">
             {Object.keys(packVariantCounts).map((packVariant) => {
               if (packVariantCounts[packVariant as PackVariant] === 0) {
                 return null

@@ -1,4 +1,3 @@
-import { cardDataMap } from "../cards/AllCards"
 import { CardState, DuelReward, DuelState } from "./DuelData"
 import { v4 } from "uuid"
 import { GameState, getActiveDeck } from "../GameData"
@@ -9,6 +8,7 @@ import { heroDataMap } from "../heroes/AllHeroes"
 import { LeagueGame } from "../league/leagueTypes"
 import { campaignChallengeMap } from "../Campaign"
 import { generateDeck } from "../decks/generateDeck"
+import { cardDataMap } from "../cards/allCards/allCards"
 
 export const STARTING_HEALTH = 15
 

@@ -1,0 +1,12 @@
+.packCell {
+  @apply rounded-md;
+  @apply flex flex-col items-center gap-2 p-8;
+}
+
+.packCell:hover {
+  @apply bg-gray-100 bg-opacity-10 shadow-md;
+}
+
+.packQuantity {
+  @apply text-4xl text-white font-bold;
+}

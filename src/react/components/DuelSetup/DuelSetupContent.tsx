@@ -30,12 +30,9 @@ export const DuelSetupContent = ({ duelEntryPoint }: DuelSetupContentProps) => {
     })
   }
 
-  const rewardMessage = `Reward: unknown`
-
   return (
     <div className={styles.duelSetupContent}>
       <h1 className={styles.duelSetupTitle}>Ready to start duel?</h1>
-      <h2 className={styles.duelSetupReward}>{rewardMessage}</h2>
       <div className={styles.duelSetupActionRow}>
         <Button data-variant="secondary" data-size="large" onClick={onChangeDeck} style={{ flexBasis: 0, flexGrow: 1 }}>
           Change decks

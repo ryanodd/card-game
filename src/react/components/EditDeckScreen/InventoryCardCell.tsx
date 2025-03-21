@@ -3,6 +3,7 @@ import { InventoryCard } from "./InventoryCard"
 import { useGameStore } from "../../hooks/useGameStore"
 import { InventoryQuantityIndicator } from "./InventoryQuantityIndicator"
 import { CardDetailed } from "../CardDetailed"
+import { Button } from "../designSystem/Button"
 
 export type InventoryCardProps = {
   cardData: CardData
@@ -17,9 +18,17 @@ export const InventoryCardCell = ({ cardData, draggable = false }: InventoryCard
     game.screen.id === "editDeck" ? game.screen.cardNames.filter((cardName) => cardName === cardData.name).length : 0
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center justify-center">
       {draggable ? <InventoryCard cardData={cardData} /> : <CardDetailed cardData={cardData} />}
-      <InventoryQuantityIndicator quantity={collectionQuantity} quantityInDeck={deckQuantity} />
+      <div className="flex items-center">
+        <Button data-size="small" data-icon-only>
+          -
+        </Button>
+        <InventoryQuantityIndicator quantity={collectionQuantity} quantityInDeck={deckQuantity} />
+        <Button data-size="small" data-icon-only>
+          +
+        </Button>
+      </div>
     </div>
   )
 }

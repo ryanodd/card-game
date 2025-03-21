@@ -1,4 +1,4 @@
-import { cardDataMap } from "./cards/AllCards"
+import { cardDataMap } from "./cards/allCards/allCards"
 import { CardData } from "./cards/CardData"
 import { CardName } from "./cards/CardName"
 import { EnergyCounts, EnergyType } from "./duel/EnergyData"

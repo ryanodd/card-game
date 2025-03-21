@@ -3,18 +3,18 @@ import { GameBackground } from "../components/GameBackground"
 import { useCallback, useEffect } from "react"
 
 import { useEditDeckState } from "../hooks/useEditDeckState"
-import { InventoryBrowser } from "../components/EditDeckScreen/InventoryBrowser"
 import { useGameStore } from "../hooks/useGameStore"
 import { DragOverlay, useDndContext } from "@dnd-kit/core"
 import { Button } from "../components/designSystem/Button"
 import { DeckListColumn } from "../components/EditDeckScreen/DeckListColumn"
 import { InventoryCard } from "../components/EditDeckScreen/InventoryCard"
 import { EditDeckCancelDialog } from "../components/EditDeckScreen/EditDeckCancelDialog"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
 import { Footer } from "../components/Footer"
 import { Deck } from "@/src/game/decks/Deck"
 import { v4 } from "uuid"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+import { InventoryBrowser } from "../components/EditDeckScreen/InventoryBrowser"
 
 export type EditDeckScreenProps = {}
 

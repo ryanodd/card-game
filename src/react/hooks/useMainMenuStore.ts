@@ -5,7 +5,7 @@ export type ManageDecksStorePayload = {
   setRenamingDeck: (deckId: string | null) => void
 }
 
-export const ManageDecksStore = create<ManageDecksStorePayload>((set) => ({
+export const useManageDecksStore = create<ManageDecksStorePayload>((set) => ({
   renamingDeckId: null,
   setRenamingDeck: (deckId) => set({ renamingDeckId: deckId }),
 }))

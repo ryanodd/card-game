@@ -1,5 +1,4 @@
-import { openPack, PackVariant } from "@/src/game/Packs"
-import { useGameStore } from "../../hooks/useGameStore"
+import { PackVariant } from "@/src/game/shop/Packs"
 import styles from "./Pack.module.css"
 import cardStyles from "../Card.module.css"
 import { ComponentPropsWithoutRef, forwardRef } from "react"
@@ -15,3 +14,5 @@ export const Pack = forwardRef<HTMLButtonElement, PackProps>(({ variant, ...prop
     </button>
   )
 })
+
+Pack.displayName = "Pack"

@@ -1,27 +1,7 @@
-import { CardData } from "./CardData"
-import { CardName } from "./CardName"
+import { CardData } from "../CardData"
+import { CardName } from "../CardName"
 
-let cards: CardData[] = []
-
-cards.push({
-  name: "Golden Friend",
-  imageSrcSmall: "/card-art/96x96/goldenFriend.png",
-  imageSrcLarge: "/card-art/512x512/goldenFriend.png",
-  imageCenterYPercent: 55,
-  rarity: "base",
-  complete: true,
-  energyType: "neutral",
-  cardType: "creature",
-  attack: 2,
-  health: 2,
-  cost: {
-    neutral: 2,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-})
+const cards: CardData[] = []
 
 // Support: the opposing active creature has a 20% chance of getting poisoned
 cards.push({
@@ -104,26 +84,6 @@ cards.push({
     water: 0,
     earth: 0,
     air: 1,
-  },
-})
-
-cards.push({
-  name: "Elder Saurus",
-  imageSrcSmall: "/card-art/96x96/elderSaurus.png",
-  imageSrcLarge: "/card-art/512x512/elderSaurus.png",
-  imageCenterYPercent: 45,
-  rarity: "base",
-  complete: true,
-  energyType: "neutral",
-  cardType: "creature",
-  attack: 5,
-  health: 5,
-  cost: {
-    neutral: 5,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 0,
   },
 })
 
@@ -482,28 +442,6 @@ cards.push({
 })
 
 cards.push({
-  name: "Dragon Cub",
-  imageSrcSmall: "/card-art/96x96/dragonCub.png",
-  imageSrcLarge: "/card-art/512x512/dragonCub.png",
-  imageCenterYPercent: 30,
-  rarity: "base",
-  complete: true,
-  energyType: "fire",
-  cardType: "creature",
-  attack: 2,
-  health: 2,
-  cost: {
-    neutral: 1,
-    fire: 1,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-  text: "Support: 30% chance to burn opposing creature.",
-  keywords: ["support"],
-})
-
-cards.push({
   name: "Glikki Forager",
   imageSrcSmall: "/card-art/96x96/glikkiTracker.png",
   imageSrcLarge: "/card-art/512x512/glikkiTracker.png",
@@ -629,25 +567,7 @@ cards.push({
     air: 0,
   },
 })
-cards.push({
-  name: "Zardian Raider",
-  imageSrcSmall: "/card-art/96x96/zardianRaider.png",
-  imageSrcLarge: "/card-art/512x512/zardianRaider.png",
-  imageCenterYPercent: 40,
-  rarity: "base",
-  complete: true,
-  energyType: "neutral",
-  cardType: "creature",
-  attack: 3,
-  health: 3,
-  cost: {
-    neutral: 3,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-})
+
 cards.push({
   name: "Something Captain",
   imageSrcSmall: "/card-art/96x96/somethingCaptain.png",
@@ -863,25 +783,7 @@ cards.push({
   },
   text: "Support: Add +1 burn to a random enemy creature.",
 })
-cards.push({
-  name: "Emerald Makasaur",
-  imageSrcSmall: "/card-art/96x96/emeraldMakasaur.png",
-  imageSrcLarge: "/card-art/512x512/emeraldMakasaur.png",
-  imageCenterYPercent: 60,
-  rarity: "base",
-  complete: true,
-  energyType: "neutral",
-  cardType: "creature",
-  attack: 4,
-  health: 4,
-  cost: {
-    neutral: 4,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-})
+
 cards.push({
   name: "Dazzling Fennec",
   imageSrcSmall: "/card-art/96x96/dazzlingFennec.png",
@@ -1065,19 +967,23 @@ cards.push({
   },
 })
 
+// Used https://deepai.org/ for image generation
 // Used https://www.iloveimg.com/ for image resizing
 
 // Ideas
-// - When this creature takes damage, restore it to full health (Mythic?)
-// - cards (in target row?) fight until they can't any more
+// - water/earth: When this creature takes damage, restore it to full health (Mythic?)
+// - fire: cards (in target row?) fight until they can't any more
 // - fire attack: 2 mana, 3 damage to something
 // - wind: Target creature in an inactive slot swaps places with the active slot
-// - wind: destroy monument
-// - earth: monument, gives all creatures +2 health
+
 // - blue: draw cards
 // - green: lil guys
 // - green: deathrattle
 // - red: attack buff
+
+// Are 0-attack minions possible?? No...
+// - earth: 0/1 monument, gives all creatures +2 health
+// - air: 0/2 egg hatches into monster
 
 export const cardDataMap: Record<CardName, CardData> = cards.reduce((cardsByName, card) => {
   cardsByName[card.name] = card

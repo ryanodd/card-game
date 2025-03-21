@@ -1,6 +1,3 @@
-import { getEnergyCountsFromSelected } from "@/src/react/hooks/useDuelUIStore"
-import { cardDataMap } from "../cards/AllCards"
-import { EnergyType } from "../duel/EnergyData"
 import { HeroName } from "../duel/heroBehaviour/HeroName"
 import { getEnergyTypesFromEnergyCounts, sortCardNames } from "../helpers"
 import { heroDataMap } from "../heroes/AllHeroes"
@@ -8,6 +5,7 @@ import { Deck } from "./Deck"
 import { v4 } from "uuid"
 import { getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
 import { CardName } from "../cards/CardName"
+import { cardDataMap } from "../cards/allCards/allCards"
 
 const NUM_CARDS_PER_DECK = 40
 

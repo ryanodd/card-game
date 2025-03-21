@@ -19,19 +19,23 @@
 }
 
 .fire_element {
-  @apply bg-orange-400;
+  @apply bg-flush-mahogany-500;
 }
 
 .water_element {
-  @apply bg-cyan-400;
+  @apply bg-shakespeare-400;
 }
 
 .earth_element {
-  @apply bg-lime-500;
+  @apply bg-de-york-500;
 }
 
 .air_element {
-  @apply bg-purple-400;
+  @apply bg-lavender-500;
+}
+
+.energyIcon {
+  @apply w-full h-full;
 }
 
 .emptyEnergyIcon {

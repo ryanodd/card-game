@@ -7,12 +7,12 @@
 }
 
 .cardNameContainer {
-  @apply bg-gray-200 bg-opacity-40 shadow-md pl-2 pr-3 py-0.5;
+  @apply bg-gray-200 bg-opacity-40 shadow-md pl-2 pr-4 py-1;
   @apply flex gap-0.5 items-center -ml-2 -mr-2;
 }
 
 .cardName {
-  @apply ml-auto line-clamp-1 text-sm text-neutral-900 font-semibold;
+  @apply ml-auto line-clamp-1 text-neutral-900 font-semibold;
 }
 
 .attackIndicator {
@@ -39,7 +39,7 @@
 }
 
 .card[data-background="earth"] {
-  @apply bg-de-york-500;
+  @apply bg-emerald-600;
 }
 
 .card[data-background="air"] {
@@ -76,8 +76,7 @@
 }
 
 .full_card_size {
-  width: 16rem;
-  height: 22rem;
+  @apply w-72 h-80;
 }
 
 .full_card_border {
@@ -86,7 +85,7 @@
 }
 
 .textContainer {
-  @apply grow bg-slate-200 bg-opacity-40 rounded-md shadow-md px-4 py-2 flex justify-center items-center;
+  @apply grow bg-slate-200 bg-opacity-40 rounded-sm shadow-md px-4 py-2 flex justify-center items-center;
 }
 
 .cardText {

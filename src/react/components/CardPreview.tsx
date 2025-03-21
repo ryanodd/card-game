@@ -4,9 +4,9 @@ import { EnergyIcon } from "./EnergyIcon"
 import { CardDetailed } from "./CardDetailed"
 import { Tooltip } from "./Tooltip"
 import { CardState, DuelState } from "@/src/game/duel/DuelData"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { getEffectiveAttack } from "@/src/game/duel/helpers/getEffectiveAttack"
 import { getEffectiveHealth } from "@/src/game/duel/helpers/getEffectiveHealth"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 
 export const getCardHealthDisplayValue = (cardState: CardState) => {
   if (cardState.cardType === "creature") {

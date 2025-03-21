@@ -1,76 +1,57 @@
-import { useGameStore } from "../../hooks/useGameStore"
-import { InventoryCard } from "./InventoryCard"
-import { sortCardNames } from "@/src/game/helpers"
-import styles from "./Inventory.module.css"
-import { cardDataMap } from "@/src/game/cards/AllCards"
 import { CardName } from "@/src/game/cards/CardName"
-import { InventoryCardCell } from "./InventoryCardCell"
-import { Button } from "../designSystem/Button"
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
-import { ArrowLeft, ArrowRight } from "../designSystem/Icon"
+import { useGameStore } from "../../hooks/useGameStore"
+import { InventoryGrid } from "./InventoryGrid"
+import { getEnergyTypesFromEnergyCounts, sortCardNames } from "@/src/game/helpers"
+import { GameState } from "@/src/game/GameData"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+
+import styles from "./Inventory.module.css"
+import { Filters, useInventoryBrowserStore } from "../../hooks/useInventoryBrowserStore"
+import { InventoryFilters } from "./InventoryFilters"
+
+export const filterCardNames = (game: GameState, cardNames: CardName[], filters: Filters) => {
+  let cardNamesToReturn = cardNames
+  if (!filters.ownership.unowned) {
+    cardNamesToReturn = cardNamesToReturn.filter((cardName) => {
+      return game.cardCollection[cardName] > 0
+    })
+  }
+  cardNamesToReturn = cardNamesToReturn.filter((cardName) => {
+    const cardEnergyTypes = getEnergyTypesFromEnergyCounts(cardDataMap[cardName].cost)
+    for (const cardEnergyType of cardEnergyTypes) {
+      if (filters.energyType[cardEnergyType] && !(cardEnergyType === "neutral" && cardEnergyTypes.length > 1)) {
+        return true
+      }
+    }
+    return false
+  })
+
+  for (const [rarity, shouldInclude] of Object.entries(filters.rarity)) {
+    if (!shouldInclude) {
+      cardNamesToReturn = cardNamesToReturn.filter((cardName) => {
+        return cardDataMap[cardName].rarity !== rarity
+      })
+    }
+  }
+
+  return cardNamesToReturn
+}
 
 export type InventoryBrowserProps = {
   cardsDraggable?: boolean
 }
 
-const INVENTORY_CARD_APPROXIMATE_WIDTH = 296
-
-export const InventoryBrowser = ({ cardsDraggable = false }: InventoryBrowserProps) => {
+export const InventoryBrowser = ({ cardsDraggable }: InventoryBrowserProps) => {
   const { game } = useGameStore()
-  const cardList = sortCardNames([...Object.keys(game.cardCollection)] as CardName[])
+  const { filters } = useInventoryBrowserStore()
 
-  const inventoryGridRef = useRef<HTMLDivElement | null>(null)
-  const [cardsPerPage, setCardsPerPage] = useState(8)
-  useLayoutEffect(() => {
-    function updateSize() {
-      if (inventoryGridRef.current) {
-        setCardsPerPage(
-          Math.max(
-            1,
-            2 * Math.floor(inventoryGridRef.current?.getBoundingClientRect().width / INVENTORY_CARD_APPROXIMATE_WIDTH)
-          )
-        )
-      }
-    }
-    window.addEventListener("resize", updateSize)
-    updateSize()
-    return () => window.removeEventListener("resize", updateSize)
-  }, [])
-
-  useEffect(() => {
-    setCurrentPageNumber(0)
-  }, [cardsPerPage])
-
-  const [currentPageNumber, setCurrentPageNumber] = useState(0)
-  const totalPages = Math.ceil(cardList.length / cardsPerPage)
+  let cardList = filterCardNames(game, [...Object.keys(game.cardCollection)] as CardName[], filters)
+  cardList = sortCardNames(cardList)
 
   return (
-    <div className={styles.inventoryContainer}>
-      <Button
-        onClick={() => {
-          setCurrentPageNumber(Math.max(0, currentPageNumber - 1))
-        }}
-        disabled={currentPageNumber <= 0}
-        data-icon-only
-      >
-        <ArrowLeft />
-      </Button>
-      <div className={`flex-grow ${styles.inventoryGrid}`} ref={inventoryGridRef}>
-        {cardList
-          .slice(currentPageNumber * cardsPerPage, currentPageNumber * cardsPerPage + cardsPerPage)
-          .map((cardName) => (
-            <InventoryCardCell key={cardName} cardData={cardDataMap[cardName]} draggable={cardsDraggable} />
-          ))}
-      </div>
-      <Button
-        onClick={() => {
-          setCurrentPageNumber(Math.min(totalPages - 1, currentPageNumber + 1))
-        }}
-        disabled={currentPageNumber >= totalPages - 1}
-        data-icon-only
-      >
-        <ArrowRight />
-      </Button>
+    <div className={styles.inventoryBrowser}>
+      <InventoryFilters />
+      <InventoryGrid cards={cardList} cardsDraggable={cardsDraggable} />
     </div>
   )
 }

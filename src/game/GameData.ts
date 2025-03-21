@@ -4,9 +4,11 @@ import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
 import { HeroName } from "./duel/heroBehaviour/HeroName"
 import { League } from "./league/leagueTypes"
-import { PackVariant } from "./Packs"
+import { PackVariant } from "./shop/Packs"
+import { EnergyType } from "./duel/EnergyData"
+import { Rarity } from "./cards/CardData"
 
-export type MainMenuState = {
+export type MainMenuScreenState = {
   id: "mainMenu"
 }
 
@@ -16,7 +18,7 @@ export type DuelScreenState = {
   debugUiOpen: boolean
 }
 
-export type EditDeckState = {
+export type EditDeckScreenState = {
   id: "editDeck"
   deckId: string | null
   deckName: string
@@ -25,21 +27,25 @@ export type EditDeckState = {
   selectHeroDialogOpen: boolean
 }
 
-export type OpenPackState = {
+export type CollectionScreenState = {
+  id: "collection"
+}
+
+export type OpenPackScreenState = {
   id: "openPack"
   cardsOpened: CardName[]
 }
 
 export type ScreenState =
-  | MainMenuState
+  | MainMenuScreenState
   | { id: "league" }
   | { id: "campaignSelect" }
   | { id: "shop" }
   | { id: "managePacks" }
-  | OpenPackState
+  | OpenPackScreenState
   | { id: "manageDecks" }
-  | EditDeckState
-  | { id: "collection" }
+  | EditDeckScreenState
+  | CollectionScreenState
   | DuelScreenState
 
 export type SettingsState = {
