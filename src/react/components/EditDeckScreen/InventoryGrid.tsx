@@ -57,7 +57,12 @@ export const InventoryGrid = ({ cards, cardsDraggable = false }: InventoryBrowse
         {cards
           .slice(currentPageNumber * cardsPerPage, currentPageNumber * cardsPerPage + cardsPerPage)
           .map((cardName) => (
-            <InventoryCardCell key={cardName} cardData={cardDataMap[cardName]} draggable={cardsDraggable} />
+            <InventoryCardCell
+              key={cardName}
+              cardData={cardDataMap[cardName]}
+              showAddSubtractControls={cardsDraggable}
+              draggable={cardsDraggable}
+            />
           ))}
       </div>
       <Button

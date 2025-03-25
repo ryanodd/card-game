@@ -1,5 +1,5 @@
 .shopCell {
-  @apply flex flex-col items-center gap-2;
+  @apply flex flex-col items-center gap-1;
 }
 
 .shopCellButton {
@@ -10,10 +10,18 @@
   @apply bg-opacity-30 bg-stone-100;
 }
 
+.shopCellButton:disabled {
+  @apply opacity-25;
+}
+
 .shopPrice {
   @apply text-3xl font-semibold text-stone-100;
+  @apply flex items-center gap-1;
 }
 
 .shopPrice[data-can-afford="false"] {
   @apply text-red-400;
+}
+.shopPrice[data-disabled="true"] {
+  @apply opacity-25;
 }

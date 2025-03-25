@@ -47,7 +47,7 @@
 }
 
 .card[data-background="multi"] {
-  @apply bg-yellow-500;
+  @apply bg-barley-corn-600;
 }
 
 .card[data-background="neutral"] {
@@ -86,11 +86,29 @@
 }
 
 .textContainer {
-  @apply grow bg-slate-200 bg-opacity-40 rounded-md shadow-md px-4 py-2 flex justify-center items-center;
+  @apply grow bg-slate-200 bg-opacity-40 rounded-md shadow-md px-4 py-2 flex flex-col gap-1.5 justify-center items-center;
 }
 
 .cardText {
-  @apply -mt-2 text-gray-950 text-left text-xs leading-3;
+  @apply text-center text-sm;
+  line-height: 0.9rem;
+}
+/* To compensate for the line height that ISN'T applied between multiple inline spans */
+.cardText *:not(:first-child) {
+  margin-top: -0.15rem;
+}
+
+.cardTextPlain {
+  @apply text-gray-950;
+}
+
+.cardTextBold {
+  @apply font-bold;
+}
+
+.cardText svg {
+  @apply inline;
+  transform: translateY(-0.05rem);
 }
 
 .cardCaptionRow {

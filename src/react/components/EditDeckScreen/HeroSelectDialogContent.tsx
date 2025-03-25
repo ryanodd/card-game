@@ -22,7 +22,7 @@ export const HeroSelectDialogContent = () => {
         {heroList.map((heroName) => {
           const heroData = heroDataMap[heroName]
           return (
-            <button className={styles.heroButton} onClick={() => onSelectHero(heroName)}>
+            <button key={heroName} className={styles.heroButton} onClick={() => onSelectHero(heroName)}>
               <HeroDetailed heroData={heroData} />
             </button>
           )

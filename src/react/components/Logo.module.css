@@ -1,0 +1,8 @@
+.logoContainer {
+  @apply rounded-md overflow-hidden relative;
+}
+
+.logoImage {
+  width: 30rem;
+  @apply relative scale-125;
+}

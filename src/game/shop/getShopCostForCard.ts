@@ -1,7 +1,7 @@
 import { getDateString, getRandomInt, getSeedFromString } from "@/src/utils/randomNumber"
 import { CardName } from "../cards/CardName"
-import { PackVariant } from "./Packs"
 import { cardDataMap } from "../cards/allCards/allCards"
+import { PackVariant } from "../GameData"
 
 const COST_VARIANCE = 20
 
@@ -12,22 +12,22 @@ export const getShopCostForCard = (cardName: CardName) => {
     costToReturn = 0
   }
   if (cardData.rarity === "common") {
-    costToReturn = 80
+    costToReturn = 45
   }
   if (cardData.rarity === "uncommon") {
-    costToReturn = 160
+    costToReturn = 140
   }
   if (cardData.rarity === "rare") {
-    costToReturn = 420
+    costToReturn = 380
   }
   if (cardData.rarity === "epic") {
-    costToReturn = 750
+    costToReturn = 820
   }
   if (cardData.rarity === "legendary") {
-    costToReturn = 1200
+    costToReturn = 1840
   }
   if (cardData.rarity === "mythic") {
-    costToReturn = 2500
+    costToReturn = 3740
   }
 
   const costModifierVariance = Math.floor(costToReturn / 5)
@@ -41,7 +41,7 @@ export const getShopCostForCard = (cardName: CardName) => {
 export const getShopCostForPack = (packVariant: PackVariant) => {
   let costToReturn = 0
   if (packVariant === "Standard Pack") {
-    costToReturn = 100
+    costToReturn = 200
   }
   if (packVariant === "Elite Pack") {
     costToReturn = 400

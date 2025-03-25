@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { MobileUnsupportedOverlay } from "./MobileUnsupportedOverlay"
+import { ToastViewport } from "./designSystem/Toast"
 
 export type MainViewProps = {
   children: ReactNode
@@ -11,6 +12,7 @@ export const MainView = ({ children }: MainViewProps) => {
     <main className="w-screen h-screen relative overflow-hidden">
       {children}
       <MobileUnsupportedOverlay />
+      <ToastViewport />
     </main>
   )
 }

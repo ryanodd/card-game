@@ -5,9 +5,7 @@ import { Game } from "@/src/react/screens/Game"
 
 export default function Home() {
   return (
-    <NoSSRWrapper>
-      <Game />
-    </NoSSRWrapper>
-    // TODO since SSR is off for the actual game, put some flashy SSR-able content here
+    // <NoSSRWrapper> does it cause any bugs? Performance problems?
+    <Game />
   )
 }

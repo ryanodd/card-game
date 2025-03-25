@@ -25,7 +25,7 @@ export const DuelMenuButton = () => {
   return (
     <MenuButton.Root modal={false}>
       <MenuButton.Trigger asChild>
-        <Button className="absolute z-10 right-4 top-4" data-variant="tertiary" data-icon-only>
+        <Button className="!absolute z-10 right-4 top-4 " data-variant="tertiary" data-icon-only>
           <Menu />
         </Button>
       </MenuButton.Trigger>

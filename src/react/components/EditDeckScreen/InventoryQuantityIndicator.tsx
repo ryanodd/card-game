@@ -19,16 +19,30 @@ const getInventoryQuantityIndicatorPips = (quantity: number, quantityInDeck: num
 
 export type InventoryQuantityIndicatorProps = {
   quantity: number
-  quantityInDeck: number
-}
-
-export const InventoryQuantityIndicator = ({ quantity, quantityInDeck }: InventoryQuantityIndicatorProps) => {
-  const pips = getInventoryQuantityIndicatorPips(quantity, quantityInDeck)
-  return (
-    <div className={styles.inventoryQuantityContainer}>
-      {pips.map((pip, i) => {
-        return <div key={i} className={styles.inventoryQuantityPip} data-type={pip} />
-      })}
-    </div>
-  )
+} & (
+  | {
+      variant: "pips"
+      quantityInDeck: number
+    }
+  | { variant: "owned-number" }
+)
+export const InventoryQuantityIndicator = ({ quantity, ...props }: InventoryQuantityIndicatorProps) => {
+  if (props.variant === "owned-number") {
+    return (
+      <div className={styles.inventoryQuantityOwnedTextContainer}>
+        <span className={styles.inventoryQuantityOwnedText}>Owned:</span>
+        <span className={styles.inventoryQuantityOwnedText2}>{quantity}</span>
+      </div>
+    )
+  }
+  if (props.variant === "pips") {
+    return (
+      <div className={styles.inventoryQuantityPipsContainer}>
+        {getInventoryQuantityIndicatorPips(quantity, props.quantityInDeck).map((pip, i) => {
+          return <div key={i} className={styles.inventoryQuantityPip} data-type={pip} />
+        })}
+      </div>
+    )
+  }
+  return null
 }

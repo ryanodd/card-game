@@ -25,13 +25,13 @@ export const InventoryCard = ({ cardData }: CardProps) => {
   const onClick = useCallback(() => {}, [])
 
   return (
-    <InventoryCardFocusDialog
-      cardData={cardData}
-      trigger={
-        <button ref={setNodeRef} {...attributes} {...listeners} onClick={onClick}>
-          <CardDetailed cardData={cardData} />
-        </button>
-      }
-    />
+    // <InventoryCardFocusDialog
+    //   cardData={cardData}
+    //   trigger={
+    <button ref={setNodeRef} {...attributes} {...listeners} onClick={onClick}>
+      <CardDetailed cardData={cardData} />
+    </button>
+    //   }
+    // />
   )
 }

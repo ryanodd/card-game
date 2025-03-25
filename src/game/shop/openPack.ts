@@ -1,8 +1,8 @@
 import { getRandomInt, getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
 import { Rarity } from "../cards/CardData"
 import { CardName } from "../cards/CardName"
-import { GameState } from "../GameData"
-import { packOddsByVariant, PackVariant, RarityOdds } from "./Packs"
+import { GameState, PackVariant } from "../GameData"
+import { packOddsByVariant, RarityOdds } from "./Packs"
 import { cardDataMap } from "../cards/allCards/allCards"
 
 const CARDS_PER_PACK = 4
@@ -74,6 +74,7 @@ export const openPack = (game: GameState, packVariant: PackVariant): GameState =
     const cardSelected = getRandomItemFromArray(cardNamesByRarity[raritySelected], getRandomSeed()) as CardName
     cardsOpened.push(cardSelected)
   }
+  // Select final (better) card
   const raritySelected = getRandomRarityByRarityOdds(odds.finalCardOdds)
   const cardSelected = getRandomItemFromArray(cardNamesByRarity[raritySelected], getRandomSeed()) as CardName
   cardsOpened.push(cardSelected)

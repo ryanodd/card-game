@@ -1,9 +1,10 @@
 .inventoryBrowser {
   @apply grow flex flex-col;
+  @apply bg-black bg-opacity-30 rounded-lg;
 }
 
 .inventoryFiltersContainer {
-  @apply flex gap-8 p-4;
+  @apply flex gap-16 p-4;
 }
 .inventoryFiltersSection {
   @apply flex gap-1;
@@ -23,6 +24,24 @@
   /* There is a value that must match this value in InventoryGrid.tsx! */
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   /* @apply h-full flex flex-wrap justify-center overflow-y-scroll gap-2.5; */
+}
+
+.inventoryCardCell {
+  @apply flex flex-col items-center justify-center;
+}
+
+.inventoryCardCardContainer[data-unowned="true"] {
+  @apply opacity-25;
+}
+
+.inventoryCardCell .addSubtractButton {
+  @apply w-12 h-12 p-4;
+  @apply text-2xl font-bold opacity-0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.inventoryCardCell:hover .addSubtractButton {
+  @apply opacity-100;
 }
 
 .deckListColumn {

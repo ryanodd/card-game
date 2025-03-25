@@ -1,5 +1,6 @@
 .button {
-  @apply shadow-sm shrink-0 flex items-center justify-center;
+  @apply shadow-sm shrink-0;
+  @apply flex items-center justify-center relative;
 }
 
 .button {
@@ -44,7 +45,7 @@
 }
 
 .button[data-variant="tertiary"] {
-  @apply bg-transparent text-white border-none;
+  @apply bg-transparent text-white border-none shadow-none;
 }
 
 .button[data-variant="tertiary"]:hover:not(:disabled) {
@@ -55,6 +56,24 @@
   @apply bg-stone-500 border-stone-500;
 }
 
+.button[data-variant="tertiary"]:disabled {
+  @apply bg-transparent border-none text-gray-500;
+}
+
 .unpressable {
   opacity: 0.2;
+}
+
+.buttonNotificationDot {
+  @apply absolute;
+  --dot-width: 1.525rem;
+  top: calc(-1 * var(--dot-width) / 2);
+  right: calc(-1 * var(--dot-width) / 2);
+  width: var(--dot-width);
+  height: var(--dot-width);
+
+  @apply rounded-full;
+  @apply flex items-center justify-center;
+  @apply bg-red-600 text-base font-bold text-white;
+  padding-bottom: 0.0825rem;
 }

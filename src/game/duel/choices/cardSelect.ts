@@ -1,6 +1,6 @@
+import { cardBehaviourMap } from "../cardBehaviour/allCardBehaviour/allCardBehaviours"
 import { DuelState } from "../DuelData"
 import { getCardByInstanceId } from "../DuelHelpers"
-import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
 
 export async function cardSelect_execute(inputDuel: DuelState, selectedCardIds: string[]) {
   let duel = inputDuel

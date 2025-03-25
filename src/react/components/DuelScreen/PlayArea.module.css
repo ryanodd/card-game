@@ -3,7 +3,7 @@
 }
 
 .playAreaBackground {
-  @apply absolute inset-0 bg-zinc-100 opacity-70 rounded-md;
+  @apply absolute inset-0 border-4 border-zinc-700 bg-stone-200 rounded-xl;
 }
 
 .playAreaDropTarget {

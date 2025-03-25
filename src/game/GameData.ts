@@ -4,7 +4,6 @@ import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
 import { HeroName } from "./duel/heroBehaviour/HeroName"
 import { League } from "./league/leagueTypes"
-import { PackVariant } from "./shop/Packs"
 import { EnergyType } from "./duel/EnergyData"
 import { Rarity } from "./cards/CardData"
 
@@ -59,6 +58,8 @@ export type CampaignLocationCompletionData = {
   unlocked: boolean
   completed: boolean
 }
+
+export type PackVariant = "Standard Pack" | "Elite Pack" // | "mythic"
 
 export type GameState = {
   screen: ScreenState

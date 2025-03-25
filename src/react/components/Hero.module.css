@@ -34,23 +34,23 @@
 }
 
 .hero[data-background="fire"] {
-  @apply bg-red-500;
+  @apply bg-flush-mahogany-600;
 }
 
 .hero[data-background="water"] {
-  @apply bg-sky-500;
+  @apply bg-shakespeare-500;
 }
 
 .hero[data-background="earth"] {
-  @apply bg-lime-500;
+  @apply bg-de-york-500;
 }
 
 .hero[data-background="air"] {
-  @apply bg-purple-400;
+  @apply bg-lavender-500;
 }
 
 .hero[data-background="multi"] {
-  @apply bg-yellow-500;
+  @apply bg-barley-corn-600;
 }
 
 .hero[data-background="neutral"] {

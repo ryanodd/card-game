@@ -47,7 +47,7 @@
 }
 
 .card[data-background="multi"] {
-  @apply bg-yellow-500;
+  @apply bg-barley-corn-600;
 }
 
 .card[data-background="neutral"] {

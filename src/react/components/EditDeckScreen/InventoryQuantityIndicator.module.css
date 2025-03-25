@@ -1,5 +1,19 @@
-.inventoryQuantityContainer {
-  @apply flex p-2 gap-2 justify-center;
+.inventoryQuantityOwnedTextContainer {
+  @apply flex items-end gap-2;
+}
+.inventoryQuantityOwnedText {
+  @apply text-stone-300;
+
+  /* Weird font spacing compensation - the centering didn't look right */
+  transform: translateY(-0.125rem);
+}
+
+.inventoryQuantityOwnedText2 {
+  @apply text-stone-100 font-semibold text-3xl;
+}
+
+.inventoryQuantityPipsContainer {
+  @apply h-8 flex p-1 gap-2 justify-center items-center;
 }
 
 .inventoryQuantityPip {
@@ -7,13 +21,14 @@
 }
 
 .inventoryQuantityPip[data-type="unavailable"] {
-  @apply bg-stone-800;
+  @apply w-3 h-3 bg-stone-900;
+  transform: scale(0.75);
 }
 
 .inventoryQuantityPip[data-type="available"] {
-  @apply bg-orange-400;
+  @apply border-2 border-stone-800 bg-slate-400 bg-opacity-30;
 }
 
 .inventoryQuantityPip[data-type="active"] {
-  @apply border border-stone-50 bg-orange-200;
+  @apply border border-sky-200 bg-sky-400;
 }

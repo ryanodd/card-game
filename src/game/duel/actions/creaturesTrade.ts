@@ -1,6 +1,6 @@
+import { cardBehaviourMap } from "../cardBehaviour/allCardBehaviour/allCardBehaviours"
 import { DuelState } from "../DuelData"
 import { getCardByInstanceId } from "../DuelHelpers"
-import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
 import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { dealDamageToCreature } from "./dealDamage"
 import { performTrampleDamage } from "./performTrampleDamage"

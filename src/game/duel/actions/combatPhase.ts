@@ -1,6 +1,6 @@
 import { DuelState } from "../DuelData"
 import { getCurrentDuelPlayer, getOtherPlayerByPlayerId, getOtherPlayerId } from "../DuelHelpers"
-import { cardBehaviourMap } from "../cardBehaviour/AllCardBehaviours"
+import { cardBehaviourMap } from "../cardBehaviour/allCardBehaviour/allCardBehaviours"
 import { BUFFER_MS, playAnimation } from "../control/playAnimation"
 import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { checkForDeaths } from "./checkForDeaths"

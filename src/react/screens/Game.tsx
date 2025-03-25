@@ -14,6 +14,7 @@ import { CollectionScreen } from "./CollectionScreen"
 import { ManagePacksScreen } from "./ManagePacksScreen"
 import { LeagueScreen } from "./LeagueScreen"
 import { OpenPackScreen } from "./OpenPackScreen"
+import { ToastProvider } from "../components/designSystem/Toast"
 
 export const Game = () => {
   const forceUpdate = useForceUpdate()
@@ -36,18 +37,20 @@ export const Game = () => {
 
   return (
     <Tooltip.Provider skipDelayDuration={0}>
-      <DndContext sensors={sensors}>
-        {game.screen.id === "mainMenu" && <MainMenuScreen />}
-        {game.screen.id === "league" && <LeagueScreen />}
-        {game.screen.id === "campaignSelect" && <CampaignLocationSelectScreen />}
-        {game.screen.id === "shop" && <ShopScreen />}
-        {game.screen.id === "managePacks" && <ManagePacksScreen />}
-        {game.screen.id === "openPack" && <OpenPackScreen />}
-        {game.screen.id === "manageDecks" && <ManageDecksScreen />}
-        {game.screen.id === "editDeck" && <EditDeckScreen />}
-        {game.screen.id === "collection" && <CollectionScreen />}
-        {game.screen.id === "duel" && <DuelScreen />}
-      </DndContext>
+      <ToastProvider duration={6000}>
+        <DndContext sensors={sensors}>
+          {game.screen.id === "mainMenu" && <MainMenuScreen />}
+          {game.screen.id === "league" && <LeagueScreen />}
+          {game.screen.id === "campaignSelect" && <CampaignLocationSelectScreen />}
+          {game.screen.id === "shop" && <ShopScreen />}
+          {game.screen.id === "managePacks" && <ManagePacksScreen />}
+          {game.screen.id === "openPack" && <OpenPackScreen />}
+          {game.screen.id === "manageDecks" && <ManageDecksScreen />}
+          {game.screen.id === "editDeck" && <EditDeckScreen />}
+          {game.screen.id === "collection" && <CollectionScreen />}
+          {game.screen.id === "duel" && <DuelScreen />}
+        </DndContext>
+      </ToastProvider>
     </Tooltip.Provider>
   )
 }

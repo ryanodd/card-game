@@ -2,14 +2,13 @@ import { getActiveDeck } from "@/src/game/GameData"
 import { MainView } from "../components/MainView"
 import { Button } from "../components/designSystem/Button"
 import { useGameStore } from "../hooks/useGameStore"
-import { deckMap } from "@/src/game/decks/Decks"
 import { GameBackground } from "../components/GameBackground"
-import { GoldTotal } from "../components/GoldTotal"
-import { createNewDuel } from "@/src/game/duel/createNewDuel"
 import { SettingsDialog } from "../components/SettingsDialog"
 import { Footer } from "../components/Footer"
 import { DefaultDialog } from "../components/designSystem/Dialog"
 import { DuelSetupContent } from "../components/DuelSetup/DuelSetupContent"
+import { getTotalPacksInInventory } from "@/src/game/shop/Packs"
+import { Logo } from "../components/Logo"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()
@@ -38,14 +37,14 @@ export const MainMenuScreen = () => {
   }
 
   const godMode = game.settings.godMode
+  const totalPacks = getTotalPacksInInventory(game)
 
   return (
     <MainView>
       <GameBackground />
       <div className="h-full flex flex-col">
         <div className="grow flex flex-col justify-center items-center gap-4  p-4">
-          <h1 className="text-3xl text-stone-50">{"It's a card game!"}</h1>
-          <h2 className="text-lg text-stone-50">{`Active deck: ${getActiveDeck(game)?.name ?? "None"}`}</h2>
+          <Logo />
           <div className="flex flex-col mt-8 gap-4">
             <div className="flex flex-col gap-4">
               <DefaultDialog
@@ -77,7 +76,11 @@ export const MainMenuScreen = () => {
               <Button data-size="large" onClick={onShopClick}>
                 Shop
               </Button>
-              <Button data-size="large" onClick={onPacksClick}>
+              <Button
+                data-size="large"
+                onClick={onPacksClick}
+                notificationDotText={totalPacks > 0 ? totalPacks.toString() : undefined}
+              >
                 Packs
               </Button>
             </div>

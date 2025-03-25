@@ -1,6 +1,5 @@
 import { Rarity } from "../cards/CardData"
-
-export type PackVariant = "Standard Pack" | "Elite Pack" // | "mythic"
+import { GameState, PackVariant } from "../GameData"
 
 export type RarityOdds = Record<Rarity, number>
 
@@ -23,8 +22,8 @@ export const packOddsByVariant: Record<PackVariant, PackOdds> = {
     finalCardOdds: {
       base: 0,
       common: 0,
-      uncommon: 0,
-      rare: 92,
+      uncommon: 70,
+      rare: 22,
       epic: 7,
       legendary: 0.99,
       mythic: 0.01,
@@ -70,4 +69,12 @@ export const packOddsByVariant: Record<PackVariant, PackOdds> = {
   //     mythic: 0,
   //   },
   // },
+}
+
+export const getTotalPacksInInventory = (game: GameState) => {
+  let sum = 0
+  for (const [packVariant, numPacks] of Object.entries(game.packs)) {
+    sum += numPacks
+  }
+  return sum
 }

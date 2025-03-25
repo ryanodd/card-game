@@ -1,8 +1,8 @@
-import { PackVariant } from "@/src/game/shop/Packs"
 import { useGameStore } from "../../hooks/useGameStore"
 import { Pack } from "./Pack"
 import { openPack } from "@/src/game/shop/openPack"
 import styles from "./PackCell.module.css"
+import { PackVariant } from "@/src/game/GameData"
 
 export type PackCellProps = {
   variant: PackVariant

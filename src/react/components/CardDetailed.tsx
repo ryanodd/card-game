@@ -2,9 +2,11 @@ import Image from "next/image"
 import { EnergyIcon } from "./EnergyIcon"
 import cardStyles from "./Card.module.css"
 
-import { CardData } from "@/src/game/cards/CardData"
+import { CardData, CardTextIconName } from "@/src/game/cards/CardData"
 import { CardState } from "@/src/game/duel/DuelData"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
+import { ReactElement, ReactNode } from "react"
+import { Dice, Heart, IconProps, Scratch, Sword } from "./designSystem/Icon"
 
 export const CARD_IMAGE_WIDTH_REMS = 16 - 1.75
 export const CARD_IMAGE_HEIGHT_REMS = 11
@@ -42,6 +44,22 @@ export const getCostIcons = (cardData: CardData) => {
   return icons
 }
 
+export type CardTextIconProps = IconProps & {
+  cardTextIconName: CardTextIconName
+}
+
+const cardTextIconMap = {
+  damage: Scratch,
+  dice: Dice,
+  heart: Heart,
+  sword: Sword,
+}
+
+export const CardTextIcon = ({ cardTextIconName, ...props }: CardTextIconProps) => {
+  const IconElement = cardTextIconMap[cardTextIconName]
+  return <IconElement className={cardStyles.cardTextIcon} {...props} />
+}
+
 export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
   return (
     <div
@@ -77,7 +95,39 @@ export const CardDetailed = ({ cardData, cardState }: CardDetailedProps) => {
       </div>
 
       <div className={cardStyles.textContainer}>
-        <p className={`${cardStyles.cardText}  `}>{cardData.text}</p>
+        {cardData.text?.map((textParagraph, i) => {
+          return (
+            <p key={i} className={`${cardStyles.cardText}`}>
+              {textParagraph.textList.map((textItem, i) => {
+                if ("plainText" in textItem) {
+                  return (
+                    <span key={i} className={cardStyles.cardTextPlain}>
+                      {textItem.plainText}
+                    </span>
+                  )
+                }
+                if ("boldText" in textItem) {
+                  return (
+                    <span key={i} className={cardStyles.cardTextBold}>
+                      {textItem.boldText}
+                    </span>
+                  )
+                }
+                if ("keyword" in textItem) {
+                  return (
+                    <span key={i} className={cardStyles.cardTextBold}>
+                      {textItem.keyword}
+                    </span>
+                  )
+                }
+                if ("icon" in textItem) {
+                  return <CardTextIcon key={i} cardTextIconName={textItem.icon} size="sm" />
+                }
+                return null
+              })}
+            </p>
+          )
+        })}
       </div>
       <div className={`${cardStyles.cardFooter} h-8 -mb-2 -mx-2 gap-2`}>
         {cardData.cardType === "creature" && (

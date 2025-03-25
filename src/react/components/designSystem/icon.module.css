@@ -2,8 +2,13 @@
   @apply max-w-none shrink-0;
 }
 
-.icon[data-size="xs"] {
+.icon[data-size="2xs"] {
   @apply w-3 h-3;
+}
+
+.icon[data-size="xs"] {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .icon[data-size="sm"] {

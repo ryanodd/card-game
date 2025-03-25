@@ -39,6 +39,7 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
 
 export const createCardsFromNames = (cardNames: CardName[]): CardState[] => {
   const cards: CardState[] = []
+
   for (let x = 0; x < cardNames.length; x++) {
     const cardData = cardDataMap[cardNames[x]]
     cards.push(cardDataToCardState(cardData))

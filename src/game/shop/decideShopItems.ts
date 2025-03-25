@@ -2,8 +2,8 @@ import { getDateString, getRandomInt, getRandomItemFromArray, getSeedFromString 
 import { CardName } from "../cards/CardName"
 import { ShopItem } from "./ShopItem"
 import { getShopCostForCard, getShopCostForPack } from "./getShopCostForCard"
-import { PackVariant } from "./Packs"
 import { cardDataMap } from "../cards/allCards/allCards"
+import { PackVariant } from "../GameData"
 
 const PACK_VARIANT_RATES: Record<PackVariant, number> = {
   "Standard Pack": 80,

@@ -4,7 +4,7 @@ import { useGameStore } from "../hooks/useGameStore"
 import { GameBackground } from "../components/GameBackground"
 import { Footer } from "../components/Footer"
 import { PackCell } from "../components/PackScreen/PackCell"
-import { PackVariant } from "@/src/game/shop/Packs"
+import { PackVariant } from "@/src/game/GameData"
 
 export const ManagePacksScreen = () => {
   const { game, setGame } = useGameStore()

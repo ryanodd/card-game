@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react"
 import { Button } from "../designSystem/Button"
 import styles from "./Inventory.module.css"
 import { useInventoryBrowserStore } from "../../hooks/useInventoryBrowserStore"
-import { Air, Earth, Fire, Water } from "../designSystem/Icon"
+import { Air, Circle, Earth, Fire, Water } from "../designSystem/Icon"
 import { EnergyType } from "@/src/game/duel/EnergyData"
 import { Rarity } from "@/src/game/cards/CardData"
 
@@ -56,7 +56,7 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
         },
       })
     }
-  }, [noEnergyTypesIncluded])
+  }, [noEnergyTypesIncluded, filters, setFilters])
 
   useEffect(() => {
     if (noRaritiesIncluded) {
@@ -73,7 +73,7 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
         },
       })
     }
-  }, [noRaritiesIncluded])
+  }, [noRaritiesIncluded, filters, setFilters])
 
   const onOwnedClick = useCallback(() => {
     setFilters({
@@ -218,14 +218,6 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
           data-size="small"
           data-icon-only
           onClick={() => {
-            onEnergyTypeClick("neutral")
-          }}
-          data-variant={!allEnergyTypesIncluded && filters.energyType.neutral ? "primary" : "tertiary"}
-        ></Button>
-        <Button
-          data-size="small"
-          data-icon-only
-          onClick={() => {
             onEnergyTypeClick("fire")
           }}
           data-variant={!allEnergyTypesIncluded && filters.energyType.fire ? "primary" : "tertiary"}
@@ -262,7 +254,18 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
         >
           <Air />
         </Button>
+        <Button
+          data-size="small"
+          data-icon-only
+          onClick={() => {
+            onEnergyTypeClick("neutral")
+          }}
+          data-variant={!allEnergyTypesIncluded && filters.energyType.neutral ? "primary" : "tertiary"}
+        >
+          <Circle size="sm" />
+        </Button>
       </div>
+
       <div className={styles.inventoryFiltersSection}>
         <Button
           data-size="small"

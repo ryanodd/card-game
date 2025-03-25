@@ -10,12 +10,14 @@ import { buyShopItem } from "@/src/game/shop/buyShopItem"
 import { Pack } from "../PackScreen/Pack"
 import { ShopItem } from "@/src/game/shop/ShopItem"
 import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+import { Coins } from "../designSystem/Icon"
 
 export type ShopCellProps = {
   shopItem: ShopItem
+  onPurchase: (shopItem: ShopItem) => void
 }
 
-export const ShopCell = ({ shopItem }: ShopCellProps) => {
+export const ShopCell = ({ shopItem, onPurchase }: ShopCellProps) => {
   const { game, setGame } = useGameStore()
 
   let shopItemToRender = null
@@ -24,11 +26,13 @@ export const ShopCell = ({ shopItem }: ShopCellProps) => {
   const onConfirmBuy = () => {
     const nextGame = buyShopItem(game, shopItem)
     setGame(nextGame)
+    onPurchase(shopItem)
   }
 
-  if (shopItem.type === "card") {
-    const cardData = cardDataMap[shopItem.cardName]
-    const quantityOwned = game.cardCollection[cardData.name]
+  const cardData = "cardName" in shopItem ? cardDataMap[shopItem.cardName] : null
+  const quantityOwned = cardData ? game.cardCollection[cardData.name] : 0
+
+  if (shopItem.type === "card" && cardData) {
     const disabled = quantityOwned >= COLLECTION_MAX_PER_CARD || !canAfford
     shopItemToRender = (
       <>
@@ -42,7 +46,7 @@ export const ShopCell = ({ shopItem }: ShopCellProps) => {
           }
           onConfirm={onConfirmBuy}
         />
-        <InventoryQuantityIndicator quantity={quantityOwned} quantityInDeck={0} />
+        <InventoryQuantityIndicator variant="owned-number" quantity={quantityOwned} />
       </>
     )
   }
@@ -64,8 +68,12 @@ export const ShopCell = ({ shopItem }: ShopCellProps) => {
   }
   return (
     <div className={styles.shopCell}>
-      <span className={styles.shopPrice} data-can-afford={canAfford}>
-        $ {shopItem.price}
+      <span
+        className={styles.shopPrice}
+        data-can-afford={canAfford}
+        data-disabled={quantityOwned >= COLLECTION_MAX_PER_CARD}
+      >
+        <Coins data-size="lg" /> {shopItem.price}
       </span>
       {shopItemToRender}
     </div>

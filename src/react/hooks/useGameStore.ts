@@ -1,5 +1,4 @@
 import { DECK_MIN_SIZE } from "@/src/game/decks/Deck"
-import { deckMap } from "@/src/game/decks/Decks"
 import { GameState } from "@/src/game/GameData"
 import { CardName } from "@/src/game/cards/CardName"
 import { HeroName } from "@/src/game/duel/heroBehaviour/HeroName"
@@ -28,14 +27,14 @@ export const RYANS_FAVORITE_TEST_COLLECTION: Record<CardName, number> = {
 
 export const STARTING_COLLECTION: Record<CardName, number> = {
   ...Object.values(cardDataMap).reduce((prev, cardData) => {
-    prev[cardData.name] = 0
+    if (cardData.rarity === "base") {
+      prev[cardData.name] = 4
+    } else {
+      prev[cardData.name] = 0
+    }
+
     return prev
   }, {} as Record<CardName, number>),
-  "Golden Friend": 4,
-  "Zardian Raider": 4,
-  "Emerald Makasaur": 4,
-  "Elder Saurus": 4,
-  "Dragon Cub": 4,
 }
 
 export const ALL_HEROES_COLLECTION: Record<HeroName, boolean> = {
@@ -47,7 +46,7 @@ export const ALL_HEROES_COLLECTION: Record<HeroName, boolean> = {
 
 export const newGameState: GameState = {
   screen: { id: "mainMenu" },
-  activeDeckId: deckMap["starterDeck"].id,
+  activeDeckId: null,
   cardCollection: STARTING_COLLECTION,
   heroCollection: ALL_HEROES_COLLECTION,
   league: createLeague(),
@@ -59,7 +58,7 @@ export const newGameState: GameState = {
     location3: { unlocked: false, completed: false },
   },
   decks: [
-    deckMap["starterDeck"],
+    generateDeck({ method: "completely-random" }),
     generateDeck({ method: "hero", heroName: "Fire Hero" }),
     generateDeck({ method: "hero", heroName: "Water Hero" }),
     generateDeck({ method: "hero", heroName: "Earth Hero" }),
@@ -79,7 +78,9 @@ export const newGameState: GameState = {
 export const getInitialGameState = (): GameState => {
   const loadedGameState = loadGameFromLocalStorage()
   if (loadedGameState === null) {
-    return newGameState
+    const initialGameState = newGameState
+    initialGameState.activeDeckId = initialGameState.decks[0].id
+    return initialGameState
   }
   return { ...loadedGameState, screen: { id: "mainMenu" } }
 }

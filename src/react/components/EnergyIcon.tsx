@@ -32,7 +32,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
             styles.fire_element
           }`}
         >
-          <Fire className={styles.energyIcon} size="md" />
+          <Fire className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
         </div>
       )
     }
@@ -44,7 +44,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
           }`}
           data-available={available ?? true}
         >
-          <Water size="md" />
+          <Water className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
         </div>
       )
     }
@@ -56,7 +56,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
           }`}
           data-available={available ?? true}
         >
-          <Earth size="md" />
+          <Earth className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
         </div>
       )
     }
@@ -68,7 +68,7 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
           }`}
           data-available={available ?? true}
         >
-          <Air size="sm" />
+          <Air className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
         </div>
       )
     }

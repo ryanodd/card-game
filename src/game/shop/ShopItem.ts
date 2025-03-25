@@ -1,5 +1,5 @@
 import { CardName } from "../cards/CardName"
-import { PackVariant } from "./Packs"
+import { PackVariant } from "../GameData"
 
 export type ShopItem = {
   title: string

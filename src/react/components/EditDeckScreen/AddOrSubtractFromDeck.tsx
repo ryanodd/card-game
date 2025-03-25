@@ -4,12 +4,13 @@ import { sortDeckListNames } from "@/src/game/helpers"
 import { CardData } from "@/src/game/cards/CardData"
 import { Button } from "../designSystem/Button"
 import { useGameStore } from "../../hooks/useGameStore"
+import styles from "./Inventory.module.css"
 
-export type AddOrSubtractFromDeckProps = {
+export type SubtractFromDeckButtonProps = {
   cardData: CardData
 }
 
-export const AddOrSubtractFromDeck = ({ cardData }: AddOrSubtractFromDeckProps) => {
+export const SubtractFromDeckButton = ({ cardData }: SubtractFromDeckButtonProps) => {
   const { editDeck, setEditDeck } = useEditDeckState()
 
   const numInDeck = editDeck.cardNames.reduce((matches, cardName) => {
@@ -31,7 +32,12 @@ export const AddOrSubtractFromDeck = ({ cardData }: AddOrSubtractFromDeckProps) 
   }, [editDeck, cardData.name, setEditDeck])
 
   return (
-    <Button onClick={onSubtractCard} disabled={numInDeck <= 0}>
+    <Button
+      data-variant="tertiary"
+      onClick={onSubtractCard}
+      disabled={numInDeck <= 0}
+      className={styles.addSubtractButton}
+    >
       -
     </Button>
   )
@@ -61,7 +67,13 @@ export const AddToDeckButton = ({ cardData }: AddToDeckButtonProps) => {
   }, [editDeck, cardData.name, setEditDeck])
 
   return (
-    <Button onClick={onAddCard} disabled={numInDeck >= quantityOwned && !godMode}>
+    <Button
+      data-size="small"
+      data-variant="tertiary"
+      onClick={onAddCard}
+      disabled={numInDeck >= quantityOwned && !godMode}
+      className={styles.addSubtractButton}
+    >
       +
     </Button>
   )

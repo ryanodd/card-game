@@ -3,7 +3,26 @@ import { CardName } from "./CardName"
 
 export type Rarity = "base" | "common" | "uncommon" | "rare" | "epic" | "legendary" | "mythic"
 
-export type Keyword = "support" | "trample" | "shield"
+export type Keyword = "Backup" | "Trample" | "Shield" | "Charge" | "Burn" | "Stun" | "Scry"
+
+export const keywordDescriptions: Record<Keyword, string> = {
+  Backup: "aaaa",
+  Trample: "",
+  Shield: "",
+  Charge: "",
+  Burn: "Burned monsters lose 1hppppppp",
+  Stun: "Stunned monsters cannot deal any damage until after their next attack.",
+  Scry: "",
+}
+
+export type CardTextIconName = "damage" | "dice" | "heart" | "sword"
+
+export type CardText = { plainText: string } | { boldText: string } | { keyword: Keyword } | { icon: CardTextIconName }
+
+export type CardTextParagraph = {
+  variant: "default" | "flavor"
+  textList: CardText[]
+}
 
 export type CardData =
   | {
@@ -15,7 +34,7 @@ export type CardData =
       complete: boolean
 
       energyType: EnergyType | "multi"
-      text?: string
+      text?: CardTextParagraph[]
       keywords?: Keyword[]
       cost: EnergyCounts
     } & (
