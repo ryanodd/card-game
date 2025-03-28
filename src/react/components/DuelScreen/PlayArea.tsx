@@ -55,13 +55,13 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
     },
   })
 
-  const animationAncestralPresence = duel.currentAnimation?.id === "ANCESTRAL_PRESENCE"
+  // const animation = duel.currentAnimation?.id === "PLAYER_AIR_ACTION"
 
   return (
     <div className={`${styles.playArea}`}>
       <div
         className={animationLayerStyles.playAreaAnimationLayer}
-        data-animation-ancestral-presence={animationAncestralPresence}
+        // data-animation-ancestral-presence={animationAncestralPresence}
       />
       <div
         className={`${styles.playAreaDropTarget}`}

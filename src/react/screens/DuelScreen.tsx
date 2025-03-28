@@ -172,7 +172,6 @@ export const DuelScreen = ({}: DuelScreenProps) => {
 
   return (
     <MainView>
-      <GameBackground />
       <DndContext
         sensors={sensors}
         // collisionDetection={closestCenter}

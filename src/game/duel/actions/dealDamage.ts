@@ -10,8 +10,8 @@ export async function dealDamageToCreature(duel: DuelState, cardInstanceId: stri
     throw Error(`Tried to deal damage to non-creature ${cardState.name}`)
   }
 
-  const burnModifier = cardState.modifiers.find((modifier) => modifier.id === "burn")
-  if (burnModifier !== undefined) {
+  const burned = cardState.status === "burn"
+  if (burned) {
     damageAmount += 1
   }
   cardState.damage += damageAmount

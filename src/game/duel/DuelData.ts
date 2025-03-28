@@ -18,28 +18,13 @@ export type HealthChangeModifier = {
   quantity: number
 }
 
-export type BurnModifier = {
-  id: "burn"
-  quantity: number
-}
-
-export type StunModifier = {
-  id: "stun"
-  quantity: number
-}
-
-export type PoisonModifier = {
-  id: "poison"
-  quantity: number
-}
-
-export type Modifier = AttackChangeModifier | HealthChangeModifier | BurnModifier | StunModifier | PoisonModifier
+export type Modifier = AttackChangeModifier | HealthChangeModifier
+export type Status = "burn" | "stun" | "poison"
 
 export type CardState = {
   name: CardName
   instanceId: string
   cost: EnergyCounts
-  modifiers: Modifier[]
 } & (
   | {
       cardType: "creature"
@@ -47,6 +32,8 @@ export type CardState = {
       health: number
       damage: number
       summoningSickness: boolean
+      modifiers: Modifier[]
+      status: Status | null
     }
   | {
       cardType: "spell"

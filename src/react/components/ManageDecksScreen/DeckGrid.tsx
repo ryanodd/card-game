@@ -14,7 +14,7 @@ export const DeckGrid = () => {
     })
   }
   return (
-    <div className="align-middle overflow-y-scroll">
+    <div className="align-middle overflow-y-scroll py-4">
       <ul className={`${styles.deckGrid} grid auto-rows-fr gap-8 items-center`}>
         {game.decks.map((deck, i) => (
           <Deckbox key={i} deck={deck} />

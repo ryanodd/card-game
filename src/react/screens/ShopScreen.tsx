@@ -35,7 +35,6 @@ export const ShopScreen = () => {
 
   return (
     <MainView>
-      <GameBackground />
       <Toast
         toastTitle={purchaseSuccessToast?.title}
         open={purchaseSuccessToast !== null}

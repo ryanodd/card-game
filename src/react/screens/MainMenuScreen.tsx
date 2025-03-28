@@ -9,9 +9,11 @@ import { DefaultDialog } from "../components/designSystem/Dialog"
 import { DuelSetupContent } from "../components/DuelSetup/DuelSetupContent"
 import { getTotalPacksInInventory } from "@/src/game/shop/Packs"
 import { Logo } from "../components/Logo"
+import packageJson from "../../../package.json"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()
+  const version = packageJson.version
 
   const onLeagueClick = () => {
     setGame({ ...game, screen: { id: "league" } })
@@ -41,7 +43,6 @@ export const MainMenuScreen = () => {
 
   return (
     <MainView>
-      <GameBackground />
       <div className="h-full flex flex-col">
         <div className="grow flex flex-col justify-center items-center gap-4  p-4">
           <Logo />
@@ -89,6 +90,7 @@ export const MainMenuScreen = () => {
             </div>
           </div>
         </div>
+        <span className="text-white text-xs px-2 py-1">Version {version}</span>
         <Footer />
       </div>
     </MainView>

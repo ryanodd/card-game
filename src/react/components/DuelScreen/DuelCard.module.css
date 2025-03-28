@@ -1,39 +1,21 @@
+.duelCardTransformLayer {
+  @apply relative;
+}
+
 .duelCardTransformLayer[data-modifier-summoning-sickness="true"] {
   > * {
     filter: brightness(75%);
   }
 }
 
-.duelCardTransformLayer[data-modifier-burn="true"] {
-  > * {
-    filter: sepia(150%);
-  }
-}
-
-.duelCardTransformLayer[data-modifier-stun="true"] {
-  > * {
-    filter: brightness(130%);
-  }
-}
-
-.duelCardTransformLayer[data-modifier-poison="true"] {
-  > * {
-    filter: contrast(150%);
-  }
-}
-
 .duelCardTransformLayer[data-animation-draw="true"][data-player-id="human"] {
   > * {
-    position: relative;
-    z-index: 20;
     animation: draw_human var(--current-animation-duration) cubic-bezier(0, 1, 0.44, 1);
   }
 }
 
 .duelCardTransformLayer[data-animation-draw="true"][data-player-id="opponent"] {
   > * {
-    position: relative;
-    z-index: 20;
     animation: draw_opponent var(--current-animation-duration) cubic-bezier(0, 1, 0.44, 1);
   }
 }
@@ -62,7 +44,6 @@
 
 .duelCardTransformLayer[data-animation-attack-start="true"][data-player-id="human"] {
   > * {
-    z-index: 20;
     animation: attack_start_human var(--current-animation-duration) ease-in;
   }
 }
@@ -78,7 +59,6 @@
 
 .duelCardTransformLayer[data-animation-attack-start="true"][data-player-id="opponent"] {
   > * {
-    z-index: 20;
     animation: attack_start_opponent var(--current-animation-duration) ease-in;
   }
 }
@@ -94,7 +74,6 @@
 
 .duelCardTransformLayer[data-animation-attack-end="true"][data-player-id="human"] {
   > * {
-    z-index: 20;
     animation: attack_end_human var(--current-animation-duration) ease-out;
   }
 }
@@ -110,7 +89,6 @@
 
 .duelCardTransformLayer[data-animation-attack-end="true"][data-player-id="opponent"] {
   > * {
-    z-index: 20;
     animation: attack_end_opponent var(--current-animation-duration) ease-out;
   }
 }

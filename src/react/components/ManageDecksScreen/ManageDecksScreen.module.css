@@ -5,4 +5,20 @@
 
 .deckCell {
   width: var(--deck-button-width);
+  @apply rounded-md bg-stone-900 opacity-75 shadow-lg relative h-72;
+  @apply flex flex-col p-4 gap-2;
+}
+
+.deckCell[data-active="true"] {
+  @apply border-4 border-red-500;
+}
+
+.deckCellTitle {
+  @apply text-xl text-stone-50;
+}
+
+.deckCellActiveBadge {
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  @apply absolute top-0 bg-red-600 rounded-full text-sm text-white px-3 py-1;
 }

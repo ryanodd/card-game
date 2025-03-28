@@ -1,3 +1,5 @@
+const { version } = require("./package.json")
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config) {
@@ -9,8 +11,15 @@ const nextConfig = {
 
     return config
   },
+
   images: {
-    unoptimized: true,
+    // Not sure why this was here before... It stops placeholder=blur from working
+    unoptimized: false,
+  },
+
+  // publicRuntimeConfig is accessable within the app
+  publicRuntimeConfig: {
+    version,
   },
 }
 

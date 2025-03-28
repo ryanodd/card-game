@@ -4,6 +4,8 @@ import { createNewEditDeckState } from "../../hooks/useEditDeckState"
 import { Button } from "../designSystem/Button"
 import styles from "./ManageDecksScreen.module.css"
 import { DeckboxMenuButton } from "./DeckboxMenuButton"
+import { EnergyIcon } from "../EnergyIcon"
+import { heroDataMap } from "@/src/game/heroes/AllHeroes"
 
 export type DeckboxProps = {
   deck: Deck
@@ -27,42 +29,46 @@ export const Deckbox = ({ deck }: DeckboxProps) => {
       activeDeckId: deckId,
     })
   }
-  return (
-    <li
-      key={`${deck.id}`}
-      className={`${styles.deckCell} rounded-md bg-stone-200 flex flex-col p-4 gap-2 shadow-lg relative h-72`}
-    >
-      <div className="flex justify-between">
-        <h3 className=" text-xl text-stone-900">{deck.name}</h3>
 
-        <DeckboxMenuButton deckId={deck.id} />
+  const energyTypes = heroDataMap[deck.heroName].energyTypes
+  return (
+    <button key={`${deck.id}`} className={`${styles.deckCell}`} data-active={game.activeDeckId === deck.id}>
+      {game.activeDeckId === deck.id && <p className={styles.deckCellActiveBadge}>Active</p>}
+      <div className="flex justify-start items-center gap-4">
+        <div className="flex flex-col gap-2">
+          {energyTypes.map((energyType, i) => {
+            return <EnergyIcon key={i} size="large" energyType={energyType} />
+          })}
+        </div>
+        <h3 className={styles.deckCellTitle}>{deck.name}</h3>
       </div>
       <h4 className="text-md text-stone-900">
         {deck.cardNames.length} {`${deck.cardNames.length === 1 ? "card" : "cards"}`}
       </h4>
+
       <div className="flex-grow" />
-      <div className="flex gap-1 items-center end">
-        {game.activeDeckId === deck.id && (
-          <p className=" justify-self-start bg-red-600 rounded-full text-sm text-white px-3 py-1">Active</p>
-        )}
-        {game.activeDeckId !== deck.id && (
+
+      <div className="flex gap-2 items-end justify-between">
+        <div className="flex flex-col gap-2 w-40">
+          {game.activeDeckId !== deck.id && (
+            <Button
+              onClick={() => {
+                onMakeActive(deck.id)
+              }}
+            >
+              Make active
+            </Button>
+          )}
           <Button
             onClick={() => {
-              onMakeActive(deck.id)
+              onEditDeck(deck.id)
             }}
           >
-            Make Active
+            Edit
           </Button>
-        )}
-        <div className="flex-grow" />
-        <Button
-          onClick={() => {
-            onEditDeck(deck.id)
-          }}
-        >
-          Edit
-        </Button>
+        </div>
+        <DeckboxMenuButton deckId={deck.id} />
       </div>
-    </li>
+    </button>
   )
 }

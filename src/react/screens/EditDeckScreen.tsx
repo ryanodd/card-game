@@ -98,7 +98,6 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
 
   return (
     <MainView>
-      <GameBackground />
       <DragOverlay dropAnimation={null}>
         {draggedCardName !== null && <InventoryCard cardData={cardDataMap[draggedCardName as CardName]} />}
       </DragOverlay>

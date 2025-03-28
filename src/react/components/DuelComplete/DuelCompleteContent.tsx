@@ -36,11 +36,13 @@ export const DuelCompleteContent = ({}) => {
           {duel.winner === "opponent" && `"Womp womp"`}
           {duel.winner === "draw" && "That's rare."}
         </h2>
-        <div className={styles.goldSection}>
-          <GoldTotal value={game.gold} />
+        {(duel.winner === "human" || duel.winner === "draw") && (
+          <div className={styles.goldSection}>
+            <GoldTotal value={game.gold} />
 
-          {goldReward !== undefined && <p className={styles.goldRewardAmount}>+{goldReward} gold</p>}
-        </div>
+            {goldReward !== undefined && <p className={styles.goldRewardAmount}>+{goldReward} gold</p>}
+          </div>
+        )}
         <Button data-variant="primary" data-size="large" onClick={onConfirm}>
           OK
         </Button>

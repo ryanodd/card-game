@@ -20,7 +20,16 @@ epicCards.push({
     earth: 0,
     air: 0,
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { plainText: "When played, " },
+        { keyword: "Burn" },
+        { plainText: " all enemy monsters in this row." },
+      ],
+    },
+  ],
 })
 
 epicCards.push({

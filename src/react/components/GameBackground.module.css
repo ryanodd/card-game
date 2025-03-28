@@ -1,9 +1,14 @@
 .gameBackground {
-  @apply bg-stone-700;
+  @apply bg-cyan-500;
   @apply absolute -inset-10;
 }
 
 .gameBackgroundImage {
-  @apply w-full h-full object-fill opacity-40;
+  @apply w-full h-full object-fill;
   filter: blur(5px);
+}
+
+.gameBackgroundfilterLayer {
+  @apply absolute inset-0;
+  @apply bg-stone-600 opacity-40;
 }

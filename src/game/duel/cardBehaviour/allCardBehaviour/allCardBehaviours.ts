@@ -7,6 +7,7 @@ import {
   getCardByInstanceId,
   getDuelPlayerByCardInstanceId,
   getDuelPlayerById,
+  getOpposingRowByCardId,
   getOtherPlayerId,
   getPlayerIdByCardInstanceId,
   getPlayerRowByCardInstanceId,
@@ -69,7 +70,7 @@ export async function ember_foxling_after_attack(inputDuel: DuelState, instanceI
   let duel = inputDuel
   const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
 
-  duel = await playAnimation(duel, { id: "EMBER_FOXLING", durationMs: 800, attackingCardId: instanceId })
+  duel = await playAnimation(duel, { id: "CARD_FIRE_ACTION", durationMs: 800, cardId: instanceId })
   duel = await dealDamageToPlayer(duel, getOtherPlayerId(playerId), 1)
   duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   return duel
@@ -78,12 +79,16 @@ export async function ember_foxling_after_attack(inputDuel: DuelState, instanceI
 export async function winged_bull_play(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const row = getPlayerRowByCardInstanceId(inputDuel, instanceId)
+  const card = getCardByInstanceId(duel, instanceId)
   if (row === undefined) {
     throw Error("Winged bull play: Couldn't find Winged bull's row")
   }
+  if (card.cardType !== "creature") {
+    throw Error("Winged bull play: Winged Bull is not a creature!")
+  }
   if (row[0].instanceId === instanceId) {
-    duel = await playAnimation(duel, { id: "WINGED_BULL", durationMs: 800, cardId: instanceId })
-    const card = getCardByInstanceId(duel, instanceId)
+    duel = await playAnimation(duel, { id: "CARD_AIR_ACTION", durationMs: 800, cardId: instanceId })
+
     card.modifiers.push({ id: "attackChange", quantity: 2 })
     duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   }
@@ -113,7 +118,7 @@ export function stegowulf_opponent_attack_modifier(inputDuel: DuelState, instanc
 export async function eerie_vision_play(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
   const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
-  duel = await playAnimation(duel, { id: "EERIE_VISION", durationMs: 800, cardId: instanceId })
+  duel = await playAnimation(duel, { id: "CARD_AIR_ACTION", durationMs: 800, cardId: instanceId })
 
   duel = await scryStart(duel, playerId, 3, instanceId)
   return duel
@@ -135,7 +140,7 @@ export async function eerie_vision_select_cards(inputDuel: DuelState, playerId: 
 
 export async function startle_play(inputDuel: DuelState, instanceId: string, target: Target) {
   let duel = inputDuel
-  duel = await playAnimation(duel, { id: "STARTLE", durationMs: 800, cardId: instanceId })
+  duel = await playAnimation(duel, { id: "CARD_AIR_ACTION", durationMs: 800, cardId: instanceId })
   // TODO
   duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   return duel
@@ -147,7 +152,7 @@ export async function cave_swimmer_support(inputDuel: DuelState, instanceId: str
   // 10% chance to draw
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 10) {
-    duel = await playAnimation(duel, { id: "CAVE_SWIMMER", durationMs: 800, cardId: instanceId })
+    duel = await playAnimation(duel, { id: "CARD_WATER_ACTION", durationMs: 800, cardId: instanceId })
     duel = await drawToHand(duel, playerId, 1)
     duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   } else {
@@ -163,7 +168,7 @@ export async function darkwoods_hyena_support(inputDuel: DuelState, instanceId: 
   // 50% chance to gain attack
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 50) {
-    duel = await playAnimation(duel, { id: "DARKWOODS_HYENA", durationMs: 800, cardId: instanceId })
+    duel = await playAnimation(duel, { id: "CARD_EARTH_ACTION", durationMs: 800, cardId: instanceId })
     const card = getCardByInstanceId(duel, instanceId)
     if (card.cardType === "creature") {
       card.modifiers.push({ id: "attackChange", quantity: 1 })
@@ -190,7 +195,7 @@ export async function joltbird_agent_support(inputDuel: DuelState, instanceId: s
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 20) {
     duel = await playAnimation(duel, {
-      id: "JOLTBIRD_AGENT",
+      id: "CARD_AIR_ACTION",
       durationMs: 800,
       cardId: randomOpposingCreature.instanceId,
     })
@@ -220,7 +225,7 @@ export async function dragon_cub_support(inputDuel: DuelState, instanceId: strin
   // 30% chance to burn
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 30) {
-    duel = await playAnimation(duel, { id: "DRAGON_CUB", durationMs: 800, cardId: instanceId })
+    duel = await playAnimation(duel, { id: "CARD_FIRE_ACTION", durationMs: 800, cardId: instanceId })
     duel = await burn(duel, opponentOpposingCreature.instanceId)
   } else {
     duel = await playAnimation(duel, { id: "ROLL_FAIL", durationMs: 600, cardId: instanceId })
@@ -237,7 +242,7 @@ export async function brash_splasher_after_attack(inputDuel: DuelState, instance
   // 50% chance to draw
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 50) {
-    duel = await playAnimation(duel, { id: "BRASH_SPLASHER", durationMs: 800, cardId: instanceId })
+    duel = await playAnimation(duel, { id: "CARD_WATER_ACTION", durationMs: 800, cardId: instanceId })
     duel = await drawToHand(duel, playerId, 1)
   } else {
     duel = await playAnimation(duel, { id: "ROLL_FAIL", durationMs: 600, cardId: instanceId })
@@ -254,7 +259,7 @@ export async function support_flame_sentinel(inputDuel: DuelState, instanceId: s
   if (targetCreature === undefined) {
     return duel
   }
-  duel = await playAnimation(duel, { id: "FLAME_SENTINEL", durationMs: 800, cardId: instanceId })
+  duel = await playAnimation(duel, { id: "CARD_FIRE_ACTION", durationMs: 800, cardId: instanceId })
   duel = await dealDamageToCreature(duel, targetCreature.instanceId, 1)
   duel = await checkForDeaths(duel)
   return duel
@@ -268,7 +273,7 @@ export async function smoldering_shot_play(inputDuel: DuelState, instanceId: str
   const row = target.playerId === "human" ? duel.human.rows[target.rowIndex] : duel.opponent.rows[target.rowIndex]
   if (row.length > 0) {
     const cardIdToDealDamage = row[0].instanceId
-    duel = await playAnimation(duel, { id: "SMOLDERING_SHOT", durationMs: 800, cardId: cardIdToDealDamage })
+    duel = await playAnimation(duel, { id: "CARD_FIRE_ACTION", durationMs: 800, cardId: cardIdToDealDamage })
     duel = await dealDamageToCreature(duel, cardIdToDealDamage, 3)
     duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
   }
@@ -294,7 +299,7 @@ export async function ancestral_presence_play(inputDuel: DuelState, instanceId: 
   const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
   const player = getDuelPlayerByCardInstanceId(duel, instanceId)
 
-  duel = await playAnimation(duel, { id: "ANCESTRAL_PRESENCE", durationMs: 800, playerId })
+  duel = await playAnimation(duel, { id: "PLAYER_AIR_ACTION", durationMs: 800, playerId })
 
   // Select cards
   const cardsToAddToHand = []
@@ -311,6 +316,26 @@ export async function ancestral_presence_play(inputDuel: DuelState, instanceId: 
   for (let x = 0; x < cardsToAddToHand.length; x++) {
     const cardToAdd = cardsToAddToHand[x]
     player.hand.push(cardToAdd)
+  }
+
+  duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
+
+  return duel
+}
+
+export async function flame_demon_play(inputDuel: DuelState, instanceId: string, target: Target) {
+  let duel = inputDuel
+  const opponentCardsInRow = getOpposingRowByCardId(duel, instanceId)
+
+  duel = await playAnimation(duel, { id: "CARD_FIRE_ACTION", durationMs: 800, cardId: instanceId })
+  if (opponentCardsInRow === undefined) {
+    return duel
+  }
+  for (const opponentCard of opponentCardsInRow) {
+    if (opponentCard.cardType === "creature") {
+      opponentCard.status = "burn"
+    }
+    duel = await playAnimation(duel, { id: "BURN", durationMs: BUFFER_MS, cardId: opponentCard.instanceId })
   }
 
   duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
@@ -512,7 +537,7 @@ export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   "Phoenix Dasher": { getValidTargets: getDefaultCreatureTargets },
   Plewb: { getValidTargets: getDefaultCreatureTargets },
   Wolf: { getValidTargets: getDefaultCreatureTargets },
-  "Flame Demon": { getValidTargets: getDefaultCreatureTargets },
+  "Flame Demon": { getValidTargets: getDefaultCreatureTargets, effects: { play: flame_demon_play } },
   "Owldus The Arcane": { getValidTargets: getDefaultCreatureTargets },
   "Mega Demigod": { getValidTargets: getDefaultCreatureTargets },
   "Molten Loaf": { getValidTargets: getDefaultCreatureTargets },

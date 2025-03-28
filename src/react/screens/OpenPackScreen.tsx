@@ -17,7 +17,6 @@ export const OpenPackScreen = () => {
 
   return (
     <MainView>
-      <GameBackground />
       <div className="w-full h-full flex flex-col">
         <div className="grow flex flex-col p-8 gap-8">
           <div className="flex flex-col gap-4">

@@ -28,7 +28,10 @@ export const InventoryCardCell = ({
 
   return (
     <div className={styles.inventoryCardCell}>
-      <div className={styles.inventoryCardCardContainer} data-unowned={collectionQuantity === 0}>
+      <div
+        className={styles.inventoryCardCardContainer}
+        data-unowned={!game.settings.godMode && collectionQuantity === 0}
+      >
         {draggable ? <InventoryCard cardData={cardData} /> : <CardDetailed cardData={cardData} />}
       </div>
       <div className="flex items-center gap-1 p-1">

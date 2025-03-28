@@ -11,6 +11,8 @@ import ExternalLinkSvg from "../../../../public/icons/externalLink.svg"
 import FireSvg from "../../../../public/icons/fire.svg"
 import HammerSvg from "../../../../public/icons/hammer.svg"
 import HeartSvg from "../../../../public/icons/heart-solid.svg"
+import KebabSvg from "../../../../public/icons/kebab.svg"
+import LightningSvg from "../../../../public/icons/lightning.svg"
 import MailSvg from "../../../../public/icons/mail.svg"
 import MenuSvg from "../../../../public/icons/menu.svg"
 import NoMobileSvg from "../../../../public/icons/noMobile.svg"
@@ -54,6 +56,8 @@ export const ExternalLink = createIcon(ExternalLinkSvg, "External Link")
 export const Fire = createIcon(FireSvg, "AFireir")
 export const Hammer = createIcon(HammerSvg, "Hammer")
 export const Heart = createIcon(HeartSvg, "Heart")
+export const Kebab = createIcon(KebabSvg, "Kebab")
+export const Lightning = createIcon(LightningSvg, "Lightning")
 export const Mail = createIcon(MailSvg, "Mail")
 export const Menu = createIcon(MenuSvg, "Menu")
 export const NoMobile = createIcon(NoMobileSvg, "No Mobile Devices")

@@ -18,7 +18,6 @@ export const CollectionScreen = ({}: CollectionScreenProps) => {
 
   return (
     <MainView>
-      <GameBackground />
       <div className="absolute-fill inset-0 z-10 flex flex-col ">
         <div className="grow overflow-hidden flex flex-col p-2 gap-2">
           <h1 className="text-5xl text-stone-50">Collection</h1>

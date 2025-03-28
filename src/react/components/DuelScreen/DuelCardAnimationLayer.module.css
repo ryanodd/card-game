@@ -1,17 +1,40 @@
 .duelCardOverlayLayer {
-  @apply absolute -inset-0 z-20 pointer-events-none flex items-center justify-center;
+  @apply absolute -inset-0 z-20 pointer-events-none flex items-center justify-center overflow-hidden;
 }
 
-.duelCardOverlayLayer[data-modifier-burn="true"] > .duelCardOverlayLayerDrawing {
-  @apply bg-red-400 rounded-full shadow-lg w-10 h-10;
+.duelCardStatusOverlayLayer {
+  @apply absolute -inset-6 z-10;
 }
 
-.duelCardOverlayLayer[data-modifier-stun="true"] > .duelCardOverlayLayerDrawing {
-  @apply bg-yellow-400 rounded-full shadow-lg w-10 h-10;
+.duelCardStatusOverlayLayer {
+  background-size: 24px 24px;
+  background-position: center;
+  background-repeat: repeat;
+  animation: status_overlay 2500ms infinite linear;
 }
 
-.duelCardOverlayLayer[data-modifier-poison="true"] > .duelCardOverlayLayerDrawing {
-  @apply bg-green-400 rounded-full shadow-lg w-10 h-10;
+@keyframes status_overlay {
+  0% {
+    transform: translate(0px, 24px);
+  }
+  100% {
+    transform: translate(24px, -24px);
+  }
+}
+
+.duelCardStatusOverlayLayer[data-modifier-burn="true"] {
+  @apply bg-red-700 bg-opacity-80 opacity-40;
+  background-image: url("/icons/fire.svg");
+}
+
+.duelCardStatusOverlayLayer[data-modifier-stun="true"] {
+  @apply bg-yellow-400 bg-opacity-90 opacity-30;
+  background-image: url("/icons/lightning.svg");
+}
+
+.duelCardStatusOverlayLayer[data-modifier-poison="true"] {
+  @apply bg-lime-600 bg-opacity-100 opacity-30;
+  background-image: url("/icons/water.svg");
 }
 
 .duelCardOverlayLayer[data-animation-burn="true"] > .duelCardOverlayLayerDrawing {

@@ -16,7 +16,6 @@ export const LeagueScreen = () => {
 
   return (
     <MainView>
-      <GameBackground />
       <div className="w-full h-full flex flex-col ">
         <div className="flex flex-col p-8 gap-8">
           <h1 className="text-5xl text-stone-50">League</h1>

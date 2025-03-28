@@ -25,6 +25,7 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
         damage: 0,
         summoningSickness: false,
         modifiers: [],
+        status: null,
       }
     case "spell":
       return {
@@ -32,7 +33,6 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
         name: cardData.name,
         cost: cardData.cost,
         cardType: cardData.cardType,
-        modifiers: [],
       }
   }
 }

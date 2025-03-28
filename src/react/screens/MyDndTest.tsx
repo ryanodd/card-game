@@ -116,7 +116,6 @@ export const MyDndTest = ({}: MyDndTestProps) => {
       onDragCancel={handleDragCancel}
     >
       <MainView>
-        <GameBackground />
         <div className="grow-1 flex flex-col p-8 gap-8">
           <MyDndTestRow droppableId="opponentHand" itemIds={displayedItems.opponentHand} />
           <MyDndTestRow droppableId="row1" itemIds={displayedItems.row1} />

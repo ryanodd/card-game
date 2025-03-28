@@ -42,6 +42,10 @@ export type DuelAnimation = {
       energyType: EnergyType
     }
   | {
+      id: "ROLL_FAIL"
+      cardId: string
+    }
+  | {
       id: "BURN"
       cardId: string
     }
@@ -54,55 +58,35 @@ export type DuelAnimation = {
       cardId: string
     }
   | {
-      id: "ROLL_FAIL"
+      id: "CARD_FIRE_ACTION"
       cardId: string
     }
   | {
-      id: "EMBER_FOXLING"
-      attackingCardId: string
-    }
-  | {
-      id: "WINGED_BULL"
+      id: "CARD_WATER_ACTION"
       cardId: string
     }
   | {
-      id: "EERIE_VISION"
+      id: "CARD_EARTH_ACTION"
       cardId: string
     }
   | {
-      id: "STARTLE"
+      id: "CARD_AIR_ACTION"
       cardId: string
     }
   | {
-      id: "CAVE_SWIMMER"
-      cardId: string
+      id: "PLAYER_FIRE_ACTION"
+      playerId: PlayerID
     }
   | {
-      id: "DARKWOODS_HYENA"
-      cardId: string
+      id: "PLAYER_WATER_ACTION"
+      playerId: PlayerID
     }
   | {
-      id: "DRAGON_CUB"
-      cardId: string
+      id: "PLAYER_EARTH_ACTION"
+      playerId: PlayerID
     }
   | {
-      id: "JOLTBIRD_AGENT"
-      cardId: string
-    }
-  | {
-      id: "BRASH_SPLASHER"
-      cardId: string
-    }
-  | {
-      id: "FLAME_SENTINEL"
-      cardId: string
-    }
-  | {
-      id: "SMOLDERING_SHOT"
-      cardId: string
-    }
-  | {
-      id: "ANCESTRAL_PRESENCE"
+      id: "PLAYER_AIR_ACTION"
       playerId: PlayerID
     }
 )

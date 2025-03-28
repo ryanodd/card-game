@@ -4,7 +4,6 @@ import { getCardByInstanceId } from "../DuelHelpers"
 import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { dealDamageToCreature } from "./dealDamage"
 import { performTrampleDamage } from "./performTrampleDamage"
-import { decreaseStun } from "./stun"
 
 // Creatures ass part of the combat phase.
 // In this function, the fact that we call them attacking & defending card is lolz. They're the same really

@@ -6,7 +6,6 @@ import { getEffectiveAttack } from "../helpers/getEffectiveAttack"
 import { checkForDeaths } from "./checkForDeaths"
 import { creaturesTrade } from "./creaturesTrade"
 import { dealDamageToPlayer } from "./dealDamage"
-import { decreaseStun } from "./stun"
 
 export async function combatPhase(inputDuel: DuelState) {
   let duel = inputDuel
@@ -23,12 +22,6 @@ export async function combatPhase(inputDuel: DuelState) {
 
     const attackingCardSummoningSick = attackingCard.summoningSickness
     if (attackingCardSummoningSick) {
-      continue
-    }
-
-    const attackingCardStunned = attackingCard?.modifiers.find((modifier) => modifier.id === "stun") !== undefined
-    if (attackingCardStunned) {
-      duel = await decreaseStun(duel, attackingCard.instanceId)
       continue
     }
 
