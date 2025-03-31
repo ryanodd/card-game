@@ -18,20 +18,18 @@ export const ManageDecksScreen = () => {
   }
 
   return (
-    <MainView>
-      <div className="w-full h-full flex flex-col justify-between">
-        <div className="grow flex flex-col p-8 gap-8">
-          <h1 className="text-5xl text-stone-50">Decks</h1>
-          <DeckGrid />
-        </div>
-        <Footer
-          leftContent={
-            <Button className="flex items-center" onClick={onBackClick}>
-              ⬅ Back
-            </Button>
-          }
-        />
+    <div className="w-full h-full flex flex-col justify-between">
+      <div className="grow flex flex-col p-8 gap-8">
+        <h1 className="text-5xl text-stone-50">Decks</h1>
+        <DeckGrid />
       </div>
-    </MainView>
+      <Footer
+        leftContent={
+          <Button className="flex items-center" onClick={onBackClick}>
+            ⬅ Back
+          </Button>
+        }
+      />
+    </div>
   )
 }

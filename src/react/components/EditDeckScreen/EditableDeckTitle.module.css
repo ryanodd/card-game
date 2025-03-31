@@ -1,0 +1,11 @@
+.deckTitleContainer {
+  @apply flex gap-1;
+}
+
+.deckTitle {
+  @apply text-3xl font-semibold text-stone-50;
+}
+
+.deckTitleInput {
+  @apply text-stone-50 bg-stone-800 bg-opacity-50 px-2 rounded-lg;
+}

@@ -1,6 +1,6 @@
 import Image from "next/image"
-import { CardDetailed, getCostIcons } from "../CardDetailed"
-import { Tooltip } from "../Tooltip"
+import { CardDetailed, getCostIcons } from "../Card/CardDetailed"
+import { Tooltip } from "../designSystem/Tooltip"
 import { useCallback } from "react"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
 import styles from "./Inventory.module.css"
@@ -42,7 +42,7 @@ export const DeckListCard = ({ cardName, quantity }: DeckListCardProps) => {
   return (
     <Tooltip content={<CardDetailed cardData={cardData} />} side="left">
       <button
-        className="relative shrink-0 flex justify-end rounded-md overflow-hidden"
+        className="relative shrink-0 flex justify-end rounded-md overflow-hidden hover:opacity-60"
         style={{ width: `${DECK_LIST_CARD_WIDTH_REMS}rem` }}
         onClick={onClick}
       >

@@ -34,6 +34,11 @@ export async function combatPhase(inputDuel: DuelState) {
       }
     }
 
+    const beforeAttackFunction = cardBehaviourMap[attackingCard.name].effects?.beforeAttack
+    if (beforeAttackFunction) {
+      duel = await beforeAttackFunction(duel, attackingCard.instanceId)
+    }
+
     duel = await playAnimation(duel, {
       id: "ATTACK_START",
       durationMs: 200,

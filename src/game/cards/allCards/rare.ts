@@ -5,7 +5,7 @@ export const rareCards: CardData[] = []
 // Slowly scales
 rareCards.push({
   name: "Pmochi",
-  imageSrcSmall: "/card-art/96x96/pmochi.png",
+  imageSrcSmall: "/card-art/512x512/pmochi.png",
   imageSrcLarge: "/card-art/512x512/pmochi.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -26,7 +26,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Fire Blob",
-  imageSrcSmall: "/card-art/96x96/fireBlob.png",
+  imageSrcSmall: "/card-art/512x512/fireBlob.png",
   imageSrcLarge: "/card-art/512x512/fireBlob.png",
   imageCenterYPercent: 52,
   rarity: "rare",
@@ -47,7 +47,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Diabolical Cultist",
-  imageSrcSmall: "/card-art/96x96/diabolicalCultist.png",
+  imageSrcSmall: "/card-art/512x512/diabolicalCultist.png",
   imageSrcLarge: "/card-art/512x512/diabolicalCultist.png",
   imageCenterYPercent: 47,
   rarity: "rare",
@@ -68,7 +68,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Treegre",
-  imageSrcSmall: "/card-art/96x96/treegre.png",
+  imageSrcSmall: "/card-art/512x512/treegre.png",
   imageSrcLarge: "/card-art/512x512/treegre.png",
   imageCenterYPercent: 45,
   rarity: "rare",
@@ -89,7 +89,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Venus Fang",
-  imageSrcSmall: "/card-art/96x96/venusFang.png",
+  imageSrcSmall: "/card-art/512x512/venusFang.png",
   imageSrcLarge: "/card-art/512x512/venusFang.png",
   imageCenterYPercent: 40,
   rarity: "rare",
@@ -121,7 +121,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Phoenix Dasher",
-  imageSrcSmall: "/card-art/96x96/phoenixDasher.png",
+  imageSrcSmall: "/card-art/512x512/phoenixDasher.png",
   imageSrcLarge: "/card-art/512x512/phoenixDasher.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -131,11 +131,16 @@ rareCards.push({
   attack: 3,
   health: 3,
   cost: {
-    neutral: 1,
-    fire: 1,
+    neutral: 2,
+    fire: 0,
     water: 0,
     earth: 0,
-    air: 1,
+    air: 0,
+    dualType: {
+      quantity: 1,
+      primary: "fire",
+      secondary: "air",
+    },
   },
   text: [],
 })
@@ -144,7 +149,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Ember Foxling",
-  imageSrcSmall: "/card-art/96x96/emberFoxling.png",
+  imageSrcSmall: "/card-art/512x512/emberFoxling.png",
   imageSrcLarge: "/card-art/512x512/emberFoxling.png",
   imageCenterYPercent: 70,
   rarity: "rare",
@@ -175,7 +180,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Vengeful Flamewing",
-  imageSrcSmall: "/card-art/96x96/vengefulFlamewing.png",
+  imageSrcSmall: "/card-art/512x512/vengefulFlamewing.png",
   imageSrcLarge: "/card-art/512x512/vengefulFlamewing.png",
   imageCenterYPercent: 45,
   rarity: "rare",
@@ -197,7 +202,7 @@ rareCards.push({
 // When attacking this creature, your opponent has a 25% chance to miss.
 rareCards.push({
   name: "Fairy Buckfly",
-  imageSrcSmall: "/card-art/96x96/fairyBuckfly.png",
+  imageSrcSmall: "/card-art/512x512/fairyBuckfly.png",
   imageSrcLarge: "/card-art/512x512/fairyBuckfly.png",
   imageCenterYPercent: 18,
   rarity: "rare",
@@ -217,7 +222,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Eerie Vision",
-  imageSrcSmall: "/card-art/96x96/eerieVision.png",
+  imageSrcSmall: "/card-art/512x512/eerieVision.png",
   imageSrcLarge: "/card-art/512x512/eerieVision.png",
   imageCenterYPercent: 20,
   rarity: "rare",
@@ -245,7 +250,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Startle",
-  imageSrcSmall: "/card-art/96x96/startle.png",
+  imageSrcSmall: "/card-art/512x512/startle.png",
   imageSrcLarge: "/card-art/512x512/startle.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -264,7 +269,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Ancestral Presence",
-  imageSrcSmall: "/card-art/96x96/ancestralPresence.png",
+  imageSrcSmall: "/card-art/512x512/ancestralPresence.png",
   imageSrcLarge: "/card-art/512x512/ancestralPresence.png",
   imageCenterYPercent: 30,
   rarity: "rare",
@@ -288,7 +293,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Flame Sentinel",
-  imageSrcSmall: "/card-art/96x96/flameSentinel.png",
+  imageSrcSmall: "/card-art/512x512/flameSentinel.png",
   imageSrcLarge: "/card-art/512x512/flameSentinel.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -321,7 +326,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Neojia Tamer",
-  imageSrcSmall: "/card-art/96x96/neojiaTamer.png",
+  imageSrcSmall: "/card-art/512x512/neojiaTamer.png",
   imageSrcLarge: "/card-art/512x512/neojiaTamer.png",
   imageCenterYPercent: 46,
   rarity: "rare",
@@ -346,7 +351,7 @@ rareCards.push({
 })
 rareCards.push({
   name: "Opaldrake Thrasher",
-  imageSrcSmall: "/card-art/96x96/opaldrakeThrasher.png",
+  imageSrcSmall: "/card-art/512x512/opaldrakeThrasher.png",
   imageSrcLarge: "/card-art/512x512/opaldrakeThrasher.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -365,7 +370,7 @@ rareCards.push({
 })
 rareCards.push({
   name: "Smoldering Shot",
-  imageSrcSmall: "/card-art/96x96/smolderingShot.png",
+  imageSrcSmall: "/card-art/512x512/smolderingShot.png",
   imageSrcLarge: "/card-art/512x512/smolderingShot.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -394,7 +399,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Fairy Arsonist",
-  imageSrcSmall: "/card-art/96x96/fairyArsonist.png",
+  imageSrcSmall: "/card-art/512x512/fairyArsonist.png",
   imageSrcLarge: "/card-art/512x512/fairyArsonist.png",
   imageCenterYPercent: 60,
   rarity: "rare",
@@ -415,7 +420,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Astral Caller",
-  imageSrcSmall: "/card-art/96x96/astralCaller.png",
+  imageSrcSmall: "/card-art/512x512/astralCaller.png",
   imageSrcLarge: "/card-art/512x512/astralCaller.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -450,7 +455,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Sicklehorn Grazer",
-  imageSrcSmall: "/card-art/96x96/sicklehornGrazer.png",
+  imageSrcSmall: "/card-art/512x512/sicklehornGrazer.png",
   imageSrcLarge: "/card-art/512x512/sicklehornGrazer.png",
   imageCenterYPercent: 50,
   rarity: "rare",
@@ -470,7 +475,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Pike Lancer",
-  imageSrcSmall: "/card-art/96x96/pikeLancer.png",
+  imageSrcSmall: "/card-art/512x512/pikeLancer.png",
   imageSrcLarge: "/card-art/512x512/pikeLancer.png",
   imageCenterYPercent: 45,
   rarity: "rare",
@@ -501,7 +506,7 @@ rareCards.push({
 
 rareCards.push({
   name: "Violet Sagebeast",
-  imageSrcSmall: "/card-art/96x96/violetSagebeast.png",
+  imageSrcSmall: "/card-art/512x512/violetSagebeast.png",
   imageSrcLarge: "/card-art/512x512/violetSagebeast.png",
   imageCenterYPercent: 38,
   rarity: "rare",

@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog"
 import { useGameStore } from "../../hooks/useGameStore"
 import { ReactNode, useCallback } from "react"
-import { CardDetailed } from "../CardDetailed"
+import { CardDetailed } from "../Card/CardDetailed"
 import styles from "./InventoryCardFocusDialog.module.css"
 import { CardData } from "@/src/game/cards/CardData"
 

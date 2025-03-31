@@ -16,7 +16,8 @@ import { v4 } from "uuid"
 import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 import { InventoryBrowser } from "../components/EditDeckScreen/InventoryBrowser"
 import { heroDataMap } from "@/src/game/heroes/AllHeroes"
-import { Filters, useInventoryBrowserStore } from "../hooks/useInventoryBrowserStore"
+import { defaultFilters, Filters, useInventoryBrowserStore } from "../hooks/useInventoryBrowserStore"
+import { EditableDeckTitle } from "../components/EditDeckScreen/EditableDeckTitle"
 
 export type EditDeckScreenProps = {}
 
@@ -39,14 +40,11 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
   const { filters, setFilters } = useInventoryBrowserStore()
   useEffect(() => {
     if (editDeck.heroName === null) {
-      setFilters({
-        ...filters,
-        energyType: { neutral: true, fire: true, water: true, earth: true, air: true },
-      })
+      setFilters(defaultFilters)
     } else {
       const hero = heroDataMap[editDeck.heroName]
       const newFilters: Filters = {
-        ...filters,
+        ...defaultFilters,
         energyType: { neutral: true, fire: false, water: false, earth: false, air: false },
       }
       for (const energyType of hero.energyTypes) {
@@ -96,14 +94,23 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
     setGame({ ...game, screen: { id: "manageDecks" } })
   }, [game, setGame])
 
+  const onRenameDeck = useCallback(
+    (newName: string) => {
+      setEditDeck({ ...editDeck, deckName: newName })
+    },
+    [editDeck, setEditDeck]
+  )
+
   return (
-    <MainView>
+    <>
       <DragOverlay dropAnimation={null}>
         {draggedCardName !== null && <InventoryCard cardData={cardDataMap[draggedCardName as CardName]} />}
       </DragOverlay>
       <div className="absolute-fill inset-0 z-10 flex flex-col">
         <div className="grow flex flex-col overflow-hidden p-2 gap-2">
-          <h1 className="text-5xl text-stone-50">{editDeck.deckName}</h1>
+          <div className="px-1.5">
+            <EditableDeckTitle title={editDeck.deckName} onRename={onRenameDeck} />
+          </div>
           <div className="flex-grow flex gap-2 overflow-hidden relative">
             <InventoryBrowser cardsDraggable />
             <DeckListColumn />
@@ -116,6 +123,6 @@ export const EditDeckScreen = ({}: EditDeckScreenProps) => {
           rightContent={<Button onClick={onDoneClick}>Done</Button>}
         />
       </div>
-    </MainView>
+    </>
   )
 }

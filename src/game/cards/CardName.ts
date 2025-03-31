@@ -1,5 +1,4 @@
 export type CardName =
-  | "Golden Friend"
   | "Bed of Snakes"
   | "Ember Foxling"
   | "Winged Bull"
@@ -93,3 +92,5 @@ export type CardName =
   | "Owldus The Arcane"
   | "Mega Demigod"
   | "Molten Loaf"
+  | "Eruption of Boulders"
+  | "Cataclysm"

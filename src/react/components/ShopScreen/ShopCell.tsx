@@ -1,7 +1,7 @@
 import { CardData } from "@/src/game/cards/CardData"
 import { InventoryQuantityIndicator } from "../EditDeckScreen/InventoryQuantityIndicator"
 import { useGameStore } from "../../hooks/useGameStore"
-import { CardDetailed } from "../CardDetailed"
+import { CardDetailed } from "../Card/CardDetailed"
 import styles from "./ShopCell.module.css"
 import { COLLECTION_MAX_PER_CARD } from "@/src/game/GameData"
 import { getShopCostForCard } from "@/src/game/shop/getShopCostForCard"

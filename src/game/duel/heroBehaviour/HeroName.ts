@@ -1,1 +1,1 @@
-export type HeroName = "Fire Hero" | "Water Hero" | "Earth Hero" | "Air Hero"
+export type HeroName = "Garmuk" | "Lappy" | "Elozar the Steadfast" | "Orrin Stormwing"

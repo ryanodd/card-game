@@ -34,7 +34,7 @@ export const ShopScreen = () => {
   )
 
   return (
-    <MainView>
+    <>
       <Toast
         toastTitle={purchaseSuccessToast?.title}
         open={purchaseSuccessToast !== null}
@@ -77,6 +77,6 @@ export const ShopScreen = () => {
           }
         />
       </div>
-    </MainView>
+    </>
   )
 }

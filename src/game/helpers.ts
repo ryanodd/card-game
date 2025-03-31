@@ -14,7 +14,7 @@ export const getEnergyTotalFromEnergyCounts = (energyCounts: EnergyCounts) => {
 }
 
 export const getConvertedEnergyCost = (cardData: CardData) => {
-  return getEnergyTotalFromEnergyCounts(cardData.cost)
+  return getEnergyTotalFromEnergyCounts(cardData.cost) + (cardData.cost.dualType?.quantity ?? 0)
 }
 
 export const getEnergyTypesFromEnergyCounts = (counts: EnergyCounts) => {

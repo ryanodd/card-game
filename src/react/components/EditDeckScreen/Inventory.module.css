@@ -67,8 +67,12 @@
 }
 
 .heroCell {
-  @apply relative shrink-0 flex justify-end items-center p-2 rounded-md overflow-hidden;
-  @apply border-amber-400 border;
+  @apply relative shrink-0 flex justify-end items-center pr-2 gap-2 rounded-md overflow-hidden;
+  @apply border-stone-400 border;
+}
+
+.heroCell:hover {
+  @apply bg-stone-600 border-stone-300;
 }
 
 .heroCellContent {

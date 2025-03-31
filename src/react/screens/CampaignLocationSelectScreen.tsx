@@ -15,21 +15,19 @@ export const CampaignLocationSelectScreen = () => {
   }
 
   return (
-    <MainView>
-      <div className="w-full h-full flex flex-col">
-        <div className="flex flex-col p-8 gap-8 grow">
-          <h1 className="text-5xl text-stone-50">Campaign Select</h1>
-          <h2 className="text-lg text-stone-50">Active deck: {getActiveDeck(game)?.name ?? "None"}</h2>
-          <LocationSelect />
-        </div>
-        <Footer
-          leftContent={
-            <Button className="flex items-center" onClick={onBackClick}>
-              ⬅ Back
-            </Button>
-          }
-        />
+    <div className="w-full h-full flex flex-col">
+      <div className="flex flex-col p-8 gap-8 grow">
+        <h1 className="text-5xl text-stone-50">Campaign Select</h1>
+        <h2 className="text-lg text-stone-50">Active deck: {getActiveDeck(game)?.name ?? "None"}</h2>
+        <LocationSelect />
       </div>
-    </MainView>
+      <Footer
+        leftContent={
+          <Button className="flex items-center" onClick={onBackClick}>
+            ⬅ Back
+          </Button>
+        }
+      />
+    </div>
   )
 }

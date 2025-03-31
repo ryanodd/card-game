@@ -7,7 +7,7 @@ export const deckMap: Record<string, Deck> = {
   firstOpponent: {
     id: "firstOpponent",
     name: "First Opponent",
-    heroName: "Fire Hero",
+    heroName: "Garmuk",
     cardNames: [
       "Brash Splasher",
       "Brash Splasher",
@@ -35,7 +35,6 @@ export const deckMap: Record<string, Deck> = {
       "Stegowulf",
       "Living Hillside",
       "Living Hillside",
-      "Golden Friend",
       "Zardian Raider",
       "Emerald Makasaur",
       "Elder Saurus",

@@ -9,6 +9,7 @@ import { LeagueGame } from "../league/leagueTypes"
 import { campaignChallengeMap } from "../Campaign"
 import { generateDeck } from "../decks/generateDeck"
 import { cardDataMap } from "../cards/allCards/allCards"
+import { cardCostToEnergyCost } from "./energy/cardCostToEnergyCost"
 
 export const STARTING_HEALTH = 15
 
@@ -18,7 +19,7 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
       return {
         instanceId: v4(),
         name: cardData.name,
-        cost: cardData.cost,
+        cost: cardCostToEnergyCost(cardData.cost),
         cardType: cardData.cardType,
         attack: cardData.attack,
         health: cardData.health,
@@ -26,12 +27,13 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
         summoningSickness: false,
         modifiers: [],
         status: null,
+        shield: false,
       }
     case "spell":
       return {
         instanceId: v4(),
         name: cardData.name,
-        cost: cardData.cost,
+        cost: cardCostToEnergyCost(cardData.cost),
         cardType: cardData.cardType,
       }
   }

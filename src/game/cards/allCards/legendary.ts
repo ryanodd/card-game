@@ -4,7 +4,7 @@ export const legendaryCards: CardData[] = []
 
 legendaryCards.push({
   name: "Sol Guardian",
-  imageSrcSmall: "/card-art/96x96/solGuardian.png",
+  imageSrcSmall: "/card-art/512x512/solGuardian.png",
   imageSrcLarge: "/card-art/512x512/solGuardian.png",
   imageCenterYPercent: 49,
   rarity: "legendary",
@@ -25,7 +25,7 @@ legendaryCards.push({
 
 legendaryCards.push({
   name: "Celestial Riftkeeper",
-  imageSrcSmall: "/card-art/96x96/celestialRiftkeeper.png",
+  imageSrcSmall: "/card-art/512x512/celestialRiftkeeper.png",
   imageSrcLarge: "/card-art/512x512/celestialRiftkeeper.png",
   imageCenterYPercent: 43,
   rarity: "legendary",
@@ -46,7 +46,7 @@ legendaryCards.push({
 
 legendaryCards.push({
   name: "Owldus The Arcane",
-  imageSrcSmall: "/card-art/96x96/owldusTheArcane.png",
+  imageSrcSmall: "/card-art/512x512/owldusTheArcane.png",
   imageSrcLarge: "/card-art/512x512/owldusTheArcane.png",
   imageCenterYPercent: 50,
   rarity: "legendary",
@@ -67,7 +67,7 @@ legendaryCards.push({
 
 legendaryCards.push({
   name: "Mega Demigod",
-  imageSrcSmall: "/card-art/96x96/megaDemigod.png",
+  imageSrcSmall: "/card-art/512x512/megaDemigod.png",
   imageSrcLarge: "/card-art/512x512/megaDemigod.png",
   imageCenterYPercent: 50,
   rarity: "legendary",
@@ -90,7 +90,7 @@ legendaryCards.push({
 
 legendaryCards.push({
   name: "Spirit Giant",
-  imageSrcSmall: "/card-art/96x96/spiritGiant.png",
+  imageSrcSmall: "/card-art/512x512/spiritGiant.png",
   imageSrcLarge: "/card-art/512x512/spiritGiant.png",
   imageCenterYPercent: 51,
   rarity: "legendary",
@@ -111,7 +111,7 @@ legendaryCards.push({
 
 legendaryCards.push({
   name: "Ilstrom, Tidal Inferno",
-  imageSrcSmall: "/card-art/96x96/ilstromTidalInferno.png",
+  imageSrcSmall: "/card-art/512x512/ilstromTidalInferno.png",
   imageSrcLarge: "/card-art/512x512/ilstromTidalInferno.png",
   imageCenterYPercent: 50,
   rarity: "legendary",

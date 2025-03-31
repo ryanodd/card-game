@@ -13,7 +13,7 @@ import { useCallback, useEffect } from "react"
 
 import { DuelMenuButton } from "../components/DuelScreen/DuelMenuButton"
 import { DndContext, DragEndEvent, DragOverlay, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
-import { CardPreview } from "../components/CardPreview"
+import { CardPreview } from "../components/Card/CardPreview"
 import { DebugMenu } from "../components/DuelScreen/DebugMenu"
 import { useDuelUIStore } from "../hooks/useDuelUIStore"
 import { HumanHand } from "../components/DuelScreen/HumanHand"
@@ -171,55 +171,53 @@ export const DuelScreen = ({}: DuelScreenProps) => {
   )
 
   return (
-    <MainView>
-      <DndContext
-        sensors={sensors}
-        // collisionDetection={closestCenter}
+    <DndContext
+      sensors={sensors}
+      // collisionDetection={closestCenter}
 
-        onDragOver={handleDragOver}
-        // Also handled by many various droppable targets with useDndMonitor
-        onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
+      // Also handled by many various droppable targets with useDndMonitor
+      onDragEnd={handleDragEnd}
 
-        // Handled by DuelCard:
-        // onDragStart={handleDragStart}
-        // onDragCancel={handleDragCancel}
-      >
-        <DragOverlay dropAnimation={null}>
-          {cardIdDragging !== null && (
-            <CardPreview
-              duel={duel}
-              cardState={getCardByInstanceId(duel, cardIdDragging)}
-              isTooltipOpen={false}
-              showCostIcons
-            />
-          )}
-        </DragOverlay>
-        <DuelCompleteDialog />
-        <CardSelectDialog duel={duel} />
-        <div className="absolute inset-0 z-10 flex flex-col justify-between gap-4 items-center">
-          <div className="w-full flex justify-between items-center gap-4 p-4 relative">
-            <OpponentHand duel={duel} />
-            <DeckPile />
-          </div>
-
-          <div className="flex justify-center gap-4 items-center">
-            <HeroArea duel={duel} playerId="human" />
-            <PlayArea duel={duel} />
-            <HeroArea duel={duel} playerId="opponent" />
-          </div>
-          <div className="w-full flex justify-end items-center p-4 gap-4 relative">
-            <HumanHand duel={duel} cardIds={humanHandCardIds} />
-            <DeckPile />
-          </div>
-          <DuelMenuButton />
+      // Handled by DuelCard:
+      // onDragStart={handleDragStart}
+      // onDragCancel={handleDragCancel}
+    >
+      <DragOverlay dropAnimation={null}>
+        {cardIdDragging !== null && (
+          <CardPreview
+            duel={duel}
+            cardState={getCardByInstanceId(duel, cardIdDragging)}
+            isTooltipOpen={false}
+            showCostIcons
+          />
+        )}
+      </DragOverlay>
+      <DuelCompleteDialog />
+      <CardSelectDialog duel={duel} />
+      <div className="absolute inset-0 z-10 flex flex-col justify-between gap-4 items-center">
+        <div className="w-full flex justify-between items-center gap-4 p-4 relative">
+          <OpponentHand duel={duel} />
+          <DeckPile />
         </div>
-        {debugEnabled && <DebugMenu />}
-        <div className="absolute bottom-56 right-4 z-20">
-          <AdvanceTurnButton duel={duel} />
+
+        <div className="flex justify-center gap-4 items-center">
+          <HeroArea duel={duel} playerId="human" />
+          <PlayArea duel={duel} />
+          <HeroArea duel={duel} playerId="opponent" />
         </div>
-        <DuelPrompt duel={duel} />
-        <ControlButtonPopup duel={duel} />
-      </DndContext>
-    </MainView>
+        <div className="w-full flex justify-end items-center p-4 gap-4 relative">
+          <HumanHand duel={duel} cardIds={humanHandCardIds} />
+          <DeckPile />
+        </div>
+        <DuelMenuButton />
+      </div>
+      {debugEnabled && <DebugMenu />}
+      <div className="absolute bottom-56 right-4 z-20">
+        <AdvanceTurnButton duel={duel} />
+      </div>
+      <DuelPrompt duel={duel} />
+      <ControlButtonPopup duel={duel} />
+    </DndContext>
   )
 }

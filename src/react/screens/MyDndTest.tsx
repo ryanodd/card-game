@@ -115,22 +115,20 @@ export const MyDndTest = ({}: MyDndTestProps) => {
       onDragOver={handleDragOver}
       onDragCancel={handleDragCancel}
     >
-      <MainView>
-        <div className="grow-1 flex flex-col p-8 gap-8">
-          <MyDndTestRow droppableId="opponentHand" itemIds={displayedItems.opponentHand} />
-          <MyDndTestRow droppableId="row1" itemIds={displayedItems.row1} />
-          <MyDndTestRow droppableId="row2" itemIds={displayedItems.row2} />
-          <MyDndTestRow droppableId="humanHand" itemIds={displayedItems.humanHand} />
-        </div>
-        <DragOverlay>
-          {draggingId ? <MyDndTestItemSprite text={draggingId.toString()} isDraggingInOverlay /> : null}
-        </DragOverlay>
-        <div className="flex justify-between p-4">
-          <Button className="flex items-center" onClick={onBackClick}>
-            ⬅ Back
-          </Button>
-        </div>
-      </MainView>
+      <div className="grow-1 flex flex-col p-8 gap-8">
+        <MyDndTestRow droppableId="opponentHand" itemIds={displayedItems.opponentHand} />
+        <MyDndTestRow droppableId="row1" itemIds={displayedItems.row1} />
+        <MyDndTestRow droppableId="row2" itemIds={displayedItems.row2} />
+        <MyDndTestRow droppableId="humanHand" itemIds={displayedItems.humanHand} />
+      </div>
+      <DragOverlay>
+        {draggingId ? <MyDndTestItemSprite text={draggingId.toString()} isDraggingInOverlay /> : null}
+      </DragOverlay>
+      <div className="flex justify-between p-4">
+        <Button className="flex items-center" onClick={onBackClick}>
+          ⬅ Back
+        </Button>
+      </div>
     </DndContext>
   )
 }

@@ -1,5 +1,5 @@
 .gameBackground {
-  @apply bg-cyan-500;
+  background: linear-gradient(to top left, #66511c, #a18744);
   @apply absolute -inset-10;
 }
 

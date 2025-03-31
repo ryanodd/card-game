@@ -34,6 +34,17 @@ export const filterCardNames = (game: GameState, cardNames: CardName[], filters:
     }
   }
 
+  if (!filters.completion.complete) {
+    cardNamesToReturn = cardNamesToReturn.filter((cardName) => {
+      return !cardDataMap[cardName].complete
+    })
+  }
+  if (!filters.completion.incomplete) {
+    cardNamesToReturn = cardNamesToReturn.filter((cardName) => {
+      return cardDataMap[cardName].complete
+    })
+  }
+
   return cardNamesToReturn
 }
 

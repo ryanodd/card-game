@@ -4,7 +4,7 @@ export const baseCards: CardData[] = []
 
 baseCards.push({
   name: "Plewb",
-  imageSrcSmall: "/card-art/96x96/plewb.png",
+  imageSrcSmall: "/card-art/512x512/plewb.png",
   imageSrcLarge: "/card-art/512x512/plewb.png",
   imageCenterYPercent: 47,
   rarity: "base",
@@ -25,7 +25,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Wolf",
-  imageSrcSmall: "/card-art/96x96/wolf.png",
+  imageSrcSmall: "/card-art/512x512/wolf.png",
   imageSrcLarge: "/card-art/512x512/wolf.png",
   imageCenterYPercent: 55,
   rarity: "base",
@@ -46,7 +46,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Little Imp Guy",
-  imageSrcSmall: "/card-art/96x96/littleImpGuy.png",
+  imageSrcSmall: "/card-art/512x512/littleImpGuy.png",
   imageSrcLarge: "/card-art/512x512/littleImpGuy.png",
   imageCenterYPercent: 55,
   rarity: "base",
@@ -62,12 +62,13 @@ baseCards.push({
     earth: 0,
     air: 0,
   },
+  keywords: ["Charge"],
   text: [{ variant: "default", textList: [{ keyword: "Charge" }] }],
 })
 
 baseCards.push({
   name: "Little Chublet",
-  imageSrcSmall: "/card-art/96x96/littleChublet.png",
+  imageSrcSmall: "/card-art/512x512/littleChublet.png",
   imageSrcLarge: "/card-art/512x512/littleChublet.png",
   imageCenterYPercent: 52,
   rarity: "base",
@@ -83,6 +84,7 @@ baseCards.push({
     earth: 0,
     air: 0,
   },
+  keywords: ["Stun"],
   text: [
     {
       variant: "default",
@@ -100,7 +102,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Crab",
-  imageSrcSmall: "/card-art/96x96/crab.png",
+  imageSrcSmall: "/card-art/512x512/crab.png",
   imageSrcLarge: "/card-art/512x512/crab.png",
   imageCenterYPercent: 44,
   rarity: "base",
@@ -110,18 +112,24 @@ baseCards.push({
   attack: 2,
   health: 2,
   cost: {
-    neutral: 1,
+    neutral: 2,
     fire: 0,
     water: 1,
     earth: 0,
     air: 0,
   },
-  text: [],
+  keywords: ["Shield"],
+  text: [
+    {
+      variant: "default",
+      textList: [{ keyword: "Shield" }],
+    },
+  ],
 })
 
 baseCards.push({
   name: "Blooming Bingus",
-  imageSrcSmall: "/card-art/96x96/bloomingBingus.png",
+  imageSrcSmall: "/card-art/512x512/bloomingBingus.png",
   imageSrcLarge: "/card-art/512x512/bloomingBingus.png",
   imageCenterYPercent: 50,
   rarity: "base",
@@ -152,7 +160,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Stegobobo",
-  imageSrcSmall: "/card-art/96x96/stegobobo.png",
+  imageSrcSmall: "/card-art/512x512/stegobobo.png",
   imageSrcLarge: "/card-art/512x512/stegobobo.png",
   imageCenterYPercent: 50,
   rarity: "base",
@@ -173,7 +181,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Clucksworth",
-  imageSrcSmall: "/card-art/96x96/clucksworth.png",
+  imageSrcSmall: "/card-art/512x512/clucksworth.png",
   imageSrcLarge: "/card-art/512x512/clucksworth.png",
   imageCenterYPercent: 55,
   rarity: "base",
@@ -189,12 +197,22 @@ baseCards.push({
     earth: 0,
     air: 1,
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { plainText: "Before attacking, gains " },
+        { boldText: "+1" },
+        { icon: "sword" },
+        { plainText: " if another Clucksworth is in play." },
+      ],
+    },
+  ],
 })
 
 baseCards.push({
   name: "Cloud Pegasus",
-  imageSrcSmall: "/card-art/96x96/cloudPegasus.png",
+  imageSrcSmall: "/card-art/512x512/cloudPegasus.png",
   imageSrcLarge: "/card-art/512x512/cloudPegasus.png",
   imageCenterYPercent: 47,
   rarity: "base",
@@ -215,7 +233,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Lion",
-  imageSrcSmall: "/card-art/96x96/lion.png",
+  imageSrcSmall: "/card-art/512x512/lion.png",
   imageSrcLarge: "/card-art/512x512/lion.png",
   imageCenterYPercent: 50,
   rarity: "base",
@@ -238,7 +256,7 @@ baseCards.push({
 
 baseCards.push({
   name: "Elder Saurus",
-  imageSrcSmall: "/card-art/96x96/elderSaurus.png",
+  imageSrcSmall: "/card-art/512x512/elderSaurus.png",
   imageSrcLarge: "/card-art/512x512/elderSaurus.png",
   imageCenterYPercent: 45,
   rarity: "base",
@@ -258,9 +276,9 @@ baseCards.push({
 
 baseCards.push({
   name: "Dragon Cub",
-  imageSrcSmall: "/card-art/96x96/dragonCub.png",
+  imageSrcSmall: "/card-art/512x512/dragonCub.png",
   imageSrcLarge: "/card-art/512x512/dragonCub.png",
-  imageCenterYPercent: 30,
+  imageCenterYPercent: 51,
   rarity: "base",
   complete: true,
   energyType: "fire",

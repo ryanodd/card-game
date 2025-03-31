@@ -1,6 +1,6 @@
 import Image from "next/image"
 import styles from "./Inventory.module.css"
-import { Tooltip } from "../Tooltip"
+import { Tooltip } from "../designSystem/Tooltip"
 import { HeroName } from "@/src/game/duel/heroBehaviour/HeroName"
 import { heroDataMap } from "@/src/game/heroes/AllHeroes"
 import { useEditDeckState } from "../../hooks/useEditDeckState"
@@ -9,7 +9,7 @@ import { HeroDetailed } from "../HeroDetailed"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
 
 export const DECK_LIST_HERO_IMAGE_WIDTH_REMS = 20
-export const DECK_LIST_HERO_IMAGE_HEIGHT_REMS = 5
+export const DECK_LIST_HERO_IMAGE_HEIGHT_REMS = 7
 
 export type HeroCellProps = {
   heroName: HeroName | null

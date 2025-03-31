@@ -33,9 +33,37 @@ cards.push(...mythicCards)
 // - green: deathrattle
 // - red: attack buff
 
-// Are 0-attack minions possible?? No...
 // - earth: 0/1 monument, gives all creatures +2 health
 // - air: 0/2 egg hatches into monster
+
+/**
+ *
+ * Keywords:
+ * - Charge, trample, shield
+ *
+ * Conditions:
+ * - when front monser attacks (backup)
+ * - when damaging hero
+ * - when killing monster
+ * - when attacked
+ * - when dying
+ * - when playing a card
+ * - When played. (if condition)
+ *
+ * Effects:
+ * - draw cards (scry)
+ * - Damage!!
+ * - Destroy things (of low energy cost)
+ * - gain attack
+ * - Burn, Stun, Poison
+ * - Heal
+ * - gain shield
+ * Stupid effects:
+ * - swap monster places
+ * - swap attack & health
+ * - spawn little creature (I don't think this is a good thing, the way things don't fricking die)
+ * - discard cards
+ */
 
 export const cardDataMap: Record<CardName, CardData> = cards.reduce((cardsByName, card) => {
   cardsByName[card.name] = card

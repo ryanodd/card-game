@@ -4,7 +4,7 @@ export const mythicCards: CardData[] = []
 
 mythicCards.push({
   name: "Nyreth, Light Eater",
-  imageSrcSmall: "/card-art/96x96/nyrethLightEater.png",
+  imageSrcSmall: "/card-art/512x512/nyrethLightEater.png",
   imageSrcLarge: "/card-art/512x512/nyrethLightEater.png",
   imageCenterYPercent: 60,
   rarity: "mythic",
@@ -24,7 +24,7 @@ mythicCards.push({
 
 mythicCards.push({
   name: "Hydrus, Seaborn Titan",
-  imageSrcSmall: "/card-art/96x96/hydrusSeabornTitan.png",
+  imageSrcSmall: "/card-art/512x512/hydrusSeabornTitan.png",
   imageSrcLarge: "/card-art/512x512/hydrusSeabornTitan.png",
   imageCenterYPercent: 20,
   rarity: "mythic",
@@ -45,7 +45,7 @@ mythicCards.push({
 
 mythicCards.push({
   name: "Saurongar The Smotherer",
-  imageSrcSmall: "/card-art/96x96/saurongarTheSmotherer.png",
+  imageSrcSmall: "/card-art/512x512/saurongarTheSmotherer.png",
   imageSrcLarge: "/card-art/512x512/saurongarTheSmotherer.png",
   imageCenterYPercent: 45,
   rarity: "mythic",
@@ -66,7 +66,7 @@ mythicCards.push({
 
 mythicCards.push({
   name: "Inferno Demon",
-  imageSrcSmall: "/card-art/96x96/infernoDemon.png",
+  imageSrcSmall: "/card-art/512x512/infernoDemon.png",
   imageSrcLarge: "/card-art/512x512/infernoDemon.png",
   imageCenterYPercent: 42,
   rarity: "mythic",

@@ -1,0 +1,3 @@
+.cardDetailedWithKeywordsContainer {
+  @apply flex gap-1;
+}

@@ -4,13 +4,18 @@ import { removeCard } from "../../actions/removeCard"
 import { BUFFER_MS, playAnimation } from "../../control/playAnimation"
 import { DuelState } from "../../DuelData"
 import {
+  getAllCardsForPlayer,
+  getAllCreaturesInPlay,
+  getAllCreaturesInPlayForPlayer,
   getCardByInstanceId,
   getDuelPlayerByCardInstanceId,
   getDuelPlayerById,
+  getOpposingAttackingCreatureByCardId,
   getOpposingRowByCardId,
   getOtherPlayerId,
   getPlayerIdByCardInstanceId,
   getPlayerRowByCardInstanceId,
+  getRandomCreatureInPlay,
   getRandomCreatureInPlayForPlayer,
   getRowIndexByCardInstanceId,
 } from "../../DuelHelpers"
@@ -25,6 +30,11 @@ import { getDefaultPlayerRowSpellTargets, getDefaultSpellTargets } from "../../c
 import { Target } from "../../choices/ChoiceData"
 import { stun } from "../../actions/stun"
 import { PlayerID } from "../../PlayerData"
+import { roll } from "../../actions/roll"
+import { restoreHealthToPlayer } from "../../actions/restoreHealth"
+import { getConvertedEnergyCost } from "@/src/game/helpers"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+import { destroyCard } from "../../actions/destroyCard"
 
 export async function fire_energy(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
@@ -239,6 +249,12 @@ export async function brash_splasher_after_attack(inputDuel: DuelState, instance
   let duel = inputDuel
   const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
 
+  duel = await roll(duel, instanceId, 50, async () => {
+    duel = await playAnimation(duel, { id: "CARD_WATER_ACTION", durationMs: 800, cardId: instanceId })
+    duel = await drawToHand(duel, playerId, 1)
+    return duel
+  })
+
   // 50% chance to draw
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 50) {
@@ -343,11 +359,95 @@ export async function flame_demon_play(inputDuel: DuelState, instanceId: string,
   return duel
 }
 
-export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
-  "Golden Friend": {
-    getValidTargets: getDefaultCreatureTargets,
-  },
+export async function little_chublet_before_attack(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  const opponentCard = getOpposingRowByCardId(duel, instanceId)?.[0]
+  if (opponentCard) {
+    duel = await roll(duel, instanceId, 10, async () => {
+      duel = await stun(duel, opponentCard.instanceId)
+      return duel
+    })
+  }
+  return duel
+}
 
+export async function blooming_bingus_defeat(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
+  duel = await restoreHealthToPlayer(duel, playerId, 1)
+  return duel
+}
+
+export async function eruption_of_boulders_play(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+
+  const opposingPlayerId = getOtherPlayerId(getPlayerIdByCardInstanceId(duel, instanceId))
+  for (let x = 0; x < 5; x++) {
+    const randomMonster = getRandomCreatureInPlayForPlayer(duel, opposingPlayerId)
+    if (randomMonster !== undefined) {
+      dealDamageToCreature(duel, randomMonster.instanceId, 1)
+      duel = await playAnimation(duel, { id: "PAUSE", durationMs: 500 })
+    }
+  }
+
+  return duel
+}
+
+export async function clucksworth_before_attack(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+
+  const allCardsInPlay = getAllCreaturesInPlay(duel)
+
+  const qtyMatchingCreatures = allCardsInPlay.filter((card) => {
+    return card.name === "Clucksworth"
+  }).length
+
+  if (qtyMatchingCreatures > 1) {
+    let card = getCardByInstanceId(duel, instanceId)
+    if (card.cardType !== "creature") {
+      throw Error("Expected Clucksworth to be a creature.")
+    }
+    card.modifiers.push({ id: "attackChange", quantity: 1 })
+    duel = await playAnimation(duel, { id: "CARD_AIR_ACTION", cardId: instanceId, durationMs: 500 })
+  }
+
+  return duel
+}
+
+export async function shark_before_attack(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+
+  let opponentCard = getOpposingAttackingCreatureByCardId(duel, instanceId)
+  if (opponentCard && getConvertedEnergyCost(cardDataMap[opponentCard.name]) <= 2) {
+    duel = await playAnimation(duel, { id: "CARD_WATER_ACTION", cardId: instanceId, durationMs: 500 })
+    duel = await destroyCard(duel, opponentCard.instanceId)
+  }
+  return duel
+}
+
+export async function cataclysm_play(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+
+  const opposingPlayerId = getOtherPlayerId(getPlayerIdByCardInstanceId(duel, instanceId))
+
+  const randomMonsterToBurn = getRandomCreatureInPlayForPlayer(duel, opposingPlayerId)
+  if (randomMonsterToBurn !== undefined) {
+    burn(duel, randomMonsterToBurn.instanceId)
+    duel = await playAnimation(duel, { id: "PAUSE", durationMs: 500 })
+  }
+
+  for (let x = 0; x < 8; x++) {
+    const randomMonster = getRandomCreatureInPlayForPlayer(duel, opposingPlayerId)
+    if (randomMonster !== undefined) {
+      dealDamageToCreature(duel, randomMonster.instanceId, 1)
+      duel = await playAnimation(duel, { id: "PAUSE", durationMs: 500 })
+    }
+  }
+
+  return duel
+}
+
+export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   "Bed of Snakes": {
     getValidTargets: getDefaultCreatureTargets,
   },
@@ -497,13 +597,18 @@ export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   "Moltsteed Racer": { getValidTargets: getDefaultCreatureTargets },
   "Volcanic Shellster": { getValidTargets: getDefaultCreatureTargets },
 
-  "Blooming Bingus": { getValidTargets: getDefaultCreatureTargets },
+  "Blooming Bingus": { getValidTargets: getDefaultCreatureTargets, effects: { defeat: blooming_bingus_defeat } },
   "Spade Manta": { getValidTargets: getDefaultCreatureTargets },
   Plasmite: { getValidTargets: getDefaultCreatureTargets },
   "Sky Dino": { getValidTargets: getDefaultCreatureTargets },
   "Little Imp Guy": { getValidTargets: getDefaultCreatureTargets },
-  Clucksworth: { getValidTargets: getDefaultCreatureTargets },
-  "Little Chublet": { getValidTargets: getDefaultCreatureTargets },
+  Clucksworth: { getValidTargets: getDefaultCreatureTargets, effects: { beforeAttack: clucksworth_before_attack } },
+  "Little Chublet": {
+    getValidTargets: getDefaultCreatureTargets,
+    effects: {
+      beforeAttack: little_chublet_before_attack,
+    },
+  },
   "Sun King Salamander": { getValidTargets: getDefaultCreatureTargets },
   "Hulking Menace": { getValidTargets: getDefaultCreatureTargets },
   Treegre: { getValidTargets: getDefaultCreatureTargets },
@@ -541,4 +646,16 @@ export const cardBehaviourMap: Record<CardName, CardBehaviour> = {
   "Owldus The Arcane": { getValidTargets: getDefaultCreatureTargets },
   "Mega Demigod": { getValidTargets: getDefaultCreatureTargets },
   "Molten Loaf": { getValidTargets: getDefaultCreatureTargets },
+  "Eruption of Boulders": {
+    getValidTargets: getDefaultSpellTargets,
+    effects: {
+      play: eruption_of_boulders_play,
+    },
+  },
+  Cataclysm: {
+    getValidTargets: getDefaultSpellTargets,
+    effects: {
+      play: cataclysm_play,
+    },
+  },
 }

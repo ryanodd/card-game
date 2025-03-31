@@ -1,4 +1,4 @@
-import { CardBackTexture } from "../CardBackTexture"
+import { CardBackTexture } from "../Card/CardBackTexture"
 
 export const DeckPile = () => {
   return (

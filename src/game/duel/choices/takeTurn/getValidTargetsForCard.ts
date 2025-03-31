@@ -1,6 +1,7 @@
 import { cardBehaviourMap } from "../../cardBehaviour/allCardBehaviour/allCardBehaviours"
 import { DuelState } from "../../DuelData"
-import { getCardByInstanceId, isEnergySufficient } from "../../DuelHelpers"
+import { getCardByInstanceId } from "../../DuelHelpers"
+import { isEnergySufficient } from "../../energy/isEnergySufficient"
 import { EnergyCounts } from "../../EnergyData"
 import { Target } from "../ChoiceData"
 
@@ -9,7 +10,7 @@ export const takeTurn_getValidTargetsForCard = (
   cardIdToPlay: string,
   energyToPay?: EnergyCounts
 ): Target[] => {
-  if (energyToPay && !isEnergySufficient(energyToPay, getCardByInstanceId(duel, cardIdToPlay).cost, true)) {
+  if (energyToPay && !isEnergySufficient(energyToPay, getCardByInstanceId(duel, cardIdToPlay).cost)) {
     return []
   }
 

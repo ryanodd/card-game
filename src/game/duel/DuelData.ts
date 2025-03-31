@@ -1,7 +1,7 @@
 import { CardName } from "../cards/CardName"
 import { HeroData } from "../heroes/HeroData"
 import { DuelAnimation } from "./AnimationData"
-import { EnergyCounts } from "./EnergyData"
+import { EnergyCost, EnergyCounts } from "./EnergyData"
 import { PlayerID } from "./PlayerData"
 
 import { ChoiceData } from "./choices/ChoiceData"
@@ -24,7 +24,7 @@ export type Status = "burn" | "stun" | "poison"
 export type CardState = {
   name: CardName
   instanceId: string
-  cost: EnergyCounts
+  cost: EnergyCost
 } & (
   | {
       cardType: "creature"
@@ -34,6 +34,7 @@ export type CardState = {
       summoningSickness: boolean
       modifiers: Modifier[]
       status: Status | null
+      shield: boolean
     }
   | {
       cardType: "spell"

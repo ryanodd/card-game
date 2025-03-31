@@ -1,5 +1,5 @@
 import styles from "./Pack.module.css"
-import cardStyles from "../Card.module.css"
+import cardStyles from "../Card/Card.module.css"
 import { ComponentPropsWithoutRef, forwardRef } from "react"
 import { PackVariant } from "@/src/game/GameData"
 

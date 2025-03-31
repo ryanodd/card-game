@@ -1,4 +1,4 @@
-import { CardPreview } from "../CardPreview"
+import { CardPreview } from "../Card/CardPreview"
 import styles from "./Hand.module.css"
 import { useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { DuelCard } from "./DuelCard"

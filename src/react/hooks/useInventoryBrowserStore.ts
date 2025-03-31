@@ -8,6 +8,10 @@ export type Filters = {
   }
   energyType: Record<EnergyType, boolean>
   rarity: Record<Rarity, boolean>
+  completion: {
+    complete: boolean
+    incomplete: boolean
+  }
 }
 
 export type InventoryBrowserState = {
@@ -33,6 +37,10 @@ export const defaultFilters: Filters = {
     epic: true,
     legendary: true,
     mythic: true,
+  },
+  completion: {
+    complete: true,
+    incomplete: true,
   },
 }
 

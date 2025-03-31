@@ -121,32 +121,32 @@
   }
 }
 
-.duelCardOverlayLayer[data-animation-ember-foxling="true"] > .duelCardOverlayLayerDrawing {
+.duelCardOverlayLayer[data-animation-fire-action="true"] > .duelCardOverlayLayerDrawing {
   background: linear-gradient(to top right, #ff9f45, #ee502d);
   @apply rounded-full shadow-lg w-20 h-20;
   animation: spin var(--current-animation-duration);
 }
 
-.duelCardOverlayLayer[data-animation-cave-swimmer="true"] > .duelCardOverlayLayerDrawing {
+.duelCardOverlayLayer[data-animation-water-action="true"] > .duelCardOverlayLayerDrawing {
   background: linear-gradient(to top right, #31a7d9, #2bd1ff);
   @apply rounded-full shadow-lg w-20 h-20;
   animation: spin var(--current-animation-duration);
 }
 
-.duelCardOverlayLayer[data-animation-flame-sentinel="true"] > .duelCardOverlayLayerDrawing {
-  background: linear-gradient(to top right, #ff9f45, #ee502d);
+.duelCardOverlayLayer[data-animation-earth-action="true"] > .duelCardOverlayLayerDrawing {
+  background: linear-gradient(to top right, #218b31, #49b039);
   @apply rounded-full shadow-lg w-20 h-20;
   animation: spin var(--current-animation-duration);
 }
 
-.duelCardOverlayLayer[data-animation-brash-splasher="true"] > .duelCardOverlayLayerDrawing {
-  background: linear-gradient(to top right, #31a7d9, #2bd1ff);
+.duelCardOverlayLayer[data-animation-air-action="true"] > .duelCardOverlayLayerDrawing {
+  background: linear-gradient(to top right, #603386, #8e3bb5);
   @apply rounded-full shadow-lg w-20 h-20;
   animation: spin var(--current-animation-duration);
 }
 
-.duelCardOverlayLayer[data-animation-flame-sentinel="true"] > .duelCardOverlayLayerDrawing {
-  background: linear-gradient(to top right, #ff9f45, #ee502d);
-  @apply rounded-full shadow-lg w-20 h-20;
-  animation: spin var(--current-animation-duration);
+.duelCardShield {
+  @apply z-30 absolute pointer-events-none -inset-x-2 inset-y-2;
+  @apply rounded-3xl bg-cyan-400 opacity-50;
+  transition: shield_appear var(--current-animation-duration);
 }

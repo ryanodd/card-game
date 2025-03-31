@@ -39,9 +39,14 @@ export const generateDeck = (options: GenerateDeckOptions): Deck => {
     .filter((cardData) => {
       if (cardData.energyType === "multi") {
         const cardEnergyTypes = getEnergyTypesFromEnergyCounts(cardData.cost)
-        const cardEnergyTypesAreIncompatible = cardEnergyTypes.some((energyType) => {
+        const cardHasSingleEnergyThatsMissing = cardEnergyTypes.some((energyType) => {
           return energyType !== "neutral" && !candidateCardEnergyTypes.includes(energyType)
         })
+        const cardHasDualEnergyThatsMissing =
+          cardData.cost.dualType !== undefined &&
+          !candidateCardEnergyTypes.includes(cardData.cost.dualType.primary) &&
+          !candidateCardEnergyTypes.includes(cardData.cost.dualType.secondary)
+        const cardEnergyTypesAreIncompatible = cardHasSingleEnergyThatsMissing || cardHasDualEnergyThatsMissing
         return !cardEnergyTypesAreIncompatible
       }
       return candidateCardEnergyTypes.includes(cardData.energyType)

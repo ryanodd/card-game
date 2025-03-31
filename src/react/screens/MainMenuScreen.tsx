@@ -42,57 +42,55 @@ export const MainMenuScreen = () => {
   const totalPacks = getTotalPacksInInventory(game)
 
   return (
-    <MainView>
-      <div className="h-full flex flex-col">
-        <div className="grow flex flex-col justify-center items-center gap-4  p-4">
-          <Logo />
+    <div className="h-full flex flex-col">
+      <div className="grow flex flex-col justify-center items-center gap-4  p-4">
+        <Logo />
+        <div className="flex flex-col mt-8 gap-4">
+          <div className="flex flex-col gap-4">
+            <DefaultDialog
+              trigger={
+                <Button data-variant="primary" data-size="large">
+                  Play Now
+                </Button>
+              }
+              content={<DuelSetupContent duelEntryPoint={{ duelType: "play-now" }} />}
+            />
+            <Button data-size="large" onClick={onLeagueClick}>
+              League
+            </Button>
+            {godMode && (
+              <Button data-size="large" onClick={onCampaignClick}>
+                Campaign
+              </Button>
+            )}
+          </div>
           <div className="flex flex-col mt-8 gap-4">
-            <div className="flex flex-col gap-4">
-              <DefaultDialog
-                trigger={
-                  <Button data-variant="primary" data-size="large">
-                    Play Now
-                  </Button>
-                }
-                content={<DuelSetupContent duelEntryPoint={{ duelType: "play-now" }} />}
-              />
-              <Button data-size="large" onClick={onLeagueClick}>
-                League
+            <div className="flex gap-4">
+              <Button className="w-48 flex-grow" data-size="large" onClick={onManageDeckClick}>
+                Decks
               </Button>
-              {godMode && (
-                <Button data-size="large" onClick={onCampaignClick}>
-                  Campaign
-                </Button>
-              )}
-            </div>
-            <div className="flex flex-col mt-8 gap-4">
-              <div className="flex gap-4">
-                <Button className="w-48 flex-grow" data-size="large" onClick={onManageDeckClick}>
-                  Decks
-                </Button>
-                <Button className="w-48 flex-grow" data-size="large" onClick={onCollectionClick}>
-                  Collection
-                </Button>
-              </div>
-              <Button data-size="large" onClick={onShopClick}>
-                Shop
-              </Button>
-              <Button
-                data-size="large"
-                onClick={onPacksClick}
-                notificationDotText={totalPacks > 0 ? totalPacks.toString() : undefined}
-              >
-                Packs
+              <Button className="w-48 flex-grow" data-size="large" onClick={onCollectionClick}>
+                Collection
               </Button>
             </div>
-            <div className="flex flex-col mt-8 gap-4">
-              <SettingsDialog trigger={<Button data-size="large">Settings</Button>} />
-            </div>
+            <Button data-size="large" onClick={onShopClick}>
+              Shop
+            </Button>
+            <Button
+              data-size="large"
+              onClick={onPacksClick}
+              notificationDotText={totalPacks > 0 ? totalPacks.toString() : undefined}
+            >
+              Packs
+            </Button>
+          </div>
+          <div className="flex flex-col mt-8 gap-4">
+            <SettingsDialog trigger={<Button data-size="large">Settings</Button>} />
           </div>
         </div>
-        <span className="text-white text-xs px-2 py-1">Version {version}</span>
-        <Footer />
       </div>
-    </MainView>
+      <span className="self-end text-white text-xs px-2 py-1">Version {version}</span>
+      <Footer />
+    </div>
   )
 }

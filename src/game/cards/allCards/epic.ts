@@ -4,11 +4,11 @@ export const epicCards: CardData[] = []
 
 epicCards.push({
   name: "Flame Demon",
-  imageSrcSmall: "/card-art/96x96/flameDemon.png",
+  imageSrcSmall: "/card-art/512x512/flameDemon.png",
   imageSrcLarge: "/card-art/512x512/flameDemon.png",
   imageCenterYPercent: 50,
   rarity: "epic",
-  complete: false,
+  complete: true,
   energyType: "fire",
   cardType: "creature",
   attack: 6,
@@ -33,8 +33,41 @@ epicCards.push({
 })
 
 epicCards.push({
+  name: "Cataclysm",
+  imageSrcSmall: "/card-art/512x512/cataclysm.png",
+  imageSrcLarge: "/card-art/512x512/cataclysm.png",
+  imageCenterYPercent: 50,
+  rarity: "epic",
+  complete: true,
+  energyType: "fire",
+  cardType: "spell",
+  cost: {
+    neutral: 3,
+    fire: 2,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [{ keyword: "Burn" }, { plainText: " a random enemy monster." }],
+    },
+    {
+      variant: "default",
+      textList: [
+        { plainText: "Deal " },
+        { icon: "damage" },
+        { boldText: "1" },
+        { plainText: " to a random enemy monster, 8 times. " },
+      ],
+    },
+  ],
+})
+
+epicCards.push({
   name: "Plasmite",
-  imageSrcSmall: "/card-art/96x96/plasmite.png",
+  imageSrcSmall: "/card-art/512x512/plasmite.png",
   imageSrcLarge: "/card-art/512x512/plasmite.png",
   imageCenterYPercent: 50,
   rarity: "epic",
@@ -55,7 +88,7 @@ epicCards.push({
 
 epicCards.push({
   name: "Manta Sprite",
-  imageSrcSmall: "/card-art/96x96/mantaSprite.png",
+  imageSrcSmall: "/card-art/512x512/mantaSprite.png",
   imageSrcLarge: "/card-art/512x512/mantaSprite.png",
   imageCenterYPercent: 50,
   rarity: "epic",
@@ -65,18 +98,23 @@ epicCards.push({
   attack: 2,
   health: 2,
   cost: {
-    neutral: 0,
+    neutral: 1,
     fire: 0,
-    water: 1,
+    water: 0,
     earth: 0,
-    air: 1,
+    air: 0,
+    dualType: {
+      quantity: 2,
+      primary: "water",
+      secondary: "air",
+    },
   },
   text: [],
 })
 
 epicCards.push({
   name: "Ethereal Nightmother",
-  imageSrcSmall: "/card-art/96x96/etherealNightmother.png",
+  imageSrcSmall: "/card-art/512x512/etherealNightmother.png",
   imageSrcLarge: "/card-art/512x512/etherealNightmother.png",
   imageCenterYPercent: 45,
   rarity: "epic",
@@ -100,7 +138,7 @@ epicCards.push({
 // If this creature is in an inactive slot, the creature in the active slot gets +2 attack
 epicCards.push({
   name: "Komodo Teacher",
-  imageSrcSmall: "/card-art/96x96/komodoTeacher.png",
+  imageSrcSmall: "/card-art/512x512/komodoTeacher.png",
   imageSrcLarge: "/card-art/512x512/komodoTeacher.png",
   imageCenterYPercent: 50,
   rarity: "epic",
@@ -121,7 +159,7 @@ epicCards.push({
 
 epicCards.push({
   name: "Stegowulf",
-  imageSrcSmall: "/card-art/96x96/stegowulf.png",
+  imageSrcSmall: "/card-art/512x512/stegowulf.png",
   imageSrcLarge: "/card-art/512x512/stegowulf.png",
   imageCenterYPercent: 45,
   rarity: "epic",
@@ -142,7 +180,7 @@ epicCards.push({
 
 epicCards.push({
   name: "Joltbird Agent",
-  imageSrcSmall: "/card-art/96x96/joltbirdAgent.png",
+  imageSrcSmall: "/card-art/512x512/joltbirdAgent.png",
   imageSrcLarge: "/card-art/512x512/joltbirdAgent.png",
   imageCenterYPercent: 50,
   rarity: "epic",
@@ -164,7 +202,7 @@ epicCards.push({
 
 epicCards.push({
   name: "Something Captain",
-  imageSrcSmall: "/card-art/96x96/somethingCaptain.png",
+  imageSrcSmall: "/card-art/512x512/somethingCaptain.png",
   imageSrcLarge: "/card-art/512x512/somethingCaptain.png",
   imageCenterYPercent: 50,
   rarity: "epic",
@@ -184,7 +222,7 @@ epicCards.push({
 
 epicCards.push({
   name: "Helix Stag",
-  imageSrcSmall: "/card-art/96x96/helixStag.png",
+  imageSrcSmall: "/card-art/512x512/helixStag.png",
   imageSrcLarge: "/card-art/512x512/helixStag.png",
   imageCenterYPercent: 50,
   rarity: "epic",
@@ -215,7 +253,7 @@ epicCards.push({
 
 epicCards.push({
   name: "Time Collapse",
-  imageSrcSmall: "/card-art/96x96/timeCollapse.png",
+  imageSrcSmall: "/card-art/512x512/timeCollapse.png",
   imageSrcLarge: "/card-art/512x512/timeCollapse.png",
   imageCenterYPercent: 50,
   rarity: "epic",

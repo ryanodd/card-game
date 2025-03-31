@@ -1,6 +1,6 @@
 import { CardState, DuelState, PlayerState } from "./DuelData"
 import { PlayerID } from "./PlayerData"
-import { EnergyCounts } from "./EnergyData"
+import { EnergyCost, EnergyCounts, EnergyType } from "./EnergyData"
 import { getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
 import { Target } from "./choices/ChoiceData"
 
@@ -77,6 +77,10 @@ export const getAllCreaturesInPlayForPlayer = (duel: DuelState, playerId: Player
   return cards
 }
 
+export const getAllCreaturesInPlay = (duel: DuelState): CardState[] => {
+  return [...getAllCreaturesInPlayForPlayer(duel, "human"), ...getAllCreaturesInPlayForPlayer(duel, "opponent")]
+}
+
 export const getCardByInstanceId = (duel: DuelState, cardId: string): CardState => {
   const card = getAllCards(duel).find((card) => {
     return card.instanceId === cardId
@@ -86,32 +90,6 @@ export const getCardByInstanceId = (duel: DuelState, cardId: string): CardState 
     throw new Error("card not found :(")
   }
   return card
-}
-
-export const isEnergySufficient = (energy: EnergyCounts, cost: EnergyCounts, mustMatchExactly?: boolean): boolean => {
-  let remainingEnergyForNeutral = 0
-  if (energy.fire < cost.fire) {
-    return false
-  }
-  remainingEnergyForNeutral += energy.fire - cost.fire
-  if (energy.water < cost.water) {
-    return false
-  }
-  remainingEnergyForNeutral += energy.water - cost.water
-  if (energy.earth < cost.earth) {
-    return false
-  }
-  remainingEnergyForNeutral += energy.earth - cost.earth
-  if (energy.air < cost.air) {
-    return false
-  }
-  remainingEnergyForNeutral += energy.air - cost.air
-  if (mustMatchExactly) {
-    return remainingEnergyForNeutral + energy.neutral === cost.neutral
-  } else {
-    const canAffordNeutral = remainingEnergyForNeutral + energy.neutral >= cost.neutral
-    return canAffordNeutral
-  }
 }
 
 export const duelWinner = (duel: DuelState): PlayerID | "draw" | null => {
@@ -208,6 +186,29 @@ export const getOpposingAttackingCreatureByCardId = (duel: DuelState, cardInstan
     return otherPlayer.rows[rowIndex][0]
   }
   return undefined
+}
+
+export const getRandomCreatureInPlay = (duel: DuelState) => {
+  const creaturesInPlay = []
+
+  for (let x = 0; x < duel.human.rows.length; x++) {
+    const row = duel.human.rows[x]
+    for (let y = 0; y < row.length; y++) {
+      creaturesInPlay.push(row[y])
+    }
+  }
+  for (let x = 0; x < duel.opponent.rows.length; x++) {
+    const row = duel.opponent.rows[x]
+    for (let y = 0; y < row.length; y++) {
+      creaturesInPlay.push(row[y])
+    }
+  }
+
+  if (creaturesInPlay.length < 1) {
+    return undefined
+  }
+
+  return getRandomItemFromArray(creaturesInPlay, getRandomSeed())
 }
 
 export const getRandomCreatureInPlayForPlayer = (duel: DuelState, playerId: PlayerID) => {

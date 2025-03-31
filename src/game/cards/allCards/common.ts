@@ -4,7 +4,7 @@ export const commonCards: CardData[] = []
 
 commonCards.push({
   name: "Scrungy",
-  imageSrcSmall: "/card-art/96x96/scrungy.png",
+  imageSrcSmall: "/card-art/512x512/scrungy.png",
   imageSrcLarge: "/card-art/512x512/scrungy.png",
   imageCenterYPercent: 51,
   rarity: "common",
@@ -25,7 +25,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Desert Crawler",
-  imageSrcSmall: "/card-art/96x96/desertCrawler.png",
+  imageSrcSmall: "/card-art/512x512/desertCrawler.png",
   imageSrcLarge: "/card-art/512x512/desertCrawler.png",
   imageCenterYPercent: 50,
   rarity: "common",
@@ -46,7 +46,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Molten Loaf",
-  imageSrcSmall: "/card-art/96x96/moltenLoaf.png",
+  imageSrcSmall: "/card-art/512x512/moltenLoaf.png",
   imageSrcLarge: "/card-art/512x512/moltenLoaf.png",
   imageCenterYPercent: 50,
   rarity: "common",
@@ -67,7 +67,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Bubblebloop",
-  imageSrcSmall: "/card-art/96x96/bubblebloop.png",
+  imageSrcSmall: "/card-art/512x512/bubblebloop.png",
   imageSrcLarge: "/card-art/512x512/bubblebloop.png",
   imageCenterYPercent: 43,
   rarity: "common",
@@ -88,7 +88,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Spade Manta",
-  imageSrcSmall: "/card-art/96x96/spadeManta.png",
+  imageSrcSmall: "/card-art/512x512/spadeManta.png",
   imageSrcLarge: "/card-art/512x512/spadeManta.png",
   imageCenterYPercent: 43,
   rarity: "common",
@@ -121,7 +121,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Hulking Menace",
-  imageSrcSmall: "/card-art/96x96/hulkingMenace.png",
+  imageSrcSmall: "/card-art/512x512/hulkingMenace.png",
   imageSrcLarge: "/card-art/512x512/hulkingMenace.png",
   imageCenterYPercent: 50,
   rarity: "common",
@@ -142,14 +142,14 @@ commonCards.push({
 
 commonCards.push({
   name: "Shark",
-  imageSrcSmall: "/card-art/96x96/shark.png",
+  imageSrcSmall: "/card-art/512x512/shark.png",
   imageSrcLarge: "/card-art/512x512/shark.png",
   imageCenterYPercent: 47,
   rarity: "common",
   complete: true,
   energyType: "water",
   cardType: "creature",
-  attack: 4,
+  attack: 2,
   health: 3,
   cost: {
     neutral: 2,
@@ -158,12 +158,17 @@ commonCards.push({
     earth: 0,
     air: 0,
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [{ plainText: "Before attacking, destroy the other monster if it costs 2 energy or less." }],
+    },
+  ],
 })
 
 commonCards.push({
   name: "Cleansing Storm",
-  imageSrcSmall: "/card-art/96x96/cleansingStorm.png",
+  imageSrcSmall: "/card-art/512x512/cleansingStorm.png",
   imageSrcLarge: "/card-art/512x512/cleansingStorm.png",
   imageCenterYPercent: 55,
   rarity: "common",
@@ -187,7 +192,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Snail",
-  imageSrcSmall: "/card-art/96x96/snail.png",
+  imageSrcSmall: "/card-art/512x512/snail.png",
   imageSrcLarge: "/card-art/512x512/snail.png",
   imageCenterYPercent: 55,
   rarity: "common",
@@ -208,7 +213,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Bouldering Brawler",
-  imageSrcSmall: "/card-art/96x96/boulderingBrawler.png",
+  imageSrcSmall: "/card-art/512x512/boulderingBrawler.png",
   imageSrcLarge: "/card-art/512x512/boulderingBrawler.png",
   imageCenterYPercent: 55,
   rarity: "common",
@@ -229,7 +234,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Narples",
-  imageSrcSmall: "/card-art/96x96/narples.png",
+  imageSrcSmall: "/card-art/512x512/narples.png",
   imageSrcLarge: "/card-art/512x512/narples.png",
   imageCenterYPercent: 47,
   rarity: "common",
@@ -250,7 +255,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Grassland Scout",
-  imageSrcSmall: "/card-art/96x96/grasslandScout.png",
+  imageSrcSmall: "/card-art/512x512/grasslandScout.png",
   imageSrcLarge: "/card-art/512x512/grasslandScout.png",
   imageCenterYPercent: 47,
   rarity: "common",
@@ -271,7 +276,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Bad Chicken",
-  imageSrcSmall: "/card-art/96x96/badChicken.png",
+  imageSrcSmall: "/card-art/512x512/badChicken.png",
   imageSrcLarge: "/card-art/512x512/badChicken.png",
   imageCenterYPercent: 42,
   rarity: "common",
@@ -294,7 +299,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Winged Bull",
-  imageSrcSmall: "/card-art/96x96/wingedBull.png",
+  imageSrcSmall: "/card-art/512x512/wingedBull.png",
   imageSrcLarge: "/card-art/512x512/wingedBull.png",
   imageCenterYPercent: 24,
   rarity: "common",
@@ -328,7 +333,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Greenwing Caller",
-  imageSrcSmall: "/card-art/96x96/greenwingCaller.png",
+  imageSrcSmall: "/card-art/512x512/greenwingCaller.png",
   imageSrcLarge: "/card-art/512x512/greenwingCaller.png",
   imageCenterYPercent: 40,
   rarity: "common",
@@ -348,7 +353,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Sludge Amphibian",
-  imageSrcSmall: "/card-art/96x96/sludgeAmphibian.png",
+  imageSrcSmall: "/card-art/512x512/sludgeAmphibian.png",
   imageSrcLarge: "/card-art/512x512/sludgeAmphibian.png",
   imageCenterYPercent: 30,
   rarity: "common",
@@ -368,7 +373,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Canyon Burrower",
-  imageSrcSmall: "/card-art/96x96/canyonBurrower.png",
+  imageSrcSmall: "/card-art/512x512/canyonBurrower.png",
   imageSrcLarge: "/card-art/512x512/canyonBurrower.png",
   imageCenterYPercent: 30,
   rarity: "common",
@@ -399,7 +404,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Something Bandit",
-  imageSrcSmall: "/card-art/96x96/somethingBandit.png",
+  imageSrcSmall: "/card-art/512x512/somethingBandit.png",
   imageSrcLarge: "/card-art/512x512/somethingBandit.png",
   imageCenterYPercent: 50,
   rarity: "common",
@@ -419,7 +424,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Huddolin",
-  imageSrcSmall: "/card-art/96x96/huddolin.png",
+  imageSrcSmall: "/card-art/512x512/huddolin.png",
   imageSrcLarge: "/card-art/512x512/huddolin.png",
   imageCenterYPercent: 50,
   rarity: "common",
@@ -450,7 +455,7 @@ commonCards.push({
 
 commonCards.push({
   name: "Hyllophant",
-  imageSrcSmall: "/card-art/96x96/hyllophant.png",
+  imageSrcSmall: "/card-art/512x512/hyllophant.png",
   imageSrcLarge: "/card-art/512x512/hyllophant.png",
   imageCenterYPercent: 55,
   rarity: "common",

@@ -1,9 +1,11 @@
-import { CardDetailed } from "../CardDetailed"
+import { CardDetailed } from "../Card/CardDetailed"
 import { useDraggable } from "@dnd-kit/core"
 import { useCallback } from "react"
 import { InventoryCardFocusDialog } from "./InventoryCardFocusDialog"
 import { CardData } from "@/src/game/cards/CardData"
 import { useGameStore } from "../../hooks/useGameStore"
+import { Tooltip } from "../designSystem/Tooltip"
+import { KeywordInfoBoxColumn } from "../Card/KeywordInfoBox"
 
 export type CardProps = {
   cardData: CardData
@@ -28,9 +30,16 @@ export const InventoryCard = ({ cardData }: CardProps) => {
     // <InventoryCardFocusDialog
     //   cardData={cardData}
     //   trigger={
-    <button ref={setNodeRef} {...attributes} {...listeners} onClick={onClick}>
-      <CardDetailed cardData={cardData} />
-    </button>
+    <Tooltip
+      align="start"
+      side="right"
+      sideOffset={4}
+      content={cardData.keywords ? <KeywordInfoBoxColumn keywords={cardData.keywords} /> : undefined}
+    >
+      <button ref={setNodeRef} {...attributes} {...listeners} onClick={onClick}>
+        <CardDetailed cardData={cardData} />
+      </button>
+    </Tooltip>
     //   }
     // />
   )

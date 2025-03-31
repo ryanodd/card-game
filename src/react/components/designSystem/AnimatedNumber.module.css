@@ -1,5 +1,5 @@
 .animatedNumber {
-  @apply absolute right-0 -bottom-3 text-red-500 font-bold;
+  @apply z-10 absolute right-0 -bottom-3 text-red-500 font-bold;
   animation: animated_number_update 1000ms forwards;
 }
 

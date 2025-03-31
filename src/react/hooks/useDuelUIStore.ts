@@ -4,6 +4,7 @@ import { v4 } from "uuid"
 import { DuelState, PlayerState } from "@/src/game/duel/DuelData"
 import { getCardByInstanceId, getCurrentDuelPlayer } from "@/src/game/duel/DuelHelpers"
 import { EnergyCounts, EnergyType } from "@/src/game/duel/EnergyData"
+import { getEnergyRequiredFromCost } from "@/src/game/duel/energy/isEnergySufficient"
 
 export type EnergySelected = {
   neutral: { id: string; selected: boolean }[]
@@ -107,6 +108,7 @@ export const selectEnergyOfType = (
   energyToSelect: EnergyType,
   quantity: number
 ): EnergySelected => {
+  if (quantity === 0) return selectedEnergy
   let quantitySoFar = 0
   for (let x = 0; x < selectedEnergy[energyToSelect].length; x++) {
     const energy = selectedEnergy[energyToSelect][x]
@@ -121,6 +123,27 @@ export const selectEnergyOfType = (
   throw Error("Couldn't find energy of type to add")
 }
 
+export const resetEnergySelected = (energySelected: EnergySelected) => {
+  for (let x = 0; x < energySelected.neutral.length; x++) {
+    energySelected.neutral[x].selected = false
+  }
+  for (let x = 0; x < energySelected.fire.length; x++) {
+    energySelected.fire[x].selected = false
+  }
+  for (let x = 0; x < energySelected.water.length; x++) {
+    energySelected.water[x].selected = false
+  }
+  for (let x = 0; x < energySelected.earth.length; x++) {
+    energySelected.earth[x].selected = false
+  }
+  for (let x = 0; x < energySelected.air.length; x++) {
+    energySelected.air[x].selected = false
+  }
+}
+
+// When it isn't possible to pay the required cost,
+// This function DOESN'T need to determine that, it can return any result it wants.
+// Its results will just be ignored because of a future isEnergySufficient check.
 export const autoPayElements = (
   duel: DuelState,
   cardIdDragging: string,
@@ -128,80 +151,79 @@ export const autoPayElements = (
 ): EnergySelected => {
   let selectedEnergy = window.structuredClone(inputSelectedEnergy)
   const playerEnergy = getCurrentDuelPlayer(duel).energy
-  const selectedEnergyCounts = getEnergyCountsFromSelected(inputSelectedEnergy)
   const card = getCardByInstanceId(duel, cardIdDragging)
 
-  let neutralNeeded = Math.max(0, card.cost.neutral - selectedEnergyCounts.neutral)
-  let fireNeeded = Math.max(0, card.cost.fire - selectedEnergyCounts.fire)
-  let waterNeeded = Math.max(0, card.cost.water - selectedEnergyCounts.water)
-  let earthNeeded = Math.max(0, card.cost.earth - selectedEnergyCounts.earth)
-  let airNeeded = Math.max(0, card.cost.air - selectedEnergyCounts.air)
+  const { singleEnergiesRequired, dualEnergyRequired, dualEnergyTypes } = getEnergyRequiredFromCost(card.cost)
 
-  let neutralAvailable = playerEnergy.neutral - selectedEnergyCounts.neutral
-  let fireAvailable = playerEnergy.fire - selectedEnergyCounts.fire
-  let waterAvailable = playerEnergy.water - selectedEnergyCounts.water
-  let earthAvailable = playerEnergy.earth - selectedEnergyCounts.earth
-  let airAvailable = playerEnergy.air - selectedEnergyCounts.air
+  // Select energy for singleEnergiesRequired
+  try {
+    selectedEnergy = selectEnergyOfType(selectedEnergy, "fire", singleEnergiesRequired.fire)
+    selectedEnergy = selectEnergyOfType(selectedEnergy, "water", singleEnergiesRequired.water)
+    selectedEnergy = selectEnergyOfType(selectedEnergy, "earth", singleEnergiesRequired.earth)
+    selectedEnergy = selectEnergyOfType(selectedEnergy, "air", singleEnergiesRequired.air)
 
-  let neutralToPay = Math.min(neutralNeeded, neutralAvailable)
-  let fireToPay = Math.min(fireNeeded, fireAvailable)
-  let waterToPay = Math.min(waterNeeded, waterAvailable)
-  let earthToPay = Math.min(earthNeeded, earthAvailable)
-  let airToPay = Math.min(airNeeded, airAvailable)
+    // Determine remaining energy available to pay with
+    let selectedEnergyCounts = getEnergyCountsFromSelected(selectedEnergy)
+    const energyAvailableCounts: EnergyCounts = {
+      neutral: playerEnergy.neutral - selectedEnergyCounts.neutral,
+      fire: playerEnergy.fire - selectedEnergyCounts.fire,
+      water: playerEnergy.water - selectedEnergyCounts.water,
+      earth: playerEnergy.earth - selectedEnergyCounts.earth,
+      air: playerEnergy.air - selectedEnergyCounts.air,
+    }
 
-  if (neutralToPay > 0) {
-    selectedEnergy = selectEnergyOfType(selectedEnergy, "neutral", neutralToPay)
-    neutralNeeded -= neutralToPay
-    neutralAvailable -= neutralToPay
-  }
-  if (fireToPay > 0) {
-    selectedEnergy = selectEnergyOfType(selectedEnergy, "fire", fireToPay)
-    fireNeeded -= fireToPay
-    fireAvailable -= fireToPay
-  }
-  if (waterToPay > 0) {
-    selectedEnergy = selectEnergyOfType(selectedEnergy, "water", waterToPay)
-    waterNeeded -= waterToPay
-    waterAvailable -= waterToPay
-  }
-  if (earthToPay > 0) {
-    selectedEnergy = selectEnergyOfType(selectedEnergy, "earth", earthToPay)
-    earthNeeded -= earthToPay
-    earthAvailable -= earthToPay
-  }
-  if (airToPay > 0) {
-    selectedEnergy = selectEnergyOfType(selectedEnergy, "air", airToPay)
-    airNeeded -= airToPay
-    airAvailable -= airToPay
-  }
+    // Select energy for dual energy
+    for (let x = 0; x < dualEnergyRequired; x++) {
+      const [primaryEnergyType, secondaryEnergyType] = dualEnergyTypes
+      if (energyAvailableCounts[primaryEnergyType] === 0) {
+        selectedEnergy = selectEnergyOfType(selectedEnergy, secondaryEnergyType, 1)
+        energyAvailableCounts[secondaryEnergyType] -= 1
+        continue
+      }
+      if (energyAvailableCounts[secondaryEnergyType] === 0) {
+        selectedEnergy = selectEnergyOfType(selectedEnergy, primaryEnergyType, 1)
+        energyAvailableCounts[primaryEnergyType] -= 1
+        continue
+      }
+      if (energyAvailableCounts[secondaryEnergyType] > energyAvailableCounts[primaryEnergyType]) {
+        selectedEnergy = selectEnergyOfType(selectedEnergy, secondaryEnergyType, 1)
+        energyAvailableCounts[secondaryEnergyType] -= 1
+        continue
+      }
+      selectedEnergy = selectEnergyOfType(selectedEnergy, primaryEnergyType, 1)
+      energyAvailableCounts[primaryEnergyType] -= 1
+    }
 
-  // At this point only neutral energy should be needed
-  while (neutralNeeded > 0) {
-    if (fireAvailable > 0) {
-      selectedEnergy = selectEnergyOfType(selectedEnergy, "fire", 1)
-      neutralNeeded -= 1
-      fireAvailable -= 1
-      continue
+    // Select energy for neutral energy
+    for (let x = 0; x < singleEnergiesRequired.neutral; x++) {
+      if (energyAvailableCounts.neutral > 0) {
+        selectedEnergy = selectEnergyOfType(selectedEnergy, "neutral", 1)
+        energyAvailableCounts.neutral -= 1
+        continue
+      }
+      let mostCommonEnergy: EnergyType = "neutral"
+      let mostCommonEnergyQuantity = 0
+      if (energyAvailableCounts.fire > mostCommonEnergyQuantity) {
+        mostCommonEnergy = "fire"
+        mostCommonEnergyQuantity = energyAvailableCounts.fire
+      }
+      if (energyAvailableCounts.water > mostCommonEnergyQuantity) {
+        mostCommonEnergy = "water"
+        mostCommonEnergyQuantity = energyAvailableCounts.water
+      }
+      if (energyAvailableCounts.earth > mostCommonEnergyQuantity) {
+        mostCommonEnergy = "earth"
+        mostCommonEnergyQuantity = energyAvailableCounts.earth
+      }
+      if (energyAvailableCounts.air > mostCommonEnergyQuantity) {
+        mostCommonEnergy = "air"
+        mostCommonEnergyQuantity = energyAvailableCounts.air
+      }
+      selectedEnergy = selectEnergyOfType(selectedEnergy, mostCommonEnergy, 1)
+      energyAvailableCounts[mostCommonEnergy] -= 1
     }
-    if (waterAvailable > 0) {
-      selectedEnergy = selectEnergyOfType(selectedEnergy, "water", 1)
-      neutralNeeded -= 1
-      waterAvailable -= 1
-      continue
-    }
-    if (earthAvailable > 0) {
-      selectedEnergy = selectEnergyOfType(selectedEnergy, "earth", 1)
-      neutralNeeded -= 1
-      earthAvailable -= 1
-      continue
-    }
-    if (airAvailable > 0) {
-      selectedEnergy = selectEnergyOfType(selectedEnergy, "air", 1)
-      neutralNeeded -= 1
-      airAvailable -= 1
-      continue
-    }
-    throw Error("No energy found!!")
+  } catch {
+    console.log("Couldn't pay energy with autoPay!")
   }
 
   return selectedEnergy

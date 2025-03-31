@@ -1,8 +1,13 @@
-import { autoPayElements, getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
+import {
+  autoPayElements,
+  getEnergyCountsFromSelected,
+  resetEnergySelected,
+  useDuelUIStore,
+} from "../../hooks/useDuelUIStore"
 
 import { CSS } from "@dnd-kit/utilities"
 
-import { CardPreview, getCardHealthDisplayValue } from "../CardPreview"
+import { CardPreview, getCardHealthDisplayValue } from "../Card/CardPreview"
 import FireIcon from "../../../../public/icons/fire.svg"
 import LightningIcon from "../../../../public/icons/lightning.svg"
 import WaterIcon from "../../../../public/icons/water.svg"
@@ -10,7 +15,7 @@ import WaterIcon from "../../../../public/icons/water.svg"
 import { useDndMonitor } from "@dnd-kit/core"
 import { useHideTooltipWhileDragging } from "../../hooks/useHideTooltipWhileDragging"
 
-import cardStyles from "../Card.module.css"
+import cardStyles from "../Card/Card.module.css"
 import animationFilterStyles from "./DuelCard.module.css"
 import animationLayerStyles from "./DuelCardAnimationLayer.module.css"
 import { useSortable } from "@dnd-kit/sortable"
@@ -20,6 +25,8 @@ import { PlayerID } from "@/src/game/duel/PlayerData"
 import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 import { AnimatedNumber } from "../designSystem/AnimatedNumber"
 import Image from "next/image"
+import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+import { isEnergySufficient } from "@/src/game/duel/energy/isEnergySufficient"
 
 export type DuelCardProps = {
   duel: DuelState
@@ -62,7 +69,10 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
       }
       setCardIdDragging(cardState.instanceId)
       if (selectable) {
-        setEnergySelected(autoPayElements(duel, cardState.instanceId, energySelected))
+        if (!isEnergySufficient(getEnergyCountsFromSelected(energySelected), cardState.cost, true)) {
+          resetEnergySelected(energySelected)
+          setEnergySelected(autoPayElements(duel, cardState.instanceId, energySelected))
+        }
       }
     },
     // There's a bug here where onDragEnd doesn't get called for the dragged card. So I try to handle one-time things in DuelScreen instead
@@ -98,6 +108,15 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
 
   const animationBurn = duel.currentAnimation?.id === "BURN" && duel.currentAnimation.cardId === cardState.instanceId
   const animationStun = duel.currentAnimation?.id === "STUN" && duel.currentAnimation.cardId === cardState.instanceId
+
+  const animationFireAction =
+    duel.currentAnimation?.id === "CARD_FIRE_ACTION" && duel.currentAnimation.cardId === cardState.instanceId
+  const animationWaterAction =
+    duel.currentAnimation?.id === "CARD_WATER_ACTION" && duel.currentAnimation.cardId === cardState.instanceId
+  const animationEarthAction =
+    duel.currentAnimation?.id === "CARD_EARTH_ACTION" && duel.currentAnimation.cardId === cardState.instanceId
+  const animationAirAction =
+    duel.currentAnimation?.id === "CARD_AIR_ACTION" && duel.currentAnimation.cardId === cardState.instanceId
 
   const animationRollFail =
     duel.currentAnimation?.id === "ROLL_FAIL" && duel.currentAnimation.cardId === cardState.instanceId
@@ -140,6 +159,10 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
           data-animation-burn={animationBurn}
           data-animation-stun={animationStun}
           data-animation-roll-fail={animationRollFail}
+          data-animation-fire-action={animationFireAction}
+          data-animation-water-action={animationWaterAction}
+          data-animation-earth-action={animationEarthAction}
+          data-animation-air-action={animationAirAction}
         >
           <div
             className={`${animationLayerStyles.duelCardStatusOverlayLayer}`}
@@ -149,6 +172,9 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
           />
           <div className={`${animationLayerStyles.duelCardOverlayLayerDrawing}`} />
         </div>
+        {cardState.cardType === "creature" && cardState.shield && (
+          <div className={animationLayerStyles.duelCardShield} />
+        )}
         <CardPreview
           duel={duel}
           cardState={cardState}

@@ -4,6 +4,7 @@ import { Air, Earth, Fire, Water } from "./designSystem/Icon"
 
 export type EnergyIconProps = {
   energyType: EnergyType
+  secondaryEnergyType?: EnergyType
   size: EnergyIconSize
   amount?: number
   available?: boolean
@@ -11,7 +12,7 @@ export type EnergyIconProps = {
 
 export type EnergyIconSize = "small" | "large"
 
-export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconProps) => {
+export const EnergyIcon = ({ energyType, secondaryEnergyType, amount, size, available }: EnergyIconProps) => {
   const getEnergySvg = () => {
     if (energyType === "neutral") {
       return (
@@ -25,54 +26,39 @@ export const EnergyIcon = ({ energyType, amount, size, available }: EnergyIconPr
         </div>
       )
     }
-    if (energyType === "fire") {
-      return (
-        <div
-          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
-            styles.fire_element
-          }`}
-        >
-          <Fire className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
-        </div>
-      )
-    }
-    if (energyType === "water") {
-      return (
-        <div
-          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
-            styles.water_element
-          }`}
-          data-available={available ?? true}
-        >
-          <Water className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
-        </div>
-      )
-    }
-    if (energyType === "earth") {
-      return (
-        <div
-          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
-            styles.earth_element
-          }`}
-          data-available={available ?? true}
-        >
-          <Earth className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
-        </div>
-      )
-    }
-    if (energyType === "air") {
-      return (
-        <div
-          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
-            styles.air_element
-          }`}
-          data-available={available ?? true}
-        >
-          <Air className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />
-        </div>
-      )
-    }
-    throw Error("invalid energy type")
+    return (
+      <div
+        className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
+          styles[`${energyType}_element`]
+        }`}
+        data-available={available ?? true}
+      >
+        {energyType === "fire" && <Fire className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
+        {energyType === "water" && <Water className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
+        {energyType === "earth" && <Earth className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
+        {energyType === "air" && <Air className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
+        {secondaryEnergyType && (
+          <div
+            className={`${styles.secondaryEnergy} ${
+              size === "small" ? styles.energy_icon_small : styles.energy_icon_large
+            } ${styles[`${secondaryEnergyType}_element`]}`}
+          >
+            {secondaryEnergyType === "fire" && (
+              <Fire className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
+            )}
+            {secondaryEnergyType === "water" && (
+              <Water className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
+            )}
+            {secondaryEnergyType === "earth" && (
+              <Earth className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
+            )}
+            {secondaryEnergyType === "air" && (
+              <Air className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
+            )}
+          </div>
+        )}
+      </div>
+    )
   }
 
   return getEnergySvg()

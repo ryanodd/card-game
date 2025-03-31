@@ -8,6 +8,7 @@ import { create } from "zustand"
 import { generateDeck } from "@/src/game/decks/generateDeck"
 import { createLeague } from "@/src/game/league/createLeague"
 import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+import { gameStateSetup } from "@/src/game/gameStateSetup"
 
 export const ALL_CARDS_COLLECTION: Record<CardName, number> = {
   ...Object.values(cardDataMap).reduce((prev, cardData) => {
@@ -21,7 +22,6 @@ export const RYANS_FAVORITE_TEST_COLLECTION: Record<CardName, number> = {
     prev[cardData.name] = 2
     return prev
   }, {} as Record<CardName, number>),
-  "Golden Friend": 1,
   "Elder Saurus": 1,
 }
 
@@ -59,10 +59,10 @@ export const newGameState: GameState = {
   },
   decks: [
     generateDeck({ method: "completely-random" }),
-    generateDeck({ method: "hero", heroName: "Fire Hero" }),
-    generateDeck({ method: "hero", heroName: "Water Hero" }),
-    generateDeck({ method: "hero", heroName: "Earth Hero" }),
-    generateDeck({ method: "hero", heroName: "Air Hero" }),
+    generateDeck({ method: "hero", heroName: "Garmuk" }),
+    generateDeck({ method: "hero", heroName: "Lappy" }),
+    generateDeck({ method: "hero", heroName: "Elozar the Steadfast" }),
+    generateDeck({ method: "hero", heroName: "Orrin Stormwing" }),
   ],
   gold: 500,
   packs: {
@@ -76,13 +76,9 @@ export const newGameState: GameState = {
 }
 
 export const getInitialGameState = (): GameState => {
-  const loadedGameState = loadGameFromLocalStorage()
-  if (loadedGameState === null) {
-    const initialGameState = newGameState
-    initialGameState.activeDeckId = initialGameState.decks[0].id
-    return initialGameState
-  }
-  return { ...loadedGameState, screen: { id: "mainMenu" } }
+  let gameState = loadGameFromLocalStorage() ?? newGameState
+  gameState = gameStateSetup(gameState)
+  return { ...gameState, screen: { id: "mainMenu" } }
 }
 
 export type GameStorePayload = {

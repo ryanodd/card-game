@@ -1,0 +1,17 @@
+.keywordsColumn {
+  max-width: 12rem;
+  @apply flex flex-col gap-1;
+}
+
+.keywordInfoBox {
+  @apply rounded-md border-2 border-zinc-700 bg-stone-800;
+  @apply flex flex-col pl-1 pt-0.5 pb-0.5 pr-0.5;
+}
+
+.keywordInfoBoxTitle {
+  @apply font-bold text-lg text-stone-100;
+}
+
+.keywordInfoBoxDescription {
+  @apply text-xs leading-tight text-stone-200;
+}

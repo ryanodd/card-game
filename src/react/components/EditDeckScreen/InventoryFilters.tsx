@@ -5,10 +5,13 @@ import { useInventoryBrowserStore } from "../../hooks/useInventoryBrowserStore"
 import { Air, Circle, Earth, Fire, Water } from "../designSystem/Icon"
 import { EnergyType } from "@/src/game/duel/EnergyData"
 import { Rarity } from "@/src/game/cards/CardData"
+import { CardRarityIndicator } from "../Card/CardRarityIndicator"
+import { useGameStore } from "../../hooks/useGameStore"
 
 export type InventoryFiltersProps = {}
 
 export const InventoryFilters = ({}: InventoryFiltersProps) => {
+  const { game } = useGameStore()
   const { filters, setFilters } = useInventoryBrowserStore()
 
   const allEnergyTypesIncluded =
@@ -42,6 +45,8 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
     !filters.rarity["epic"] &&
     !filters.rarity["legendary"] &&
     !filters.rarity["mythic"]
+
+  const allCompletionsIncluded = filters.completion["complete"] && filters.completion["incomplete"]
 
   useEffect(() => {
     if (noEnergyTypesIncluded) {
@@ -188,6 +193,34 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
     [filters, setFilters, allRaritiesIncluded, noRaritiesIncluded]
   )
 
+  const onAllCompletionClick = useCallback(() => {
+    setFilters({
+      ...filters,
+      completion: {
+        complete: true,
+        incomplete: true,
+      },
+    })
+  }, [filters, setFilters])
+  const onCompleteClick = useCallback(() => {
+    setFilters({
+      ...filters,
+      completion: {
+        complete: true,
+        incomplete: false,
+      },
+    })
+  }, [filters, setFilters])
+  const onIncompleteClick = useCallback(() => {
+    setFilters({
+      ...filters,
+      completion: {
+        complete: false,
+        incomplete: true,
+      },
+    })
+  }, [filters, setFilters])
+
   return (
     <div className={styles.inventoryFiltersContainer}>
       <div className={styles.inventoryFiltersSection}>
@@ -285,59 +318,91 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
         </Button>
         <Button
           data-size="small"
+          data-icon-only
           onClick={() => {
             onRarityClick("common")
           }}
           data-variant={!allRaritiesIncluded && filters.rarity.common ? "primary" : "tertiary"}
         >
-          Common
+          <CardRarityIndicator rarity="common" />
         </Button>
         <Button
           data-size="small"
+          data-icon-only
           onClick={() => {
             onRarityClick("uncommon")
           }}
           data-variant={!allRaritiesIncluded && filters.rarity.uncommon ? "primary" : "tertiary"}
         >
-          Uncommon
+          <CardRarityIndicator rarity="uncommon" />
         </Button>
         <Button
           data-size="small"
+          data-icon-only
           onClick={() => {
             onRarityClick("rare")
           }}
           data-variant={!allRaritiesIncluded && filters.rarity.rare ? "primary" : "tertiary"}
         >
-          Rare
+          <CardRarityIndicator rarity="rare" />
         </Button>
         <Button
           data-size="small"
+          data-icon-only
           onClick={() => {
             onRarityClick("epic")
           }}
           data-variant={!allRaritiesIncluded && filters.rarity.epic ? "primary" : "tertiary"}
         >
-          Epic
+          <CardRarityIndicator rarity="epic" />
         </Button>
         <Button
           data-size="small"
+          data-icon-only
           onClick={() => {
             onRarityClick("legendary")
           }}
           data-variant={!allRaritiesIncluded && filters.rarity.legendary ? "primary" : "tertiary"}
         >
-          Legendary
+          <CardRarityIndicator rarity="legendary" />
         </Button>
         <Button
           data-size="small"
+          data-icon-only
           onClick={() => {
             onRarityClick("mythic")
           }}
           data-variant={!allRaritiesIncluded && filters.rarity.mythic ? "primary" : "tertiary"}
         >
-          Mythic
+          <CardRarityIndicator rarity="mythic" />
         </Button>
       </div>
+
+      {game.settings.godMode && (
+        <div className={styles.inventoryFiltersSection}>
+          <Button
+            data-size="small"
+            onClick={onAllCompletionClick}
+            data-variant={allCompletionsIncluded ? "primary" : "tertiary"}
+          >
+            All
+          </Button>
+          <Button
+            data-size="small"
+            onClick={onCompleteClick}
+            data-variant={!allCompletionsIncluded && filters.completion.complete ? "primary" : "tertiary"}
+          >
+            Complete
+          </Button>
+          <Button
+            data-size="small"
+            onClick={onIncompleteClick}
+            data-variant={!allCompletionsIncluded && filters.completion.incomplete ? "primary" : "tertiary"}
+          >
+            Incomplete
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

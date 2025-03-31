@@ -1,3 +1,11 @@
+.energy {
+  @apply relative;
+}
+.secondaryEnergy {
+  mask-image: url("/masks/energyIconDualTypeMask.svg");
+  @apply absolute inset-0;
+}
+
 .energy_icon_small {
   @apply w-6 h-6 rounded-full border border-neutral-900 text-neutral-900 p-1 shadow-md aspect-square flex justify-center items-center;
 }
@@ -35,6 +43,10 @@
 }
 
 .energyIcon {
+  @apply w-full h-full;
+}
+
+.secondaryEnergyIcon {
   @apply w-full h-full;
 }
 

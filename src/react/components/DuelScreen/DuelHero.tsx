@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react"
 import styles from "./DuelHero.module.css"
 import Image from "next/image"
 import { AnimatedNumber } from "../designSystem/AnimatedNumber"
-import { Tooltip } from "../Tooltip"
+import { Tooltip } from "../designSystem/Tooltip"
 import { HeroDetailed } from "../HeroDetailed"
 
 export type DuelHeroProps = {

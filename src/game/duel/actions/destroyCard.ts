@@ -1,6 +1,7 @@
 import { DuelState } from "../DuelData"
 import { getCardByInstanceId, getDuelPlayerById, getPlayerIdByCardInstanceId } from "../DuelHelpers"
 import { removeCard } from "./removeCard"
+import { resetCard } from "./resetCard"
 
 export async function destroyCard(inputDuel: DuelState, cardId: string) {
   let duel = inputDuel
@@ -9,9 +10,11 @@ export async function destroyCard(inputDuel: DuelState, cardId: string) {
   const playerId = getPlayerIdByCardInstanceId(duel, cardId)
   const player = getDuelPlayerById(duel, playerId)
 
-  player.discard.push(card)
-
   duel = await removeCard(duel, cardId)
+
+  resetCard(card)
+
+  player.discard.push(card)
 
   return duel
 }

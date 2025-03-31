@@ -4,9 +4,9 @@ import { HeroData } from "./HeroData"
 let heroes: HeroData[] = []
 
 heroes.push({
-  name: "Fire Hero",
-  imageSrc: "/card-art/512x512/spiritGiant.png",
-  imageCenterYPercent: 50,
+  name: "Garmuk",
+  imageSrc: "/heroes/garmuk.png",
+  imageCenterYPercent: 40,
   rarity: "base",
   energyType: "fire",
   energyTypes: ["fire"],
@@ -17,9 +17,9 @@ heroes.push({
 })
 
 heroes.push({
-  name: "Water Hero",
-  imageSrc: "/card-art/512x512/somethingCaptain.png",
-  imageCenterYPercent: 50,
+  name: "Lappy",
+  imageSrc: "/heroes/lappy.png",
+  imageCenterYPercent: 45,
   rarity: "base",
   energyType: "water",
   energyTypes: ["water"],
@@ -30,9 +30,9 @@ heroes.push({
 })
 
 heroes.push({
-  name: "Earth Hero",
-  imageSrc: "/card-art/512x512/hero3.png",
-  imageCenterYPercent: 50,
+  name: "Elozar the Steadfast",
+  imageSrc: "/heroes/elozarTheSteadfast.png",
+  imageCenterYPercent: 32,
   rarity: "base",
   energyType: "earth",
   energyTypes: ["earth"],
@@ -43,9 +43,9 @@ heroes.push({
 })
 
 heroes.push({
-  name: "Air Hero",
-  imageSrc: "/card-art/512x512/hero4.png",
-  imageCenterYPercent: 50,
+  name: "Orrin Stormwing",
+  imageSrc: "/heroes/orrinStormwing.png",
+  imageCenterYPercent: 25,
   rarity: "base",
   energyType: "air",
   energyTypes: ["air"],

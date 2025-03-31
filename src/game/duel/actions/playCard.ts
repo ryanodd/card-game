@@ -1,10 +1,12 @@
+import { cardDataMap } from "../../cards/allCards/allCards"
 import { DuelState } from "../DuelData"
-import { getCurrentDuelPlayer, isEnergySufficient } from "../DuelHelpers"
+import { getCurrentDuelPlayer } from "../DuelHelpers"
 import { EnergyCounts } from "../EnergyData"
 import { PlayerID } from "../PlayerData"
 import { cardBehaviourMap } from "../cardBehaviour/allCardBehaviour/allCardBehaviours"
 import { Target } from "../choices/ChoiceData"
 import { playAnimation } from "../control/playAnimation"
+import { isEnergySufficient } from "../energy/isEnergySufficient"
 import { checkForDeaths } from "./checkForDeaths"
 
 export type PlayCardParams = {
@@ -23,8 +25,8 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
   if (!playedCard) {
     throw Error("something went wrong playing a card")
   }
-  if (!isEnergySufficient(energyPaid, playedCard.cost, true)) {
-    throw Error("Can't afford to play this card (or paid too much)")
+  if (!isEnergySufficient(energyPaid, playedCard.cost)) {
+    throw Error("Can't afford to play this card")
   }
 
   // Pay energy
@@ -44,13 +46,19 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
   if (playedCard.cardType === "creature" && target.targetType === "rowSpace") {
     const row = player.rows[target.rowIndex]
     row.splice(target.positionIndex, 0, playedCard)
-    playedCard.summoningSickness = true
+    if (cardDataMap[playedCard.name].keywords?.includes("Charge") !== true) {
+      playedCard.summoningSickness = true
+    }
+
     if (duel.currentPlayerId === "opponent") {
       duel = await playAnimation(duel, { id: "SUMMON", durationMs: 200, cardId })
     }
 
     if (cardBehaviour.effects?.summon) {
       duel = await cardBehaviour.effects.summon(duel, playedCard.instanceId)
+    }
+    if (cardDataMap[playedCard.name].keywords?.includes("Shield")) {
+      playedCard.shield = true
     }
   }
 

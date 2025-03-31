@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef, ComponentType, forwardRef, HTMLAttributes } f
 import AirSvg from "../../../../public/icons/air.svg"
 import ArrowLeftSvg from "../../../../public/icons/arrowLeft.svg"
 import ArrowRightSvg from "../../../../public/icons/arrowRight.svg"
+import CheckSvg from "../../../../public/icons/check.svg"
 import CircleSvg from "../../../../public/icons/circle.svg"
 import CloseSvg from "../../../../public/icons/close.svg"
 import DiceSvg from "../../../../public/icons/dice.svg"
@@ -16,6 +17,7 @@ import LightningSvg from "../../../../public/icons/lightning.svg"
 import MailSvg from "../../../../public/icons/mail.svg"
 import MenuSvg from "../../../../public/icons/menu.svg"
 import NoMobileSvg from "../../../../public/icons/noMobile.svg"
+import PencilSvg from "../../../../public/icons/pencil.svg"
 import ScratchSvg from "../../../../public/icons/scratch.svg"
 import SwordSvg from "../../../../public/icons/sword-solid.svg"
 import WaterSvg from "../../../../public/icons/water.svg"
@@ -48,6 +50,7 @@ export const createIcon = (SVG: ComponentType<HTMLAttributes<SVGSVGElement>>, la
 export const Air = createIcon(AirSvg, "Air")
 export const ArrowLeft = createIcon(ArrowLeftSvg, "Left")
 export const ArrowRight = createIcon(ArrowRightSvg, "Right")
+export const Check = createIcon(CheckSvg, "Check")
 export const Circle = createIcon(CircleSvg, "Circle")
 export const Close = createIcon(CloseSvg, "Close")
 export const Dice = createIcon(DiceSvg, "Dice")
@@ -61,6 +64,7 @@ export const Lightning = createIcon(LightningSvg, "Lightning")
 export const Mail = createIcon(MailSvg, "Mail")
 export const Menu = createIcon(MenuSvg, "Menu")
 export const NoMobile = createIcon(NoMobileSvg, "No Mobile Devices")
+export const Pencil = createIcon(PencilSvg, "Pencil")
 export const Scratch = createIcon(ScratchSvg, "Scratch")
 export const Sword = createIcon(SwordSvg, "Sword")
 export const Water = createIcon(WaterSvg, "Water")

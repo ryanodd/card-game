@@ -11,10 +11,12 @@ export type CardBehaviour = {
   effects?: {
     play?: (inputDuel: DuelState, instanceId: string, target: Target) => Promise<DuelState>
     summon?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
+    beforeAttack?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     afterAttack?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     support?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     attackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
     opposingAttackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
     selectCards?: (inputDuel: DuelState, playerId: PlayerID, cardsSelected: string[]) => Promise<DuelState>
+    defeat?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
   }
 }

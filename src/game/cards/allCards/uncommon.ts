@@ -4,7 +4,7 @@ export const uncommonCards: CardData[] = []
 
 uncommonCards.push({
   name: "Sun King Salamander",
-  imageSrcSmall: "/card-art/96x96/sunKingSalamander.png",
+  imageSrcSmall: "/card-art/512x512/sunKingSalamander.png",
   imageSrcLarge: "/card-art/512x512/sunKingSalamander.png",
   imageCenterYPercent: 45,
   rarity: "uncommon",
@@ -24,50 +24,8 @@ uncommonCards.push({
 })
 
 uncommonCards.push({
-  name: "Sky Dino",
-  imageSrcSmall: "/card-art/96x96/skyDino.png",
-  imageSrcLarge: "/card-art/512x512/skyDino.png",
-  imageCenterYPercent: 24,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "air",
-  cardType: "creature",
-  attack: 2,
-  health: 3,
-  cost: {
-    neutral: 2,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 1,
-  },
-  // text: "Support: 50% chance to restore +1 HP to your front monster.",
-})
-
-uncommonCards.push({
-  name: "Feathered Scrapper",
-  imageSrcSmall: "/card-art/96x96/featheredScrapper.png",
-  imageSrcLarge: "/card-art/512x512/featheredScrapper.png",
-  imageCenterYPercent: 43,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "air",
-  cardType: "creature",
-  attack: 3,
-  health: 3,
-  cost: {
-    neutral: 2,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 1,
-  },
-  // text: "Support: 50% chance to restore +1 HP to your front monster.",
-})
-
-uncommonCards.push({
   name: "Spewing Cavern",
-  imageSrcSmall: "/card-art/96x96/spewingCavern.png",
+  imageSrcSmall: "/card-art/512x512/spewingCavern.png",
   imageSrcLarge: "/card-art/512x512/spewingCavern.png",
   imageCenterYPercent: 24,
   rarity: "uncommon",
@@ -86,11 +44,82 @@ uncommonCards.push({
   // text: "When attacked, 20% chance to burn each opposing monster in its row.",
 })
 
+uncommonCards.push({
+  name: "Eruption of Boulders",
+  imageSrcSmall: "/card-art/512x512/eruptionOfBoulders.png",
+  imageSrcLarge: "/card-art/512x512/eruptionOfBoulders.png",
+  imageCenterYPercent: 35,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "fire",
+  cardType: "spell",
+  cost: {
+    neutral: 2,
+    fire: 1,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { plainText: "Deal " },
+        { icon: "damage" },
+        { boldText: "1" },
+        { plainText: " to a random enemy minion 5 times." },
+      ],
+    },
+  ],
+})
+
+uncommonCards.push({
+  name: "Sky Dino",
+  imageSrcSmall: "/card-art/512x512/skyDino.png",
+  imageSrcLarge: "/card-art/512x512/skyDino.png",
+  imageCenterYPercent: 49,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "air",
+  cardType: "creature",
+  attack: 2,
+  health: 3,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 1,
+  },
+  // text: "Support: 50% chance to restore +1 HP to your front monster.",
+})
+
+uncommonCards.push({
+  name: "Feathered Scrapper",
+  imageSrcSmall: "/card-art/512x512/featheredScrapper.png",
+  imageSrcLarge: "/card-art/512x512/featheredScrapper.png",
+  imageCenterYPercent: 43,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "air",
+  cardType: "creature",
+  attack: 3,
+  health: 3,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 1,
+  },
+  // text: "Support: 50% chance to restore +1 HP to your front monster.",
+})
+
 ///////////////////////////////////////////
 
 uncommonCards.push({
   name: "Bed of Snakes",
-  imageSrcSmall: "/card-art/96x96/bedOfSnakes.png",
+  imageSrcSmall: "/card-art/512x512/bedOfSnakes.png",
   imageSrcLarge: "/card-art/512x512/bedOfSnakes.png",
   imageCenterYPercent: 75,
   rarity: "uncommon",
@@ -111,7 +140,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Merfin Yodeler",
-  imageSrcSmall: "/card-art/96x96/merfinYodeler.png",
+  imageSrcSmall: "/card-art/512x512/merfinYodeler.png",
   imageSrcLarge: "/card-art/512x512/merfinYodeler.png",
   imageCenterYPercent: 20,
   rarity: "uncommon",
@@ -147,7 +176,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Living Hillside",
-  imageSrcSmall: "/card-art/96x96/livingHillside.png",
+  imageSrcSmall: "/card-art/512x512/livingHillside.png",
   imageSrcLarge: "/card-art/512x512/livingHillside.png",
   imageCenterYPercent: 20,
   rarity: "uncommon",
@@ -167,7 +196,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Sonic Dragon",
-  imageSrcSmall: "/card-art/96x96/sonicDragon.png",
+  imageSrcSmall: "/card-art/512x512/sonicDragon.png",
   imageSrcLarge: "/card-art/512x512/sonicDragon.png",
   imageCenterYPercent: 30,
   rarity: "uncommon",
@@ -202,7 +231,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Cave Swimmer",
-  imageSrcSmall: "/card-art/96x96/caveSwimmer.png",
+  imageSrcSmall: "/card-art/512x512/caveSwimmer.png",
   imageSrcLarge: "/card-art/512x512/caveSwimmer.png",
   imageCenterYPercent: 70,
   rarity: "uncommon",
@@ -235,7 +264,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Darkwoods Hyena",
-  imageSrcSmall: "/card-art/96x96/darkwoodsHyena.png",
+  imageSrcSmall: "/card-art/512x512/darkwoodsHyena.png",
   imageSrcLarge: "/card-art/512x512/darkwoodsHyena.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
@@ -261,7 +290,7 @@ uncommonCards.push({
         { boldText: "25%" },
         { plainText: " to gain " },
         { boldText: "+1" },
-        { icon: "heart" },
+        { icon: "sword" },
         { plainText: "." },
       ],
     },
@@ -271,7 +300,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Monstrous Flamebeast",
-  imageSrcSmall: "/card-art/96x96/monstrousFlamebeast.png",
+  imageSrcSmall: "/card-art/512x512/monstrousFlamebeast.png",
   imageSrcLarge: "/card-art/512x512/monstrousFlamebeast.png",
   imageCenterYPercent: 40,
   rarity: "uncommon",
@@ -298,7 +327,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Glikki Forager",
-  imageSrcSmall: "/card-art/96x96/glikkiTracker.png",
+  imageSrcSmall: "/card-art/512x512/glikkiTracker.png",
   imageSrcLarge: "/card-art/512x512/glikkiTracker.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
@@ -318,7 +347,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Brash Splasher",
-  imageSrcSmall: "/card-art/96x96/brashSplasher.png",
+  imageSrcSmall: "/card-art/512x512/brashSplasher.png",
   imageSrcLarge: "/card-art/512x512/brashSplasher.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
@@ -349,7 +378,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Bonehide Mole",
-  imageSrcSmall: "/card-art/96x96/bonehideMole.png",
+  imageSrcSmall: "/card-art/512x512/bonehideMole.png",
   imageSrcLarge: "/card-art/512x512/bonehideMole.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
@@ -375,7 +404,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Dazzling Fennec",
-  imageSrcSmall: "/card-art/96x96/dazzlingFennec.png",
+  imageSrcSmall: "/card-art/512x512/dazzlingFennec.png",
   imageSrcLarge: "/card-art/512x512/dazzlingFennec.png",
   imageCenterYPercent: 50,
   rarity: "uncommon",
@@ -395,7 +424,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Red Crab Brawler",
-  imageSrcSmall: "/card-art/96x96/redCrabBrawler.png",
+  imageSrcSmall: "/card-art/512x512/redCrabBrawler.png",
   imageSrcLarge: "/card-art/512x512/redCrabBrawler.png",
   imageCenterYPercent: 45,
   rarity: "uncommon",
@@ -422,7 +451,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Moltsteed Racer",
-  imageSrcSmall: "/card-art/96x96/moltsteedRacer.png",
+  imageSrcSmall: "/card-art/512x512/moltsteedRacer.png",
   imageSrcLarge: "/card-art/512x512/moltsteedRacer.png",
   imageCenterYPercent: 55,
   rarity: "uncommon",
@@ -448,7 +477,7 @@ uncommonCards.push({
 
 uncommonCards.push({
   name: "Volcanic Shellster",
-  imageSrcSmall: "/card-art/96x96/volcanicShellster.png",
+  imageSrcSmall: "/card-art/512x512/volcanicShellster.png",
   imageSrcLarge: "/card-art/512x512/volcanicShellster.png",
   imageCenterYPercent: 65,
   rarity: "uncommon",

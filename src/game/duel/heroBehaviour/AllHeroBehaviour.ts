@@ -1,9 +1,8 @@
 import { getEnergyTotalFromEnergyCounts, getEnergyTypesFromEnergyCounts } from "../../helpers"
 import { DuelState } from "../DuelData"
-import { getDuelPlayerByCardInstanceId, getDuelPlayerById } from "../DuelHelpers"
+import { getDuelPlayerById } from "../DuelHelpers"
 import { PlayerID } from "../PlayerData"
 
-import { removeCard } from "../actions/removeCard"
 import { HeroBehaviour } from "./HeroBehaviourData"
 
 import { HeroName } from "./HeroName"
@@ -49,16 +48,16 @@ export async function air_hero_produce_turn_energy(inputDuel: DuelState, playerI
 }
 
 export const heroBehaviourMap: Record<HeroName, HeroBehaviour> = {
-  "Fire Hero": {
+  Garmuk: {
     produceTurnEnergy: fire_hero_produce_turn_energy,
   },
-  "Water Hero": {
+  Lappy: {
     produceTurnEnergy: water_hero_produce_turn_energy,
   },
-  "Earth Hero": {
+  "Elozar the Steadfast": {
     produceTurnEnergy: earth_hero_produce_turn_energy,
   },
-  "Air Hero": {
+  "Orrin Stormwing": {
     produceTurnEnergy: air_hero_produce_turn_energy,
   },
 }
