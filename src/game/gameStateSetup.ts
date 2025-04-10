@@ -20,5 +20,9 @@ export const gameStateSetup = (game: GameState): GameState => {
     game.activeDeckId = game.decks[0].id
   }
 
+  // TODO recover mid-duel
+  // Are there any other scenarios that could use recovery?
+  game.screen = { id: "mainMenu" }
+
   return game
 }

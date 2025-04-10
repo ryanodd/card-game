@@ -16,12 +16,15 @@ export type DuelAnimation = {
       cardId: string
     }
   | {
+      id: "DISCARD_HAND"
+    }
+  | {
       id: "ATTACK_START"
-      cardId: string
+      cardIds: string[]
     }
   | {
       id: "ATTACK_END"
-      cardId: string
+      cardIds: string[]
     }
   | {
       id: "MISS"

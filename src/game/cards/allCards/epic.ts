@@ -66,6 +66,27 @@ epicCards.push({
 })
 
 epicCards.push({
+  name: "Cowl Panther",
+  imageSrcSmall: "/card-art/512x512/cowlPanther.png",
+  imageSrcLarge: "/card-art/512x512/cowlPanther.png",
+  imageCenterYPercent: 59,
+  rarity: "epic",
+  complete: true,
+  energyType: "neutral",
+  cardType: "creature",
+  attack: 5,
+  health: 2,
+  cost: {
+    neutral: 3,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: [],
+})
+
+epicCards.push({
   name: "Plasmite",
   imageSrcSmall: "/card-art/512x512/plasmite.png",
   imageSrcLarge: "/card-art/512x512/plasmite.png",

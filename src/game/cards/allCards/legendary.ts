@@ -45,7 +45,7 @@ legendaryCards.push({
 })
 
 legendaryCards.push({
-  name: "Owldus The Arcane",
+  name: "Owldus the Arcane",
   imageSrcSmall: "/card-art/512x512/owldusTheArcane.png",
   imageSrcLarge: "/card-art/512x512/owldusTheArcane.png",
   imageCenterYPercent: 50,
@@ -107,25 +107,4 @@ legendaryCards.push({
     air: 0,
   },
   // text: "When played: if there is a friendly creature in front of Spirit Giant, gain +3/+3.",
-})
-
-legendaryCards.push({
-  name: "Ilstrom, Tidal Inferno",
-  imageSrcSmall: "/card-art/512x512/ilstromTidalInferno.png",
-  imageSrcLarge: "/card-art/512x512/ilstromTidalInferno.png",
-  imageCenterYPercent: 50,
-  rarity: "legendary",
-  complete: false,
-  energyType: "multi",
-  cardType: "creature",
-  attack: 5,
-  health: 5,
-  cost: {
-    neutral: 3,
-    fire: 1,
-    water: 1,
-    earth: 0,
-    air: 0,
-  },
-  // text: "When Ilstrom, Tidal Inferno enters the battlefield, deal 2 damage to the opponent. Support: if you have 3 or more creatures in play, 50% chance for opponent to discard a random card.",
 })

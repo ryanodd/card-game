@@ -10,40 +10,31 @@ import { HeroName } from "./HeroName"
 export async function fire_hero_produce_turn_energy(inputDuel: DuelState, playerId: PlayerID) {
   let duel = inputDuel
   const player = getDuelPlayerById(duel, playerId)
-  const energyFromPreviousTurn = getEnergyTotalFromEnergyCounts(player.energy)
-  for (let x = energyFromPreviousTurn; x < player.energyCapacity; x++) {
-    player.energy.fire += 1
-  }
+  player.energy.fire = 10
   return duel
 }
 
 export async function water_hero_produce_turn_energy(inputDuel: DuelState, playerId: PlayerID) {
   let duel = inputDuel
   const player = getDuelPlayerById(duel, playerId)
-  const energyFromPreviousTurn = getEnergyTotalFromEnergyCounts(player.energy)
-  for (let x = energyFromPreviousTurn; x < player.energyCapacity; x++) {
-    player.energy.water += 1
-  }
+  player.energy.water = 10
+
   return duel
 }
 
 export async function earth_hero_produce_turn_energy(inputDuel: DuelState, playerId: PlayerID) {
   let duel = inputDuel
   const player = getDuelPlayerById(duel, playerId)
-  const energyFromPreviousTurn = getEnergyTotalFromEnergyCounts(player.energy)
-  for (let x = energyFromPreviousTurn; x < player.energyCapacity; x++) {
-    player.energy.earth += 1
-  }
+  player.energy.earth = 10
+
   return duel
 }
 
 export async function air_hero_produce_turn_energy(inputDuel: DuelState, playerId: PlayerID) {
   let duel = inputDuel
   const player = getDuelPlayerById(duel, playerId)
-  const energyFromPreviousTurn = getEnergyTotalFromEnergyCounts(player.energy)
-  for (let x = energyFromPreviousTurn; x < player.energyCapacity; x++) {
-    player.energy.air += 1
-  }
+  player.energy.air = 10
+
   return duel
 }
 

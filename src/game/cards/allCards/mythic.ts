@@ -44,7 +44,7 @@ mythicCards.push({
 })
 
 mythicCards.push({
-  name: "Saurongar The Smotherer",
+  name: "Saurongar the Smotherer",
   imageSrcSmall: "/card-art/512x512/saurongarTheSmotherer.png",
   imageSrcLarge: "/card-art/512x512/saurongarTheSmotherer.png",
   imageCenterYPercent: 45,

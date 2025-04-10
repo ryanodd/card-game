@@ -16,11 +16,3 @@ export async function restoreHealthToCreature(duel: DuelState, cardInstanceId: s
 
   return newDuel
 }
-
-export const restoreHealthToPlayer = (duel: DuelState, playerID: PlayerID, healthAmount: number) => {
-  let newDuel = duel
-  const player = getDuelPlayerById(newDuel, playerID)
-  player.health = Math.max(STARTING_HEALTH, player.health + healthAmount)
-
-  return newDuel
-}

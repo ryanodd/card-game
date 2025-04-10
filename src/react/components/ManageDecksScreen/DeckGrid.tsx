@@ -20,7 +20,7 @@ export const DeckGrid = () => {
           <Deckbox key={i} deck={deck} />
         ))}
         <li>
-          <Button data-variant="primary" className="flex flex-col items-center" onClick={onCreateNewDeck}>
+          <Button className="flex flex-col items-center" onClick={onCreateNewDeck}>
             <span className="text-4xl">+</span>
             <span>New deck</span>
           </Button>

@@ -1,5 +1,7 @@
 .card_size {
-  @apply w-24 h-32;
+  width: 8rem;
+  height: 11.2rem;
+  @apply w-32;
 }
 
 .card_border {
@@ -8,11 +10,31 @@
 
 .cardNameContainer {
   @apply bg-gray-200 bg-opacity-40 shadow-md pl-2 pr-3 py-0.5;
-  @apply flex gap-0.5 items-center -ml-2 -mr-2;
+  @apply flex gap-0.5 items-center -ml-3 -mr-2;
+}
+
+.cardEnergyContainer {
+  @apply flex;
+}
+
+.cardEnergyContainer > * {
+  margin: 0 -0.175rem;
+}
+
+.cardEnergyContainer[data-size="large"] > * {
+  @apply -mx-1.5;
+}
+
+.cardEnergyContainer > *:first-child {
+  @apply ml-0;
+}
+
+.cardEnergyContainer > *:last-child {
+  @apply mr-0;
 }
 
 .cardName {
-  @apply ml-auto line-clamp-1 text-sm text-neutral-900 font-semibold;
+  @apply ml-auto line-clamp-1 text-base text-neutral-900 font-semibold;
 }
 
 .attackIndicator {
@@ -60,17 +82,6 @@
     filter: brightness(120%);
   }
 }
-
-/* .card_highlighted {
-  animation: highlight-animation 1s infinite;
-}
-
-@keyframes highlight-animation {
-  50% {
-    filter: brightness(140%);
-  }
-} */
-
 .image_border {
   @apply w-full rounded-sm overflow-hidden;
 }

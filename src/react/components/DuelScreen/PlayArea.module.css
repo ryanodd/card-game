@@ -1,13 +1,22 @@
 .playArea {
+  width: 1344px;
   @apply p-8 rounded-sm  flex flex-col gap-4 relative;
 }
 
 .playAreaBackground {
-  @apply absolute inset-0 border-4 border-zinc-700 bg-stone-200 rounded-xl;
+  @apply absolute -z-10 inset-0 border-4 border-zinc-700 bg-stone-200 rounded-xl;
 }
 
 .playAreaDropTarget {
   @apply absolute inset-0 z-20 rounded-3xl;
+}
+
+.playAreaTopRow {
+  @apply flex justify-between;
+}
+
+.playAreaBottomRow {
+  @apply flex justify-between;
 }
 
 .rowHalfDropTarget {
@@ -38,7 +47,7 @@
 
 .rowHalf {
   box-sizing: content-box;
-  width: calc((4 * 7rem) + (3 * 0.25rem));
+  width: calc((6 * 7rem) + (3 * 0.25rem));
   @apply h-40 shadow-sm border-opacity-20 border-4 border-stone-600 rounded-3xl flex flex-row gap-1 items-center relative p-4;
 }
 

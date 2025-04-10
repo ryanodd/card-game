@@ -16,6 +16,7 @@ import { LeagueScreen } from "./LeagueScreen"
 import { OpenPackScreen } from "./OpenPackScreen"
 import { ToastProvider } from "../components/designSystem/Toast"
 import { MainView } from "../components/MainView"
+import { TitleScreen } from "./TitlleScreen"
 
 export const Game = () => {
   const forceUpdate = useForceUpdate()
@@ -41,6 +42,7 @@ export const Game = () => {
       <ToastProvider duration={6000}>
         <DndContext sensors={sensors}>
           <MainView>
+            {game.screen.id === "title" && <TitleScreen />}
             {game.screen.id === "mainMenu" && <MainMenuScreen />}
             {game.screen.id === "league" && <LeagueScreen />}
             {game.screen.id === "campaignSelect" && <CampaignLocationSelectScreen />}

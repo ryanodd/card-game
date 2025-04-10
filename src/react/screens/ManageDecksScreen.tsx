@@ -1,12 +1,5 @@
-import { randomUUID } from "crypto"
-import { MainView } from "../components/MainView"
 import { Button } from "../components/designSystem/Button"
-import { createNewEditDeckState } from "../hooks/useEditDeckState"
 import { useGameStore } from "../hooks/useGameStore"
-import { v4 } from "uuid"
-import { GameBackground } from "../components/GameBackground"
-import { Deck } from "@/src/game/decks/Deck"
-import styles from "./ManageDecksScreen.module.css"
 import { Footer } from "../components/Footer"
 import { DeckGrid } from "../components/ManageDecksScreen/DeckGrid"
 

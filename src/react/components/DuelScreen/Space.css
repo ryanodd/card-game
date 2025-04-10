@@ -22,15 +22,3 @@
     filter: brightness(75%);
   }
 }
-
-@keyframes summoning-sickness-animation {
-  0% {
-    filter: brightness(70%);
-  }
-  50% {
-    filter: brightness(50%);
-  }
-  100% {
-    filter: brightness(70%);
-  }
-}

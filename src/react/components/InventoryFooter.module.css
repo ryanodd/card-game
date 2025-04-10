@@ -1,0 +1,5 @@
+.inventoryFooter {
+  @apply self-start z-10;
+  @apply rounded-tr-lg bg-zinc-900 bg-opacity-50;
+  @apply flex gap-2 p-2;
+}

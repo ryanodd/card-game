@@ -1,0 +1,9 @@
+.heroArea {
+  @apply flex gap-2;
+}
+.heroArea[data-human="true"] {
+  @apply items-end;
+}
+.heroArea[data-human="false"] {
+  @apply flex-row-reverse items-start;
+}

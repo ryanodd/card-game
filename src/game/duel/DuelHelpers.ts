@@ -44,11 +44,8 @@ export const getAllCardsForPlayer = (duel: DuelState, playerId: PlayerID): CardS
     cards.push(discard[x])
   }
 
-  const rows = player.rows
-  for (let x = 0; x < rows.length; x++) {
-    for (let y = 0; y < rows[x].length; y++) {
-      cards.push(rows[x][y])
-    }
+  for (let x = 0; x < player.row.length; x++) {
+    cards.push(player.row[x])
   }
 
   const cardSelect = player.cardSelect
@@ -67,11 +64,8 @@ export const getAllCreaturesInPlayForPlayer = (duel: DuelState, playerId: Player
   const cards = []
 
   const player = getDuelPlayerById(duel, playerId)
-  const rows = player.rows
-  for (let x = 0; x < rows.length; x++) {
-    for (let y = 0; y < rows[x].length; y++) {
-      cards.push(rows[x][y])
-    }
+  for (let x = 0; x < player.row.length; x++) {
+    cards.push(player.row[x])
   }
 
   return cards
@@ -118,48 +112,32 @@ export const getCardStateByInstanceId = (duel: DuelState, instanceId: string): C
   return foundCard
 }
 
-export const getRowIndexByCardInstanceId = (duel: DuelState, cardInstanceId: string) => {
-  const humanRows = duel.human.rows
-  for (let x = 0; x < humanRows.length; x++) {
-    for (let y = 0; y < humanRows[x].length; y++) {
-      if (humanRows[x][y].instanceId === cardInstanceId) {
-        return x
-      }
+export const getPlayerRowByCardInstanceId = (duel: DuelState, cardInstanceId: string) => {
+  for (let x = 0; x < duel.human.row.length; x++) {
+    if (duel.human.row[x].instanceId === cardInstanceId) {
+      return duel.human.row
     }
   }
 
-  const opponentRows = duel.opponent.rows
-  for (let x = 0; x < opponentRows.length; x++) {
-    for (let y = 0; y < opponentRows[x].length; y++) {
-      if (opponentRows[x][y].instanceId === cardInstanceId) {
-        return x
-      }
+  for (let x = 0; x < duel.opponent.row.length; x++) {
+    if (duel.opponent.row[x].instanceId === cardInstanceId) {
+      return duel.opponent.row
     }
   }
 
   return undefined
 }
 
-export const getPlayerRowByCardInstanceId = (duel: DuelState, cardInstanceId: string) => {
-  const humanRows = duel.human.rows
-  for (let x = 0; x < humanRows.length; x++) {
-    for (let y = 0; y < humanRows[x].length; y++) {
-      if (humanRows[x][y].instanceId === cardInstanceId) {
-        return humanRows[x]
-      }
-    }
+export const getPlayerByCardInstanceId = (duel: DuelState, cardInstanceId: string): PlayerState => {
+  const humanCards = getAllCardsForPlayer(duel, "human")
+  if (humanCards.find((cardState) => cardState.instanceId === cardInstanceId) !== undefined) {
+    return duel.human
   }
-
-  const opponentRows = duel.opponent.rows
-  for (let x = 0; x < opponentRows.length; x++) {
-    for (let y = 0; y < opponentRows[x].length; y++) {
-      if (opponentRows[x][y].instanceId === cardInstanceId) {
-        return opponentRows[x]
-      }
-    }
+  const opponentCards = getAllCardsForPlayer(duel, "opponent")
+  if (opponentCards.find((cardState) => cardState.instanceId === cardInstanceId) !== undefined) {
+    return duel.opponent
   }
-
-  return undefined
+  throw Error(`card ${getCardByInstanceId(duel, cardInstanceId).name} belongs to neither human nor opponent`)
 }
 
 export const getPlayerIdByCardInstanceId = (duel: DuelState, cardInstanceId: string): PlayerID => {
@@ -181,28 +159,14 @@ export const getDuelPlayerByCardInstanceId = (duel: DuelState, cardInstanceId: s
 export const getOpposingAttackingCreatureByCardId = (duel: DuelState, cardInstanceId: string) => {
   const currentPlayerId = getPlayerIdByCardInstanceId(duel, cardInstanceId)
   const otherPlayer = getOtherPlayerByPlayerId(duel, currentPlayerId)
-  const rowIndex = getRowIndexByCardInstanceId(duel, cardInstanceId)
-  if (rowIndex !== undefined && otherPlayer.rows[rowIndex].length >= 1) {
-    return otherPlayer.rows[rowIndex][0]
+  if (otherPlayer.row.length >= 1) {
+    return otherPlayer.row[0]
   }
   return undefined
 }
 
 export const getRandomCreatureInPlay = (duel: DuelState) => {
-  const creaturesInPlay = []
-
-  for (let x = 0; x < duel.human.rows.length; x++) {
-    const row = duel.human.rows[x]
-    for (let y = 0; y < row.length; y++) {
-      creaturesInPlay.push(row[y])
-    }
-  }
-  for (let x = 0; x < duel.opponent.rows.length; x++) {
-    const row = duel.opponent.rows[x]
-    for (let y = 0; y < row.length; y++) {
-      creaturesInPlay.push(row[y])
-    }
-  }
+  const creaturesInPlay = getAllCreaturesInPlay(duel)
 
   if (creaturesInPlay.length < 1) {
     return undefined
@@ -215,11 +179,8 @@ export const getRandomCreatureInPlayForPlayer = (duel: DuelState, playerId: Play
   const cardsInPlayForPlayer = []
   const player = getDuelPlayerById(duel, playerId)
 
-  for (let x = 0; x < player.rows.length; x++) {
-    const row = player.rows[x]
-    for (let y = 0; y < row.length; y++) {
-      cardsInPlayForPlayer.push(row[y])
-    }
+  for (let x = 0; x < player.row.length; x++) {
+    cardsInPlayForPlayer.push(player.row[x])
   }
 
   if (cardsInPlayForPlayer.length < 1) {
@@ -231,11 +192,25 @@ export const getRandomCreatureInPlayForPlayer = (duel: DuelState, playerId: Play
 
 export const getOpposingRowByCardId = (duel: DuelState, cardId: string) => {
   const playerId = getPlayerIdByCardInstanceId(duel, cardId)
-  const rowIndex = getRowIndexByCardInstanceId(duel, cardId)
-  if (rowIndex === undefined) {
-    return undefined
-  }
   const opposingPlayer = getOtherPlayerByPlayerId(duel, playerId)
-  const opposingRow = opposingPlayer.rows[rowIndex]
+  const opposingRow = opposingPlayer.row
   return opposingRow
+}
+
+export const isDuelCardInHand = (duel: DuelState, cardId: string) => {
+  if (
+    duel.human.hand.find((card) => {
+      return card.instanceId === cardId
+    })
+  ) {
+    return true
+  }
+  if (
+    duel.opponent.hand.find((card) => {
+      return card.instanceId === cardId
+    })
+  ) {
+    return true
+  }
+  return false
 }

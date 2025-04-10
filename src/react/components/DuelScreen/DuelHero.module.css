@@ -7,8 +7,14 @@
 }
 
 .duelHeroHealthContainer {
-  @apply absolute z-10 -bottom-4 left-1/2 -translate-x-1/2;
-  @apply rounded-full bg-rose-600 border border-neutral-900 px-2;
+  @apply relative flex flex-col;
+}
+.duelHeroHealthContainer > svg {
+  @apply text-red-600;
+}
+
+.duelHeroHealthContainer > svg[data-full="false"] {
+  @apply text-zinc-900;
 }
 
 .shaking {

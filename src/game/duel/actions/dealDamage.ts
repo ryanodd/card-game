@@ -24,11 +24,3 @@ export async function dealDamageToCreature(duel: DuelState, cardInstanceId: stri
 
   return newDuel
 }
-
-export const dealDamageToPlayer = (duel: DuelState, playerID: PlayerID, damageAmount: number) => {
-  let newDuel = duel
-  const player = getDuelPlayerById(newDuel, playerID)
-  player.health = Math.max(0, player.health - damageAmount)
-
-  return newDuel
-}

@@ -34,7 +34,7 @@ export const ClickableEnergy = ({ index, id, energyType }: ClickableEnergyProps)
       data-selected={energy.selected}
       className={styles.energy}
     >
-      <EnergyIcon energyType={energyType} size="large" />
+      <EnergyIcon energyType={energyType} size="lg" />
     </button>
   )
 }

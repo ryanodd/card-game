@@ -1,6 +1,6 @@
 .button {
   @apply shadow-sm shrink-0;
-  @apply flex items-center justify-center relative;
+  @apply flex items-center justify-center relative gap-2;
 }
 
 .button {

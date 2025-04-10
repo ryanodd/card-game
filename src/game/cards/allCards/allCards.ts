@@ -49,6 +49,8 @@ cards.push(...mythicCards)
  * - when dying
  * - when playing a card
  * - When played. (if condition)
+ * - In front
+ * - In back
  *
  * Effects:
  * - draw cards (scry)
@@ -58,11 +60,17 @@ cards.push(...mythicCards)
  * - Burn, Stun, Poison
  * - Heal
  * - gain shield
+ *
  * Stupid effects:
  * - swap monster places
  * - swap attack & health
  * - spawn little creature (I don't think this is a good thing, the way things don't fricking die)
  * - discard cards
+ *
+ * Specific Ideas:
+ * bunny can attack from second in line
+ * Legendary/Mythic 1-cost spell: Reveal opponent's hand, maybe do extra stuff
+ * The name 'Makasaur'
  */
 
 export const cardDataMap: Record<CardName, CardData> = cards.reduce((cardsByName, card) => {

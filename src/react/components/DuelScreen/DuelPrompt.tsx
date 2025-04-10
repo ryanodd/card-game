@@ -35,12 +35,12 @@ export const useGetPromptMessage = (duel: DuelState): string | null => {
     // }
 
     // Can't play cards
-    if (handTargets.length === 0) {
-      if (duel.turnNumber === 1) {
-        return "On your first turn, you only get 1 energy. You can't afford to play any cards. End your turn."
-      }
-      return null
-    }
+    // if (handTargets.length === 0) {
+    //   if (duel.turnNumber === 1) {
+    //     return "On your first turn, you only get 1 energy. You can't afford to play any cards. End your turn."
+    //   }
+    //   return null
+    // }
   }
 
   return null

@@ -4,6 +4,7 @@
   border-bottom: var(--pack-border);
   @apply rounded-sm overflow-hidden border-slate-900 border-opacity-30;
   @apply text-zinc-800 text-4xl font-extrabold uppercase;
+  @apply flex items-center justify-center;
 }
 
 .pack[data-variant="Standard Pack"] {

@@ -1,6 +1,4 @@
-import { DuelState, GAME_START_NUM_TO_DRAW } from "../DuelData"
-import { drawToCardSelect } from "./drawToCardSelect"
-import { drawToHand } from "./drawToHand"
+import { DuelState } from "../DuelData"
 import { shuffleDeck } from "./shuffleDeck"
 import { startMulligan } from "./startMulligan"
 import { turnStart } from "./turnStart"
@@ -22,8 +20,6 @@ export async function duelSetup(inputDuel: DuelState) {
   }
 
   if (inputDuel.info.tutorial) {
-    duel = await drawToHand(duel, "human", GAME_START_NUM_TO_DRAW)
-    duel = await drawToHand(duel, "opponent", GAME_START_NUM_TO_DRAW)
     duel = await turnStart(duel)
   } else {
     duel = await startMulligan(duel, duel.playerGoingFirst)

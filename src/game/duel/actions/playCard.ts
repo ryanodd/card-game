@@ -44,11 +44,7 @@ export async function playCardFromHand(inputDuel: DuelState, { cardId, target, e
   })
   // Put creature in space
   if (playedCard.cardType === "creature" && target.targetType === "rowSpace") {
-    const row = player.rows[target.rowIndex]
-    row.splice(target.positionIndex, 0, playedCard)
-    if (cardDataMap[playedCard.name].keywords?.includes("Charge") !== true) {
-      playedCard.summoningSickness = true
-    }
+    player.row.splice(target.positionIndex, 0, playedCard)
 
     if (duel.currentPlayerId === "opponent") {
       duel = await playAnimation(duel, { id: "SUMMON", durationMs: 200, cardId })

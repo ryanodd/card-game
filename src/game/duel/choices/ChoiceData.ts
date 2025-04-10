@@ -20,16 +20,11 @@ export type Target =
   | {
       targetType: "rowSpace"
       playerId: "human" | "opponent"
-      rowIndex: number
+
       positionIndex: number
     }
   | {
       targetType: "playArea"
-    }
-  | {
-      targetType: "playerRow"
-      playerId: "human" | "opponent"
-      rowIndex: number
     }
   | {
       targetType: "player"

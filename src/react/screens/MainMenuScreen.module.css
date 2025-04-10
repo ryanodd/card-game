@@ -1,0 +1,30 @@
+.islandBackgroundImage {
+  filter: blur(0.5px);
+  @apply w-full h-full;
+  @apply absolute inset-0 -z-10 object-cover;
+}
+
+.locationButton {
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.locationButton[data-id="quickDuel"] {
+  left: 38%;
+  top: 61%;
+}
+
+.locationButton[data-id="campaign"] {
+  left: 40%;
+  top: 40%;
+}
+
+.locationButton[data-id="league"] {
+  left: 53%;
+  top: 53%;
+}
+
+.locationButton[data-id="shop"] {
+  left: 72%;
+  top: 66%;
+}

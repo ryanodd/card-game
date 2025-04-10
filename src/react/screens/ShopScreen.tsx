@@ -5,12 +5,14 @@ import { GameBackground } from "../components/GameBackground"
 import { useCallback, useMemo, useState } from "react"
 import { Footer } from "../components/Footer"
 import { ShopCell } from "../components/ShopScreen/ShopCell"
-import { decideShopItems } from "@/src/game/shop/decideShopItems"
+import { decideShopItems, useMsUntilShopRefreshText } from "@/src/game/shop/decideShopItems"
 import { ShopItem } from "@/src/game/shop/ShopItem"
 import { Toast } from "../components/designSystem/Toast"
 
 export const ShopScreen = () => {
   const { game, setGame } = useGameStore()
+
+  const msUntilRefresh = useMsUntilShopRefreshText()
 
   const onBackClick = () => {
     setGame({ ...game, screen: { id: "mainMenu" } })
@@ -59,7 +61,7 @@ export const ShopScreen = () => {
         <div className="grow flex flex-col p-8 gap-8">
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl text-stone-50">Shop</h1>
-            <h2 className="text-xl text-stone-50">The shop&apos;s contents change daily.</h2>
+            <h2 className="text-xl text-stone-50">Refreshes in {msUntilRefresh}</h2>
           </div>
           <div className="grow flex items-center">
             <div className="grow flex gap-4">

@@ -20,7 +20,7 @@ import animationFilterStyles from "./DuelCard.module.css"
 import animationLayerStyles from "./DuelCardAnimationLayer.module.css"
 import { useSortable } from "@dnd-kit/sortable"
 import { CardState, DuelState } from "@/src/game/duel/DuelData"
-import { duelWinner, getDuelPlayerById } from "@/src/game/duel/DuelHelpers"
+import { duelWinner, getDuelPlayerById, isDuelCardInHand } from "@/src/game/duel/DuelHelpers"
 import { PlayerID } from "@/src/game/duel/PlayerData"
 import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 import { AnimatedNumber } from "../designSystem/AnimatedNumber"
@@ -46,10 +46,6 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     takeTurn_getPlayableHandCardIds(duel).includes(cardState.instanceId)
 
   const highlighted = selectable && !cardIdDragging
-
-  let rowIndex: number = getDuelPlayerById(duel, playerId).rows.findIndex((row) =>
-    row.some((card) => card.instanceId === cardState.instanceId)
-  )
 
   const DRAGGABLE_ID = `draggable-card-${cardState.instanceId}`
   const { attributes, isDragging, listeners, setNodeRef, transform, transition } = useSortable({
@@ -83,13 +79,13 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     // },
   })
 
-  const summoningSickness = cardState.cardType === "creature" && cardState.summoningSickness
-
   const modifierBurn = cardState.cardType === "creature" && cardState.status === "burn"
   const modifierStun = cardState.cardType === "creature" && cardState.status === "stun"
   const modifierPoison = cardState.cardType === "creature" && cardState.status === "poison"
 
   const animationDraw = duel.currentAnimation?.id === "DRAW" && duel.currentAnimation.cardId === cardState.instanceId
+  const animationDiscardHand =
+    duel.currentAnimation?.id === "DISCARD_HAND" && isDuelCardInHand(duel, cardState.instanceId)
 
   const animationOpponentSummon =
     duel.currentAnimation?.id === "SUMMON" &&
@@ -97,9 +93,9 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
     playerId === "opponent"
 
   const animationAttackStart =
-    duel.currentAnimation?.id === "ATTACK_START" && duel.currentAnimation.cardId === cardState.instanceId
+    duel.currentAnimation?.id === "ATTACK_START" && duel.currentAnimation.cardIds.includes(cardState.instanceId)
   const animationAttackEnd =
-    duel.currentAnimation?.id === "ATTACK_END" && duel.currentAnimation.cardId === cardState.instanceId
+    duel.currentAnimation?.id === "ATTACK_END" && duel.currentAnimation.cardIds.includes(cardState.instanceId)
 
   const animationDestroyStart =
     duel.currentAnimation?.id === "DESTROY_START" && duel.currentAnimation?.cardIds.includes(cardState.instanceId)
@@ -123,9 +119,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
 
   return (
     <div
-      className={` relative ${isDragging ? "opacity-0" : ""} ${selectable ? cardStyles.card_selectable : ""} ${
-        highlighted ? cardStyles.card_highlighted : ""
-      }`}
+      className={` relative ${isDragging ? "opacity-0" : ""} ${selectable ? cardStyles.card_selectable : ""}`}
       data-player-id={playerId}
       ref={setNodeRef}
       {...attributes}
@@ -135,11 +129,11 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
       <div
         className={`${animationFilterStyles.duelCardTransformLayer} `}
         data-player-id={playerId}
-        data-modifier-summoning-sickness={summoningSickness}
         data-modifier-burn={modifierBurn}
         data-modifier-stun={modifierStun}
         data-modifier-poison={modifierPoison}
         data-animation-draw={animationDraw}
+        data-animation-discard-hand={animationDiscardHand}
         data-animation-opponent-summon={animationOpponentSummon}
         data-animation-attack-start={animationAttackStart}
         data-animation-attack-end={animationAttackEnd}
@@ -172,6 +166,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
           />
           <div className={`${animationLayerStyles.duelCardOverlayLayerDrawing}`} />
         </div>
+        <div className={`${animationLayerStyles.duelCardUnderlayLayer}`} data-animation-highlighted={highlighted} />
         {cardState.cardType === "creature" && cardState.shield && (
           <div className={animationLayerStyles.duelCardShield} />
         )}
@@ -181,6 +176,7 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
           isTooltipOpen={isTooltipOpen}
           setIsTooltipOpen={setIsTooltipOpen}
           showCostIcons
+          isDragging={isDragging}
         />
       </div>
       {"health" in cardState && <AnimatedNumber value={getCardHealthDisplayValue(cardState)} />}

@@ -172,7 +172,7 @@ commonCards.push({
   imageSrcLarge: "/card-art/512x512/cleansingStorm.png",
   imageCenterYPercent: 55,
   rarity: "common",
-  complete: true,
+  complete: false,
   energyType: "water",
   cardType: "spell",
   cost: {
@@ -185,7 +185,12 @@ commonCards.push({
   text: [
     {
       variant: "default",
-      textList: [{ plainText: "Remove all status effects on your monsters." }],
+      textList: [
+        { plainText: "Before combat, all of your opponent's monsters get " },
+        { boldText: "-1" },
+        { icon: "sword" },
+        { plainText: " (min 1)." },
+      ],
     },
   ],
 })
@@ -283,16 +288,21 @@ commonCards.push({
   complete: true,
   energyType: "air",
   cardType: "creature",
-  attack: 3,
-  health: 3,
+  attack: 2,
+  health: 2,
   cost: {
-    neutral: 2,
+    neutral: 1,
     fire: 0,
     water: 0,
     earth: 0,
     air: 1,
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [{ icon: "dice" }, { boldText: "20%" }, { plainText: " for opponent to miss." }],
+    },
+  ],
 })
 
 //////////////////////////////////////////////
@@ -319,13 +329,10 @@ commonCards.push({
     {
       variant: "default",
       textList: [
-        { plainText: "When played in the front, " },
-        { icon: "dice" },
-        { boldText: "50%" },
-        { plainText: " to gain " },
-        { boldText: "+2" },
+        { plainText: "Before combat, " },
+        { boldText: "+1" },
         { icon: "sword" },
-        { plainText: "." },
+        { plainText: " if in the front." },
       ],
     },
   ],
@@ -400,26 +407,6 @@ commonCards.push({
       ],
     },
   ],
-})
-
-commonCards.push({
-  name: "Something Bandit",
-  imageSrcSmall: "/card-art/512x512/somethingBandit.png",
-  imageSrcLarge: "/card-art/512x512/somethingBandit.png",
-  imageCenterYPercent: 50,
-  rarity: "common",
-  complete: true,
-  energyType: "water",
-  cardType: "creature",
-  attack: 3,
-  health: 2,
-  cost: {
-    neutral: 1,
-    fire: 0,
-    water: 1,
-    earth: 0,
-    air: 0,
-  },
 })
 
 commonCards.push({

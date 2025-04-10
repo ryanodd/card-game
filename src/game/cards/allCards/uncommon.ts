@@ -103,16 +103,21 @@ uncommonCards.push({
   complete: false,
   energyType: "air",
   cardType: "creature",
-  attack: 3,
-  health: 3,
+  attack: 2,
+  health: 2,
   cost: {
-    neutral: 2,
+    neutral: 1,
     fire: 0,
     water: 0,
     earth: 0,
     air: 1,
   },
-  // text: "Support: 50% chance to restore +1 HP to your front monster.",
+  text: [
+    {
+      variant: "default",
+      textList: [{ icon: "dice" }, { boldText: "33%" }, { plainText: " for opponent to miss." }],
+    },
+  ],
 })
 
 ///////////////////////////////////////////
@@ -323,26 +328,6 @@ uncommonCards.push({
     },
   ],
   keywords: ["Charge"],
-})
-
-uncommonCards.push({
-  name: "Glikki Forager",
-  imageSrcSmall: "/card-art/512x512/glikkiTracker.png",
-  imageSrcLarge: "/card-art/512x512/glikkiTracker.png",
-  imageCenterYPercent: 50,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "multi",
-  cardType: "creature",
-  attack: 2,
-  health: 3,
-  cost: {
-    neutral: 1,
-    fire: 0,
-    water: 0,
-    earth: 1,
-    air: 1,
-  },
 })
 
 uncommonCards.push({

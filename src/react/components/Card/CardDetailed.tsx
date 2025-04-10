@@ -22,26 +22,26 @@ export type CardDetailedProps = {
 export const getCostIcons = (cardData: CardData) => {
   const icons = []
   if (cardData.cost.neutral !== 0) {
-    icons.push(<EnergyIcon energyType="neutral" size="small" amount={cardData.cost.neutral} key="neutral" />)
+    icons.push(<EnergyIcon energyType="neutral" size="md" amount={cardData.cost.neutral} key="neutral" />)
   }
   if (cardData.cost.fire !== undefined) {
     for (let x = 0; x < cardData.cost.fire; x++) {
-      icons.push(<EnergyIcon energyType="fire" size="small" key={`fire-${x}`} />)
+      icons.push(<EnergyIcon energyType="fire" size="md" key={`fire-${x}`} />)
     }
   }
   if (cardData.cost.water !== undefined) {
     for (let x = 0; x < cardData.cost.water; x++) {
-      icons.push(<EnergyIcon energyType="water" size="small" key={`water-${x}`} />)
+      icons.push(<EnergyIcon energyType="water" size="md" key={`water-${x}`} />)
     }
   }
   if (cardData.cost.earth !== undefined) {
     for (let x = 0; x < cardData.cost.earth; x++) {
-      icons.push(<EnergyIcon energyType="earth" size="small" key={`earth-${x}`} />)
+      icons.push(<EnergyIcon energyType="earth" size="md" key={`earth-${x}`} />)
     }
   }
   if (cardData.cost.air !== undefined) {
     for (let x = 0; x < cardData.cost.air; x++) {
-      icons.push(<EnergyIcon energyType="air" size="small" key={`air-${x}`} />)
+      icons.push(<EnergyIcon energyType="air" size="md" key={`air-${x}`} />)
     }
   }
 
@@ -51,7 +51,7 @@ export const getCostIcons = (cardData: CardData) => {
         <EnergyIcon
           energyType={cardData.cost.dualType.primary}
           secondaryEnergyType={cardData.cost.dualType.secondary}
-          size="small"
+          size="md"
           key={`dual-type-${x}`}
         />
       )
@@ -85,7 +85,7 @@ export const CardDetailed = forwardRef<HTMLDivElement, CardDetailedProps>(({ car
       {...props}
     >
       <div className={`${cardStyles.cardNameContainer}`}>
-        {getCostIcons(cardData)}
+        <div className={cardStyles.cardEnergyContainer}>{getCostIcons(cardData)}</div>
         <h2 className={`${cardStyles.cardName} tracking-tight`}>{cardData.name}</h2>
       </div>
       <Image

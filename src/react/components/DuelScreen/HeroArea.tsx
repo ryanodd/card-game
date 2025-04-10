@@ -2,6 +2,8 @@ import { DuelState } from "@/src/game/duel/DuelData"
 import { PlayerID } from "@/src/game/duel/PlayerData"
 import { DuelHero } from "./DuelHero"
 import { PlayerEnergyArea } from "./PlayerEnergyArea"
+import { HeroHealth } from "./HeroHealth"
+import styles from "./HeroArea.module.css"
 
 export type HeroAreaProps = {
   duel: DuelState
@@ -10,8 +12,10 @@ export type HeroAreaProps = {
 
 export const HeroArea = ({ duel, playerId }: HeroAreaProps) => {
   return (
-    <div className="h-72 w-56 justify-start flex flex-col gap-4 items-center">
+    <div className={styles.heroArea} data-human={playerId === "human"}>
+      <HeroHealth duel={duel} playerId={playerId} />
       <DuelHero duel={duel} playerId={playerId} />
+
       <PlayerEnergyArea duel={duel} playerId={playerId} />
     </div>
   )

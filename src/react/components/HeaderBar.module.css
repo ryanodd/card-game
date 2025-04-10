@@ -1,0 +1,5 @@
+.headerBar {
+  @apply w-full;
+  @apply bg-slate-200 bg-opacity-20;
+  @apply flex items-center gap-2 px-4 py-2;
+}

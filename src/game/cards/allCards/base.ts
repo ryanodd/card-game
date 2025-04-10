@@ -53,7 +53,7 @@ baseCards.push({
   complete: true,
   energyType: "fire",
   cardType: "creature",
-  attack: 1,
+  attack: 0,
   health: 1,
   cost: {
     neutral: 0,
@@ -62,8 +62,17 @@ baseCards.push({
     earth: 0,
     air: 0,
   },
-  keywords: ["Charge"],
-  text: [{ variant: "default", textList: [{ keyword: "Charge" }] }],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { plainText: "Before attacking, deal " },
+        { boldText: "1" },
+        { icon: "damage" },
+        { plainText: " to the other monster." },
+      ],
+    },
+  ],
 })
 
 baseCards.push({
@@ -152,7 +161,7 @@ baseCards.push({
         { plainText: "When defeated, " },
         { icon: "heart" },
         { boldText: "+1" },
-        { plainText: " to your Hero." },
+        { plainText: " to the monster behind." },
       ],
     },
   ],
@@ -167,7 +176,7 @@ baseCards.push({
   complete: false,
   energyType: "earth",
   cardType: "creature",
-  attack: 4,
+  attack: 3,
   health: 4,
   cost: {
     neutral: 3,
@@ -302,7 +311,7 @@ baseCards.push({
         { boldText: "30%" },
         { plainText: " to " },
         { keyword: "Burn" },
-        { plainText: " opposing Hero." },
+        { plainText: " the opponent's attacking monster." },
       ],
     },
   ],

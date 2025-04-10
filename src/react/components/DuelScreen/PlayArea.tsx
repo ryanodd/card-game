@@ -3,12 +3,14 @@ import animationLayerStyles from "./PlayAreaAnimationLayer.module.css"
 
 import { getEnergyCountsFromSelected, useDuelUIStore } from "../../hooks/useDuelUIStore"
 import { useDndMonitor, useDroppable } from "@dnd-kit/core"
-import { Row } from "./Row"
 import { DuelState } from "@/src/game/duel/DuelData"
 import { duelWinner } from "@/src/game/duel/DuelHelpers"
 import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
 import { takeTurn_executePlayCard } from "@/src/game/duel/choices/takeTurn/executePlayCard"
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
+import { HumanRow } from "./HumanRow"
+import { OpponentRow } from "./OpponentRow"
+import { HeroArea } from "./HeroArea"
 
 export type PlayAreaProps = {
   duel: DuelState
@@ -71,9 +73,14 @@ export const PlayArea = ({ duel }: PlayAreaProps) => {
         data-dragging-over={isOver}
       />
       <div className={styles.playAreaBackground} />
-      {duel.human.rows.map((row, i) => {
-        return <Row key={i} duel={duel} index={i} />
-      })}
+      <div className={styles.playAreaTopRow}>
+        <HeroArea duel={duel} playerId="human" />
+        <OpponentRow />
+      </div>
+      <div className={styles.playAreaBottomRow}>
+        <HumanRow />
+        <HeroArea duel={duel} playerId="opponent" />
+      </div>
     </div>
   )
 }

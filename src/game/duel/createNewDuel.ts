@@ -11,7 +11,7 @@ import { generateDeck } from "../decks/generateDeck"
 import { cardDataMap } from "../cards/allCards/allCards"
 import { cardCostToEnergyCost } from "./energy/cardCostToEnergyCost"
 
-export const STARTING_HEALTH = 15
+export const STARTING_HEALTH = 3
 
 export const cardDataToCardState = (cardData: CardData): CardState => {
   switch (cardData.cardType) {
@@ -24,7 +24,6 @@ export const cardDataToCardState = (cardData: CardData): CardState => {
         attack: cardData.attack,
         health: cardData.health,
         damage: 0,
-        summoningSickness: false,
         modifiers: [],
         status: null,
         shield: false,
@@ -129,7 +128,7 @@ export const createNewDuel = ({ humanDeck, opponentDeck, reward, leagueGame, tut
       deck: createCardsFromNames(humanDeck.cardNames),
       hand: [],
       discard: [],
-      rows: [[], []],
+      row: [],
       cardSelect: [],
       inPlay: null,
       energy: {
@@ -139,7 +138,6 @@ export const createNewDuel = ({ humanDeck, opponentDeck, reward, leagueGame, tut
         earth: 0,
         air: 0,
       },
-      energyCapacity: 0,
       drawnDead: false,
     },
     opponent: {
@@ -148,7 +146,7 @@ export const createNewDuel = ({ humanDeck, opponentDeck, reward, leagueGame, tut
       deck: createCardsFromNames(opponentDeck.cardNames),
       hand: [],
       discard: [],
-      rows: [[], []],
+      row: [],
       cardSelect: [],
       inPlay: null,
       energy: {
@@ -158,7 +156,6 @@ export const createNewDuel = ({ humanDeck, opponentDeck, reward, leagueGame, tut
         earth: 0,
         air: 0,
       },
-      energyCapacity: 0,
       drawnDead: false,
     },
 

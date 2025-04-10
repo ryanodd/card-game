@@ -4,8 +4,6 @@ import { CardName } from "./cards/CardName"
 import { DuelState } from "./duel/DuelData"
 import { HeroName } from "./duel/heroBehaviour/HeroName"
 import { League } from "./league/leagueTypes"
-import { EnergyType } from "./duel/EnergyData"
-import { Rarity } from "./cards/CardData"
 
 export type MainMenuScreenState = {
   id: "mainMenu"
@@ -36,6 +34,7 @@ export type OpenPackScreenState = {
 }
 
 export type ScreenState =
+  | { id: "title" }
   | MainMenuScreenState
   | { id: "league" }
   | { id: "campaignSelect" }

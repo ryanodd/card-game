@@ -5,6 +5,5 @@ export const resetCard = (card: CardState) => {
     card.damage = 0
     card.modifiers = []
     card.status = null
-    card.summoningSickness = false
   }
 }

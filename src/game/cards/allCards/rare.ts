@@ -84,7 +84,23 @@ rareCards.push({
     earth: 2,
     air: 0,
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { boldText: "Backup: " },
+        { icon: "dice" },
+        { boldText: "20%" },
+        { plainText: " to gain " },
+        { boldText: "+1" },
+        { icon: "sword" },
+        { plainText: " and " },
+        { boldText: "+1" },
+        { icon: "heart" },
+        { plainText: "." },
+      ],
+    },
+  ],
 })
 
 rareCards.push({
@@ -239,11 +255,7 @@ rareCards.push({
   text: [
     {
       variant: "default",
-      textList: [{ keyword: "Scry" }, { boldText: " 3" }, { plainText: ". Draw a card." }],
-    },
-    {
-      variant: "default",
-      textList: [{ plainText: "Your hero takes " }, { icon: "damage" }, { boldText: "3" }, { plainText: "." }],
+      textList: [{ keyword: "Scry" }, { boldText: " 2" }, { plainText: ". Draw 2 cards." }],
     },
   ],
 })
@@ -367,55 +379,6 @@ rareCards.push({
     earth: 0,
     air: 0,
   },
-})
-rareCards.push({
-  name: "Smoldering Shot",
-  imageSrcSmall: "/card-art/512x512/smolderingShot.png",
-  imageSrcLarge: "/card-art/512x512/smolderingShot.png",
-  imageCenterYPercent: 50,
-  rarity: "rare",
-  complete: false,
-  energyType: "fire",
-  cardType: "spell",
-  cost: {
-    neutral: 1,
-    fire: 1,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [
-        { plainText: "Deal " },
-        { icon: "damage" },
-        { boldText: "3" },
-        { plainText: " to the front enemy monster in target row." },
-      ],
-    },
-  ],
-})
-
-rareCards.push({
-  name: "Fairy Arsonist",
-  imageSrcSmall: "/card-art/512x512/fairyArsonist.png",
-  imageSrcLarge: "/card-art/512x512/fairyArsonist.png",
-  imageCenterYPercent: 60,
-  rarity: "rare",
-  complete: false,
-  energyType: "multi",
-  cardType: "creature",
-  attack: 2,
-  health: 2,
-  cost: {
-    neutral: 0,
-    fire: 1,
-    water: 0,
-    earth: 0,
-    air: 1,
-  },
-  // text: "Support: Add +1 burn to a random enemy creature.",
 })
 
 rareCards.push({

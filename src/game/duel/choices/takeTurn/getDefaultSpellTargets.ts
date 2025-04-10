@@ -7,34 +7,26 @@ export const getDefaultSpellTargets = (duel: DuelState, instanceId: string): Tar
   return [{ targetType: "playArea" }]
 }
 
-export const getDefaultPlayerRowSpellTargets = (duel: DuelState, instanceId: string): Target[] => {
+export const getDefaultPlayerSpellTargets = (duel: DuelState, instanceId: string): Target[] => {
   const targets: Target[] = []
-  for (let x = 0; x < duel.human.rows.length; x++) {
-    targets.push({ targetType: "playerRow", playerId: "human", rowIndex: x })
-    targets.push({ targetType: "playerRow", playerId: "opponent", rowIndex: x })
-  }
+  targets.push({ targetType: "player", playerId: "human" })
+  targets.push({ targetType: "player", playerId: "opponent" })
 
   return targets
 }
 
-export const getDefaultHumanRowSpellTargets = (duel: DuelState, playerId: PlayerID, instanceId: string): Target[] => {
+export const getDefaultHumanOnlySpellTargets = (duel: DuelState, playerId: PlayerID, instanceId: string): Target[] => {
   const targets: Target[] = []
-  for (let x = 0; x < duel.human.rows.length; x++) {
-    targets.push({ targetType: "playerRow", playerId: "human", rowIndex: x })
-  }
-
+  targets.push({ targetType: "player", playerId: "human" })
   return targets
 }
 
-export const getDefaultOpponentRowSpellTargets = (
+export const getDefaultOpponentOnlySpellTargets = (
   duel: DuelState,
   playerId: PlayerID,
   instanceId: string
 ): Target[] => {
   const targets: Target[] = []
-  for (let x = 0; x < duel.opponent.rows.length; x++) {
-    targets.push({ targetType: "playerRow", playerId: "opponent", rowIndex: x })
-  }
-
+  targets.push({ targetType: "player", playerId: "human" })
   return targets
 }

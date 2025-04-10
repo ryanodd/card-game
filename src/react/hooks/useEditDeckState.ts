@@ -10,7 +10,7 @@ export const createNewEditDeckState = (deck: Deck | null): EditDeckScreenState =
     deckName: deck?.name ?? "My deck",
     heroName: deck?.heroName ?? null,
     cardNames: deck?.cardNames ?? [],
-    selectHeroDialogOpen: false,
+    selectHeroDialogOpen: deck ? false : true,
   }
 }
 

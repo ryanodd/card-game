@@ -1,13 +1,62 @@
-import { getDateString, getRandomInt, getRandomItemFromArray, getSeedFromString } from "@/src/utils/randomNumber"
+import {
+  getDateString,
+  getHourString,
+  getRandomInt,
+  getRandomItemFromArray,
+  getSeedFromString,
+} from "@/src/utils/randomNumber"
 import { CardName } from "../cards/CardName"
 import { ShopItem } from "./ShopItem"
 import { getShopCostForCard, getShopCostForPack } from "./getShopCostForCard"
 import { cardDataMap } from "../cards/allCards/allCards"
 import { PackVariant } from "../GameData"
+import { useEffect, useState } from "react"
+
+export const SECOND_MS = 1000
+export const MINUTE_MS = 60 * SECOND_MS
+export const HOUR_MS = 60 * MINUTE_MS
 
 const PACK_VARIANT_RATES: Record<PackVariant, number> = {
   "Standard Pack": 80,
   "Elite Pack": 20,
+}
+
+// As currently implemented, must be divisible evenly into 24h
+export const HOURS_INTERVAL = 4
+const getShopSeedString = () => {
+  return `${getDateString()}-${parseInt(getHourString()) % 4}`
+}
+
+const getMsUntilShopRefresh = () => {
+  const msNow = Date.now()
+  const intervalMs = HOURS_INTERVAL * HOUR_MS
+  return intervalMs - (msNow % intervalMs)
+}
+
+export const useMsUntilShopRefreshText = () => {
+  const [text, setText] = useState("")
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const secondsUntilRefresh = Math.floor(getMsUntilShopRefresh() / 1000)
+      const minutesUntilRefresh = Math.floor(secondsUntilRefresh / 60)
+      const hoursUntilRefresh = Math.floor(minutesUntilRefresh / 60)
+      const secondsToDisplay = secondsUntilRefresh % 60
+      const minutesToDisplay = minutesUntilRefresh % 60
+      const hoursToDisplay = hoursUntilRefresh
+
+      const hoursString = hoursToDisplay >= 10 ? hoursToDisplay.toString() : `0${hoursToDisplay}`
+      const minutesString = minutesToDisplay >= 10 ? minutesToDisplay.toString() : `0${minutesToDisplay}`
+      const secondsString = secondsToDisplay >= 10 ? secondsToDisplay.toString() : `0${secondsToDisplay}`
+
+      setText(
+        hoursString === "00" ? `${minutesString}:${secondsString}` : `${hoursString}:${minutesString}:${secondsString}`
+      )
+    }, 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+  return text
 }
 
 export const decideShopItems = (): ShopItem[] => {
@@ -78,7 +127,7 @@ export const decideShopItems = (): ShopItem[] => {
   const NUM_CARDS_TO_GENERATE = 3
   const selectedCardNames: CardName[] = []
   for (let x = 0; x < NUM_CARDS_TO_GENERATE; x++) {
-    const selectedCardName = getRandomItemFromArray(weightedCardList, getSeedFromString(`${getDateString()}-${x}`))
+    const selectedCardName = getRandomItemFromArray(weightedCardList, getSeedFromString(`${getShopSeedString()}-${x}`))
     if (selectedCardName === undefined) {
       throw Error("decide shop cards no available cards")
     }
@@ -90,7 +139,7 @@ export const decideShopItems = (): ShopItem[] => {
     })
   }
 
-  const randomPackVariantPercentile = getRandomInt(100, getSeedFromString(getDateString()))
+  const randomPackVariantPercentile = getRandomInt(100, getSeedFromString(getShopSeedString()))
   let packVariant: PackVariant = "Standard Pack"
   let runningTotal = 0
   for (let [packVariant, percent] of Object.entries(PACK_VARIANT_RATES)) {

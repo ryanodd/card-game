@@ -6,8 +6,6 @@ import { PlayerID } from "./PlayerData"
 
 import { ChoiceData } from "./choices/ChoiceData"
 
-export const GAME_START_NUM_TO_DRAW = 3
-
 export type AttackChangeModifier = {
   id: "attackChange"
   quantity: number
@@ -31,7 +29,6 @@ export type CardState = {
       attack: number
       health: number
       damage: number
-      summoningSickness: boolean
       modifiers: Modifier[]
       status: Status | null
       shield: boolean
@@ -47,11 +44,10 @@ export type PlayerState = {
   hand: CardState[]
   deck: CardState[]
   discard: CardState[]
-  rows: CardState[][]
+  row: CardState[]
   inPlay: CardState | null
   cardSelect: CardState[]
   energy: EnergyCounts
-  energyCapacity: number
   drawnDead: boolean
 }
 

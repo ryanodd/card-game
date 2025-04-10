@@ -12,7 +12,7 @@ export async function drawToHand(inputDuel: DuelState, playerId: PlayerID, numbe
       throw Error("No more cards left to draw") // TODO expected codepath
     }
     player.hand.push(cardDrawn)
-    duel = await playAnimation(duel, { id: "DRAW", durationMs: 500, cardId: cardDrawn.instanceId })
+    duel = await playAnimation(duel, { id: "DRAW", durationMs: 200, cardId: cardDrawn.instanceId })
   }
   return duel
 }

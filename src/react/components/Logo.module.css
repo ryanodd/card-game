@@ -3,6 +3,6 @@
 }
 
 .logoImage {
-  width: 30rem;
+  width: 28rem;
   @apply relative scale-125;
 }

@@ -8,7 +8,6 @@ export async function roll(
   percentThreshold: number,
   onSuccess: () => Promise<DuelState>
 ) {
-  // 50% chance to draw
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < percentThreshold) {
     duel = await onSuccess()

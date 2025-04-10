@@ -54,25 +54,21 @@ export const PlayerEnergyArea = ({ duel, playerId }: PlayerEnergyAreaProps) => {
 
   if (playerId === "opponent") {
     for (let x = 0; x < player.energy.fire; x++) {
-      energyIconsToRender.push(<EnergyIcon energyType="fire" size="large" available={x < player.energy.fire} key={x} />)
+      energyIconsToRender.push(<EnergyIcon energyType="fire" size="lg" available={x < player.energy.fire} key={x} />)
     }
     for (let x = 0; x < player.energy.water; x++) {
-      energyIconsToRender.push(
-        <EnergyIcon energyType="water" size="large" available={x < player.energy.water} key={x} />
-      )
+      energyIconsToRender.push(<EnergyIcon energyType="water" size="lg" available={x < player.energy.water} key={x} />)
     }
     for (let x = 0; x < player.energy.earth; x++) {
-      energyIconsToRender.push(
-        <EnergyIcon energyType="earth" size="large" available={x < player.energy.earth} key={x} />
-      )
+      energyIconsToRender.push(<EnergyIcon energyType="earth" size="lg" available={x < player.energy.earth} key={x} />)
     }
     for (let x = 0; x < player.energy.air; x++) {
-      energyIconsToRender.push(<EnergyIcon energyType="air" size="large" available={x < player.energy.air} key={x} />)
+      energyIconsToRender.push(<EnergyIcon energyType="air" size="lg" available={x < player.energy.air} key={x} />)
     }
   }
 
-  for (let x = energyIconsToRender.length; x < player.energyCapacity; x++) {
-    energyIconsToRender.push(<EmptyEnergyIcon size="large" />)
+  for (let x = energyIconsToRender.length; x < 10; x++) {
+    energyIconsToRender.push(<EmptyEnergyIcon size="lg" />)
   }
 
   const [animationEnergyAddedToggle, setAnimationEnergyAddedToggle] = useState<boolean>(false)

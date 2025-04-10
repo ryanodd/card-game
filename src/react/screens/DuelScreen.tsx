@@ -26,21 +26,13 @@ import { Portal } from "@radix-ui/react-portal"
 import { ControlButtonPopup } from "../components/DuelScreen/ControlButtonPopup"
 import { takeTurn_getPlayableHandCardIds } from "@/src/game/duel/choices/takeTurn/getPlayableHandCardIds"
 
-// Throws error if given a non-rowHumanHalf droppableId
-const getRowIndexFromDroppableId = (droppableId: string): number | undefined => {
-  if (!droppableId.startsWith("droppable-rowHumanHalf-")) {
-    throw Error(`Could not get rowIndex for droppable ${droppableId}`)
-  }
-  const rowIndexStr = droppableId.split("droppable-rowHumanHalf-")[1]
-  const rowIndex = parseFloat(rowIndexStr)
-  return rowIndex
-}
+import styles from "./DuelScreen.module.css"
 
 // Only works for human hand/row interactions
 const findContainerDroppableIdByDraggableId = (
   draggableId: string,
   humanHandCardIds: string[],
-  humanAllRowCardIds: string[][]
+  humanRowCardIds: string[]
 ) => {
   if (draggableId === "droppable-human-hand" || draggableId?.startsWith("droppable-rowHumanHalf-")) {
     return draggableId
@@ -51,10 +43,8 @@ const findContainerDroppableIdByDraggableId = (
     if (humanHandCardIds.includes(cardId)) {
       return "droppable-human-hand"
     }
-    for (let i = 0; i < humanAllRowCardIds.length; i++) {
-      if (humanAllRowCardIds[i].includes(cardId)) {
-        return `droppable-rowHumanHalf-${i}`
-      }
+    if (humanRowCardIds.includes(cardId)) {
+      return `droppable-rowHumanHalf`
     }
   }
 }
@@ -65,14 +55,8 @@ export const DuelScreen = ({}: DuelScreenProps) => {
   const { game } = useGameStore()
   const { duel } = useDuelState()
 
-  const {
-    cardIdDragging,
-    humanHandCardIds,
-    setHumanHandCardIds,
-    humanAllRowCardIds,
-    setHumanAllRowCardIds,
-    debugEnabled,
-  } = useDuelUIStore()
+  const { cardIdDragging, humanHandCardIds, setHumanHandCardIds, humanRowCardIds, setHumanRowCardIds, debugEnabled } =
+    useDuelUIStore()
 
   useEffect(() => {
     resetDuelUIStore(duel)
@@ -95,20 +79,15 @@ export const DuelScreen = ({}: DuelScreenProps) => {
       }
       const draggedCardId = draggedId.split("draggable-card-")[1]
 
-      const activeContainer = findContainerDroppableIdByDraggableId(draggedId, humanHandCardIds, humanAllRowCardIds)
-      const overContainer = findContainerDroppableIdByDraggableId(overId, humanHandCardIds, humanAllRowCardIds)
+      const activeContainer = findContainerDroppableIdByDraggableId(draggedId, humanHandCardIds, humanRowCardIds)
+      const overContainer = findContainerDroppableIdByDraggableId(overId, humanHandCardIds, humanRowCardIds)
 
       if (activeContainer === overContainer) {
         return
       }
 
       // From hand to row
-      if (activeContainer === "droppable-human-hand" && overContainer?.startsWith("droppable-rowHumanHalf-")) {
-        const rowIndexTo = getRowIndexFromDroppableId(overContainer)
-        if (rowIndexTo === undefined) {
-          throw Error("rowIndex undefined??")
-        }
-
+      if (activeContainer === "droppable-human-hand" && overContainer === "droppable-rowHumanHalf") {
         // Don't allow dragging into play area when unselectable (btw we still allow drag and drop within hand)
         const choiceId = duel.choice.id
         const selectable =
@@ -117,40 +96,30 @@ export const DuelScreen = ({}: DuelScreenProps) => {
           return
         }
 
-        const newRowIndexesIds = humanAllRowCardIds
-        newRowIndexesIds[rowIndexTo] = [draggedCardId, ...humanAllRowCardIds[rowIndexTo]]
-
-        setHumanAllRowCardIds(newRowIndexesIds)
+        setHumanRowCardIds([draggedCardId, ...humanRowCardIds])
         setHumanHandCardIds(humanHandCardIds.filter((cardId) => cardId !== draggedCardId))
 
         // From row to hand
-      } else if (activeContainer?.startsWith("droppable-rowHumanHalf-") && overContainer === "droppable-human-hand") {
-        const rowIndexFrom = getRowIndexFromDroppableId(activeContainer)
-
-        if (rowIndexFrom === undefined) {
-          throw Error("rowIndex undefined??")
-        }
-        const newRowIndexesIds = humanAllRowCardIds
-        newRowIndexesIds[rowIndexFrom] = humanAllRowCardIds[rowIndexFrom].filter((cardId) => cardId !== draggedCardId)
-        setHumanAllRowCardIds(newRowIndexesIds)
-        setHumanHandCardIds([...humanHandCardIds, draggedCardId])
+      } else if (activeContainer === "droppable-rowHumanHalf" && overContainer === "droppable-human-hand") {
+        setHumanRowCardIds(humanRowCardIds.filter((cardId) => cardId !== draggedCardId))
+        setHumanHandCardIds([draggedCardId, ...humanHandCardIds])
         // From row to row
-      } else if (
-        activeContainer?.startsWith("droppable-rowHumanHalf-") &&
-        overContainer?.startsWith("droppable-rowHumanHalf-")
-      ) {
-        const rowIndexFrom = getRowIndexFromDroppableId(activeContainer)
-        const rowIndexTo = getRowIndexFromDroppableId(overContainer)
-        if (rowIndexFrom === undefined || rowIndexTo === undefined) {
-          throw Error("rowIndex undefined??")
-        }
-        const newRowIndexesIds = humanAllRowCardIds
-        newRowIndexesIds[rowIndexTo] = [draggedCardId, ...humanAllRowCardIds[rowIndexTo]]
-        newRowIndexesIds[rowIndexFrom] = humanAllRowCardIds[rowIndexFrom].filter((cardId) => cardId !== draggedCardId)
-        setHumanAllRowCardIds(newRowIndexesIds)
+        // } else if (
+        //   activeContainer?.startsWith("droppable-rowHumanHalf-") &&
+        //   overContainer?.startsWith("droppable-rowHumanHalf-")
+        // ) {
+        //   const rowIndexFrom = getRowIndexFromDroppableId(activeContainer)
+        //   const rowIndexTo = getRowIndexFromDroppableId(overContainer)
+        //   if (rowIndexFrom === undefined || rowIndexTo === undefined) {
+        //     throw Error("rowIndex undefined??")
+        //   }
+        //   const newRowIndexesIds = humanAllRowCardIds
+        //   newRowIndexesIds[rowIndexTo] = [draggedCardId, ...humanAllRowCardIds[rowIndexTo]]
+        //   newRowIndexesIds[rowIndexFrom] = humanAllRowCardIds[rowIndexFrom].filter((cardId) => cardId !== draggedCardId)
+        //   setHumanAllRowCardIds(newRowIndexesIds)
       }
     },
-    [duel, humanHandCardIds, humanAllRowCardIds, setHumanHandCardIds, setHumanAllRowCardIds] // Careful of bugs here
+    [duel, humanHandCardIds, humanRowCardIds, setHumanHandCardIds, setHumanRowCardIds] // Careful of bugs here
   )
 
   const handleDragEnd = useCallback(() => {
@@ -195,18 +164,13 @@ export const DuelScreen = ({}: DuelScreenProps) => {
       </DragOverlay>
       <DuelCompleteDialog />
       <CardSelectDialog duel={duel} />
-      <div className="absolute inset-0 z-10 flex flex-col justify-between gap-4 items-center">
-        <div className="w-full flex justify-between items-center gap-4 p-4 relative">
+      <div className={styles.duelScreen}>
+        <div className={styles.opponentRow}>
           <OpponentHand duel={duel} />
           <DeckPile />
         </div>
-
-        <div className="flex justify-center gap-4 items-center">
-          <HeroArea duel={duel} playerId="human" />
-          <PlayArea duel={duel} />
-          <HeroArea duel={duel} playerId="opponent" />
-        </div>
-        <div className="w-full flex justify-end items-center p-4 gap-4 relative">
+        <PlayArea duel={duel} />
+        <div className={styles.humanRow}>
           <HumanHand duel={duel} cardIds={humanHandCardIds} />
           <DeckPile />
         </div>

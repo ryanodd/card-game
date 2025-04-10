@@ -10,6 +10,7 @@ import Image from "next/image"
 import { AnimatedNumber } from "../designSystem/AnimatedNumber"
 import { Tooltip } from "../designSystem/Tooltip"
 import { HeroDetailed } from "../HeroDetailed"
+import { Heart } from "../designSystem/Icon"
 
 export type DuelHeroProps = {
   duel: DuelState
@@ -42,10 +43,6 @@ export const DuelHero = ({ duel, playerId }: DuelHeroProps) => {
           <div className={`${styles.duelHeroImageContainer} relative`}>
             <Image src={heroData.imageSrc} alt={heroData.name} width={512} height={512} />
           </div>
-        </div>
-        <div className={`${styles.duelHeroHealthContainer}`}>
-          <h2 className="font-medium text-2xl text-white">{Math.max(0, player.health)}</h2>
-          <AnimatedNumber value={player.health} />
         </div>
       </div>
     </Tooltip>

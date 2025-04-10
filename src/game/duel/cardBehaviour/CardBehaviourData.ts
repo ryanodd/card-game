@@ -13,6 +13,7 @@ export type CardBehaviour = {
     summon?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     beforeAttack?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     afterAttack?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
+    beforeCombat?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     support?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     attackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
     opposingAttackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"

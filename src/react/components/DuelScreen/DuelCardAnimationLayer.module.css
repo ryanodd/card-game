@@ -150,3 +150,26 @@
   @apply rounded-3xl bg-cyan-400 opacity-50;
   transition: shield_appear var(--current-animation-duration);
 }
+
+.duelCardUnderlayLayer {
+  @apply absolute -inset-1.5 -z-20;
+  @apply rounded-lg pointer-events-none;
+  @apply flex items-center justify-center;
+}
+
+.duelCardUnderlayLayer[data-animation-highlighted="true"] {
+  @apply bg-de-york-400 bg-opacity-90;
+  animation: underlay_highlight 1200ms infinite;
+}
+
+@keyframes underlay_highlight {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

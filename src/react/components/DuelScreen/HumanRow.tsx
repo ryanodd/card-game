@@ -10,15 +10,11 @@ import { takeTurn_executePlayCard } from "@/src/game/duel/choices/takeTurn/execu
 import { saveAndAdvanceDuelUntilChoiceOrWinner } from "@/src/game/duel/control/saveAndAdvanceDuelUntilChoiceOrWinner"
 import { takeTurn_getValidTargetsForCard } from "@/src/game/duel/choices/takeTurn/getValidTargetsForCard"
 import { getCardByInstanceId } from "@/src/game/duel/DuelHelpers"
+import { useDuelState } from "../../hooks/useDuelState"
 
-export type RowProps = {
-  duel: DuelState
-  index: number
-}
-
-export const Row = ({ duel, index }: RowProps) => {
-  const { humanAllRowCardIds } = useDuelUIStore()
-  const humanRowCardIds = humanAllRowCardIds[index]
+export const HumanRow = () => {
+  const { duel } = useDuelState()
+  const { humanRowCardIds } = useDuelUIStore()
 
   // IMPORTANT: There's a hard-to-discover bug with react-dnd:
   // if you pass a different instance of your itemIds array (even if the values are the same)
@@ -34,7 +30,7 @@ export const Row = ({ duel, index }: RowProps) => {
   const getHumanCards = () => {
     const spaces = []
     for (let x = 0; x < humanRowCardIds.length; x++) {
-      const cardState = duel.human.rows[index].find((card) => {
+      const cardState = duel.human.row.find((card) => {
         return card.instanceId === humanRowCardIds[x]
       })
       if (!cardState) {
@@ -45,21 +41,10 @@ export const Row = ({ duel, index }: RowProps) => {
     return spaces
   }
 
-  const opponentCards = duel.opponent.rows[index]
-  const getOpponentCards = () => {
-    const spaces = []
-    for (let x = 0; x < opponentCards.length; x++) {
-      const card = opponentCards[x]
-      spaces.push(<DuelCard key={card.instanceId} duel={duel} playerId="opponent" cardState={card} />)
-    }
-    return spaces
-  }
-
   const { cardIdDragging, energySelected } = useDuelUIStore()
-
   const choiceId = duel.choice.id
 
-  const DROPPABLE_ID = `droppable-rowHumanHalf-${index}`
+  const DROPPABLE_ID = `droppable-rowHumanHalf`
   const { active, attributes, isDragging, listeners, over, setNodeRef, transition, transform } = useSortable({
     id: DROPPABLE_ID,
     data: {
@@ -78,10 +63,7 @@ export const Row = ({ duel, index }: RowProps) => {
     cardIdDragging !== null &&
     takeTurn_getValidTargetsForCard(duel, cardIdDragging, getEnergyCountsFromSelected(energySelected)).find(
       (target) => {
-        return (
-          (target.targetType === "rowSpace" && target.rowIndex === index) ||
-          (target.targetType === "playerRow" && target.rowIndex === index && target.playerId === "human")
-        )
+        return target.targetType === "rowSpace"
       }
     ) !== undefined
 
@@ -97,26 +79,14 @@ export const Row = ({ duel, index }: RowProps) => {
       }
 
       const draggedCardInstanceId = event.active.id.toString().split("draggable-card-")[1]
-      const activeIndex = duel.human.rows[index]
+      const activeIndex = duel.human.row
         .map((card) => card.instanceId)
         .indexOf(event.over?.id?.toString()?.split("draggable-card-")?.[1] ?? "N/A")
 
       const draggedCard = getCardByInstanceId(duel, draggedCardInstanceId)
 
-      if (draggedCard.cardType === "spell") {
-        const newDuel = await takeTurn_executePlayCard(duel, {
-          cardIdToPlay: draggedCardInstanceId,
-          target: {
-            targetType: "playerRow",
-            playerId: "human",
-            rowIndex: index,
-          },
-          energyPaid: getEnergyCountsFromSelected(energySelected),
-        })
-        saveAndAdvanceDuelUntilChoiceOrWinner(newDuel)
-      }
       // Moved to container, but not a specific slot - plop down at the end?? Maybe this needs more thinking.
-      else if (event.over?.id.toString() === DROPPABLE_ID) {
+      if (event.over?.id.toString() === DROPPABLE_ID) {
         const indexToPlay = humanRowCardIds.length - 1
 
         const newDuel = await takeTurn_executePlayCard(duel, {
@@ -124,7 +94,6 @@ export const Row = ({ duel, index }: RowProps) => {
           target: {
             targetType: "rowSpace",
             playerId: "human",
-            rowIndex: index,
             positionIndex: indexToPlay,
           },
           energyPaid: getEnergyCountsFromSelected(energySelected),
@@ -136,8 +105,7 @@ export const Row = ({ duel, index }: RowProps) => {
         }
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,
-
-          target: { targetType: "rowSpace", playerId: "human", rowIndex: index, positionIndex: activeIndex },
+          target: { targetType: "rowSpace", playerId: "human", positionIndex: activeIndex },
           energyPaid: getEnergyCountsFromSelected(energySelected),
         })
         saveAndAdvanceDuelUntilChoiceOrWinner(newDuel)
@@ -148,20 +116,17 @@ export const Row = ({ duel, index }: RowProps) => {
   const humanHalfHighlighted = humanHalfSelectable
 
   return (
-    <div className={`${styles.row}`}>
-      <SortableContext items={sortableItemIdsForHumanRowHalf} strategy={horizontalListSortingStrategy}>
-        <div className={`${styles.rowHalf} ${styles.rowHumanHalf}`} data-top={index === 0} data-bottom={index === 1}>
-          <div
-            className={`${styles.rowHalfDropTarget}`}
-            data-selectable={humanHalfSelectable}
-            data-highlighted={humanHalfHighlighted}
-            data-dragging-over={isOver}
-            ref={setNodeRef}
-          />
-          {getHumanCards()}
-        </div>
-      </SortableContext>
-      <div className={`${styles.rowHalf}`}>{getOpponentCards()}</div>
-    </div>
+    <SortableContext items={sortableItemIdsForHumanRowHalf} strategy={horizontalListSortingStrategy}>
+      <div className={`${styles.rowHalf} ${styles.rowHumanHalf}`}>
+        <div
+          className={`${styles.rowHalfDropTarget}`}
+          data-selectable={humanHalfSelectable}
+          data-highlighted={humanHalfHighlighted}
+          data-dragging-over={isOver}
+          ref={setNodeRef}
+        />
+        {getHumanCards()}
+      </div>
+    </SortableContext>
   )
 }

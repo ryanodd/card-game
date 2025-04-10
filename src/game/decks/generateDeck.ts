@@ -6,10 +6,11 @@ import { v4 } from "uuid"
 import { getRandomItemFromArray, getRandomSeed } from "@/src/utils/randomNumber"
 import { CardName } from "../cards/CardName"
 import { cardDataMap } from "../cards/allCards/allCards"
+import { EMPTY_COLLECTION } from "../collections"
 
 const NUM_CARDS_PER_DECK = 40
 
-export type GenerateDeckOptions =
+export type GenerateDeckOptions = { collection?: Record<CardName, number>; name?: string } & (
   | {
       method: "completely-random"
     }
@@ -17,6 +18,7 @@ export type GenerateDeckOptions =
       method: "hero"
       heroName: HeroName
     }
+)
 // | {
 //     method: "energy-types"
 //     cardEnergyTypes: EnergyType[]
@@ -54,14 +56,24 @@ export const generateDeck = (options: GenerateDeckOptions): Deck => {
     .map((cardData) => cardData.name)
 
   let cardNames: CardName[] = []
-  for (let x = 0; x < NUM_CARDS_PER_DECK; x++) {
-    cardNames.push(getRandomItemFromArray<CardName>(candidateCardNames, getRandomSeed()) as CardName)
+  let cardQuantities: Record<CardName, number> = structuredClone(EMPTY_COLLECTION)
+  while (cardNames.length < NUM_CARDS_PER_DECK && candidateCardNames.length > 0) {
+    const chosenCardName = getRandomItemFromArray<CardName>(candidateCardNames, getRandomSeed()) as CardName
+    if (options.collection && options.collection[chosenCardName] === cardQuantities[chosenCardName]) {
+      candidateCardNames.splice(
+        candidateCardNames.findIndex((cardName) => cardName === chosenCardName),
+        1
+      )
+      continue
+    }
+    cardNames.push(chosenCardName)
+    cardQuantities[chosenCardName] += 1
   }
   cardNames = sortCardNames(cardNames)
 
   return {
     id: v4(),
-    name: `Generated ${heroName} deck`,
+    name: options.name ?? `Generated ${heroName} deck`,
     heroName,
     cardNames,
   }

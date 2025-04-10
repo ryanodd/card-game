@@ -76,3 +76,10 @@ export function getRandomItemFromArray<T>(list: T[], seed: number): T | undefine
 export const getDateString = () => {
   return new Date().toISOString().slice(0, 10)
 }
+
+/**
+ * Changes each day. Always UTC time zone.
+ */
+export const getHourString = () => {
+  return new Date().toISOString().slice(11, 2)
+}

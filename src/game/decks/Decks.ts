@@ -1,5 +1,4 @@
 import { Deck } from "./Deck"
-import { generateDeck } from "./generateDeck"
 
 export const deckMap: Record<string, Deck> = {
   // starterDeck: ,
@@ -13,8 +12,6 @@ export const deckMap: Record<string, Deck> = {
       "Brash Splasher",
       "Cave Swimmer",
       "Merfin Yodeler",
-      "Something Bandit",
-      "Something Bandit",
       "Komodo Teacher",
       "Red Crab Brawler",
       "Red Crab Brawler",
@@ -35,8 +32,6 @@ export const deckMap: Record<string, Deck> = {
       "Stegowulf",
       "Living Hillside",
       "Living Hillside",
-      "Zardian Raider",
-      "Emerald Makasaur",
       "Elder Saurus",
     ],
   },

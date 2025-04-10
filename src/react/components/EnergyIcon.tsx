@@ -10,16 +10,15 @@ export type EnergyIconProps = {
   available?: boolean
 }
 
-export type EnergyIconSize = "small" | "large"
+export type EnergyIconSize = "xs" | "sm" | "md" | "lg" | "xl"
 
 export const EnergyIcon = ({ energyType, secondaryEnergyType, amount, size, available }: EnergyIconProps) => {
   const getEnergySvg = () => {
     if (energyType === "neutral") {
       return (
         <div
-          className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
-            styles.neutral_element
-          }`}
+          className={`${styles.energyIcon} ${styles.neutral_element}`}
+          data-size={size}
           data-available={available ?? true}
         >
           <p className="text-md font-bold">{amount ?? 1}</p>
@@ -28,33 +27,23 @@ export const EnergyIcon = ({ energyType, secondaryEnergyType, amount, size, avai
     }
     return (
       <div
-        className={`${styles.energy} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large} ${
-          styles[`${energyType}_element`]
-        }`}
+        className={`${styles.energyIcon} ${styles[`${energyType}_element`]}`}
+        data-size={size}
         data-available={available ?? true}
       >
-        {energyType === "fire" && <Fire className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
-        {energyType === "water" && <Water className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
-        {energyType === "earth" && <Earth className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
-        {energyType === "air" && <Air className={styles.energyIcon} size={size === "small" ? "sm" : "md"} />}
+        {energyType === "fire" && <Fire className={styles.energyIconSvg} size={size} />}
+        {energyType === "water" && <Water className={styles.energyIconSvg} size={size} />}
+        {energyType === "earth" && <Earth className={styles.energyIconSvg} size={size} />}
+        {energyType === "air" && <Air className={styles.energyIconSvg} size={size} />}
         {secondaryEnergyType && (
           <div
-            className={`${styles.secondaryEnergy} ${
-              size === "small" ? styles.energy_icon_small : styles.energy_icon_large
-            } ${styles[`${secondaryEnergyType}_element`]}`}
+            className={`${styles.energyIcon} ${styles.secondaryEnergy} ${styles[`${secondaryEnergyType}_element`]}`}
+            data-size="size"
           >
-            {secondaryEnergyType === "fire" && (
-              <Fire className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
-            )}
-            {secondaryEnergyType === "water" && (
-              <Water className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
-            )}
-            {secondaryEnergyType === "earth" && (
-              <Earth className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
-            )}
-            {secondaryEnergyType === "air" && (
-              <Air className={styles.secondaryEnergyIcon} size={size === "small" ? "sm" : "md"} />
-            )}
+            {secondaryEnergyType === "fire" && <Fire className={styles.secondaryEnergyIcon} size={size} />}
+            {secondaryEnergyType === "water" && <Water className={styles.secondaryEnergyIcon} size={size} />}
+            {secondaryEnergyType === "earth" && <Earth className={styles.secondaryEnergyIcon} size={size} />}
+            {secondaryEnergyType === "air" && <Air className={styles.secondaryEnergyIcon} size={size} />}
           </div>
         )}
       </div>
@@ -69,9 +58,5 @@ export type EmptyEnergyIconProps = {
 }
 
 export const EmptyEnergyIcon = ({ size }: EmptyEnergyIconProps) => {
-  return (
-    <div
-      className={`${styles.emptyEnergyIcon} ${size === "small" ? styles.energy_icon_small : styles.energy_icon_large}`}
-    />
-  )
+  return <div className={`${styles.energyIcon} ${styles.emptyEnergyIcon}`} data-size={size} />
 }

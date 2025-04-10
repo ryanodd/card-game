@@ -1,17 +1,31 @@
-.energy {
-  @apply relative;
+.energyIcon {
+  @apply rounded-full border border-neutral-900 text-neutral-900 aspect-square;
+  @apply flex justify-center items-center relative;
 }
+
+.energyIconSvg {
+  @apply opacity-70;
+}
+
 .secondaryEnergy {
   mask-image: url("/masks/energyIconDualTypeMask.svg");
   @apply absolute inset-0;
 }
 
-.energy_icon_small {
-  @apply w-6 h-6 rounded-full border border-neutral-900 text-neutral-900 p-1 shadow-md aspect-square flex justify-center items-center;
+.energyIcon[data-size="sm"] {
+  @apply w-6 h-6 p-0.5;
 }
 
-.energy_icon_large {
-  @apply w-8 h-8 rounded-full border border-neutral-900 text-neutral-900 p-1.5 shadow-md aspect-square flex justify-center items-center;
+.energyIcon[data-size="md"] {
+  @apply w-7 h-7 p-1;
+}
+
+.energyIcon[data-size="lg"] {
+  @apply w-8 h-8 p-1.5;
+}
+
+.energyIcon[data-size="xl"] {
+  @apply w-10 h-10 p-1;
 }
 
 .energy[data-selected="true"] {
@@ -40,10 +54,6 @@
 
 .air_element {
   @apply bg-lavender-500;
-}
-
-.energyIcon {
-  @apply w-full h-full;
 }
 
 .secondaryEnergyIcon {

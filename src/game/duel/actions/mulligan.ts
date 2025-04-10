@@ -1,4 +1,4 @@
-import { DuelState, GAME_START_NUM_TO_DRAW } from "../DuelData"
+import { DuelState } from "../DuelData"
 import { getDuelPlayerById, getOtherPlayerId } from "../DuelHelpers"
 import { PlayerID } from "../PlayerData"
 import { drawToHand } from "./drawToHand"
@@ -29,7 +29,6 @@ export async function mulligan(inputDuel: DuelState, playerId: PlayerID, selecte
 
   // Shuffle & Draw the rest
   duel = await shuffleDeck(duel, playerId)
-  duel = await drawToHand(duel, playerId, GAME_START_NUM_TO_DRAW - player.hand.length)
 
   // Continue duel: next mulligan or duel start
   if (duel.currentPlayerId === duel.playerGoingFirst) {

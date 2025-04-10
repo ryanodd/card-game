@@ -2,12 +2,6 @@
   @apply relative;
 }
 
-.duelCardTransformLayer[data-modifier-summoning-sickness="true"] {
-  > * {
-    filter: brightness(75%);
-  }
-}
-
 .duelCardTransformLayer[data-animation-draw="true"][data-player-id="human"] {
   > * {
     animation: draw_human var(--current-animation-duration) cubic-bezier(0, 1, 0.44, 1);
@@ -42,6 +36,21 @@
   }
 }
 
+.duelCardTransformLayer[data-animation-discard-hand="true"] {
+  animation: discard var(--current-animation-duration) cubic-bezier(0, 1, 0.44, 1);
+}
+
+@keyframes discard {
+  0% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-400px);
+  }
+}
+
 .duelCardTransformLayer[data-animation-attack-start="true"][data-player-id="human"] {
   > * {
     animation: attack_start_human var(--current-animation-duration) ease-in;
@@ -50,10 +59,10 @@
 
 @keyframes attack_start_human {
   0% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
   100% {
-    transform: translateX(80px);
+    transform: translateY(-40px);
   }
 }
 
@@ -65,10 +74,10 @@
 
 @keyframes attack_start_opponent {
   0% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
   100% {
-    transform: translateX(-80px);
+    transform: translateY(40px);
   }
 }
 
@@ -80,10 +89,10 @@
 
 @keyframes attack_end_human {
   0% {
-    transform: translateX(80px);
+    transform: translateY(-40px);
   }
   100% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
 }
 
@@ -95,10 +104,10 @@
 
 @keyframes attack_end_opponent {
   0% {
-    transform: translateX(-80px);
+    transform: translateY(40px);
   }
   100% {
-    transform: translateX(0px);
+    transform: translateY(0px);
   }
 }
 

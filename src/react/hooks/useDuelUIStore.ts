@@ -58,8 +58,8 @@ export type DuelUIStorePayload = {
   humanHandCardIds: string[]
   setHumanHandCardIds: (humanHandCardIds: string[]) => void
 
-  humanAllRowCardIds: string[][]
-  setHumanAllRowCardIds: (humanAllRowCardIds: string[][]) => void
+  humanRowCardIds: string[]
+  setHumanRowCardIds: (humanRowCardIds: string[]) => void
 
   energySelected: EnergySelected
   setEnergySelected: (energy: EnergySelected) => void
@@ -79,8 +79,8 @@ export const useDuelUIStore = create<DuelUIStorePayload>((set) => ({
   humanHandCardIds: [],
   setHumanHandCardIds: (humanHandCardIds) => set({ humanHandCardIds }),
 
-  humanAllRowCardIds: [[], []],
-  setHumanAllRowCardIds: (humanAllRowCardIds) => set({ humanAllRowCardIds }),
+  humanRowCardIds: [],
+  setHumanRowCardIds: (humanRowCardIds) => set({ humanRowCardIds }),
 
   energySelected: {
     neutral: [],

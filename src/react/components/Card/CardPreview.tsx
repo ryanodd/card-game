@@ -21,34 +21,42 @@ export type CardPreviewProps = {
   showCostIcons?: boolean
   isTooltipOpen?: boolean
   setIsTooltipOpen?: (open: boolean) => void
+  isDragging?: boolean
 }
 
-export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, setIsTooltipOpen }: CardPreviewProps) => {
+export const CardPreview = ({
+  duel,
+  cardState,
+  showCostIcons,
+  isTooltipOpen,
+  setIsTooltipOpen,
+  isDragging,
+}: CardPreviewProps) => {
   const cardData = cardDataMap[cardState.name]
 
   const getCostIcons = () => {
     const icons = []
     if (cardData.cost.neutral !== 0) {
-      icons.push(<EnergyIcon energyType="neutral" size="small" amount={cardData.cost.neutral} key="neutral" />)
+      icons.push(<EnergyIcon energyType="neutral" size="md" amount={cardData.cost.neutral} key="neutral" />)
     }
     if (cardData.cost.fire !== undefined) {
       for (let x = 0; x < cardData.cost.fire; x++) {
-        icons.push(<EnergyIcon energyType="fire" size="small" key={`fire-${x}`} />)
+        icons.push(<EnergyIcon energyType="fire" size="md" key={`fire-${x}`} />)
       }
     }
     if (cardData.cost.water !== undefined) {
       for (let x = 0; x < cardData.cost.water; x++) {
-        icons.push(<EnergyIcon energyType="water" size="small" key={`water-${x}`} />)
+        icons.push(<EnergyIcon energyType="water" size="md" key={`water-${x}`} />)
       }
     }
     if (cardData.cost.earth !== undefined) {
       for (let x = 0; x < cardData.cost.earth; x++) {
-        icons.push(<EnergyIcon energyType="earth" size="small" key={`earth-${x}`} />)
+        icons.push(<EnergyIcon energyType="earth" size="md" key={`earth-${x}`} />)
       }
     }
     if (cardData.cost.air !== undefined) {
       for (let x = 0; x < cardData.cost.air; x++) {
-        icons.push(<EnergyIcon energyType="air" size="small" key={`air-${x}`} />)
+        icons.push(<EnergyIcon energyType="air" size="md" key={`air-${x}`} />)
       }
     }
     if (cardData.cost.dualType !== undefined) {
@@ -57,7 +65,7 @@ export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, set
           <EnergyIcon
             energyType={cardData.cost.dualType.primary}
             secondaryEnergyType={cardData.cost.dualType.secondary}
-            size="small"
+            size="md"
             key={`air-${x}`}
           />
         )
@@ -69,7 +77,7 @@ export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, set
   return (
     <Tooltip
       sideOffset={8}
-      content={<CardDetailedWithKeywords cardData={cardData} cardState={cardState} />}
+      content={isDragging ? undefined : <CardDetailedWithKeywords cardData={cardData} cardState={cardState} />}
       open={isTooltipOpen}
       onOpenChange={setIsTooltipOpen}
     >
@@ -77,7 +85,9 @@ export const CardPreview = ({ duel, cardState, showCostIcons, isTooltipOpen, set
         className={`${styles.card} ${styles.card_size} ${styles.card_border} relative`}
         data-background={cardData.energyType}
       >
-        {showCostIcons && <div className="absolute -top-2 -left-2 z-10 flex">{getCostIcons()}</div>}
+        {showCostIcons && (
+          <div className={`absolute -top-2 -left-2 z-10 ${styles.cardEnergyContainer}`}>{getCostIcons()}</div>
+        )}
         <div className={`${styles.image_border} relative`}>
           <Image src={cardData.imageSrcSmall} alt={cardData.name} width={512} height={512} />
         </div>

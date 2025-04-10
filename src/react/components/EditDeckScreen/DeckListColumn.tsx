@@ -10,11 +10,15 @@ import { DefaultDialog } from "../designSystem/Dialog"
 import { HeroSelectDialogContent } from "./HeroSelectDialogContent"
 import { HeroSelectDialog } from "./HeroSelectDialog"
 import { cardDataMap } from "@/src/game/cards/allCards/allCards"
+import { Button } from "../designSystem/Button"
+import { useGameStore } from "../../hooks/useGameStore"
+import { generateDeck } from "@/src/game/decks/generateDeck"
 
 export const DROPPABLE_ID_DECKLIST = "droppable-decklist"
 
 export const DeckListColumn = () => {
   const { editDeck, setEditDeck } = useEditDeckState()
+  const { game } = useGameStore()
 
   const cardTotalsMap: Record<string, number> = {}
   editDeck.cardNames.forEach((cardName) => {
@@ -46,6 +50,15 @@ export const DeckListColumn = () => {
     },
   })
 
+  const onAutoBuildDeck = () => {
+    const newDeck = generateDeck(
+      editDeck.heroName ? { method: "hero", heroName: editDeck.heroName } : { method: "completely-random" }
+    )
+    setEditDeck({ ...editDeck, cardNames: newDeck.cardNames, heroName: newDeck.heroName })
+  }
+
+  const godMode = game.settings.godMode
+
   return (
     <div ref={setNodeRef} className={`${styles.deckListColumn} ${isOver ? "brightness-125" : ""}`}>
       <HeroSelectDialog
@@ -67,7 +80,11 @@ export const DeckListColumn = () => {
          */}
         {editDeck.cardNames.length === 0 && <div style={{ width: `${DECK_LIST_CARD_WIDTH_REMS}rem` }} />}
       </div>
-
+      {godMode && editDeck.cardNames.length === 0 && (
+        <Button data-variant="tertiary" onClick={onAutoBuildDeck}>
+          Auto-build deck
+        </Button>
+      )}
       <DeckListFooter />
     </div>
   )

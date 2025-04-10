@@ -37,7 +37,7 @@ export const Deckbox = ({ deck }: DeckboxProps) => {
       <div className="flex justify-start items-center gap-4">
         <div className="flex flex-col gap-2">
           {energyTypes.map((energyType, i) => {
-            return <EnergyIcon key={i} size="large" energyType={energyType} />
+            return <EnergyIcon key={i} size="lg" energyType={energyType} />
           })}
         </div>
         <h3 className={styles.deckCellTitle}>{deck.name}</h3>
