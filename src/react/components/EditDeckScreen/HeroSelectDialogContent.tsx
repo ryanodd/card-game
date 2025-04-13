@@ -17,7 +17,6 @@ export const HeroSelectDialogContent = () => {
 
   return (
     <div className={styles.heroSelectContent}>
-      <h1 className={styles.heroSelectTitle}>Select Hero</h1>
       <div className={styles.heroRow}>
         {heroList.map((heroName) => {
           const heroData = heroDataMap[heroName]

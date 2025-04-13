@@ -15,12 +15,17 @@ export const keywordDescriptions: Record<Keyword, string> = {
   Scry: "Look at the top card of the deck. Choose whether to put it back, or put it on the bottom of the deck.",
 }
 
-export type CardTextIconName = "damage" | "dice" | "heart" | "sword"
+export type CardTextIconName = "damage" | "dice" | "heart" | "sword" | EnergyType
 
-export type CardText = { plainText: string } | { boldText: string } | { keyword: Keyword } | { icon: CardTextIconName }
+export type CardText =
+  | { plainText: string }
+  | { boldText: string }
+  | { keyword: Keyword }
+  | { icon: CardTextIconName }
+  | { energyIcons: EnergyType[] }
 
 export type CardTextParagraph = {
-  variant: "default" | "flavor"
+  variant?: "default" | "flavor"
   textList: CardText[]
 }
 

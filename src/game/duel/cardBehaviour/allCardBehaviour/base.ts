@@ -35,7 +35,6 @@ export async function dragon_cub_support(inputDuel: DuelState, instanceId: strin
 
   //Get opposing attacking creature
   const opponentOpposingCreature = getOpposingAttackingCreatureByCardId(duel, instanceId)
-  console.log(opponentOpposingCreature)
   if (opponentOpposingCreature === undefined) {
     return duel
   }

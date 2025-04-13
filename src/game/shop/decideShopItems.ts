@@ -10,7 +10,7 @@ import { ShopItem } from "./ShopItem"
 import { getShopCostForCard, getShopCostForPack } from "./getShopCostForCard"
 import { cardDataMap } from "../cards/allCards/allCards"
 import { PackVariant } from "../GameData"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 export const SECOND_MS = 1000
 export const MINUTE_MS = 60 * SECOND_MS
@@ -22,9 +22,9 @@ const PACK_VARIANT_RATES: Record<PackVariant, number> = {
 }
 
 // As currently implemented, must be divisible evenly into 24h
-export const HOURS_INTERVAL = 4
+export const HOURS_INTERVAL = 1
 const getShopSeedString = () => {
-  return `${getDateString()}-${parseInt(getHourString()) % 4}`
+  return `${getDateString()}-${parseInt(getHourString()) % HOURS_INTERVAL}`
 }
 
 const getMsUntilShopRefresh = () => {
@@ -35,27 +35,29 @@ const getMsUntilShopRefresh = () => {
 
 export const useMsUntilShopRefreshText = () => {
   const [text, setText] = useState("")
+  const updateText = useCallback(() => {
+    const secondsUntilRefresh = Math.floor(getMsUntilShopRefresh() / 1000)
+    const minutesUntilRefresh = Math.floor(secondsUntilRefresh / 60)
+    const hoursUntilRefresh = Math.floor(minutesUntilRefresh / 60)
+    const secondsToDisplay = secondsUntilRefresh % 60
+    const minutesToDisplay = minutesUntilRefresh % 60
+    const hoursToDisplay = hoursUntilRefresh
+
+    const hoursString = hoursToDisplay >= 10 ? hoursToDisplay.toString() : `0${hoursToDisplay}`
+    const minutesString = minutesToDisplay >= 10 ? minutesToDisplay.toString() : `0${minutesToDisplay}`
+    const secondsString = secondsToDisplay >= 10 ? secondsToDisplay.toString() : `0${secondsToDisplay}`
+
+    setText(
+      hoursString === "00" ? `${minutesString}:${secondsString}` : `${hoursString}:${minutesString}:${secondsString}`
+    )
+  }, [setText])
   useEffect(() => {
-    const interval = setInterval(() => {
-      const secondsUntilRefresh = Math.floor(getMsUntilShopRefresh() / 1000)
-      const minutesUntilRefresh = Math.floor(secondsUntilRefresh / 60)
-      const hoursUntilRefresh = Math.floor(minutesUntilRefresh / 60)
-      const secondsToDisplay = secondsUntilRefresh % 60
-      const minutesToDisplay = minutesUntilRefresh % 60
-      const hoursToDisplay = hoursUntilRefresh
-
-      const hoursString = hoursToDisplay >= 10 ? hoursToDisplay.toString() : `0${hoursToDisplay}`
-      const minutesString = minutesToDisplay >= 10 ? minutesToDisplay.toString() : `0${minutesToDisplay}`
-      const secondsString = secondsToDisplay >= 10 ? secondsToDisplay.toString() : `0${secondsToDisplay}`
-
-      setText(
-        hoursString === "00" ? `${minutesString}:${secondsString}` : `${hoursString}:${minutesString}:${secondsString}`
-      )
-    }, 1000)
+    updateText()
+    const interval = setInterval(updateText)
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [updateText])
   return text
 }
 

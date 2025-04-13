@@ -66,6 +66,48 @@ epicCards.push({
 })
 
 epicCards.push({
+  name: "Deluvian Horror",
+  imageSrcSmall: "/card-art/512x512/deluvianHorror.jpg",
+  imageSrcLarge: "/card-art/512x512/deluvianHorror.jpg",
+  imageCenterYPercent: 50,
+  rarity: "epic",
+  complete: true,
+  energyType: "fire",
+  cardType: "creature",
+  attack: 4,
+  health: 5,
+  cost: {
+    neutral: 2,
+    fire: 2,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: [],
+})
+
+epicCards.push({
+  name: "Nessinger",
+  imageSrcSmall: "/card-art/512x512/nessinger.jpg",
+  imageSrcLarge: "/card-art/512x512/nessinger.jpg",
+  imageCenterYPercent: 50,
+  rarity: "epic",
+  complete: true,
+  energyType: "water",
+  cardType: "creature",
+  attack: 5,
+  health: 6,
+  cost: {
+    neutral: 4,
+    fire: 0,
+    water: 1,
+    earth: 0,
+    air: 0,
+  },
+  text: [],
+})
+
+epicCards.push({
   name: "Cowl Panther",
   imageSrcSmall: "/card-art/512x512/cowlPanther.png",
   imageSrcLarge: "/card-art/512x512/cowlPanther.png",
@@ -152,6 +194,30 @@ epicCards.push({
     air: 1,
   },
   text: [],
+})
+
+epicCards.push({
+  name: "Eerie Vision",
+  imageSrcSmall: "/card-art/512x512/eerieVision.png",
+  imageSrcLarge: "/card-art/512x512/eerieVision.png",
+  imageCenterYPercent: 20,
+  rarity: "epic",
+  complete: false,
+  energyType: "air",
+  cardType: "spell",
+  cost: {
+    neutral: 0,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 1,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [{ keyword: "Scry" }, { boldText: " 2" }, { plainText: ". Draw 2 cards." }],
+    },
+  ],
 })
 
 //////////////////////////////

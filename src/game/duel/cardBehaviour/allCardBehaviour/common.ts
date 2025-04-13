@@ -23,18 +23,18 @@ import { getConvertedEnergyCost } from "@/src/game/helpers"
 import { cardDataMap } from "@/src/game/cards/allCards/allCards"
 import { destroyCard } from "../../actions/destroyCard"
 
-export function canyon_burrower_opposing_attack_modifier(
-  inputDuel: DuelState,
-  instanceId: string,
-  attackAmount: number
-) {
-  // 30% chance to burn
-  const random100 = getRandomInt(100, getRandomSeed())
-  if (random100 < 30) {
-    return "miss"
-  }
+export async function duskwood_ostrich_support(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  duel = await roll(duel, instanceId, 25, async () => {
+    const card = getCardByInstanceId(duel, instanceId)
+    if (card.cardType !== "creature") {
+      throw Error("Duskwood ostrich support: not a creature!")
+    }
+    card.modifiers.push({ id: "attackChange", quantity: 1 })
+    return duel
+  })
 
-  return attackAmount
+  return duel
 }
 
 export async function winged_bull_before_combat(inputDuel: DuelState, instanceId: string) {
@@ -56,13 +56,26 @@ export async function winged_bull_before_combat(inputDuel: DuelState, instanceId
   return duel
 }
 
-export function bad_chicken_opposing_attack_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
+export function bad_chicken_defense_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 20) {
     return "miss"
   }
 
   return attackAmount
+}
+
+export async function snail_support(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  const card = getCardByInstanceId(duel, instanceId)
+  duel = await roll(duel, instanceId, 20, async () => {
+    if (card.cardType !== "creature") {
+      throw Error("Snail is not a creature")
+    }
+    card.shield = true
+    return duel
+  })
+  return duel
 }
 
 export async function shark_before_attack(inputDuel: DuelState, instanceId: string) {
@@ -81,7 +94,7 @@ export const commonCardBehaviourMap = {
   "Bouldering Brawler": { getValidTargets: getDefaultCreatureTargets },
   Scrungy: { getValidTargets: getDefaultCreatureTargets },
   "Molten Loaf": { getValidTargets: getDefaultCreatureTargets },
-  Snail: { getValidTargets: getDefaultCreatureTargets },
+  Snail: { getValidTargets: getDefaultCreatureTargets, effects: { support: snail_support } },
   Bubblebloop: { getValidTargets: getDefaultCreatureTargets },
   "Cleansing Storm": { getValidTargets: getDefaultSpellTargets },
   Shark: {
@@ -90,17 +103,9 @@ export const commonCardBehaviourMap = {
       beforeAttack: shark_before_attack,
     },
   },
+  "Duskwood Ostrich": { getValidTargets: getDefaultCreatureTargets, effects: { support: duskwood_ostrich_support } },
   "Spade Manta": { getValidTargets: getDefaultCreatureTargets },
-  "Sludge Amphibian": {
-    getValidTargets: getDefaultCreatureTargets,
-  },
-  "Canyon Burrower": {
-    getValidTargets: getDefaultCreatureTargets,
-    effects: {
-      opposingAttackModifier: canyon_burrower_opposing_attack_modifier,
-    },
-  },
-  Huddolin: { getValidTargets: getDefaultCreatureTargets },
+  "Towering Owl": { getValidTargets: getDefaultCreatureTargets },
   Hyllophant: { getValidTargets: getDefaultCreatureTargets },
   "Hulking Menace": { getValidTargets: getDefaultCreatureTargets },
   "Grassland Scout": { getValidTargets: getDefaultCreatureTargets },
@@ -114,10 +119,7 @@ export const commonCardBehaviourMap = {
   "Bad Chicken": {
     getValidTargets: getDefaultCreatureTargets,
     effects: {
-      opposingAttackModifier: bad_chicken_opposing_attack_modifier,
+      defenseModifier: bad_chicken_defense_modifier,
     },
-  },
-  "Greenwing Caller": {
-    getValidTargets: getDefaultCreatureTargets,
   },
 }

@@ -95,6 +95,15 @@
   @apply -mt-2 text-gray-950 text-left text-xs leading-3;
 }
 
+.heroTextParagraph {
+  @apply flex gap-2 items-center;
+}
+
+.heroTextEnergyIconsContainer {
+  @apply inline w-32;
+  @apply flex gap-0.5 flex-wrap;
+}
+
 .heroCaptionRow {
   @apply -mt-2 -mb-2 h-5 flex justify-between relative grow-0;
 }

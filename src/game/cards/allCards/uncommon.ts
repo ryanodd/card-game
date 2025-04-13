@@ -74,6 +74,110 @@ uncommonCards.push({
 })
 
 uncommonCards.push({
+  name: "Icy Herder",
+  imageSrcSmall: "/card-art/512x512/icyHerder.jpg",
+  imageSrcLarge: "/card-art/512x512/icyHerder.jpg",
+  imageCenterYPercent: 46,
+  rarity: "uncommon",
+  complete: true,
+  energyType: "water",
+  cardType: "creature",
+  attack: 2,
+  health: 2,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 1,
+    earth: 0,
+    air: 0,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { plainText: "Before attacking, monster behind gets " },
+        { boldText: "+1" },
+        { icon: "heart" },
+
+        { plainText: " and " },
+        { boldText: "+1" },
+        { icon: "sword" },
+        { plainText: "." },
+      ],
+    },
+  ],
+  keywords: ["Backup"],
+})
+
+uncommonCards.push({
+  name: "Bloodthirsty Bear",
+  imageSrcSmall: "/card-art/512x512/bloodthirstyBear.png",
+  imageSrcLarge: "/card-art/512x512/bloodthirstyBear.png",
+  imageCenterYPercent: 45,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "earth",
+  cardType: "creature",
+  attack: 3,
+  health: 4,
+  cost: {
+    neutral: 3,
+    fire: 0,
+    water: 0,
+    earth: 1,
+    air: 0,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { plainText: "Before attacking, deals " },
+        { boldText: "+2" },
+        { icon: "damage" },
+        { plainText: " if not at maximum health." },
+      ],
+    },
+  ],
+  keywords: ["Backup"],
+})
+
+uncommonCards.push({
+  name: "Gnarldebeast",
+  imageSrcSmall: "/card-art/512x512/gnarldebeast.jpg",
+  imageSrcLarge: "/card-art/512x512/gnarldebeast.jpg",
+  imageCenterYPercent: 30,
+  rarity: "uncommon",
+  complete: false,
+  energyType: "earth",
+  cardType: "creature",
+  attack: 5,
+  health: 5,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 1,
+    air: 0,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { keyword: "Backup" },
+        { plainText: ": " },
+        { icon: "dice" },
+        { boldText: "25%" },
+        { plainText: " to gain " },
+        { boldText: "+1" },
+        { icon: "sword" },
+        { plainText: "." },
+      ],
+    },
+  ],
+  keywords: ["Backup"],
+})
+
+uncommonCards.push({
   name: "Sky Dino",
   imageSrcSmall: "/card-art/512x512/skyDino.png",
   imageSrcLarge: "/card-art/512x512/skyDino.png",
@@ -268,69 +372,6 @@ uncommonCards.push({
 })
 
 uncommonCards.push({
-  name: "Darkwoods Hyena",
-  imageSrcSmall: "/card-art/512x512/darkwoodsHyena.png",
-  imageSrcLarge: "/card-art/512x512/darkwoodsHyena.png",
-  imageCenterYPercent: 50,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "earth",
-  cardType: "creature",
-  attack: 2,
-  health: 3,
-  cost: {
-    neutral: 2,
-    fire: 0,
-    water: 0,
-    earth: 1,
-    air: 0,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [
-        { keyword: "Backup" },
-        { plainText: ": " },
-        { icon: "dice" },
-        { boldText: "25%" },
-        { plainText: " to gain " },
-        { boldText: "+1" },
-        { icon: "sword" },
-        { plainText: "." },
-      ],
-    },
-  ],
-  keywords: ["Backup"],
-})
-
-uncommonCards.push({
-  name: "Monstrous Flamebeast",
-  imageSrcSmall: "/card-art/512x512/monstrousFlamebeast.png",
-  imageSrcLarge: "/card-art/512x512/monstrousFlamebeast.png",
-  imageCenterYPercent: 40,
-  rarity: "uncommon",
-  complete: true,
-  energyType: "fire",
-  cardType: "creature",
-  attack: 4,
-  health: 3,
-  cost: {
-    neutral: 3,
-    fire: 1,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [{ keyword: "Charge" }],
-    },
-  ],
-  keywords: ["Charge"],
-})
-
-uncommonCards.push({
   name: "Brash Splasher",
   imageSrcSmall: "/card-art/512x512/brashSplasher.png",
   imageSrcLarge: "/card-art/512x512/brashSplasher.png",
@@ -362,32 +403,6 @@ uncommonCards.push({
 })
 
 uncommonCards.push({
-  name: "Bonehide Mole",
-  imageSrcSmall: "/card-art/512x512/bonehideMole.png",
-  imageSrcLarge: "/card-art/512x512/bonehideMole.png",
-  imageCenterYPercent: 50,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "earth",
-  cardType: "creature",
-  attack: 2,
-  health: 2,
-  cost: {
-    neutral: 1,
-    fire: 0,
-    water: 0,
-    earth: 1,
-    air: 0,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [{ keyword: "Shield" }],
-    },
-  ],
-})
-
-uncommonCards.push({
   name: "Dazzling Fennec",
   imageSrcSmall: "/card-art/512x512/dazzlingFennec.png",
   imageSrcLarge: "/card-art/512x512/dazzlingFennec.png",
@@ -408,59 +423,6 @@ uncommonCards.push({
 })
 
 uncommonCards.push({
-  name: "Red Crab Brawler",
-  imageSrcSmall: "/card-art/512x512/redCrabBrawler.png",
-  imageSrcLarge: "/card-art/512x512/redCrabBrawler.png",
-  imageCenterYPercent: 45,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "water",
-  cardType: "creature",
-  attack: 3,
-  health: 2,
-  cost: {
-    neutral: 2,
-    fire: 0,
-    water: 1,
-    earth: 0,
-    air: 0,
-  },
-
-  text: [
-    {
-      variant: "default",
-      textList: [{ keyword: "Shield" }],
-    },
-  ],
-})
-
-uncommonCards.push({
-  name: "Moltsteed Racer",
-  imageSrcSmall: "/card-art/512x512/moltsteedRacer.png",
-  imageSrcLarge: "/card-art/512x512/moltsteedRacer.png",
-  imageCenterYPercent: 55,
-  rarity: "uncommon",
-  complete: false,
-  energyType: "fire",
-  cardType: "creature",
-  attack: 3,
-  health: 2,
-  cost: {
-    neutral: 2,
-    fire: 1,
-    water: 0,
-    earth: 0,
-    air: 0,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [{ keyword: "Charge" }],
-    },
-  ],
-})
-
-uncommonCards.push({
   name: "Volcanic Shellster",
   imageSrcSmall: "/card-art/512x512/volcanicShellster.png",
   imageSrcLarge: "/card-art/512x512/volcanicShellster.png",
@@ -478,4 +440,30 @@ uncommonCards.push({
     earth: 0,
     air: 0,
   },
+})
+
+uncommonCards.push({
+  name: "Spirit Woomlet",
+  imageSrcSmall: "/card-art/512x512/spiritWoomlet.jpg",
+  imageSrcLarge: "/card-art/512x512/spiritWoomlet.jpg",
+  imageCenterYPercent: 47,
+  rarity: "uncommon",
+  complete: true,
+  energyType: "neutral",
+  cardType: "creature",
+  attack: 2,
+  health: 2,
+  cost: {
+    neutral: 2,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [{ plainText: "When destroyed, draw a card." }],
+    },
+  ],
 })

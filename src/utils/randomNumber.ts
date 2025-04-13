@@ -78,8 +78,8 @@ export const getDateString = () => {
 }
 
 /**
- * Changes each day. Always UTC time zone.
+ * Changes each hour. Always UTC time zone.
  */
 export const getHourString = () => {
-  return new Date().toISOString().slice(11, 2)
+  return new Date().toISOString().slice(11, 12)
 }

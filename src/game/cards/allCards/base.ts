@@ -194,7 +194,7 @@ baseCards.push({
   imageSrcLarge: "/card-art/512x512/clucksworth.png",
   imageCenterYPercent: 55,
   rarity: "base",
-  complete: false,
+  complete: true,
   energyType: "air",
   cardType: "creature",
   attack: 2,

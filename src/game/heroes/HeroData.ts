@@ -1,4 +1,4 @@
-import { Keyword, Rarity } from "../cards/CardData"
+import { CardText, CardTextParagraph, Keyword, Rarity } from "../cards/CardData"
 import { EnergyType } from "../duel/EnergyData"
 import { HeroName } from "../duel/heroBehaviour/HeroName"
 
@@ -12,7 +12,7 @@ export type HeroData = {
   energyType: EnergyType | "multi"
   energyTypes: EnergyType[]
 
-  text?: string
+  text?: CardTextParagraph[]
   keywords?: Keyword[]
 
   health: number

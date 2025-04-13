@@ -112,6 +112,27 @@ export async function joltbird_agent_support(inputDuel: DuelState, instanceId: s
   return duel
 }
 
+export async function eerie_vision_play(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
+  duel = await playAnimation(duel, { id: "CARD_AIR_ACTION", durationMs: 800, cardId: instanceId })
+
+  duel = await scryStart(duel, playerId, 2, instanceId)
+  return duel
+}
+
+export async function eerie_vision_select_cards(inputDuel: DuelState, playerId: PlayerID, selectedCardIds: string[]) {
+  let duel = inputDuel
+  duel = await scryEnd(duel, playerId, selectedCardIds)
+
+  duel = await drawToHand(duel, playerId, 2)
+  duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
+
+  duel.choice = { id: "TAKE_TURN", playerId: duel.currentPlayerId }
+
+  return duel
+}
+
 export const epicCardBehaviourMap = {
   Cataclysm: {
     getValidTargets: getDefaultSpellTargets,
@@ -120,7 +141,11 @@ export const epicCardBehaviourMap = {
     },
   },
   "Flame Demon": { getValidTargets: getDefaultCreatureTargets, effects: { play: flame_demon_play } },
+  "Deluvian Horror": { getValidTargets: getDefaultCreatureTargets },
   "Komodo Teacher": {
+    getValidTargets: getDefaultCreatureTargets,
+  },
+  Nessinger: {
     getValidTargets: getDefaultCreatureTargets,
   },
   "Something Captain": { getValidTargets: getDefaultCreatureTargets },
@@ -144,5 +169,12 @@ export const epicCardBehaviourMap = {
   "Astral Caller": { getValidTargets: getDefaultCreatureTargets },
   "Cowl Panther": {
     getValidTargets: getDefaultCreatureTargets,
+  },
+  "Eerie Vision": {
+    getValidTargets: getDefaultSpellTargets,
+    effects: {
+      play: eerie_vision_play,
+      selectCards: eerie_vision_select_cards,
+    },
   },
 }

@@ -119,32 +119,26 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
 
   return (
     <div
-      className={` relative ${isDragging ? "opacity-0" : ""} ${selectable ? cardStyles.card_selectable : ""}`}
+      className={`${cardStyles.duelCardDragTarget} ${cardStyles.card_size} relative ${
+        selectable ? cardStyles.card_selectable : ""
+      }`}
+      data-dragging={isDragging}
       data-player-id={playerId}
       ref={setNodeRef}
       {...attributes}
       {...listeners}
       style={style}
     >
-      <div
-        className={`${animationFilterStyles.duelCardTransformLayer} `}
-        data-player-id={playerId}
-        data-modifier-burn={modifierBurn}
-        data-modifier-stun={modifierStun}
-        data-modifier-poison={modifierPoison}
-        data-animation-draw={animationDraw}
-        data-animation-discard-hand={animationDiscardHand}
-        data-animation-opponent-summon={animationOpponentSummon}
-        data-animation-attack-start={animationAttackStart}
-        data-animation-attack-end={animationAttackEnd}
-        data-animation-destroy-start={animationDestroyStart}
-        data-animation-destroy-end={animationDestroyEnd}
-        data-animation-burn={animationBurn}
-        data-animation-stun={animationStun}
-        data-animation-roll-fail={animationRollFail}
-      >
+      <div className={`${cardStyles.duelCardDragTargetResizer}`}>
         <div
-          className={`${animationLayerStyles.duelCardOverlayLayer} `}
+          className={`${animationFilterStyles.duelCardTransformLayer} `}
+          data-dragging={isDragging}
+          data-player-id={playerId}
+          data-modifier-burn={modifierBurn}
+          data-modifier-stun={modifierStun}
+          data-modifier-poison={modifierPoison}
+          data-animation-draw={animationDraw}
+          data-animation-discard-hand={animationDiscardHand}
           data-animation-opponent-summon={animationOpponentSummon}
           data-animation-attack-start={animationAttackStart}
           data-animation-attack-end={animationAttackEnd}
@@ -153,33 +147,45 @@ export const DuelCard = ({ duel, playerId, cardState }: DuelCardProps) => {
           data-animation-burn={animationBurn}
           data-animation-stun={animationStun}
           data-animation-roll-fail={animationRollFail}
-          data-animation-fire-action={animationFireAction}
-          data-animation-water-action={animationWaterAction}
-          data-animation-earth-action={animationEarthAction}
-          data-animation-air-action={animationAirAction}
         >
           <div
-            className={`${animationLayerStyles.duelCardStatusOverlayLayer}`}
-            data-modifier-burn={modifierBurn}
-            data-modifier-stun={modifierStun}
-            data-modifier-poison={modifierPoison}
+            className={`${animationLayerStyles.duelCardOverlayLayer} `}
+            data-animation-opponent-summon={animationOpponentSummon}
+            data-animation-attack-start={animationAttackStart}
+            data-animation-attack-end={animationAttackEnd}
+            data-animation-destroy-start={animationDestroyStart}
+            data-animation-destroy-end={animationDestroyEnd}
+            data-animation-burn={animationBurn}
+            data-animation-stun={animationStun}
+            data-animation-roll-fail={animationRollFail}
+            data-animation-fire-action={animationFireAction}
+            data-animation-water-action={animationWaterAction}
+            data-animation-earth-action={animationEarthAction}
+            data-animation-air-action={animationAirAction}
+          >
+            <div
+              className={`${animationLayerStyles.duelCardStatusOverlayLayer}`}
+              data-modifier-burn={modifierBurn}
+              data-modifier-stun={modifierStun}
+              data-modifier-poison={modifierPoison}
+            />
+            <div className={`${animationLayerStyles.duelCardOverlayLayerDrawing}`} />
+          </div>
+          <div className={`${animationLayerStyles.duelCardUnderlayLayer}`} data-animation-highlighted={highlighted} />
+          {cardState.cardType === "creature" && cardState.shield && (
+            <div className={animationLayerStyles.duelCardShield} />
+          )}
+          <CardPreview
+            duel={duel}
+            cardState={cardState}
+            isTooltipOpen={isTooltipOpen}
+            setIsTooltipOpen={setIsTooltipOpen}
+            showCostIcons
+            isDragging={isDragging}
           />
-          <div className={`${animationLayerStyles.duelCardOverlayLayerDrawing}`} />
         </div>
-        <div className={`${animationLayerStyles.duelCardUnderlayLayer}`} data-animation-highlighted={highlighted} />
-        {cardState.cardType === "creature" && cardState.shield && (
-          <div className={animationLayerStyles.duelCardShield} />
-        )}
-        <CardPreview
-          duel={duel}
-          cardState={cardState}
-          isTooltipOpen={isTooltipOpen}
-          setIsTooltipOpen={setIsTooltipOpen}
-          showCostIcons
-          isDragging={isDragging}
-        />
+        {"health" in cardState && <AnimatedNumber value={getCardHealthDisplayValue(cardState)} />}
       </div>
-      {"health" in cardState && <AnimatedNumber value={getCardHealthDisplayValue(cardState)} />}
     </div>
   )
 }

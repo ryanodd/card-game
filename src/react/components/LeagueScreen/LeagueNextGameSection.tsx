@@ -2,8 +2,6 @@ import { useGameStore } from "../../hooks/useGameStore"
 import { Button } from "../designSystem/Button"
 import styles from "./LeagueNextGameSection.module.css"
 import { LeaguePlayerCell } from "./LeaguePlayerCell"
-import { DuelSetupContent } from "../DuelSetup/DuelSetupContent"
-import { DefaultDialog } from "../designSystem/Dialog"
 import { getActiveDeck } from "@/src/game/GameData"
 import { createNewDuel, getDuelParamsFromEntryPoint } from "@/src/game/duel/createNewDuel"
 

@@ -1,5 +1,5 @@
 .duelCardTransformLayer {
-  @apply relative;
+  @apply pointer-events-auto;
 }
 
 .duelCardTransformLayer[data-animation-draw="true"][data-player-id="human"] {

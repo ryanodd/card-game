@@ -17,27 +17,22 @@
   animation: contentShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
 
   transform: translate(-50%, -50%);
-
-  /* TODO figure out how we want this to scale, allowing unlimited heroes + filtering.
-    We probably want pages.
-  */
-  width: 680px;
-  /* min-width: 60vw;
-  max-width: 90vw; */
 }
 
-.heroDialogCloseButton {
-  @apply absolute top-0 right-0;
+.heroDialogTitleRow {
+  @apply w-full p-4 flex items-center justify-between;
 }
 
 .heroSelectContent {
-  @apply flex flex-col items-center p-4 gap-4;
+  @apply flex flex-col items-center;
 }
 
-.heroSelectTitle {
+.heroDialogTitle {
   @apply text-6xl font-semibold text-white;
 }
 
 .heroRow {
+  width: 1200px;
+  height: 900px;
   @apply flex flex-wrap gap-2 overflow-y-auto;
 }

@@ -1,6 +1,6 @@
 import styles from "./Energy.module.css"
 import { EnergyType } from "@/src/game/duel/EnergyData"
-import { Air, Earth, Fire, Water } from "./designSystem/Icon"
+import { Air, Circle, Earth, Fire, IconProps, Water } from "./designSystem/Icon"
 
 export type EnergyIconProps = {
   energyType: EnergyType
@@ -59,4 +59,24 @@ export type EmptyEnergyIconProps = {
 
 export const EmptyEnergyIcon = ({ size }: EmptyEnergyIconProps) => {
   return <div className={`${styles.energyIcon} ${styles.emptyEnergyIcon}`} data-size={size} />
+}
+
+export type EnergyDesignSystemIconProps = {
+  energyType: EnergyType
+} & IconProps
+
+export const EnergyDesignSystemIcon = ({ energyType, ...props }: EnergyDesignSystemIconProps) => {
+  if (energyType === "fire") {
+    return <Fire {...props} />
+  }
+  if (energyType === "water") {
+    return <Water {...props} />
+  }
+  if (energyType === "earth") {
+    return <Earth {...props} />
+  }
+  if (energyType === "air") {
+    return <Air {...props} />
+  }
+  return <Circle {...props} />
 }

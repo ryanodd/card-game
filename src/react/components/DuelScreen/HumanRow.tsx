@@ -29,6 +29,7 @@ export const HumanRow = () => {
 
   const getHumanCards = () => {
     const spaces = []
+
     for (let x = 0; x < humanRowCardIds.length; x++) {
       const cardState = duel.human.row.find((card) => {
         return card.instanceId === humanRowCardIds[x]
@@ -87,7 +88,7 @@ export const HumanRow = () => {
 
       // Moved to container, but not a specific slot - plop down at the end?? Maybe this needs more thinking.
       if (event.over?.id.toString() === DROPPABLE_ID) {
-        const indexToPlay = humanRowCardIds.length - 1
+        const indexToPlay = humanRowCardIds.length
 
         const newDuel = await takeTurn_executePlayCard(duel, {
           cardIdToPlay: draggedCardInstanceId,

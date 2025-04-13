@@ -10,7 +10,12 @@ heroes.push({
   rarity: "base",
   energyType: "fire",
   energyTypes: ["fire"],
-  text: "Produces fire energy.",
+  text: [
+    {
+      variant: "default",
+      textList: [{ energyIcons: ["fire", "fire", "fire", "fire", "fire", "fire", "fire", "fire", "fire", "fire"] }],
+    },
+  ],
   health: 25,
   speed: 25,
   complete: true,
@@ -23,7 +28,14 @@ heroes.push({
   rarity: "base",
   energyType: "water",
   energyTypes: ["water"],
-  text: "Produces water energy.",
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { energyIcons: ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water"] },
+      ],
+    },
+  ],
   health: 25,
   speed: 25,
   complete: true,
@@ -36,7 +48,14 @@ heroes.push({
   rarity: "base",
   energyType: "earth",
   energyTypes: ["earth"],
-  text: "Produces earth energy.",
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { energyIcons: ["earth", "earth", "earth", "earth", "earth", "earth", "earth", "earth", "earth", "earth"] },
+      ],
+    },
+  ],
   health: 25,
   speed: 25,
   complete: true,
@@ -49,7 +68,128 @@ heroes.push({
   rarity: "base",
   energyType: "air",
   energyTypes: ["air"],
-  text: "Produces air energy.",
+  text: [
+    {
+      variant: "default",
+      textList: [{ energyIcons: ["air", "air", "air", "air", "air", "air", "air", "air", "air", "air"] }],
+    },
+  ],
+  health: 25,
+  speed: 25,
+  complete: true,
+})
+
+////////////////// DUAL-TYPE /////////////////////
+
+heroes.push({
+  name: "Jet",
+  imageSrc: "/heroes/jet.jpg",
+  imageCenterYPercent: 25,
+  rarity: "base",
+  energyType: "multi",
+  energyTypes: ["fire", "water"],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { energyIcons: ["fire", "fire", "fire", "fire", "fire", "water", "water", "water", "water", "water"] },
+      ],
+    },
+  ],
+  health: 25,
+  speed: 25,
+  complete: true,
+})
+
+heroes.push({
+  name: "Scorch",
+  imageSrc: "/heroes/scorch.jpg",
+  imageCenterYPercent: 25,
+  rarity: "base",
+  energyType: "multi",
+  energyTypes: ["fire", "earth"],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { energyIcons: ["fire", "fire", "fire", "fire", "fire", "earth", "earth", "earth", "earth", "earth"] },
+      ],
+    },
+  ],
+  health: 25,
+  speed: 25,
+  complete: true,
+})
+
+heroes.push({
+  name: "Pyroenix",
+  imageSrc: "/heroes/pyroenix.jpg",
+  imageCenterYPercent: 25,
+  rarity: "base",
+  energyType: "multi",
+  energyTypes: ["fire", "air"],
+  text: [
+    {
+      variant: "default",
+      textList: [{ energyIcons: ["fire", "fire", "fire", "fire", "fire", "air", "air", "air", "air", "air"] }],
+    },
+  ],
+  health: 25,
+  speed: 25,
+  complete: true,
+})
+
+heroes.push({
+  name: "Rocco",
+  imageSrc: "/heroes/rocco.jpg",
+  imageCenterYPercent: 25,
+  rarity: "base",
+  energyType: "multi",
+  energyTypes: ["water", "earth"],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { energyIcons: ["water", "water", "water", "water", "water", "earth", "earth", "earth", "earth", "earth"] },
+      ],
+    },
+  ],
+  health: 25,
+  speed: 25,
+  complete: true,
+})
+
+heroes.push({
+  name: "Wishtopher",
+  imageSrc: "/heroes/wishtopher.jpg",
+  imageCenterYPercent: 25,
+  rarity: "base",
+  energyType: "multi",
+  energyTypes: ["water", "air"],
+  text: [
+    {
+      variant: "default",
+      textList: [{ energyIcons: ["water", "water", "water", "water", "water", "air", "air", "air", "air", "air"] }],
+    },
+  ],
+  health: 25,
+  speed: 25,
+  complete: true,
+})
+
+heroes.push({
+  name: "Robbyn",
+  imageSrc: "/heroes/robbyn.jpg",
+  imageCenterYPercent: 25,
+  rarity: "base",
+  energyType: "multi",
+  energyTypes: ["earth", "air"],
+  text: [
+    {
+      variant: "default",
+      textList: [{ energyIcons: ["earth", "earth", "earth", "earth", "earth", "air", "air", "air", "air", "air"] }],
+    },
+  ],
   health: 25,
   speed: 25,
   complete: true,

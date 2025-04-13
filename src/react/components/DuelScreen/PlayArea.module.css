@@ -20,7 +20,7 @@
 }
 
 .rowHalfDropTarget {
-  @apply absolute inset-0 z-20 rounded-3xl;
+  @apply absolute inset-8 z-20 rounded-3xl;
 }
 
 .playAreaDropTarget[data-selectable="false"],
@@ -48,7 +48,7 @@
 .rowHalf {
   box-sizing: content-box;
   width: calc((6 * 7rem) + (3 * 0.25rem));
-  @apply h-40 shadow-sm border-opacity-20 border-4 border-stone-600 rounded-3xl flex flex-row gap-1 items-center relative p-4;
+  @apply h-40 shadow-sm border-opacity-20 border-4 border-stone-600 rounded-3xl flex flex-row gap-2 items-center relative px-4 py-6;
 }
 
 /* .rowHalf[data-top="true"] {

@@ -54,16 +54,16 @@ export const PlayerEnergyArea = ({ duel, playerId }: PlayerEnergyAreaProps) => {
 
   if (playerId === "opponent") {
     for (let x = 0; x < player.energy.fire; x++) {
-      energyIconsToRender.push(<EnergyIcon energyType="fire" size="lg" available={x < player.energy.fire} key={x} />)
+      energyIconsToRender.push(<EnergyIcon energyType="fire" size="lg" key={x} />)
     }
     for (let x = 0; x < player.energy.water; x++) {
-      energyIconsToRender.push(<EnergyIcon energyType="water" size="lg" available={x < player.energy.water} key={x} />)
+      energyIconsToRender.push(<EnergyIcon energyType="water" size="lg" key={x} />)
     }
     for (let x = 0; x < player.energy.earth; x++) {
-      energyIconsToRender.push(<EnergyIcon energyType="earth" size="lg" available={x < player.energy.earth} key={x} />)
+      energyIconsToRender.push(<EnergyIcon energyType="earth" size="lg" key={x} />)
     }
     for (let x = 0; x < player.energy.air; x++) {
-      energyIconsToRender.push(<EnergyIcon energyType="air" size="lg" available={x < player.energy.air} key={x} />)
+      energyIconsToRender.push(<EnergyIcon energyType="air" size="lg" key={x} />)
     }
   }
 

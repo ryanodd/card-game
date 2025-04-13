@@ -201,7 +201,7 @@ commonCards.push({
   imageSrcLarge: "/card-art/512x512/snail.png",
   imageCenterYPercent: 55,
   rarity: "common",
-  complete: false,
+  complete: true,
   energyType: "earth",
   cardType: "creature",
   attack: 1,
@@ -213,7 +213,60 @@ commonCards.push({
     earth: 1,
     air: 0,
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { keyword: "Backup" },
+        { plainText: ": " },
+        { icon: "dice" },
+        { boldText: "20%" },
+        { plainText: " to gain " },
+        { keyword: "Shield" },
+        { plainText: "." },
+      ],
+    },
+  ],
+})
+
+commonCards.push({
+  name: "Duskwood Ostrich",
+  imageSrcSmall: "/card-art/512x512/duskwoodOstrich.png",
+  imageSrcLarge: "/card-art/512x512/duskwoodOstrich.png",
+  imageCenterYPercent: 42,
+  rarity: "common",
+  complete: true,
+  energyType: "multi",
+  cardType: "creature",
+  attack: 1,
+  health: 2,
+  cost: {
+    neutral: 1,
+    fire: 0,
+    water: 0,
+    earth: 0,
+    air: 0,
+    dualType: {
+      primary: "earth",
+      secondary: "air",
+      quantity: 1,
+    },
+  },
+  text: [
+    {
+      variant: "default",
+      textList: [
+        { keyword: "Backup" },
+        { plainText: ": " },
+        { icon: "dice" },
+        { boldText: "25%" },
+        { plainText: " to gain " },
+        { boldText: "+1" },
+        { icon: "sword" },
+        { plainText: "." },
+      ],
+    },
+  ],
 })
 
 commonCards.push({
@@ -309,9 +362,9 @@ commonCards.push({
 
 commonCards.push({
   name: "Winged Bull",
-  imageSrcSmall: "/card-art/512x512/wingedBull.png",
-  imageSrcLarge: "/card-art/512x512/wingedBull.png",
-  imageCenterYPercent: 24,
+  imageSrcSmall: "/card-art/512x512/wingedBull.jpg",
+  imageSrcLarge: "/card-art/512x512/wingedBull.jpg",
+  imageCenterYPercent: 50,
   rarity: "common",
   complete: false,
   energyType: "air",
@@ -339,80 +392,9 @@ commonCards.push({
 })
 
 commonCards.push({
-  name: "Greenwing Caller",
-  imageSrcSmall: "/card-art/512x512/greenwingCaller.png",
-  imageSrcLarge: "/card-art/512x512/greenwingCaller.png",
-  imageCenterYPercent: 40,
-  rarity: "common",
-  complete: false,
-  energyType: "air",
-  cardType: "creature",
-  attack: 3,
-  health: 5,
-  cost: {
-    neutral: 3,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 1,
-  },
-})
-
-commonCards.push({
-  name: "Sludge Amphibian",
-  imageSrcSmall: "/card-art/512x512/sludgeAmphibian.png",
-  imageSrcLarge: "/card-art/512x512/sludgeAmphibian.png",
-  imageCenterYPercent: 30,
-  rarity: "common",
-  complete: false,
-  energyType: "water",
-  cardType: "creature",
-  attack: 3,
-  health: 4,
-  cost: {
-    neutral: 3,
-    fire: 0,
-    water: 1,
-    earth: 0,
-    air: 0,
-  },
-})
-
-commonCards.push({
-  name: "Canyon Burrower",
-  imageSrcSmall: "/card-art/512x512/canyonBurrower.png",
-  imageSrcLarge: "/card-art/512x512/canyonBurrower.png",
-  imageCenterYPercent: 30,
-  rarity: "common",
-  complete: false,
-  energyType: "earth",
-  cardType: "creature",
-  attack: 2,
-  health: 2,
-  cost: {
-    neutral: 1,
-    fire: 0,
-    water: 0,
-    earth: 1,
-    air: 0,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [
-        { plainText: "When attacked, " },
-        { icon: "dice" },
-        { boldText: "30%" },
-        { plainText: " for opponent to miss." },
-      ],
-    },
-  ],
-})
-
-commonCards.push({
-  name: "Huddolin",
-  imageSrcSmall: "/card-art/512x512/huddolin.png",
-  imageSrcLarge: "/card-art/512x512/huddolin.png",
+  name: "Towering Owl",
+  imageSrcSmall: "/card-art/512x512/toweringOwl.jpg",
+  imageSrcLarge: "/card-art/512x512/toweringOwl.jpg",
   imageCenterYPercent: 50,
   rarity: "common",
   complete: false,

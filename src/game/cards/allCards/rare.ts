@@ -67,6 +67,39 @@ rareCards.push({
 })
 
 rareCards.push({
+  name: "Jebubblesaur",
+  imageSrcSmall: "/card-art/512x512/jebubblesaur.jpg",
+  imageSrcLarge: "/card-art/512x512/jebubblesaur.jpg",
+  imageCenterYPercent: 47,
+  rarity: "rare",
+  complete: true,
+  energyType: "water",
+  cardType: "creature",
+  attack: 3,
+  health: 6,
+  cost: {
+    neutral: 3,
+    fire: 0,
+    water: 2,
+    earth: 0,
+    air: 0,
+  },
+  text: [
+    {
+      textList: [
+        { plainText: "Before attacking, " },
+        { icon: "dice" },
+        { boldText: "50%" },
+        { plainText: " to give the other monster " },
+        { boldText: "-1" },
+        { icon: "sword" },
+        { plainText: "." },
+      ],
+    },
+  ],
+})
+
+rareCards.push({
   name: "Treegre",
   imageSrcSmall: "/card-art/512x512/treegre.png",
   imageSrcLarge: "/card-art/512x512/treegre.png",
@@ -144,8 +177,8 @@ rareCards.push({
   complete: true,
   energyType: "multi",
   cardType: "creature",
-  attack: 3,
-  health: 3,
+  attack: 4,
+  health: 2,
   cost: {
     neutral: 2,
     fire: 0,
@@ -158,7 +191,16 @@ rareCards.push({
       secondary: "air",
     },
   },
-  text: [],
+  text: [
+    {
+      variant: "default",
+      textList: [{ icon: "dice" }, { boldText: "20%" }, { plainText: " for opponent to miss." }],
+    },
+    {
+      variant: "default",
+      textList: [{ plainText: "When destroyed, " }, { boldText: "burn" }, { plainText: " a random enemy monster." }],
+    },
+  ],
 })
 
 ////////////////////////////////////
@@ -190,72 +232,6 @@ rareCards.push({
         { boldText: "1" },
         { plainText: " to the enemy Hero." },
       ],
-    },
-  ],
-})
-
-rareCards.push({
-  name: "Vengeful Flamewing",
-  imageSrcSmall: "/card-art/512x512/vengefulFlamewing.png",
-  imageSrcLarge: "/card-art/512x512/vengefulFlamewing.png",
-  imageCenterYPercent: 45,
-  rarity: "rare",
-  complete: false,
-  energyType: "multi",
-  cardType: "creature",
-  attack: 2,
-  health: 4,
-  cost: {
-    neutral: 1,
-    fire: 1,
-    water: 0,
-    earth: 0,
-    air: 1,
-  },
-  // text: "When Vengeful flamewing attacks, if it isn't at maximum health, do +3 damage.",
-})
-
-// When attacking this creature, your opponent has a 25% chance to miss.
-rareCards.push({
-  name: "Fairy Buckfly",
-  imageSrcSmall: "/card-art/512x512/fairyBuckfly.png",
-  imageSrcLarge: "/card-art/512x512/fairyBuckfly.png",
-  imageCenterYPercent: 18,
-  rarity: "rare",
-  complete: false,
-  energyType: "multi",
-  cardType: "creature",
-  attack: 2,
-  health: 4,
-  cost: {
-    neutral: 1,
-    fire: 0,
-    water: 0,
-    earth: 1,
-    air: 1,
-  },
-})
-
-rareCards.push({
-  name: "Eerie Vision",
-  imageSrcSmall: "/card-art/512x512/eerieVision.png",
-  imageSrcLarge: "/card-art/512x512/eerieVision.png",
-  imageCenterYPercent: 20,
-  rarity: "rare",
-  complete: false,
-  energyType: "air",
-  cardType: "spell",
-  cost: {
-    neutral: 1,
-    fire: 0,
-    water: 0,
-    earth: 0,
-    air: 1,
-  },
-  text: [
-    {
-      variant: "default",
-      textList: [{ keyword: "Scry" }, { boldText: " 2" }, { plainText: ". Draw 2 cards." }],
     },
   ],
 })
@@ -414,26 +390,6 @@ rareCards.push({
       ],
     },
   ],
-})
-
-rareCards.push({
-  name: "Sicklehorn Grazer",
-  imageSrcSmall: "/card-art/512x512/sicklehornGrazer.png",
-  imageSrcLarge: "/card-art/512x512/sicklehornGrazer.png",
-  imageCenterYPercent: 50,
-  rarity: "rare",
-  complete: false,
-  energyType: "multi",
-  cardType: "creature",
-  attack: 3,
-  health: 3,
-  cost: {
-    neutral: 1,
-    fire: 1,
-    water: 0,
-    earth: 1,
-    air: 0,
-  },
 })
 
 rareCards.push({

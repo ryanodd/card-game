@@ -164,8 +164,6 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
 
   const onRarityClick = useCallback(
     (rarity: Rarity) => {
-      console.log(filters.rarity)
-      console.log(noRaritiesIncluded)
       if (allRaritiesIncluded) {
         setFilters({
           ...filters,
@@ -190,7 +188,7 @@ export const InventoryFilters = ({}: InventoryFiltersProps) => {
         })
       }
     },
-    [filters, setFilters, allRaritiesIncluded, noRaritiesIncluded]
+    [filters, setFilters, allRaritiesIncluded]
   )
 
   const onAllCompletionClick = useCallback(() => {

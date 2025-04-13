@@ -1,16 +1,27 @@
 .duelScreen {
-  @apply absolute inset-0 z-10 flex flex-col justify-between gap-2 items-center;
+  @apply absolute inset-0 z-10 flex flex-col justify-start gap-2 items-center;
 }
 
 .opponentRow {
-  @apply w-full flex justify-end items-center gap-4 p-4 relative;
+  @apply w-full flex justify-end items-center gap-1 p-1 relative;
 }
 
 .humanRow {
-  @apply w-full flex justify-between items-center p-4 gap-4 relative;
+  @apply mt-auto w-full flex justify-between items-center p-4 gap-4 relative;
 }
 
 .heroRow {
   width: 1200px;
   @apply flex justify-between gap-4 items-center;
+}
+
+.dragOverlayCardPreviewContainer {
+  @apply w-8 h-8;
+  @apply relative;
+}
+
+.dragOverlayCardPreviewResizer {
+  transform: translate(-50%, -50%);
+  @apply absolute left-1/2 top-1/2;
+  @apply pointer-events-none;
 }

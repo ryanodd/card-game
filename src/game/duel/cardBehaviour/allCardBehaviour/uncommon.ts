@@ -64,7 +64,23 @@ export async function cave_swimmer_support(inputDuel: DuelState, instanceId: str
   return duel
 }
 
-export async function darkwoods_hyena_support(inputDuel: DuelState, instanceId: string) {
+icy_herder_before_attack
+
+export async function icy_herder_before_attack(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+
+  const monsterBehind = getPlayerRowByCardInstanceId(duel, instanceId)?.[1]
+  if (monsterBehind === undefined || monsterBehind.cardType !== "creature") {
+    return duel
+  }
+
+  duel = await playAnimation(duel, { id: "CARD_EARTH_ACTION", durationMs: 800, cardId: instanceId })
+  monsterBehind.modifiers.push({ id: "healthChange", quantity: 1 })
+
+  return duel
+}
+
+export async function gnarldebeast_hyena_support(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
 
   // 50% chance to gain attack
@@ -80,17 +96,33 @@ export async function darkwoods_hyena_support(inputDuel: DuelState, instanceId: 
   return duel
 }
 
-export function feathered_scrapper_opposing_attack_modifier(
-  inputDuel: DuelState,
-  instanceId: string,
-  attackAmount: number
-) {
+export function bloodthirsty_bear_attack_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
+  let duel = inputDuel
+  const card = getCardByInstanceId(duel, instanceId)
+  if (card.cardType !== "creature") {
+    throw Error("Bloodthirsty bear is not a creature")
+  }
+  if (card.damage > 0) {
+    return attackAmount + 2
+  }
+  return attackAmount
+}
+
+export function feathered_scrapper_defense_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
   const random100 = getRandomInt(100, getRandomSeed())
   if (random100 < 20) {
     return "miss"
   }
 
   return attackAmount
+}
+
+export async function spirit_woomlet_defeat(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
+
+  duel = await drawToHand(duel, playerId, 1)
+  return duel
 }
 
 export const uncommonCardBehaviourMap = {
@@ -100,13 +132,6 @@ export const uncommonCardBehaviourMap = {
     getValidTargets: getDefaultSpellTargets,
     effects: {
       play: eruption_of_boulders_play,
-    },
-  },
-  "Moltsteed Racer": { getValidTargets: getDefaultCreatureTargets },
-  "Monstrous Flamebeast": {
-    getValidTargets: getDefaultCreatureTargets,
-    keywords: {
-      trample: true,
     },
   },
   "Spewing Cavern": { getValidTargets: getDefaultCreatureTargets },
@@ -123,15 +148,23 @@ export const uncommonCardBehaviourMap = {
   "Merfin Yodeler": {
     getValidTargets: getDefaultCreatureTargets,
   },
-  "Red Crab Brawler": { getValidTargets: getDefaultCreatureTargets },
+  "Icy Herder": {
+    getValidTargets: getDefaultCreatureTargets,
+    effects: { afterAttack: icy_herder_before_attack },
+  },
   "Bed of Snakes": {
     getValidTargets: getDefaultCreatureTargets,
   },
-  "Bonehide Mole": { getValidTargets: getDefaultCreatureTargets },
-  "Darkwoods Hyena": {
+  Gnarldebeast: {
     getValidTargets: getDefaultCreatureTargets,
     effects: {
-      support: darkwoods_hyena_support,
+      support: gnarldebeast_hyena_support,
+    },
+  },
+  "Bloodthirsty Bear": {
+    getValidTargets: getDefaultCreatureTargets,
+    attackModifier: {
+      attackModifier: bloodthirsty_bear_attack_modifier,
     },
   },
   "Living Hillside": {
@@ -141,14 +174,21 @@ export const uncommonCardBehaviourMap = {
   "Feathered Scrapper": {
     getValidTargets: getDefaultCreatureTargets,
     effects: {
-      opposingAttackModifier: feathered_scrapper_opposing_attack_modifier,
+      defenseModifier: feathered_scrapper_defense_modifier,
     },
   },
+
   "Sky Dino": { getValidTargets: getDefaultCreatureTargets },
   "Sonic Dragon": {
     getValidTargets: getDefaultCreatureTargets,
     effects: {
       // TODO supportOpponentAttackModifier: sonic_dragon_support_opponent_attack_modifier,
+    },
+  },
+  "Spirit Woomlet": {
+    getValidTargets: getDefaultCreatureTargets,
+    effects: {
+      defeat: spirit_woomlet_defeat,
     },
   },
 }

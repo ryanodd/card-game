@@ -25,7 +25,7 @@ export async function creaturesTrade(inputDuel: DuelState, attackingCardId: stri
       attackingCard.attack
     ) ?? attackingDamageAmount
   attackingDamageAmount =
-    cardBehaviourMap[defendingCard.name].effects?.opposingAttackModifier?.(
+    cardBehaviourMap[defendingCard.name].effects?.defenseModifier?.(
       duel,
       attackingCard.instanceId,
       defendingCard.attack
@@ -39,7 +39,7 @@ export async function creaturesTrade(inputDuel: DuelState, attackingCardId: stri
       defendingCard.attack
     ) ?? defendingDamageAmount
   defendingDamageAmount =
-    cardBehaviourMap[attackingCard.name].effects?.opposingAttackModifier?.(
+    cardBehaviourMap[attackingCard.name].effects?.defenseModifier?.(
       duel,
       attackingCard.instanceId,
       defendingCard.attack

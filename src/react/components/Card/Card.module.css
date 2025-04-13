@@ -1,3 +1,19 @@
+.duelCardDragTarget {
+  @apply relative;
+  @apply z-50;
+}
+
+.duelCardDragTarget[data-dragging="true"] {
+  /* @apply w-8 h-8; */
+  @apply opacity-0;
+}
+
+.duelCardDragTargetResizer {
+  transform: translate(-50%, -50%);
+  @apply absolute left-1/2 top-1/2;
+  @apply pointer-events-none;
+}
+
 .card_size {
   width: 8rem;
   height: 11.2rem;

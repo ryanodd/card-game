@@ -154,12 +154,16 @@ export const DuelScreen = ({}: DuelScreenProps) => {
     >
       <DragOverlay dropAnimation={null}>
         {cardIdDragging !== null && (
-          <CardPreview
-            duel={duel}
-            cardState={getCardByInstanceId(duel, cardIdDragging)}
-            isTooltipOpen={false}
-            showCostIcons
-          />
+          <div className={styles.dragOverlayCardPreviewContainer}>
+            <div className={styles.dragOverlayCardPreviewResizer}>
+              <CardPreview
+                duel={duel}
+                cardState={getCardByInstanceId(duel, cardIdDragging)}
+                isTooltipOpen={false}
+                showCostIcons
+              />
+            </div>
+          </div>
         )}
       </DragOverlay>
       <DuelCompleteDialog />

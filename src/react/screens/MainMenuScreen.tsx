@@ -13,6 +13,7 @@ import { HeaderBar } from "../components/HeaderBar"
 import { SettingsDialog } from "../components/SettingsDialog"
 import { Gear, Shop, Swords, TreasureMap, Trophy } from "../components/designSystem/Icon"
 import { Logo } from "../components/Logo"
+import { CardsRemovedDialog } from "../components/MainMenuScreen/CardsRemovedDialog"
 
 export const MainMenuScreen = () => {
   const { game, setGame } = useGameStore()
@@ -52,6 +53,7 @@ export const MainMenuScreen = () => {
       />
       <div className="grow flex flex-col justify-center items-center gap-4  p-4">
         <DefaultDialog
+          title="Quick battle"
           trigger={
             <Button className={styles.locationButton} data-id="quickDuel" data-size="large">
               <Swords />
@@ -84,6 +86,7 @@ export const MainMenuScreen = () => {
         <span className="self-end text-white text-xs px-2 py-1">Version {version}</span>
       </div>
       <Footer />
+      <CardsRemovedDialog />
     </div>
   )
 }

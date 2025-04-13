@@ -10,6 +10,7 @@ import {
   getDuelPlayerById,
   getOpposingAttackingCreatureByCardId,
   getOpposingRowByCardId,
+  getOtherPlayerByPlayerId,
   getOtherPlayerId,
   getPlayerByCardInstanceId,
   getPlayerIdByCardInstanceId,
@@ -40,23 +41,17 @@ export async function ember_foxling_after_attack(inputDuel: DuelState, instanceI
   return duel
 }
 
-export async function eerie_vision_play(inputDuel: DuelState, instanceId: string) {
+export async function jebubblesaur_before_attack(inputDuel: DuelState, instanceId: string) {
   let duel = inputDuel
-  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
-  duel = await playAnimation(duel, { id: "CARD_AIR_ACTION", durationMs: 800, cardId: instanceId })
-
-  duel = await scryStart(duel, playerId, 2, instanceId)
-  return duel
-}
-
-export async function eerie_vision_select_cards(inputDuel: DuelState, playerId: PlayerID, selectedCardIds: string[]) {
-  let duel = inputDuel
-  duel = await scryEnd(duel, playerId, selectedCardIds)
-
-  duel = await drawToHand(duel, playerId, 2)
-  duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
-
-  duel.choice = { id: "TAKE_TURN", playerId: duel.currentPlayerId }
+  const targetCreature = getOpposingAttackingCreatureByCardId(duel, instanceId)
+  if (targetCreature === undefined || targetCreature.cardType !== "creature") {
+    return duel
+  }
+  duel = await roll(duel, instanceId, 50, async () => {
+    duel = await playAnimation(duel, { id: "CARD_WATER_ACTION", durationMs: 600, cardId: targetCreature.instanceId })
+    targetCreature.modifiers.push({ id: "attackChange", quantity: -1 })
+    return duel
+  })
 
   return duel
 }
@@ -111,7 +106,30 @@ export async function support_flame_sentinel(inputDuel: DuelState, instanceId: s
   return duel
 }
 
+export function phoenix_dasher_defense_modifier(inputDuel: DuelState, instanceId: string, attackAmount: number) {
+  const random100 = getRandomInt(100, getRandomSeed())
+  if (random100 < 20) {
+    return "miss"
+  }
+  return attackAmount
+}
+
+export async function phoenix_dasher_defeat(inputDuel: DuelState, instanceId: string) {
+  let duel = inputDuel
+  const playerId = getPlayerIdByCardInstanceId(duel, instanceId)
+  const randomEnemyCreature = getRandomCreatureInPlayForPlayer(duel, getOtherPlayerId(playerId))
+  if (randomEnemyCreature === undefined) {
+    return duel
+  }
+  duel = await playAnimation(duel, { id: "CARD_FIRE_ACTION", durationMs: 800, cardId: instanceId })
+  duel = await burn(duel, randomEnemyCreature.instanceId)
+  duel = await playAnimation(duel, { id: "PAUSE", durationMs: BUFFER_MS })
+
+  return duel
+}
+
 export const rareCardBehaviourMap = {
+  "Flame Sentinel": { getValidTargets: getDefaultCreatureTargets, effects: { support: support_flame_sentinel } },
   "Ember Foxling": {
     getValidTargets: getDefaultCreatureTargets,
     effects: {
@@ -119,19 +137,9 @@ export const rareCardBehaviourMap = {
     },
   },
   "Diabolical Cultist": { getValidTargets: getDefaultCreatureTargets },
-  "Vengeful Flamewing": {
-    getValidTargets: getDefaultCreatureTargets,
-  },
-  "Fairy Buckfly": {
-    getValidTargets: getDefaultCreatureTargets,
-  },
-  "Eerie Vision": {
-    getValidTargets: getDefaultSpellTargets,
-    effects: {
-      play: eerie_vision_play,
-      selectCards: eerie_vision_select_cards,
-    },
-  },
+  Jebubblesaur: { getValidTargets: getDefaultCreatureTargets, effects: { beforeAttack: jebubblesaur_before_attack } },
+  Treegre: { getValidTargets: getDefaultCreatureTargets },
+  "Venus Fang": { getValidTargets: getDefaultCreatureTargets },
   Startle: {
     getValidTargets: getDefaultSpellTargets,
     effects: {
@@ -144,15 +152,20 @@ export const rareCardBehaviourMap = {
       play: ancestral_presence_play,
     },
   },
-  "Flame Sentinel": { getValidTargets: getDefaultCreatureTargets, effects: { support: support_flame_sentinel } },
+
   "Neojia Tamer": { getValidTargets: getDefaultCreatureTargets },
   "Opaldrake Thrasher": { getValidTargets: getDefaultCreatureTargets },
-  "Sicklehorn Grazer": { getValidTargets: getDefaultCreatureTargets },
   "Pike Lancer": { getValidTargets: getDefaultCreatureTargets },
   "Violet Sagebeast": { getValidTargets: getDefaultCreatureTargets },
-  Treegre: { getValidTargets: getDefaultCreatureTargets },
+
   "Fire Blob": { getValidTargets: getDefaultCreatureTargets },
   Pmochi: { getValidTargets: getDefaultCreatureTargets },
-  "Venus Fang": { getValidTargets: getDefaultCreatureTargets },
-  "Phoenix Dasher": { getValidTargets: getDefaultCreatureTargets },
+
+  "Phoenix Dasher": {
+    getValidTargets: getDefaultCreatureTargets,
+    effects: {
+      defenseModifier: phoenix_dasher_defense_modifier,
+      defeat: phoenix_dasher_defeat,
+    },
+  },
 }

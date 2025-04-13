@@ -223,7 +223,7 @@ export const autoPayElements = (
       energyAvailableCounts[mostCommonEnergy] -= 1
     }
   } catch {
-    console.log("Couldn't pay energy with autoPay!")
+    console.warn("Couldn't pay energy with autoPay!")
   }
 
   return selectedEnergy

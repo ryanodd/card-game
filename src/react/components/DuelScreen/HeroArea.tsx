@@ -15,7 +15,6 @@ export const HeroArea = ({ duel, playerId }: HeroAreaProps) => {
     <div className={styles.heroArea} data-human={playerId === "human"}>
       <HeroHealth duel={duel} playerId={playerId} />
       <DuelHero duel={duel} playerId={playerId} />
-
       <PlayerEnergyArea duel={duel} playerId={playerId} />
     </div>
   )

@@ -16,7 +16,7 @@ export type CardBehaviour = {
     beforeCombat?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     support?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
     attackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
-    opposingAttackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
+    defenseModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
     selectCards?: (inputDuel: DuelState, playerId: PlayerID, cardsSelected: string[]) => Promise<DuelState>
     defeat?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
   }

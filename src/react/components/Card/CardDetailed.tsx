@@ -6,9 +6,9 @@ import styles from "./CardDetailed.module.css"
 import { CardData, CardTextIconName } from "@/src/game/cards/CardData"
 import { CardState } from "@/src/game/duel/DuelData"
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
-import { forwardRef, ReactElement, ReactNode } from "react"
-import { Dice, Heart, IconProps, Scratch, Sword } from "../designSystem/Icon"
-import { KeywordInfoBox, KeywordInfoBoxColumn } from "./KeywordInfoBox"
+import { forwardRef } from "react"
+import { Air, Circle, Dice, Earth, Fire, Heart, IconProps, Scratch, Sword, Water } from "../designSystem/Icon"
+import { KeywordInfoBoxColumn } from "./KeywordInfoBox"
 import { CardRarityIndicator } from "./CardRarityIndicator"
 
 export const CARD_IMAGE_WIDTH_REMS = 16 - 1.75
@@ -69,6 +69,11 @@ const cardTextIconMap = {
   dice: Dice,
   heart: Heart,
   sword: Sword,
+  fire: Fire,
+  water: Water,
+  earth: Earth,
+  air: Air,
+  neutral: Circle,
 }
 
 export const CardTextIcon = ({ cardTextIconName, ...props }: CardTextIconProps) => {

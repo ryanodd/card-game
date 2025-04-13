@@ -3,6 +3,7 @@ import heroStyles from "./Hero.module.css"
 
 import { calculateTranslateYOffsetRem } from "@/src/utils/calculateYOffsetRem"
 import { HeroData } from "@/src/game/heroes/HeroData"
+import { EnergyDesignSystemIcon, EnergyIcon } from "./EnergyIcon"
 
 export const HERO_IMAGE_WIDTH_REMS = 16
 export const HERO_IMAGE_HEIGHT_REMS = 12
@@ -46,7 +47,28 @@ export const HeroDetailed = ({ heroData }: HeroDetailedProps) => {
       </div>
 
       <div className={heroStyles.textContainer}>
-        <p className={`${heroStyles.heroText}  `}>{heroData.text}</p>
+        <p className={`${heroStyles.heroText}`}>
+          {heroData.text?.map((textParagraph, i) => {
+            return (
+              <p key={i} className={heroStyles.heroTextParagraph}>
+                {textParagraph.textList.map((text) => {
+                  if ("plainText" in text) {
+                    return text.plainText
+                  }
+                  if ("energyIcons" in text) {
+                    return (
+                      <div key="energyIcons" className={heroStyles.heroTextEnergyIconsContainer}>
+                        {text.energyIcons.map((energyType, j) => {
+                          return <EnergyIcon key={j} size="sm" energyType={energyType} />
+                        })}
+                      </div>
+                    )
+                  }
+                })}
+              </p>
+            )
+          })}
+        </p>
       </div>
       <div className={`${heroStyles.heroFooter} h-8 -mb-2 -mx-2 gap-2`}></div>
     </div>

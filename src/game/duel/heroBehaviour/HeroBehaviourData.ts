@@ -15,7 +15,7 @@ export type HeroBehaviour = {
   //   afterAttack?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
   //   support?: (inputDuel: DuelState, instanceId: string) => Promise<DuelState>
   //   attackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
-  //   opposingAttackModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
+  //   defenseModifier?: (inputDuel: DuelState, instanceId: string, attackAmount: number) => number | "miss"
   //   selectCards?: (inputDuel: DuelState, instanceId: string, cardsSelected: string[]) => Promise<DuelState>
   // }
 }

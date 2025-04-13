@@ -1,5 +1,5 @@
 .hand_container {
-  @apply absolute left-1/2 -translate-x-1/2 flex gap-4 p-2;
+  @apply absolute left-1/2 -translate-x-1/2 flex gap-4 p-4;
 }
 
 .opponent_hand_container {

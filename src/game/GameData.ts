@@ -7,6 +7,7 @@ import { League } from "./league/leagueTypes"
 
 export type MainMenuScreenState = {
   id: "mainMenu"
+  cardsRemoved?: string[]
 }
 
 export type DuelScreenState = {

@@ -1,0 +1,7 @@
+.cardsRemovedSection {
+  @apply flex flex-col gap-4;
+}
+
+.listItem {
+  @apply ml-4;
+}

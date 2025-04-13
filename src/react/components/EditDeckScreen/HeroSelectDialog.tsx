@@ -16,12 +16,17 @@ export const HeroSelectDialog = ({ trigger, content, ...props }: HeroSelectDialo
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={`${styles.heroDialogOverlay}`} />
+
         <Dialog.Content className={styles.heroDialogContent}>
-          <Dialog.Close asChild>
-            <Button className={`${styles.heroDialogCloseButton}`} data-variant="tertiary" data-icon-only>
-              <Close />
-            </Button>
-          </Dialog.Close>
+          <div className={styles.heroDialogTitleRow}>
+            <div></div>
+            <Dialog.Title className={styles.heroDialogTitle}>Select Hero</Dialog.Title>
+            <Dialog.Close asChild>
+              <Button className={`${styles.heroDialogCloseButton}`} data-variant="tertiary" data-icon-only>
+                <Close />
+              </Button>
+            </Dialog.Close>
+          </div>
           {content}
         </Dialog.Content>
       </Dialog.Portal>
